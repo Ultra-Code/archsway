@@ -7,7 +7,8 @@
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 #ZSH_THEME="robbyrussell"
 #ZSH_THEME="af-magic"
-ZSH_THEME="agnoster"
+#ZSH_THEME="agnoster"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 #ZSH_THEME="miloshadzic"
 #ZSH_THEME="norm"
 #ZSH_THEME="pygmalion"
@@ -77,7 +78,10 @@ plugins=(git z debian fzf heroku history-substring-search yarn zsh-autosuggestio
 source $ZSH/oh-my-zsh.sh
 
 #my bash aliases
-source $ZSH_ALIASES
+if [[ -z "$ZSH_ALIASES" ]]
+then
+    source $ZSH_ALIASES
+fi
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
