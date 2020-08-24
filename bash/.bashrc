@@ -8,6 +8,9 @@ case $- in
       *) return;;
 esac
 
+#Push bash in insert mode
+set -o vi
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
