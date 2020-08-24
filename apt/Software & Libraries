@@ -1,0 +1,132 @@
+#Graphic Libraries
+intel-media-va-driver-non-free
+mesa-va-drivers
+libglu1-mesa-dev
+mesa-common-dev
+libfontconfig1
+vulkan-tools #For vulkaninfo
+mesa-vulkan-drivers
+
+#Cpu
+spectre-meltdown-checker
+intel-microcode
+
+#Drivers & Modules
+firmware-misc-nonfree
+firmware-linux
+firmware-linux-nonfree
+firmware-ipw2x00
+
+#Tools
+wireless-tools
+build-essential
+tlp
+smartmontools
+linux-cpupower
+gnome-nettools
+gnome-power-manager
+thermald
+hardinfo
+iotop is to monotor input output
+
+#Sid
+install apt-listbugs to know bugs during upgrade
+apt-listchanges for changes during packages install
+purge unattended-upgrade
+install apt-show-version for seeing packages in thier various dists ->
+and if they are upgradable and thier version
+add relatime to filesystem options
+
+#Compiler and development tools
+Clang
+clang-format
+clang-tidy
+clang-tools
+clazy usefull c++ for refactoring QT tools
+conan packages manager
+cmake 3.15 build system
+clang llvm  linker lld
+clang llvm next generation high performance debuger lldb
+clang llvm standard library libc++-dev
+clang llvm low level support for standard c++ library libc++abi-dev
+build2 build system
+Nix build environment and package manager
+
+#Scientific and mathematical computing
+Julia for AI Machine Learning Deep Learning & scientific computing
+Sagemath tool for mathematical computation
+
+#System Designs
+Visual_Paradigm community edition for case tool development
+
+#Document reader with wide annotation support
+Okular for Document reading not forgetting the Backend okular
+
+#Database Administration
+DBeaver for database administration
+
+#DBMS
+Mariadb
+Mongodb
+
+#Web backend development
+C++ framework
+Node
+
+#Backend and frontend Mocking
+Frontend-Postman
+Backend-Mockoon
+
+#Audio editing
+Ardour for audio editing
+
+#Dictionary Ware
+Artha
+
+#Video editing
+Kdenlive for video editing
+Handbrake
+Open Shot
+
+#Picture making & editing & ui designing
+Krita for modeling and picture editing
+Akira in the future
+Pencill for UI UX
+Blender
+Gimp
+InkScape
+
+#IDE
+Qt Creator
+
+#Version Control Client
+SmartGit
+
+#Cloud base note
+NixNote Backend for evernote
+
+#Email Manager
+evolution
+thunderbird
+
+#Fonts
+fonts-liberation2
+ttf-mscorefonts-installer for windows type fonts
+
+#Development Libraries
+install libboost for the boost library
+install libmysqlcppconn-dev for mariadb and mysql database connector
+libmysql++-dev mariadb and mysql c++ connector comes with a nice manuel
+install for odb cross platform for persistence of database objects in c++
+install libpoco-dev for developing network centric applications
+
+#Compression & archiving
+pax an improved archiving tool that is portable
+zpac and lrzip as main compresion tools
+
+#Terminal Multiplexer
+Tmux
+
+#Status line
+Powerlevel10k
+Powerline
