@@ -1,0 +1,20 @@
+[cola]
+	spellcheck = false
+[user]
+	name = Ultra-Code
+	email = mega.alpha100@gmail.com
+[gc]
+	autoDetach = false
+[core]
+	editor = nvim
+[hub]
+	protocol = https
+[merge]
+	tool = vimdiff
+	conflictStyle = diff3
+[diff]
+	tool = vimdiff
+[mergetool]
+	prompt = false
+[pull]
+	rebase = true
