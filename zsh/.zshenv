@@ -1,12 +1,11 @@
 # This sets up colors properly
-export TERM="xterm-256color" 
+export TERM="xterm-256color"
 
 # set shell
 export SHELL=/usr/bin/zsh
 
 #directory where user-specific configuration files should be written
-#export XDG_CONFIG_HOME="$HOME/.etc"
-export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CONFIG_HOME="$HOME/.etc"
 
 #dir where user-specific data files should be written
 export XDG_DATA_HOME="$HOME/.local/share"
