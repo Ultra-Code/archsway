@@ -73,15 +73,16 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git z debian fzf heroku history-substring-search yarn zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git z fzf heroku history-substring-search yarn zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
 #my bash aliases
-if [[ -z "$ZSH_ALIASES" ]]
+if [[ $ZSH_ALIASES ]];
 then
     source $ZSH_ALIASES
 fi
+
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -134,14 +135,17 @@ zstyle :compinstall filename '/home/ultracode/.zshrc'
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
-#
+
 # To display only username on the cmd for agnoster
 #prompt_context() {
   #if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
     #prompt_segment black default "%(!.%{%F{yellow}%}.)$USER"
   #fi
 #}
+#prompt_context(){} disable user@host prompt
 
-setopt HIST_SAVE_NO_DUPS         # Do not write a duplicate event to the history file.
 
-prompt_context(){}
+#Shell options
+setopt HIST_SAVE_NO_DUPS # Do not write a duplicate event to the history file.
+setopt COMPLETE_ALIASES  # Add autocomplition for aliases
+
