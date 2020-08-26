@@ -31,31 +31,23 @@ export EDITOR="nvim"
 export VISUAL="nvim"
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/ultracode/.oh-my-zsh"
+export ZSH="$XDG_DATA_HOME/.oh-my-zsh"
 
 # Set fzf installation directory path
 export FZF_BASE="/usr/bin/fzf"
 
 #NODE global path
-export NODE_PATH=$NODE_PATH:$HOME/.npm-global/lib/node_modules
-
-#Add Android Management tools to path
-export PATH="$PATH:/opt/Android/cmdline-tools/latest/bin/"
-export PATH="$PATH:
-/home/ultracode/Repository/Git/emsdk:\
-/home/ultracode/Repository/Git/emsdk/node/12.9.1_64bit/bin:\
-/home/ultracode/Repository/Git/emsdk/upstream/emscripten"
-export PATH="$PATH:/opt/flutter/bin/"
-#yarn package mangaement tool
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-export ANDROID_HOME="/opt/Android/"
-export PATH="$PATH:ANDROID_HOME"
-export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/"
-export ANDROID_NKD_ROOT="/opt/Android/ndk/21.1.6352462/"
+export NODE_PATH="$NODE_PATH:/opt/node-v14.8.0-linux-x64/include/node_modules/"
+export NODE_REPL_HISTORY="$XDG_CONFIG_HOME/"
+export PATH="$PATH:/opt/node-v14.8.0-linux-x64/bin/"
+#export ANDROID_HOME="/opt/Android/"
+#export PATH="$PATH:ANDROID_HOME"
+#export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/"
+#export ANDROID_NKD_ROOT="/opt/Android/ndk/21.1.6352462/"
 
 #Add completions for pipenv
 #eval "$(pipenv --completion)"
-export PIPENV_VENV_IN_PROJECT=1
+#export PIPENV_VENV_IN_PROJECT=1
 
 #Cofigurations For Building using CMAKE
 export CC=/usr/bin/clang-10
