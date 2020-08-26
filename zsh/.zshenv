@@ -7,12 +7,12 @@ export SHELL=/usr/bin/zsh
 #directory where user-specific configuration files should be written
 export XDG_CONFIG_HOME="$HOME/.etc"
 
-#dir where user-specific data files should be written
-export XDG_DATA_HOME="$HOME/.local/share"
-
 #defines the preference-ordered set of base directories to search
 #for configuration files in addition to the $XDG_CONFIG_HOME base directory
 export XDG_CONFIG_DIR="$HOME/.config:/etc/xdg"
+
+#dir where user-specific data files should be written
+export XDG_DATA_HOME="$HOME/.local/share"
 
 #defines the preference-ordered set of base directories to search for
 #data files in addition to the $XDG_DATA_HOME base directory
@@ -20,6 +20,11 @@ export XDG_DATA_DIRS="/usr/local/share/:/usr/share/"
 
 #dir where user-specific non-essential (cached) data should be written
 export XDG_CACHE_HOME="$HOME/.cache"
+
+#defines the base directory relative to which user-specific non-essential
+#runtime files and other file objects (such as sockets, named pipes, ...)
+#should be stored
+export XDG_RUNTIME_DIR=/run/user/1000
 
 export HISTFILE="$HOME/.zsh_history"    # History filepath
 export HISTSIZE=10000                   # Maximum events for internal history
