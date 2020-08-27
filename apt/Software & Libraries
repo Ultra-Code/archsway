@@ -1,9 +1,5 @@
 #Graphic Libraries
 intel-media-va-driver-non-free
-mesa-va-drivers
-libglu1-mesa-dev
-mesa-common-dev
-libfontconfig1
 vulkan-tools #For vulkaninfo
 mesa-vulkan-drivers
 
@@ -15,7 +11,7 @@ intel-microcode
 firmware-misc-nonfree
 firmware-linux
 firmware-linux-nonfree
-firmware-ipw2x00
+firmware-ipw2x00 #for wireless
 
 #Tools
 wireless-tools
