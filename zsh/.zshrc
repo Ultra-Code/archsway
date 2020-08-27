@@ -83,6 +83,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=(git z fzf heroku history-substring-search yarn zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
+unalias -m '*' #remove all omz aliases
 
 #my bash aliases
 if [[ $ZSH_ALIASES ]];

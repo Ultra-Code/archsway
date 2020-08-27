@@ -33,17 +33,37 @@ alias sv="source ~/.virtualevn/bin/activate"
 alias gs='git status'
 alias ga='git add'
 alias gp='git push'
-alias gpo='git push origin'
 alias gtd='git tag --delete'
-alias gtdr='git tag --delete origin'
 alias gr='git branch -r'
-alias gplo='git pull origin'
+alias gpu='git pull'
 alias gb='git branch '
 alias gc='git commit'
 alias gd='git diff'
 alias gco='git checkout '
-alias gl='git log'
 alias gr='git remote'
 alias grs='git remote show'
-alias glo='git log --pretty="oneline"'
-alias glol='git log --graph --oneline --decorate'
+alias gl='git log --graph --oneline --decorate'
+
+# open ~/.zshrc in using the default editor specified in $EDITOR
+alias ez="$EDITOR $HOME/.zshrc"
+
+# source ~/.zshrc
+alias sz="source $HOME/.zshrc"
+
+
+alias _='sudo '
+alias ...=../..
+alias ....=../../..
+alias .....=../../../..
+alias ......=../../../../..
+1='cd -'
+2='cd -2'
+3='cd -3'
+4='cd -4'
+5='cd -5'
+6='cd -6'
+7='cd -7'
+8='cd -8'
+9='cd -9'
+alias z='_z 2>&1'
+alias history=omz_history
