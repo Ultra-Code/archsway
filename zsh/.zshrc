@@ -80,10 +80,10 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git z fzf heroku history-substring-search yarn zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(z fzf history-substring-search zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
-unalias -m '*' #remove all omz aliases
+#unalias -m '*' #remove all omz aliases
 
 #my bash aliases
 if [[ $ZSH_ALIASES ]];
@@ -156,8 +156,6 @@ compinit
 #Shell options
 setopt HIST_SAVE_NO_DUPS # Do not write a duplicate event to the history file.
 setopt COMPLETE_ALIASES  # Add autocomplition for aliases
-
-GITSTATUS_LOG_LEVEL=DEBUG
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

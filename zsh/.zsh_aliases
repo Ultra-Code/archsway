@@ -49,21 +49,3 @@ alias ez="$EDITOR $HOME/.zshrc"
 
 # source ~/.zshrc
 alias sz="source $HOME/.zshrc"
-
-
-alias _='sudo '
-alias ...=../..
-alias ....=../../..
-alias .....=../../../..
-alias ......=../../../../..
-1='cd -'
-2='cd -2'
-3='cd -3'
-4='cd -4'
-5='cd -5'
-6='cd -6'
-7='cd -7'
-8='cd -8'
-9='cd -9'
-alias z='_z 2>&1'
-alias history=omz_history

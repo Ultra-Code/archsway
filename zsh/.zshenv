@@ -44,7 +44,7 @@ export FZF_BASE="/usr/bin/fzf"
 #NODE global path
 export NODE_PATH="$NODE_PATH:/opt/node-v14.8.0-linux-x64/include/node_modules/"
 export NODE_REPL_HISTORY="$XDG_CONFIG_HOME/"
-export PATH="$PATH:/opt/node-v14.8.0-linux-x64/bin/"
+export PATH="$PATH:/sbin/:/opt/node-v14.8.0-linux-x64/bin/"
 #export ANDROID_HOME="/opt/Android/"
 #export PATH="$PATH:ANDROID_HOME"
 #export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/"
