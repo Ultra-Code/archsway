@@ -1,34 +1,24 @@
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto -F'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
+alias ls='ls --color -F'
+alias ll='ls -Alh'
+alias li='ll -i'
+alias lr='ll -R'
 
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
+alias grep='grep --color'
+alias fgrep='fgrep --color'
+alias egrep='egrep --color'
 
 alias casm="nasm -f elf32"
 alias lasm="ld -m elf_i386"
 
-# some more ls aliases
-#alias ll='ls -l'
-#alias la='ls -A'
-#alias l='ls -CF'
-alias ll='ls -Alh'
-alias li='ll -i'
-alias pylint='python3 -m pylint'
-
 alias admin='tmux new -s admin -n ADMINISTRATOR \; new-window -n EDITOR \; new-window -n DEVELOPER;'
 alias dev='tmux new -s developer -n TESTING \; new-window -n DAEMON \; new-window -n DEVELOPER\; new-window -n DATABASE'
+
 #Add hub as an alias for git hub
 #So that git and git hub all have access to each other
 #eval "$(hub alias -s)"
-alias __git=hub
+#alias __git=hub
 
-alias sv="source ~/.virtualevn/bin/activate"
+#alias sv="source ~/.virtualevn/bin/activate"
 
 alias gs='git status'
 alias ga='git add'
@@ -49,3 +39,15 @@ alias ez="$EDITOR $HOME/.zshrc"
 
 # source ~/.zshrc
 alias sz="source $HOME/.zshrc"
+
+#source ~/.zshenv
+alias se="source $HOME/.zshenv"
+
+#edit ~/.zshenv
+alias ee="$EDITOR $HOME/.zshenv"
+
+#source ~/.zsh_aliases
+alias sa="source $HOME/.zsh_aliases"
+
+#edit ~/.zsh_aliases
+alias ea="$EDITOR $HOME/.zsh_aliases"
