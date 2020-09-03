@@ -42,9 +42,7 @@ export ZSH="$XDG_DATA_HOME/.oh-my-zsh"
 export FZF_BASE="/usr/bin/fzf"
 
 #NODE global path
-export NODE_PATH="$NODE_PATH:/opt/node-v14.8.0-linux-x64/include/node_modules/"
 export NODE_REPL_HISTORY="$XDG_CONFIG_HOME/"
-export PATH="$PATH:/sbin/:/opt/node-v14.8.0-linux-x64/bin/"
 #export ANDROID_HOME="/opt/Android/"
 #export PATH="$PATH:ANDROID_HOME"
 #export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/"
@@ -55,7 +53,9 @@ export PATH="$PATH:/sbin/:/opt/node-v14.8.0-linux-x64/bin/"
 #export PIPENV_VENV_IN_PROJECT=1
 
 #Cofigurations For Building using CMAKE
-export CC=/usr/bin/clang-10
-export CXX=/usr/bin/clang++-10
+export CC=/usr/bin/clang-11
+export CXX=/usr/bin/clang++-11
 export CMAKE_GENERATOR=Ninja
 
+#Qt5 directroy
+export Qt5_DIR=/opt/qt5/5.15.0/gcc_64/
