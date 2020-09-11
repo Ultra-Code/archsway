@@ -51,3 +51,16 @@ alias sa="source $HOME/.zsh_aliases"
 
 #edit ~/.zsh_aliases
 alias ea="$EDITOR $HOME/.zsh_aliases"
+
+#Aptitude aliases
+alias apu='sudo aptitude update'
+alias aps='aptitude show'
+alias apf='sudo aptitude full-upgrade'
+alias api='sudo aptitude install'
+alias apc='sudo aptitude autoclean'
+alias app='sudo aptitude purge'
+alias apr='sudo aptitude reinstall'
+alias ap='aptitude'
+
+#Cmake
+alias cmgen='cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON'
