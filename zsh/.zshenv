@@ -44,7 +44,7 @@ export FZF_BASE="/usr/bin/fzf"
 #NODE global path
 export NODE_REPL_HISTORY="$XDG_CONFIG_HOME/"
 #export ANDROID_HOME="/opt/Android/"
-#export PATH="$PATH:ANDROID_HOME"
+export PATH="$PATH:$HOME/.local/bin"
 #export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/"
 #export ANDROID_NKD_ROOT="/opt/Android/ndk/21.1.6352462/"
 
