@@ -151,13 +151,13 @@ DATABASES = {
                 }
             }
         },
-        'NAME': 'healthmasys_db',
+        'NAME': 'db',
         'CLIENT': {
-            'host': '127.0.0.1',
+            'host': '',
             'port': 27017,
-            'username': 'healthmasys',
-            'password': 'healthmasysadmin',
-            'authSource': 'healthmasys_db',
+            'username': '',
+            'password': '',
+            'authSource': 'db',
             'authMechanism': 'SCRAM-SHA-1'
         }
     }
