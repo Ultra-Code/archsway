@@ -70,3 +70,10 @@ alias bnew='bdep new -t empty'
 alias blib='bdep new --package -l c++ -t lib,split'
 alias bexe='bdep new --package -l c++ -t exe,prefix=src'
 alias bcon='bdep init -C @clang cc config.cxx=clang++-11 config.cxx.coptions="-Wall -Wextra -pedantic -pedantic-errors -Werror"'
+alias bdex='bdep new -l c++ -t exe'
+alias bdlb='bdep new -l c++ -t lib'
+
+#Systemd services
+alias enabled_services='systemctl list-unit-files --type=service --state=enabled'
+alias running_services='systemctl list-units  --type=service  --state=running'
+alias all_services='systemctl -at service'
