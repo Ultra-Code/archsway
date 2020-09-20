@@ -27,8 +27,8 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_RUNTIME_DIR=/run/user/1000
 
 export HISTFILE="$HOME/.zsh_history"    # History filepath
-export HISTSIZE=10000                   # Maximum events for internal history
-export SAVEHIST=10000                   # Maximum events in history file
+export HISTSIZE=1000000                   # Maximum events for internal history
+export SAVEHIST=1000000                   # Maximum events in history file
 
 export ZSH_ALIASES="$HOME/.zsh_aliases"
 
@@ -44,7 +44,7 @@ export FZF_BASE="/usr/bin/fzf"
 #NODE global path
 export NODE_REPL_HISTORY="$XDG_CONFIG_HOME/"
 #export ANDROID_HOME="/opt/Android/"
-export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:/sbin/:$HOME/.local/bin"
 #export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/"
 #export ANDROID_NKD_ROOT="/opt/Android/ndk/21.1.6352462/"
 
@@ -58,4 +58,7 @@ export CXX=/usr/bin/clang++-11
 export CMAKE_GENERATOR=Ninja
 
 #Qt5 directroy
-export Qt5_DIR=/opt/qt5/5.15.0/gcc_64/
+export Qt5CORE_DIR=/opt/qt5/5.15.0/gcc_64
+
+#Add shared library to path
+export LD_LIBRARY_PATH=$Qt5CORE_DIR/lib
