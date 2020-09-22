@@ -65,10 +65,14 @@ alias ap='aptitude'
 #Cmake
 alias cmgen='cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON'
 
+#Clang
+alias clfs='ln -s ~/.clang* .'
+
 #Build2
 alias bnew='bdep new -t empty'
 alias blib='bdep new --package -l c++ -t lib,split'
 alias bexe='bdep new --package -l c++ -t exe,prefix=src'
+alias bdb='b -vn clean update |& compiledb'
 alias bcon='bdep init -C @clang cc config.cxx=clang++-11 config.cxx.coptions="-Wall -Wextra -pedantic -pedantic-errors -Werror"'
 alias bdex='bdep new -l c++ -t exe'
 alias bdlb='bdep new -l c++ -t lib'
