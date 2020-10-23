@@ -111,7 +111,7 @@ CPU_MAX_PERF_ON_AC=100
 CPU_MIN_PERF_ON_BAT=0
 CPU_MAX_PERF_ON_BAT=30
 
-# Set the CPU "tubo boost" feature: 0=disable, 1=allow
+# Set the CPU "turbo boost" feature: 0=disable, 1=allow
 # Requires an Intel Core i processor.
 # Important:
 # - This may conflict with your distribution's governor settings
@@ -209,14 +209,14 @@ SATA_LINKPWR_ON_BAT="med_power_with_dipm min_power"
 # EXPERIMENTAL ** WARNING: auto may cause system lockups/data loss.
 # Default: <none>
 
-AHCI_RUNTIME_PM_ON_AC=on
-AHCI_RUNTIME_PM_ON_BAT=on
+#AHCI_RUNTIME_PM_ON_AC=on
+#AHCI_RUNTIME_PM_ON_BAT=on
 
 # Seconds of inactivity before disk is suspended.
 # Note: effective only when AHCI_RUNTIME_PM_ON_AC/BAT is activated.
 # Default: 15
 
-AHCI_RUNTIME_PM_TIMEOUT=15
+#AHCI_RUNTIME_PM_TIMEOUT=15
 
 # PCI Express Active State Power Management (PCIe ASPM):
 #   default(*), performance, powersave, powersupersave.
@@ -452,13 +452,13 @@ DEVICES_TO_DISABLE_ON_BAT_NOT_IN_USE="bluetooth wifi wwan"
 
 # Radio devices to disable on connect.
 
-DEVICES_TO_DISABLE_ON_LAN_CONNECT="wifi wwan"
+DEVICES_TO_DISABLE_ON_LAN_CONNECT="bluetooth wifi wwan"
 DEVICES_TO_DISABLE_ON_WIFI_CONNECT="bluetooth wwan"
 #DEVICES_TO_DISABLE_ON_WWAN_CONNECT="bluetooth wifi"
 
 # Radio devices to enable on disconnect.
 
-DEVICES_TO_ENABLE_ON_LAN_DISCONNECT="wifi"
+#DEVICES_TO_ENABLE_ON_LAN_DISCONNECT="wifi"
 #DEVICES_TO_ENABLE_ON_WIFI_DISCONNECT=""
 #DEVICES_TO_ENABLE_ON_WWAN_DISCONNECT=""
 
