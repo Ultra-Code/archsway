@@ -1,5 +1,5 @@
 ---
-Checks: 'clang-diagnostic-*,abseil-*,boost-*,bugprone-*,cert-*,clang-analyzer-*,-clang-analyzer-osx*,cppcoreguidelines-*,fuchsia-*,-fuchsia-trailing-return,-fuchsia-default-*,google-*,-google-objc-*,llvm-*,-llvm-header-guard,-llvm-include-order,misc-*,modernize-*,mpi-*,-objc-*,openmp-*,performance-*,portability-*,readability-*,zircon-*'
+Checks: 'clang-diagnostic-*,abseil-*,boost-*,bugprone-*,cert-*,clang-analyzer-*,-clang-analyzer-osx*,cppcoreguidelines-*,-fuchsia-*,google-*,-google-objc-*,llvm-*,-llvm-header-guard,-llvm-include-order,misc-*,modernize-*,mpi-*,-objc-*,openmp-*,performance-*,portability-*,readability-*,zircon-*'
 
 WarningsAsErrors: ''
 HeaderFilterRegex: ''
