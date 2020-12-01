@@ -23,15 +23,8 @@ alias dev='tmux new -s developer -n TESTING \; new-window -n DAEMON \; new-windo
 alias gs='git status'
 alias ga='git add'
 alias gp='git push'
-alias gtd='git tag --delete'
-alias gr='git branch -r'
 alias gpu='git pull'
-alias gb='git branch '
 alias gc='git commit'
-alias gd='git diff'
-alias gco='git checkout '
-alias gr='git remote'
-alias grs='git remote show'
 alias gl='git log --graph --oneline --decorate'
 
 # open ~/.zshrc in using the default editor specified in $EDITOR
@@ -54,13 +47,7 @@ alias ea="$EDITOR $HOME/.zsh_aliases"
 
 #Aptitude aliases
 alias apu='sudo aptitude update'
-alias aps='aptitude show'
 alias apf='sudo aptitude full-upgrade'
-alias api='sudo aptitude install'
-alias apc='sudo aptitude autoclean'
-alias app='sudo aptitude purge'
-alias apr='sudo aptitude reinstall'
-alias ap='aptitude'
 
 #Cmake
 alias cmgen='cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON'
@@ -73,10 +60,18 @@ alias clf='ln -s ~/.clang* .'
 #alias blib='bdep new --package -l c++ -t lib,split'
 #alias bexe='bdep new --package -l c++ -t exe,prefix=src'
 alias cldb='b -vn clean update |& compiledb'
-alias bconr='bdep init -C ~/repos/c++/build2/build2builds/clang-release @clang-release cc config.cxx="clang++-11 -03" config.cxx.coptions="-Wall -Wextra -pedantic -pedantic-errors -Werror"'
-alias bcond='bdep init -C ~/repos/c++/build2/build2builds/clang-debug @clang-debug cc config.cxx="clang++-11 -g -O0" config.cxx.coptions="-Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-missing-prototypes"'
-alias bcadd='bdep init -A ~/repos/c++/build2/build2builds/clang-debug'
+
+#Create project configurations for build type
+alias bconr='bdep init -C ~/repos/c++/build2/build2builds/clang-release @clang-release cc config.cxx="clang++-11 -03"\
+    config.cxx.coptions="-Wall -Wextra -pedantic -pedantic-errors -Werror"'
+alias bcond='bdep init -C ~/repos/c++/build2/build2builds/clang-debug @clang-debug cc config.cxx="clang++-11 -g -O0"\
+    config.cxx.coptions="-Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-missing-prototypes"'
+
+#Add project to particular clang configuration
 alias bcadr='bdep init -A ~/repos/c++/build2/build2builds/clang-release'
+alias bcadd='bdep init -A ~/repos/c++/build2/build2builds/clang-debug'
+
+#Create exeutables and library
 alias bexe='bdep new -l c++ -t exe'
 alias blib='bdep new -l c++ -t lib'
 
