@@ -63,9 +63,9 @@ alias cldb='b -vn clean update |& compiledb'
 
 #Create project configurations for build type
 alias bconr='bdep init -C ~/repos/c++/build2/build2builds/clang-release @clang-release cc config.cxx="clang++-11 -03"\
-    config.cxx.coptions="-Wall -Wextra -pedantic -pedantic-errors -Werror"'
+    config.cxx.coptions="-Wall -Wextra -pedantic -pedantic-errors -Werror -DNDEBUG"'
 alias bcond='bdep init -C ~/repos/c++/build2/build2builds/clang-debug @clang-debug cc config.cxx="clang++-11 -g -O0"\
-    config.cxx.coptions="-Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-missing-prototypes"'
+    config.cxx.coptions="-Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-missing-prototypes -DDEBUG"'
 
 #Add project to particular clang configuration
 alias bcadr='bdep init -A ~/repos/c++/build2/build2builds/clang-release'
