@@ -52,9 +52,9 @@ alias apf='sudo aptitude full-upgrade'
 #Cmake
 alias cmgen='cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON'
 
-if [[ -f ../build2/build2.zsh ]]
+if [[ -f $HOME/configurations/build2/build2.zsh ]]
   then
-    source ../build2/build2.zsh
+    source $HOME/configurations/build2/build2.zsh
 fi
 
 #Systemd services
