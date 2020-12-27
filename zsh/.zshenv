@@ -44,7 +44,7 @@ export FZF_BASE="/usr/bin/fzf"
 #NODE global path
 export NODE_REPL_HISTORY="$XDG_CONFIG_HOME/"
 #export ANDROID_HOME="/opt/Android/"
-export PATH="$PATH:/sbin/:$HOME/.local/bin"
+export PATH="$PATH:/sbin/:$HOME/.local/bin/:$HOME/.yarn/bin/"
 #export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/"
 #export ANDROID_NKD_ROOT="/opt/Android/ndk/21.1.6352462/"
 
@@ -53,12 +53,9 @@ export PATH="$PATH:/sbin/:$HOME/.local/bin"
 #export PIPENV_VENV_IN_PROJECT=1
 
 #Cofigurations For Building using CMAKE
-export CC=/usr/bin/clang-11
-export CXX=/usr/bin/clang++-11
+export CC=/usr/bin/clang
+export CXX=/usr/bin/clang++
 export CMAKE_GENERATOR=Ninja
 
-#Qt5 directroy
-export Qt5CORE_DIR=/opt/qt5/5.15.0/gcc_64
-
-#Add shared library to path
-export LD_LIBRARY_PATH=$Qt5CORE_DIR/lib
+# Add env to my neovim init file
+export NVIMRC="$XDG_CONFIG_HOME/nvim/init.vim"
