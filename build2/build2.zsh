@@ -11,7 +11,7 @@ gcc_debug_macros='-D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC'
 gcc_warning_flags='-Wall -Wextra -Weffc++ -pedantic -pedantic-errors'
 gcc_instumentation_option='-fsanitize=address -fsanitize=undefined'
 gcc_optimization_options='-fno-omit-frame-pointer'
-gcc_optimization_options_linker='-fuse-ld=gold -flto -flto-compression-level -fuse-linker-plugin'
+gcc_optimization_options_linker='-fuse-ld=gold -flto -fuse-linker-plugin'
 
 #GCC RELEASE MACROS
 deactivate_assert_macro='-DNDEBUG'
