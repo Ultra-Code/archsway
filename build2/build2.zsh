@@ -11,19 +11,20 @@ gcc_debug_macros='-D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC'
 gcc_warning_flags='-Wall -Wextra -Weffc++ -pedantic -pedantic-errors'
 gcc_instumentation_option='-fsanitize=address -fsanitize=undefined'
 gcc_optimization_options='-fno-omit-frame-pointer'
-gcc_optimization_options_linker='-fuse-ld=gold -flto -fuse-linker-plugin'
+gcc_codegen_options='-fvisibility=hidden'
+gcc_optimization_options_linker='-fuse-ld=lld -flto -fuse-linker-plugin'
 
 #GCC RELEASE MACROS
 deactivate_assert_macro='-DNDEBUG'
 gcc_release_macros='-D_FORTIFY_SOURCE=2'
 
 #GCC RELEASE OPTIONS
-gcc_release_optimization_options_linker='-fuse-ld=gold -flto=4 -flto-compression-level=9 -fuse-linker-plugin'
+gcc_release_optimization_options_linker='-fuse-ld=lld -flto=4 -flto-compression-level=9 -fuse-linker-plugin'
 gcc_instumentation_option_security='-fstack-clash-protection -fstack-protector-strong -fcf-protection=full'
 gcc_release_compiler='g++ -O3'
 
 #OPTIONS CATEGORIZATIONS
-gcc_compiler_flags=$gcc_warning_flags" "$gcc_optimization_options" "$gcc_optimization_options_linker" "$gcc_instumentation_option
+gcc_compiler_flags=$gcc_warning_flags" "$gcc_optimization_options" "$gcc_optimization_options_linker" "$gcc_instumentation_option" "$gcc_codegen_options
 gcc_linker_flags=$gcc_optimization_options_linker" "$gcc_instumentation_option
 gcc_preprocessor_flags=$gcc_debug_macros" "$activate_assert_macro
 
@@ -39,9 +40,9 @@ gcc_cxx_linker_config='config.bin.ar=gcc-ar config.bin.ranlib=gcc-ranlib config.
 alias gcc-config-debug=$gcc_b2_init" "$gcc_cxx_mode_config" "$gcc_cxx_preprocessor_config" "$gcc_cxx_linker_config
 
 #CLANG FLAGS AND MACROS
-clang_codegen='-fstrict-vtable-pointers -fwhole-program-vtables -fsanitize-cfi-icall-generalize-pointers -fomit-frame-pointer -fno-optimize-sibling-calls'
-clang_optimization_options_linker='-flto=thin'
-clang_instumentation_option='-fsanitize=address -fsanitize=undefined -static-libasan'
+clang_codegen='-fomit-frame-pointer -fvisibility=hidden'
+clang_optimization_options_linker='-flto=thin -Wl,--thinlto-cache-dir=./.cache'
+clang_instumentation_option='-fsanitize=address -fsanitize=undefined'
 clang_linker_flags=$clang_instumentation_option" "$clang_optimization_options_linker
 clang_compiler_flags='-Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-missing-prototypes'" "$clang_codegen" "$clang_linker_flags
 clang_preprocessor_flags=$activate_assert_macro
@@ -51,11 +52,11 @@ clang_compiler_name='clang'
 clang_compiler_build_mode='debug'
 clang_build_name=$clang_compiler_name"-"$clang_compiler_build_mode
 clang_b2_init='bdep init -C ~/repos/c++/build2/build2builds/'$clang_build_name" "@$clang_build_name' cc'
-clang_debug_compiler='clang++ -ggdb -Og'
+clang_debug_compiler='clang++ -glldb -Og'
 clang_release_compiler='clang++ -O3'
 clang_cxx_mode_config=' config.cxx'='"'$clang_debug_compiler'"'' config.cxx.coptions'='"'$clang_compiler_flags'"'
 clang_cxx_preprocessor_config='config.cxx.poptions'='"'$clang_preprocessor_flags'"'
-clang_cxx_linker_config='config.cxx.loptions'='"'$clang_linker_flags'"'
+clang_cxx_linker_config='config.bin.ar=llvm-ar config.bin.ranlib=llvm-ranlib config.cxx.loptions'='"'$clang_linker_flags'"'
 alias clang-config-debug=$clang_b2_init" "$clang_cxx_mode_config" "$clang_cxx_preprocessor_config" "$clang_cxx_linker_config
 
 #Add project to particular configuration
