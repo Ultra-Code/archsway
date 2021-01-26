@@ -9,7 +9,7 @@ gcc_debug_macros='-D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC'
 
 #GCC DEBUG FLAGS
 gcc_warning_flags='-Wall -Wextra -Weffc++ -pedantic -pedantic-errors'
-gcc_instumentation_option='-fsanitize=address -fsanitize=undefined'
+gcc_instrumentation_option='-fsanitize=address -fsanitize=undefined'
 gcc_optimization_options='-fno-omit-frame-pointer'
 gcc_codegen_options='-fvisibility=hidden'
 gcc_optimization_options_linker='-fuse-ld=lld -flto -fuse-linker-plugin'
@@ -20,12 +20,12 @@ gcc_release_macros='-D_FORTIFY_SOURCE=2'
 
 #GCC RELEASE OPTIONS
 gcc_release_optimization_options_linker='-fuse-ld=lld -flto=4 -flto-compression-level=9 -fuse-linker-plugin'
-gcc_instumentation_option_security='-fstack-clash-protection -fstack-protector-strong -fcf-protection=full'
+gcc_instrumentation_option_security='-fstack-clash-protection -fstack-protector-strong -fcf-protection=full'
 gcc_release_compiler='g++ -O3'
 
 #OPTIONS CATEGORIZATIONS
-gcc_compiler_flags=$gcc_warning_flags" "$gcc_optimization_options" "$gcc_optimization_options_linker" "$gcc_instumentation_option" "$gcc_codegen_options
-gcc_linker_flags=$gcc_optimization_options_linker" "$gcc_instumentation_option
+gcc_compiler_flags=$gcc_warning_flags" "$gcc_optimization_options" "$gcc_optimization_options_linker" "$gcc_instrumentation_option" "$gcc_codegen_options
+gcc_linker_flags=$gcc_optimization_options_linker" "$gcc_instrumentation_option
 gcc_preprocessor_flags=$gcc_debug_macros" "$activate_assert_macro
 
 #GCC Build2 DEBUG CONFIG
@@ -39,14 +39,19 @@ gcc_cxx_preprocessor_config='config.cxx.poptions'='"'$gcc_preprocessor_flags'"'
 gcc_cxx_linker_config='config.bin.ar=gcc-ar config.bin.ranlib=gcc-ranlib config.cxx.loptions'='"'$gcc_linker_flags'"'
 alias gcc-config-debug=$gcc_b2_init" "$gcc_cxx_mode_config" "$gcc_cxx_preprocessor_config" "$gcc_cxx_linker_config
 
-#CLANG FLAGS AND MACROS
+#CLANG DEBUG FLAGS
 clang_codegen='-fomit-frame-pointer -fvisibility=hidden'
 clang_optimization_options_linker='-flto=thin -Wl,--thinlto-cache-dir=./.cache'
-clang_instumentation_option='-fsanitize=address -fsanitize=undefined'
-clang_linker_flags=$clang_instumentation_option" "$clang_optimization_options_linker
-clang_compiler_flags='-Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-missing-prototypes'" "$clang_codegen" "$clang_linker_flags
+clang_instrumentation_option='-fsanitize=address -fsanitize=undefined'
+clang_linker_flags=$clang_instrumentation_option" "$clang_optimization_options_linker
+clang_warning_flags='-Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-missing-prototypes'
+clang_compiler_flags=$clang_warning_flags" "$clang_codegen" "$clang_linker_flags
+
+#CLANG DEBUG MACROS
 clang_preprocessor_flags=$activate_assert_macro
 
+#CLANG RELEASE OPTIONS
+clang_instrumentation_option_security='-fstack-clash-protection'
 
 clang_compiler_name='clang'
 clang_compiler_build_mode='debug'
