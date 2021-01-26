@@ -27,8 +27,8 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_RUNTIME_DIR=/run/user/1000
 
 export HISTFILE="$HOME/.zsh_history"    # History filepath
-export HISTSIZE=1000000                   # Maximum events for internal history
-export SAVEHIST=1000000                   # Maximum events in history file
+export HISTSIZE=1000000000              # Refers to the maximum number of commands that are loaded into memory from the history file
+export SAVEHIST=1000000000              # Refers to the Maximum number of commands that are stored in the zsh history
 
 export ZSH_ALIASES="$HOME/.zsh_aliases"
 
