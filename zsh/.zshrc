@@ -156,6 +156,7 @@ compinit
 #Shell options
 setopt HIST_SAVE_NO_DUPS # Do not write a duplicate event to the history file.
 setopt COMPLETE_ALIASES  # Add autocomplition for aliases
+setopt SHARE_HISTORY     # Enable shells to read and write to the most recent history
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
