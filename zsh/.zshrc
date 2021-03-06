@@ -162,3 +162,7 @@ setopt SHARE_HISTORY     # Enable shells to read and write to the most recent hi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+#completions for stack
+autoload -U +X bashcompinit && bashcompinit
+eval "$(stack --bash-completion-script stack)"
