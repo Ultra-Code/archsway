@@ -5,26 +5,17 @@ alias cldb='b -vn clean update |& compiledb'
 
 #GCC DEBUG MACROS
 activate_assert_macro='-DDEBUG'
-gcc_debug_macros='-D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC'
+gcc_debug_macros=''
 
 #GCC DEBUG FLAGS
 gcc_warning_flags='-Wall -Wextra -Weffc++ -pedantic -pedantic-errors'
 gcc_instrumentation_option='-fsanitize=address -fsanitize=undefined'
 gcc_optimization_options='-fno-omit-frame-pointer'
-gcc_codegen_options='-fvisibility=hidden'
-gcc_optimization_options_linker='-fuse-ld=lld -flto -fuse-linker-plugin'
-
-#GCC RELEASE MACROS
-deactivate_assert_macro='-DNDEBUG'
-gcc_release_macros='-D_FORTIFY_SOURCE=2'
-
-#GCC RELEASE OPTIONS
-gcc_release_optimization_options_linker='-fuse-ld=lld -flto=4 -flto-compression-level=9 -fuse-linker-plugin'
-gcc_instrumentation_option_security='-fstack-clash-protection -fstack-protector-strong -fcf-protection=full'
-gcc_release_compiler='g++ -O3'
+gcc_codegen_options='-fvisibility=hidden -fvisibility-inlines-hidden'
+gcc_optimization_options_linker='-fuse-ld=lld'
 
 #OPTIONS CATEGORIZATIONS
-gcc_compiler_flags=$gcc_warning_flags" "$gcc_optimization_options" "$gcc_optimization_options_linker" "$gcc_instrumentation_option" "$gcc_codegen_options
+gcc_compiler_flags=$gcc_warning_flags" "$gcc_optimization_options" "$gcc_instrumentation_option" "$gcc_codegen_options
 gcc_linker_flags=$gcc_optimization_options_linker" "$gcc_instrumentation_option
 gcc_preprocessor_flags=$gcc_debug_macros" "$activate_assert_macro
 
@@ -39,6 +30,29 @@ gcc_cxx_preprocessor_config='config.cxx.poptions'='"'$gcc_preprocessor_flags'"'
 gcc_cxx_linker_config='config.bin.ar=gcc-ar config.bin.ranlib=gcc-ranlib config.cxx.loptions'='"'$gcc_linker_flags'"'
 alias gcc-config-debug=$gcc_b2_init" "$gcc_cxx_mode_config" "$gcc_cxx_preprocessor_config" "$gcc_cxx_linker_config
 
+#GCC RELEASE MACROS
+deactivate_assert_macro='-DNDEBUG'
+gcc_release_macros='-D_FORTIFY_SOURCE=2'
+
+#GCC RELEASE OPTIONS
+gcc_release_optimization_options_linker='-fuse-ld=lld -flto -flto-compression-level=9 -fuse-linker-plugin'
+gcc_instrumentation_option_security='-fstack-clash-protection -fstack-protector-strong -fcf-protection=full'
+
+#RELEASE OPTIONS CATEGORIZATIONS
+gcc_release_flags=$gcc_warning_flags
+gcc_release_linker_flags=$gcc_release_optimization_options_linker
+gcc_release_preprocessor_flags=$deactivate_assert_macro" "$gcc_release_macros
+
+#GCC Build2 RELEASE CONFIG
+gcc_compiler_name='gcc'
+gcc_compiler_build_mode='release'
+gcc_build_name=$gcc_compiler_name"-"$gcc_compiler_build_mode
+gcc_b2_init='bdep init -C ~/repos/c++/build2/build2builds/'$gcc_build_name" "@$gcc_build_name' cc'
+gcc_release_compiler='g++ -03'
+gcc_cxx_mode_config=' config.cxx'='"'$gcc_release_compiler'"'' config.cxx.coptions'='"'$gcc_compiler_flags'"'
+gcc_cxx_preprocessor_config='config.cxx.poptions'='"'$gcc_preprocessor_flags'"'
+gcc_cxx_linker_config='config.bin.ar=gcc-ar config.bin.ranlib=gcc-ranlib config.cxx.loptions'='"'$gcc_linker_flags'"'
+alias gcc-config-release=$gcc_b2_init" "$gcc_cxx_mode_config" "$gcc_cxx_preprocessor_config" "$gcc_cxx_linker_config
 #CLANG DEBUG FLAGS
 clang_codegen='-fomit-frame-pointer -fvisibility=hidden'
 clang_optimization_options_linker='-flto=thin -Wl,--thinlto-cache-dir=./.cache'
