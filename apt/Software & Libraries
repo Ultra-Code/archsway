@@ -1,5 +1,9 @@
 #Graphic Libraries
 intel-media-va-driver-non-free
+mesa-va-drivers
+libglu1-mesa-dev
+mesa-common-dev
+libfontconfig1
 vulkan-tools #For vulkaninfo
 mesa-vulkan-drivers
 
@@ -11,7 +15,7 @@ intel-microcode
 firmware-misc-nonfree
 firmware-linux
 firmware-linux-nonfree
-firmware-ipw2x00 #for wireless
+firmware-ipw2x00
 
 #Tools
 wireless-tools
@@ -45,8 +49,8 @@ clang llvm  linker lld
 clang llvm next generation high performance debuger lldb
 clang llvm standard library libc++-dev
 clang llvm low level support for standard c++ library libc++abi-dev
-build2 build system
-Nix build environment and package manager
+
+
 
 #Scientific and mathematical computing
 Julia for AI Machine Learning Deep Learning & scientific computing
@@ -61,23 +65,9 @@ Okular for Document reading not forgetting the Backend okular
 #Database Administration
 DBeaver for database administration
 
-#DBMS
-Mariadb
-Mongodb
-
-#Web backend development
-C++ framework
-Node
-
-#Backend and frontend Mocking
-Frontend-Postman
-Backend-Mockoon
-
-#Source code tags
-universal-ctags
-
 #Audio editing
 Ardour for audio editing
+audacity for audio editing
 
 #Dictionary Ware
 Artha
@@ -112,6 +102,10 @@ thunderbird
 fonts-liberation2
 ttf-mscorefonts-installer for windows type fonts
 
+#Terminal Fonts
+FiraCode 2 nerd fonts
+jetbrainmonomedium nerd fonts
+
 #Development Libraries
 install libboost for the boost library
 install libmysqlcppconn-dev for mariadb and mysql database connector
@@ -129,3 +123,26 @@ Tmux
 #Status line
 Powerlevel10k
 Powerline
+
+#Firewall
+ufw and ufw-gui for managing firewalls
+
+#Digital Reading
+calibre for epub reading
+
+#Web backend testing
+postman
+insomia
+
+#Torrenting
+qbittorent
+
+#Video Players
+Vlc
+Totem
+
+#Download Manager
+xtreamdownload manager
+
+#Shell
+zsh with tmux
