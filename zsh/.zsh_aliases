@@ -52,10 +52,10 @@ alias apf='sudo aptitude full-upgrade'
 #Cmake
 alias cmgen='cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON'
 
-if [[ -f $HOME/configurations/build2/build2.zsh ]]
-  then
-    source $HOME/configurations/build2/build2.zsh
-fi
+#Clang
+alias clf='ln -s ~/.clang* .'
+
+alias cldb='b -vn clean update |& compiledb'
 
 #Systemd services
 alias enabled_services='systemctl list-unit-files --type=service --state=enabled'
