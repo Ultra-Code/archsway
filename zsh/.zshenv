@@ -1,3 +1,6 @@
+#Set up zsh config root directory
+export ZDOTDIR="$HOME/configurations/zsh/"
+
 # This sets up colors properly
 export TERM="xterm-256color"
 
@@ -26,35 +29,20 @@ export XDG_CACHE_HOME="$HOME/.cache"
 #should be stored
 export XDG_RUNTIME_DIR=/run/user/1000
 
-export HISTFILE="$HOME/.zsh_history"    # History filepath
+export HISTFILE="$ZDOTDIR/.zsh_history"    # History filepath
 export HISTSIZE=1000000000              # Refers to the maximum number of commands that are loaded into memory from the history file
 export SAVEHIST=1000000000              # Refers to the Maximum number of commands that are stored in the zsh history
 
-export ZSH_ALIASES="$HOME/.zsh_aliases"
+export ZSH_ALIASES="$ZDOTDIR/.zsh_aliases"
 
-export EDITOR="nvim"
-export VISUAL="nvim"
+export EDITOR="vi"
+export VISUAL="vi"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$XDG_DATA_HOME/.oh-my-zsh"
 
-# Set fzf installation directory path
-export FZF_BASE="/usr/bin/fzf"
-
-#NODE global path
-export NODE_REPL_HISTORY="$XDG_CONFIG_HOME/"
-#export ANDROID_HOME="/opt/Android/"
-GCC_11_PATH=/usr/local/gcc-11/bin/
-export PATH="$PATH:/sbin/:$HOME/.local/bin/:$HOME/.yarn/bin/:$GCC_11_PATH"
-#LIBDIR=/usr/local/gcc/lib64/
-#export LD_LIBRARY_PATH="$LIBDIR:$LD_LIBRARY_PATH"
-#export PATH="$PATH:/usr/local/gcc/bin/"
-#export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/"
-#export ANDROID_NKD_ROOT="/opt/Android/ndk/21.1.6352462/"
-
-#Add completions for pipenv
-#eval "$(pipenv --completion)"
-#export PIPENV_VENV_IN_PROJECT=1
+nix_bin_dir=/nix/var/nix/profiles/default/bin/
+export PATH="$PATH:/sbin/:$HOME/.local/bin/:$nix_bin_dir"
 
 #Cofigurations For Building using CMAKE
 export CC=/usr/bin/gcc
@@ -62,4 +50,4 @@ export CXX=/usr/bin/g++
 export CMAKE_GENERATOR=Ninja
 
 # Add env to my neovim init file
-export NVIMRC="$XDG_CONFIG_HOME/nvim/init.vim"
+export NVIMRC="$XDG_CONFIG_HOME/nvim/init.lua"
