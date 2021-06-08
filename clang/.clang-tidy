@@ -1,5 +1,5 @@
 ---
-Checks: 'clang-diagnostic-*,boost-*,bugprone-*,cert-*,clang-analyzer-*,concurrency-*,cppcoreguidelines-*,google-*,hicpp-*,misc-*,modernize-*,performance-*,portability-*,readability-*'
+Checks: 'clang-diagnostic-*,boost-*,bugprone-*,cert-*,clang-analyzer-*,concurrency-*,cppcoreguidelines-*,google-*,-google-build-*,hicpp-*,misc-*,modernize-*,performance-*,portability-*,readability-*'
 
 WarningsAsErrors: ''
 HeaderFilterRegex: ''
