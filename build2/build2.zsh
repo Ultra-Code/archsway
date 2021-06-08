@@ -1,7 +1,23 @@
-#Clang
-alias clf='ln -s ~/.clang* .'
+#Current configuration
+##Relivant options of build2 config in various mods
+# config.cxx = g++
+# config.cxx.coptions = -Wall -Wextra -pedantic -pedantic-errors -fsanitize=thread
+# config.cxx.loptions = -fsanitize=thread
 
-alias cldb='b -vn clean update |& compiledb'
+###Sanitized builds
+# config.cxx = g++
+# config.cxx.coptions = -Wall -Wextra -pedantic -pedantic-errors -fsanitize=address,undefined
+# config.cxx.loptions =  -fsanitize=address,undefined
+
+###Release builds
+# config.cxx = g++ -O3
+# config.cxx.coptions = -Wall -Wextra -pedantic -pedantic-errors -fdevirtualize-at-ltrans -floop-nest-optimize -fivopts
+# config.cxx.loptions = -flto -flto-compression-level=9 -fuse-linker-plugin
+
+##Debug Mode
+# config.cxx = g++ -ggdb
+# config.cxx.coptions = -Wall -Wextra -pedantic -pedantic-errors -fconcepts-diagnostics-depth=5
+
 
 #GCC DEBUG MACROS
 activate_assert_macro='-DDEBUG'
