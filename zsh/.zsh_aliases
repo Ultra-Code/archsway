@@ -10,8 +10,8 @@ alias egrep='egrep --color'
 alias casm="nasm -f elf32"
 alias lasm="ld -m elf_i386"
 
-alias admin='tmux new -s admin -n ADMINISTRATOR \; new-window -n EDITOR \; new-window -n DEVELOPER;'
-alias dev='tmux new -s developer -n TESTING \; new-window -n DAEMON \; new-window -n DEVELOPER\; new-window -n DATABASE'
+alias admin='tmux new -s admin -d -n ADMINISTRATOR \; new-window -d -n EDITOR \; new-window -d -n CONFIGURATOR\;'
+alias dev='tmux new -s developer -n TESTING \; new-window -n DAEMON \; new-window -n DEVELOPER\; new-window -n DATABASE\;'
 
 #Add hub as an alias for git hub
 #So that git and git hub all have access to each other
@@ -28,22 +28,22 @@ alias gc='git commit'
 alias gl='git log --graph --oneline --decorate'
 
 # open ~/.zshrc in using the default editor specified in $EDITOR
-alias ez="$EDITOR $HOME/.zshrc"
+alias ez="$EDITOR $ZDOTDIR/.zshrc"
 
 # source ~/.zshrc
-alias sz="source $HOME/.zshrc"
+alias sz="source $ZDOTDIR/.zshrc"
 
 #edit ~/.zshenv
-alias ee="$EDITOR $HOME/.zshenv"
+alias ee="$EDITOR $ZDOTDIR/.zshenv"
 
 #source ~/.zshenv
-alias se="source $HOME/.zshenv"
+alias se="source $ZDOTDIR/.zshenv"
 
 #edit ~/.zsh_aliases
-alias ea="$EDITOR $HOME/.zsh_aliases"
+alias ea="$EDITOR $ZDOTDIR/.zsh_aliases"
 
 #source ~/.zsh_aliases
-alias sa="source $HOME/.zsh_aliases"
+alias sa="source $ZDOTDIR/.zsh_aliases"
 
 #Aptitude aliases
 alias apu='sudo aptitude update'
