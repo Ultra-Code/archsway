@@ -39,10 +39,14 @@ export EDITOR="vi"
 export VISUAL="vi"
 
 # Path to your oh-my-zsh installation.
-export ZSH="$XDG_DATA_HOME/.oh-my-zsh"
+export OHMYZSH="$XDG_DATA_HOME/.oh-my-zsh"
 
-nix_bin_dir="$HOME/.nix-profile/bin/"
-export PATH="$PATH:/sbin/:$HOME/.local/bin/:$nix_bin_dir"
+# Export default nix envs
+if [ -f $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
+    source $HOME/.nix-profile/etc/profile.d/nix.sh
+fi
+
+export PATH="$HOME/.local/bin/:/sbin/:$PATH"
 
 #Cofigurations For Building using CMAKE
 export CC=/usr/bin/gcc
@@ -51,3 +55,8 @@ export CMAKE_GENERATOR=Ninja
 
 # Add env to my neovim init file
 export NVIMRC="$XDG_CONFIG_HOME/nvim/init.lua"
+
+export FZF_DEFAULT_OPTS='--multi --cycle --height 60% --layout=reverse --border=rounded --info=inline'
+export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
+export FZF_CTRL_T_OPTS='--preview="cat {}"'
+export FZF_ALT_C_OPTS='--preview="tree -C {}"'
