@@ -80,9 +80,9 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(z fzf history-substring-search zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(z history-substring-search zsh-autosuggestions zsh-syntax-highlighting nix-zsh-completions)
 
-source $ZSH/oh-my-zsh.sh
+source $OHMYZSH/oh-my-zsh.sh
 #unalias -m '*' #remove all omz aliases
 
 #my bash aliases
@@ -161,7 +161,14 @@ setopt SHARE_HISTORY     # Enable shells to read and write to the most recent hi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+#fzf keybindings for Zsh:
+if [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]; then
+   source /usr/share/doc/fzf/examples/key-bindings.zsh
+fi
+#enable fuzzy auto-completion for Zsh:
+if [ -f /usr/share/doc/fzf/examples/completion.zsh ]; then
+   source /usr/share/doc/fzf/examples/completion.zsh
+fi
 
 #completions for stack
 autoload -U +X bashcompinit && bashcompinit
