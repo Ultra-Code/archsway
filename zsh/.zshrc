@@ -138,7 +138,7 @@ bindkey -M vicmd 'j' history-substring-search-down
 
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
-zstyle :compinstall filename '/home/ultracode/.zshrc'
+zstyle :compinstall filename '$ZDOTDIR/.zshrc'
 
 autoload -Uz compinit
 compinit
@@ -166,3 +166,6 @@ setopt SHARE_HISTORY     # Enable shells to read and write to the most recent hi
 #completions for stack
 autoload -U +X bashcompinit && bashcompinit
 eval "$(stack --bash-completion-script stack)"
+
+# Completion for kitty
+kitty + complete setup zsh | source /dev/stdin
