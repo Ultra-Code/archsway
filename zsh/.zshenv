@@ -41,7 +41,7 @@ export VISUAL="vi"
 # Path to your oh-my-zsh installation.
 export ZSH="$XDG_DATA_HOME/.oh-my-zsh"
 
-nix_bin_dir=/nix/var/nix/profiles/default/bin/
+nix_bin_dir="$HOME/.nix-profile/bin/"
 export PATH="$PATH:/sbin/:$HOME/.local/bin/:$nix_bin_dir"
 
 #Cofigurations For Building using CMAKE
