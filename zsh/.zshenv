@@ -1,5 +1,10 @@
+#set DOTFILES for personal config root directory
+export DOTFILES="$HOME/.dotfiles"
+
 #Set up zsh config root directory
-export ZDOTDIR="$HOME/configurations/zsh/"
+export ZDOTDIR="$DOTFILES/zsh"
+
+export ZSH_ALIASES="$ZDOTDIR/.zsh_aliases"
 
 # This sets up colors properly
 export TERM="xterm-256color"
@@ -19,7 +24,7 @@ export XDG_DATA_HOME="$HOME/.local/share"
 
 #defines the preference-ordered set of base directories to search for
 #data files in addition to the $XDG_DATA_HOME base directory
-export XDG_DATA_DIRS="/usr/local/share/:/usr/share/"
+export XDG_DATA_DIRS="/usr/local/share/:/usr/share"
 
 #dir where user-specific non-essential (cached) data should be written
 export XDG_CACHE_HOME="$HOME/.cache"
@@ -32,8 +37,6 @@ export XDG_RUNTIME_DIR=/run/user/1000
 export HISTFILE="$ZDOTDIR/.zsh_history"    # History filepath
 export HISTSIZE=1000000000              # Refers to the maximum number of commands that are loaded into memory from the history file
 export SAVEHIST=1000000000              # Refers to the Maximum number of commands that are stored in the zsh history
-
-export ZSH_ALIASES="$ZDOTDIR/.zsh_aliases"
 
 export EDITOR="vi"
 export VISUAL="vi"
