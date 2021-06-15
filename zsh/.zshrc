@@ -80,7 +80,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(z history-substring-search zsh-autosuggestions zsh-syntax-highlighting nix-zsh-completions)
+plugins=(nix-zsh-completions z history-substring-search zsh-autosuggestions zsh-syntax-highlighting)
 
 source $OHMYZSH/oh-my-zsh.sh
 #unalias -m '*' #remove all omz aliases
