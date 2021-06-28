@@ -1,0 +1,27 @@
+add APT::Install-Recommends "false"; to /etc/apt/apt.conf.d/install_recommends
+before and install operations
+gnome-session gdm kitty gnome-user-share pulseaudio-module-bluetooth network-manager-gnome
+optional install gkbd-capplet
+enable graphic target
+install sudo and add %username ALL=(ALL:ALL) ALL in a file under sudoer
+install gnome-control-center for easy configuration of settings or get better
+aquinted with gsettings
+gnome-tweak-tool for extra configurations
+firmware-misc-nonfree some drivers but not need
+pulseaudio for audio
+network-manager
+nautilus
+aria2 and ca-certificate for net download on command line
+zsh shell ,ohmyzsh for zsh plugin manager
+git for development
+man for man pages
+firfox for browser
+neovim for editor
+tlp for battery management
+vlc for videos
+build2 for c++
+intel-microcode for updated and correctly performing cpu
+for intel video acceleration va-driver-all and vdpau-driver-all for nvidia
+--only install what you need
+And if need be install iw | wireless tools for wifi management only if
+neccessay
