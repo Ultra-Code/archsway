@@ -1,26 +1,23 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-#ZSH_THEME="robbyrussell"
-#ZSH_THEME="af-magic"
-#ZSH_THEME="agnoster"
-ZSH_THEME="powerlevel10k/powerlevel10k"
-#ZSH_THEME="miloshadzic"
-#ZSH_THEME="norm"
-#ZSH_THEME="pygmalion"
-#ZSH_THEME="amuse"
-#ZSH_THEME="awesomepanda"
+ZSH_THEME="robbyrussell"
+# ZSH_THEME="af-magic"
+# ZSH_THEME="agnoster"
+# ZSH_THEME="amuse"
+# ZSH_THEME="crunch"
+# ZSH_THEME="dogenpunk"
+# ZSH_THEME="dst"
+# ZSH_THEME="fino"
+# ZSH_THEME="half-life"
+# ZSH_THEME="jonathan"
+# ZSH_THEME="kphoen"
+# ZSH_THEME="linuxonly"
+# ZSH_THEME="muse"
+# ZSH_THEME="sorin"
+# ZSH_THEME="strug"
+#ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -80,7 +77,11 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(nix-zsh-completions z history-substring-search zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(
+    nix-zsh-completions
+    z
+    zsh-autosuggestions
+)
 
 source $OHMYZSH/oh-my-zsh.sh
 #unalias -m '*' #remove all omz aliases
@@ -136,13 +137,6 @@ bindkey -M vicmd v edit-command-line
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
-# End of lines configured by zsh-newuser-install
-# The following lines were added by compinstall
-zstyle :compinstall filename '$ZDOTDIR/.zshrc'
-
-autoload -Uz compinit
-compinit
-# End of lines added by compinstall
 
 # To display only username on the cmd for agnoster
 #prompt_context() {
@@ -154,12 +148,10 @@ compinit
 
 
 #Shell options
-setopt HIST_SAVE_NO_DUPS # Do not write a duplicate event to the history file.
+setopt HIST_IGNORE_ALL_DUPS # Do not write a duplicate event to the history file.
+setopt HIST_SAVE_NO_DUPS #older commands that duplicate newer ones are omitted.
 setopt COMPLETE_ALIASES  # Add autocomplition for aliases
 setopt SHARE_HISTORY     # Enable shells to read and write to the most recent history
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 #fzf keybindings for Zsh:
 if [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]; then
@@ -171,8 +163,22 @@ if [ -f /usr/share/doc/fzf/examples/completion.zsh ]; then
 fi
 
 #completions for stack
-autoload -U +X bashcompinit && bashcompinit
-eval "$(stack --bash-completion-script stack)"
+#autoload -U +X bashcompinit && bashcompinit
+#eval "$(stack --bash-completion-script stack)"
 
 # Completion for kitty
 kitty + complete setup zsh | source /dev/stdin
+
+# add bdep completions for zsh to fpath
+fpath=($DOTFILES/build2/completions $fpath)
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# End of lines configured by zsh-newuser-install
+# The following lines were added by compinstall
+zstyle :compinstall filename '$ZDOTDIR/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
