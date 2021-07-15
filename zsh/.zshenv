@@ -37,6 +37,7 @@ export XDG_RUNTIME_DIR=/run/user/1000
 export HISTFILE="$ZDOTDIR/.zsh_history"    # History filepath
 export HISTSIZE=1000000000              # Refers to the maximum number of commands that are loaded into memory from the history file
 export SAVEHIST=1000000000              # Refers to the Maximum number of commands that are stored in the zsh history
+export HISTORY_IGNORE="(cd|ls|z|mv|rm|cp|l|vi|man|ln|exec|tar|apt|mkdir|cat|tree|gs|gc |gl|ga)*" #skip pattern at history write time
 
 export EDITOR="vi"
 export VISUAL="vi"
@@ -63,3 +64,6 @@ export FZF_DEFAULT_OPTS='--multi --cycle --height 60% --layout=reverse --border=
 export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
 export FZF_CTRL_T_OPTS='--preview="cat {}"'
 export FZF_ALT_C_OPTS='--preview="tree -C {}"'
+
+#Add Homebrew to your PATH in /home/ultracode/.zprofile:
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
