@@ -7,3 +7,12 @@ deb http://deb.debian.org/debian unstable main contrib non-free
 #                   OFFICIAL DEBIAN EXPERIMENTAL REPOS
 #------------------------------------------------------------------------------#
 deb http://deb.debian.org/debian experimental main contrib non-free
+
+
+/etc/apt/apt.conf.d/99dont_install_recommends
+APT::Install-Recommends "false";
+
+/etc/apt/preferences.d/99debian_experimental
+Package: *
+Pin: release a=experimental
+Pin-Priority: 900
