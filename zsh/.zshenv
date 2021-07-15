@@ -24,7 +24,7 @@ export XDG_DATA_HOME="$HOME/.local/share"
 
 #defines the preference-ordered set of base directories to search for
 #data files in addition to the $XDG_DATA_HOME base directory
-export XDG_DATA_DIRS="/usr/local/share/:/usr/share"
+export XDG_DATA_DIRS="~/.nix-profile/share/:/usr/local/share/:/usr/share"
 
 #dir where user-specific non-essential (cached) data should be written
 export XDG_CACHE_HOME="$HOME/.cache"
@@ -45,6 +45,9 @@ export VISUAL="vi"
 # Path to your oh-my-zsh installation.
 export OHMYZSH="$XDG_DATA_HOME/.oh-my-zsh"
 
+# NIX_PATH point to latest nixpkgs release
+# alway also use unstable chanel for packages
+export NIX_PATH="nixpkgs=https://github.com/NixOS/nixpkgs/archive/release-21.05.tar.gz"
 # Export default nix envs
 if [ -f $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
     source $HOME/.nix-profile/etc/profile.d/nix.sh
