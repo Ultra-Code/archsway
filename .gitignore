@@ -1,2 +1,8 @@
 #ignore zcomp files
-/zsh/.zcompdump*
+zsh/.zcompdump*
+
+#p10k configure file
+zsh/.p10k.zsh
+
+#zinit dir
+zsh/.zinit/
