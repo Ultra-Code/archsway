@@ -1,22 +1,11 @@
 alias ls='ls --color -F'
-alias ll='ls -Alh'
-alias li='ll -i'
-alias lr='ll -R'
+alias l='ls -Alh'
 
 alias grep='grep --color'
-alias fgrep='fgrep --color'
 alias egrep='egrep --color'
 
 alias casm="nasm -f elf32"
 alias lasm="ld -m elf_i386"
-
-alias admin='tmux new -s admin -d -n ADMINISTRATOR \; new-window -d -n EDITOR \; new-window -d -n CONFIGURATOR\;'
-alias dev='tmux new -s developer -n TESTING \; new-window -n DAEMON \; new-window -n DEVELOPER\; new-window -n DATABASE\;'
-
-#Add hub as an alias for git hub
-#So that git and git hub all have access to each other
-#eval "$(hub alias -s)"
-#alias __git=hub
 
 #alias sv="source ~/.virtualevn/bin/activate"
 
@@ -61,6 +50,3 @@ alias cldb='b -vn clean update |& compiledb'
 alias enabled_services='systemctl list-unit-files --type=service --state=enabled'
 alias running_services='systemctl list-units  --type=service  --state=running'
 alias all_services='systemctl -at service'
-
-#cppcheck
-alias cppchecks='/usr/bin/cppcheck --enable=warning,style,performance,portability,information,missingInclude --inconclusive --force -j 4 --template=gcc --language=c++'
