@@ -24,6 +24,7 @@ setopt PROMPT_SUBST
 #Completion configurations
 #
 unsetopt MENU_COMPLETE
+unsetopt FLOWCONTROL
 #completion is done from both ends of the word
 setopt COMPLETE_IN_WORD
 #Automatically use menu completion after the second consecutive request for
