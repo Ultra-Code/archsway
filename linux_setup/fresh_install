@@ -1,6 +1,7 @@
 add APT::Install-Recommends "false"; to /etc/apt/apt.conf.d/install_recommends
 before and install operations
-gnome-session gdm kitty gnome-user-share pulseaudio-module-bluetooth network-manager-gnome
+gnome-session gdm kitty gnome-user-share pulseaudio-module-bluetooth
+network-manager-gnome gnome-shell gnome-backgrounds gnome-applets mutter gjs
 optional install gkbd-capplet
 enable graphic target
 install sudo and add %username ALL=(ALL:ALL) ALL in a file under sudoer
