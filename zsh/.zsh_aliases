@@ -2,6 +2,7 @@ alias ls='ls --color -F'
 alias l='ls -Alh'
 alias md='mkdir -p'
 alias rd=rmdir
+alias _='sudo'
 
 alias grep='grep --color'
 alias egrep='egrep --color'
