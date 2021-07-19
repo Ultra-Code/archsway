@@ -24,7 +24,7 @@ export XDG_DATA_HOME="$HOME/.local/share"
 
 #defines the preference-ordered set of base directories to search for
 #data files in addition to the $XDG_DATA_HOME base directory
-export XDG_DATA_DIRS="~/.nix-profile/share/:/usr/local/share/:/usr/share"
+export XDG_DATA_DIRS="/usr/local/share/:/usr/share"
 
 #dir where user-specific non-essential (cached) data should be written
 export XDG_CACHE_HOME="$HOME/.cache"
@@ -37,7 +37,7 @@ export XDG_RUNTIME_DIR=/run/user/1000
 export HISTFILE="$ZDOTDIR/.zsh_history"    # History filepath
 export HISTSIZE=1000000000              # Refers to the maximum number of commands that are loaded into memory from the history file
 export SAVEHIST=1000000000              # Refers to the Maximum number of commands that are stored in the zsh history
-export HISTORY_IGNORE="(cd|ls|z|mv|rm|cp|l|vi|man|ln|exec|tar|apt|mkdir|cat|tree|git|gs|gc |gl|ga|gp|.)*" #skip pattern at history write time
+export HISTORY_IGNORE="(cd|ls|z|mv|rm|cp|l|vi|man|ln|exec|tar|mkdir|cat|tree|git|gs|gc |gl|ga|gp|.|~|d|ap|_)*" #skip pattern at history write time
 
 export EDITOR="vi"
 export VISUAL="vi"
@@ -45,12 +45,12 @@ export VISUAL="vi"
 # Path to your oh-my-zsh installation.
 export OHMYZSH="$XDG_DATA_HOME/.oh-my-zsh"
 
-# NIX_PATH point to latest nixpkgs release
+# NIX_PATH point to latest nixpkgs release for reproducible builds
 # alway also use unstable chanel for packages
-export NIX_PATH="nixpkgs=https://github.com/NixOS/nixpkgs/archive/release-21.05.tar.gz"
+# export NIX_PATH="nixpkgs=https://github.com/NixOS/nixpkgs/archive/release-21.05.tar.gz"
 # Export default nix envs
-if [ -f $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
-    source $HOME/.nix-profile/etc/profile.d/nix.sh
+if [ -f /etc/profile.d/nix.sh ]; then
+    source  /etc/profile.d/nix.sh
 fi
 
 export PATH="$HOME/.local/bin/:/sbin/:$PATH"
@@ -67,6 +67,3 @@ export FZF_DEFAULT_OPTS='--multi --cycle --height 60% --layout=reverse --border=
 export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
 export FZF_CTRL_T_OPTS='--preview="cat {}"'
 export FZF_ALT_C_OPTS='--preview="tree -C {}"'
-
-#Add Homebrew to your PATH in /home/ultracode/.zprofile:
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
