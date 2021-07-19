@@ -24,17 +24,20 @@ autoload -Uz _zinit
 
 #Zinit plugins and snippets
 # Load powerlevel10k theme
-zinit ice depth"1" # git clone depth
+zinit ice depth"1"  #git clone depth
 zinit light romkatv/powerlevel10k
 
-zinit ice wait lucid atload'_zsh_autosuggest_start'
+zinit ice wait lucid atload '_zsh_autosuggest_start'
 zinit light zsh-users/zsh-autosuggestions
 
-zinit ice wait lucid
+zinit ice wait lucid atload '_zshz_precmd'
 zinit light agkozak/zsh-z
 
 zinit ice wait lucid
 zinit light zsh-users/zsh-history-substring-search
+
+zinit ice blockf wait lucid
+zinit light spwhitt/nix-zsh-completions
 
 if [[ $ZDOTDIR/zoption.zsh ]];
 then
