@@ -1,33 +1,18 @@
 #Graphic Libraries
 intel-media-va-driver-non-free
 mesa-va-drivers
-libglu1-mesa-dev
-mesa-common-dev
-libfontconfig1
-vulkan-tools #For vulkaninfo
-mesa-vulkan-drivers
 
 #Cpu
-spectre-meltdown-checker
 intel-microcode
 
 #Drivers & Modules
 firmware-misc-nonfree
-firmware-linux
 firmware-linux-nonfree
-firmware-ipw2x00
 
 #Tools
-wireless-tools
-build-essential
 tlp
-smartmontools
 linux-cpupower
-gnome-nettools
-gnome-power-manager
-thermald
-hardinfo
-iotop is to monotor input output
+networkmanager
 
 #Sid
 install apt-listbugs to know bugs during upgrade
@@ -38,29 +23,11 @@ and if they are upgradable and thier version
 add relatime to filesystem options
 
 #Compiler and development tools
-Clang
-clang-format
-clang-tidy
-clang-tools
-clazy usefull c++ for refactoring QT tools
-conan packages manager
-cmake 3.15 build system
-clang llvm  linker lld
-clang llvm next generation high performance debuger lldb
-clang llvm standard library libc++-dev
-clang llvm low level support for standard c++ library libc++abi-dev
-
-
-
-#Scientific and mathematical computing
-Julia for AI Machine Learning Deep Learning & scientific computing
-Sagemath tool for mathematical computation
-
-#System Designs
-Visual_Paradigm community edition for case tool development
-
-#Document reader with wide annotation support
-Okular for Document reading not forgetting the Backend okular
+clang-format clang-tidy clangd for c++ programming
+zig and zls for zig programming
+libgtkmm-3-dev libgtkmm-3-docs and glade for gtkmm
+libglfw3-dev and libglfw3-wayland for window and opengl contex creations on wayland linux
+libepoxy for loading opengl functions
 
 #Database Administration
 DBeaver for database administration
@@ -87,16 +54,11 @@ InkScape
 
 #IDE
 Qt Creator
+Eclipse
+Neovim
 
-#Version Control Client
-SmartGit
-
-#Cloud base note
-NixNote Backend for evernote
-
-#Email Manager
-evolution
-thunderbird
+#Note
+Vimwiki
 
 #Fonts
 fonts-liberation2
@@ -117,18 +79,21 @@ install libpoco-dev for developing network centric applications
 pax an improved archiving tool that is portable
 zpac and lrzip as main compresion tools
 
-#Terminal Multiplexer
-Tmux
+#Terminal
+kitty
 
 #Status line
 Powerlevel10k
-Powerline
+
+#Thumbnailer
+gnome-ebup-thumbnailer for epub thumbnails
 
 #Firewall
 ufw and ufw-gui for managing firewalls
 
 #Digital Reading
 calibre for epub reading
+Foliate for ebooks and envince for pdf
 
 #Web backend testing
 postman
@@ -139,10 +104,9 @@ qbittorent
 
 #Video Players
 Vlc
-Totem
 
 #Download Manager
 xtreamdownload manager
 
 #Shell
-zsh with tmux
+zsh
