@@ -26,3 +26,5 @@ for intel video acceleration va-driver-all and vdpau-driver-all for nvidia
 --only install what you need
 And if need be install iw | wireless tools for wifi management only if
 neccessay
+enable sysrq and swappiness with vm.swappiness=7 kernel.sysrq=1 under
+/etc/sysctl.d/{name}.conf
