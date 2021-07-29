@@ -39,7 +39,7 @@ export XDG_RUNTIME_DIR=/run/user/1000
 export HISTFILE="$ZDOTDIR/.zsh_history"    # History filepath
 export HISTSIZE=1000000000              # Refers to the maximum number of commands that are loaded into memory from the history file
 export SAVEHIST=1000000000              # Refers to the Maximum number of commands that are stored in the zsh history
-export HISTORY_IGNORE="(cd|ls|z|mv|rm|cp|l|vi|man|ln|exec|tar|mkdir|cat|tree|git|gs|gc |gl|ga|gp|.|~|d|ap|_)*" #skip pattern at history write time
+export HISTORY_IGNORE="(z|mv|rm|cp|l|vi|man|ln|tar|mkdir|cat|tree|git|g|.|~|d|ap|_|np)*" #skip pattern at history write time
 
 export EDITOR="vi"
 export VISUAL="vi"
