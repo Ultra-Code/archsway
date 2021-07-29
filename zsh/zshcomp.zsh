@@ -7,12 +7,7 @@ fi
 #eval "$(stack --bash-completion-script stack)"
 
 # Completion for kitty
-kitty + complete setup zsh | source /dev/stdin
-
-# add bdep completions for zsh to fpath
-fpath=($DOTFILES/build2/completions $fpath)
-
-
+#kitty + complete setup zsh | source /dev/stdin
 
 function d () {
   if [[ -n $1 ]]; then
