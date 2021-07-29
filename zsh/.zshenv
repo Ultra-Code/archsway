@@ -6,6 +6,8 @@ export ZDOTDIR="$DOTFILES/zsh"
 
 export ZSH_ALIASES="$ZDOTDIR/.zsh_aliases"
 
+export KITTY="$HOME/.local/kitty.app/bin"
+
 # This sets up colors properly
 export TERM="xterm-256color"
 
@@ -53,7 +55,7 @@ if [ -f /etc/profile.d/nix.sh ]; then
     source  /etc/profile.d/nix.sh
 fi
 
-export PATH="$HOME/.local/bin/:/sbin/:$PATH"
+export PATH="$PATH:$KITTY"
 
 #Cofigurations For Building using CMAKE
 export CC=/usr/bin/gcc
