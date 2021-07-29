@@ -7,17 +7,14 @@ alias _='sudo'
 alias grep='grep --color'
 alias egrep='egrep --color'
 
-alias casm="nasm -f elf32"
-alias lasm="ld -m elf_i386"
-
-#alias sv="source ~/.virtualevn/bin/activate"
-
 alias gs='git status'
 alias ga='git add'
 alias gp='git push'
 alias gpu='git pull'
 alias gc='git commit'
 alias gl='git log --graph --oneline --decorate'
+alias glp='git log -p'
+alias gd='git diff'
 
 # open ~/.zshrc in using the default editor specified in $EDITOR
 alias ez="$EDITOR $ZDOTDIR/.zshrc"
@@ -38,8 +35,10 @@ alias ea="$EDITOR $ZDOTDIR/.zsh_aliases"
 alias sa="source $ZDOTDIR/.zsh_aliases"
 
 #Aptitude aliases
-alias apu='sudo aptitude update'
-alias apf='sudo aptitude full-upgrade'
+alias apu='sudo apt-get update'
+alias apd='sudo apt-get dist-upgrade'
+alias aps='sudo apt-get upgrade'
+alias app='sudo apt-get --auto-remove purge'
 
 #Cmake
 alias cmgen='cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON'
