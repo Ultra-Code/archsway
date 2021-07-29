@@ -1,7 +1,6 @@
 #Shell options
 setopt HIST_IGNORE_ALL_DUPS # Do not write a duplicate event to the history file.
 setopt HIST_SAVE_NO_DUPS #older commands that duplicate newer ones are omitted.
-setopt COMPLETE_ALIASES  # Add autocomplition for aliases
 setopt SHARE_HISTORY     # Enable shells to read and write to the most recent history
 setopt HIST_IGNORE_SPACE # ignore commands that start with space
 
@@ -33,5 +32,3 @@ setopt AUTO_MENU
 #move cursor to the end of the word if completion was started with it in within
 #word
 setopt ALWAYS_TO_END
-#Try to correct the spelling of all arguments in a line
-setopt CORRECT_ALL
