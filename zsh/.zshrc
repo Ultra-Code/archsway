@@ -8,36 +8,35 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.dotfiles/zsh/.p10k.zsh.
 [[ ! -f ~/.dotfiles/zsh/.p10k.zsh ]] || source ~/.dotfiles/zsh/.p10k.zsh
 
+if [[ -f $HOME/.dotfiles/zsh/.zinit/bin/zinit.zsh ]]; then
+source "$HOME/.dotfiles/zsh/.zinit/bin/zinit.zsh"
+fi
+
+#Zinit plugins and snippets
+zinit depth"1" light-mode for \
+    romkatv/powerlevel10k
+
+zinit wait lucid light-mode for \
+    zsh-users/zsh-history-substring-search
+
+zinit wait lucid atload'_zsh_autosuggest_start' light-mode for \
+    zsh-users/zsh-autosuggestions
+
+zinit wait lucid atload'_zshz_precmd' light-mode for \
+    agkozak/zsh-z
+
+zinit wait lucid light-mode blockf for \
+     spwhitt/nix-zsh-completions
+
 #Setup completion system
 autoload -Uz compinit
 compinit
 
 #Automatically load bash completion functions
-autoload -U +X bashcompinit && bashcompinit
-
-if [[ -f $HOME/.dotfiles/zsh/.zinit/bin/zinit.zsh ]]; then
-source "$HOME/.dotfiles/zsh/.zinit/bin/zinit.zsh"
-fi
+#autoload -U +X bashcompinit && bashcompinit
 
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
-
-#Zinit plugins and snippets
-# Load powerlevel10k theme
-zinit ice depth"1"  #git clone depth
-zinit light romkatv/powerlevel10k
-
-zinit ice wait lucid atload '_zsh_autosuggest_start'
-zinit light zsh-users/zsh-autosuggestions
-
-zinit ice wait lucid atload '_zshz_precmd'
-zinit light agkozak/zsh-z
-
-zinit ice wait lucid
-zinit light zsh-users/zsh-history-substring-search
-
-zinit ice blockf wait lucid
-zinit light spwhitt/nix-zsh-completions
 
 if [[ $ZDOTDIR/zoption.zsh ]];
 then
