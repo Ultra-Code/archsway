@@ -8,6 +8,7 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.dotfiles/zsh/.p10k.zsh.
 [[ ! -f ~/.dotfiles/zsh/.p10k.zsh ]] || source ~/.dotfiles/zsh/.p10k.zsh
 
+#source before compinit
 if [[ -f $HOME/.dotfiles/zsh/.zinit/bin/zinit.zsh ]]; then
 source "$HOME/.dotfiles/zsh/.zinit/bin/zinit.zsh"
 fi
@@ -16,16 +17,16 @@ fi
 zinit depth"1" light-mode for \
     romkatv/powerlevel10k
 
-zinit wait lucid light-mode for \
+zinit wait'9' lucid light-mode for \
     zsh-users/zsh-history-substring-search
 
-zinit wait lucid atload'_zsh_autosuggest_start' light-mode for \
+zinit wait'9' lucid atload'_zsh_autosuggest_start' light-mode for \
     zsh-users/zsh-autosuggestions
 
-zinit wait lucid atload'_zshz_precmd' light-mode for \
+zinit wait'9' lucid atload'_zshz_precmd' light-mode for \
     agkozak/zsh-z
 
-zinit wait lucid light-mode blockf for \
+zinit wait'9' lucid light-mode blockf for \
      spwhitt/nix-zsh-completions
 
 #Setup completion system
@@ -34,9 +35,6 @@ compinit
 
 #Automatically load bash completion functions
 #autoload -U +X bashcompinit && bashcompinit
-
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
 
 if [[ $ZDOTDIR/zoption.zsh ]];
 then
