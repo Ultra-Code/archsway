@@ -14,19 +14,19 @@ source "$HOME/.dotfiles/zsh/.zinit/bin/zinit.zsh"
 fi
 
 #Zinit plugins and snippets
-zinit depth"1" light-mode for \
+zinit depth'1' light-mode for \
     romkatv/powerlevel10k
 
-zinit wait'9' lucid light-mode for \
+zinit wait'3' lucid light-mode for \
     zsh-users/zsh-history-substring-search
 
-zinit wait'9' lucid atload'_zsh_autosuggest_start' light-mode for \
+zinit wait'3' lucid atload'_zsh_autosuggest_start' light-mode for \
     zsh-users/zsh-autosuggestions
 
-zinit wait'9' lucid atload'_zshz_precmd' light-mode for \
+zinit wait'3' lucid atload'_zshz_precmd' light-mode for \
     agkozak/zsh-z
 
-zinit wait'9' lucid light-mode blockf for \
+zinit wait'3' lucid light-mode blockf for \
      spwhitt/nix-zsh-completions
 
 #Setup completion system
@@ -60,3 +60,5 @@ if [[ $ZDOTDIR/zkeybind.zsh ]];
 then
     source $ZDOTDIR/zkeybind.zsh
 fi
+
+eval "$(direnv hook zsh)"
