@@ -35,10 +35,13 @@ alias ea="$EDITOR $ZDOTDIR/.zsh_aliases"
 alias sa="source $ZDOTDIR/.zsh_aliases"
 
 #Aptitude aliases
-alias apu='sudo apt-get update'
-alias apd='sudo apt-get dist-upgrade'
-alias aps='sudo apt-get upgrade'
-alias app='sudo apt-get --auto-remove purge'
+alias apu='sudo aptitude update'
+alias aps='sudo aptitude safe-upgrade'
+alias apf='sudo aptitude full-upgrade'
+alias app='sudo aptitude purge'
+
+#Nix aliases
+alias nix-shell='nix-shell --command $SHELL'
 
 #Cmake
 alias cmgen='cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON'
