@@ -1,30 +1,65 @@
-add APT::Install-Recommends "false"; to /etc/apt/apt.conf.d/install_recommends
-before and install operations
-gnome-session gdm kitty gnome-user-share pulseaudio-module-bluetooth
-network-manager-gnome gnome-shell gnome-backgrounds gnome-applets mutter gjs
-optional install gkbd-capplet
-enable graphic target
-install sudo and add %username ALL=(ALL:ALL) ALL in a file under sudoer
-install gnome-control-center for easy configuration of settings or get better
-aquinted with gsettings
-gnome-tweak-tool for extra configurations
-firmware-misc-nonfree some drivers but not need
-pulseaudio for audio
-network-manager
-nautilus
-aria2 and ca-certificate for net download on command line
-zsh shell ,ohmyzsh for zsh plugin manager
-git for development
-man for man pages
-firfox for browser
-neovim for editor
-tlp for battery management
-vlc for videos
-build2 for c++
-intel-microcode for updated and correctly performing cpu
-for intel video acceleration va-driver-all and vdpau-driver-all for nvidia
---only install what you need
-And if need be install iw | wireless tools for wifi management only if
-neccessay
-enable sysrq and swappiness with vm.swappiness=7 kernel.sysrq=1 under
-/etc/sysctl.d/{name}.conf
+#ON LINUX FRESH INSTALL
+*Disable apt from automatically installing recommended packages by adding
+    APT::Install-Recommends "false"; to /etc/apt/apt.conf.d/install_recommends
+    before and install operations
+*Disable auto-apt upgrade and update by making sure apt-config-auto-update and
+    unattended-upgrades are not installed
+*Install gnome-session gdm gnome-shell gnome-backgrounds gnome-applets mutter
+    gjs for the gnome desktop environment
+*For automatic network management install network-manager-gnome
+*Verify if the kitty in repos is rescent enough else install with it install
+    script available on it documentation site
+*Install pulseaudio as sound server and pluseaudio-module-bluetooth if you
+    plane to use a bluetooth headset
+*Install modemmanager with it recommmends to automatically connect modem
+*To run qtapps on wayland install qtwayland5 and for qtapps that require sqlite
+    install libqt5sql5-sqlite
+*To tweak and configure gnome shell install gnome-tweak-tool for gnome 40
+*For thumbnails for videos install ffmpegthumbnailer
+*Image viewer for gnome install eog .ie Eye of Gnome image view
+*Install xdm download manager for downloads
+*If a font manager is needed install gnome-font-viewer
+*If you want to be able to view the layout configuration of my keyboard install gkbd-capplet
+*To boot into gui by default enable graphic target with sudo systemctl set-default graphical.target
+*Install sudo and add %username ALL=(ALL:ALL) ALL in the sudoer file
+*Install gnome-control-center for easy configuration of settings or get better
+    aquinted with gsettings
+*Drivers for effective use of hardware firmware-misc-nonfree ,firmware-linux
+    and other appropriate hardware for various hardware
+*File manager for gnome install nautilus
+*aria2 for command line downloads
+*zsh shell and zinit for plugins management
+*git for version control
+*man for reading man pages
+*firfox for browsing
+*neovim as preferred editor and remove vi from system
+*tlp for battery power management
+*vlc as preffered video player
+*build2 as build tool for c++
+*intel-microcode for updated and correctly performing cpu
+*for intel gpu acceleration va-driver-all and vdpau-driver-all for nvidia
+*enable sysrq and swappiness with vm.swappiness=7 kernel.sysrq=1 under
+    /etc/sysctl.d/{name}.conf
+*setup my dns server in /etc/systemd/resolved.conf with cloud dns
+
+*options for btrfs :NOTE make sure to to update kernel to the latest before you
+    do any modifications to the options under
+*read intensive work-loads, specifying noatime significantly improves performance
+    because no new access time information needs to be written.
+:noatime
+    Enable automatic file defragmentation. When enabled, small random writes into files
+    (in a range of tens of kilobytes, currently it’s 64K) are detected and queued up for
+    the defragmentation process. Not well suited for large database workloads.
+    The read latency may increase due to reading the adjacent blocks that make up the range
+    for defragmentation, successive write will merge the blocks in the new location.
+:autodefrag
+    Control BTRFS file data compression:compression options are zlib,zstd and lzo
+    Both zlib and zstd (since version 5.1) expose the compression level as a tunable
+    knob with higher levels trading speed and memory (zstd) for higher compression ratios
+    Zlib accepts the range [1, 9] and zstd accepts [1, 15]. If no level is set, both
+    currently use a default level of 3
+:compress=zstd:12
+    Enable autorecovery attempts if a bad tree root is found at mount time.
+    usebackuproot
+    Set the interval of periodic transaction commit when data are synchronized to permanent storage
+:commit=240
