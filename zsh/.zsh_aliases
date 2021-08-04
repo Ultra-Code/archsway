@@ -41,10 +41,10 @@ alias app='sudo aptitude purge'
 alias nix-shell='nix-shell --command $SHELL'
 
 #reload zsh in interactive mode
-alias zsi='env -i zsh'
+alias zsi='exec env -i zsh'
 
 #reload zsh in interactive login mode
-alias zsl='env -i zsh -l'
+alias zsl='exec env -i zsh -l'
 
 #Cmake
 alias cmgen='cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON'
