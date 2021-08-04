@@ -29,6 +29,9 @@ export XDG_DATA_DIRS="/usr/local/share/:/usr/share"
 #dir where user-specific non-essential (cached) data should be written
 export XDG_CACHE_HOME="$HOME/.cache"
 
+# add local man pages to manpath
+export MANPATH="/usr/share/man:/usr/local/share/man:$XDG_DATA_HOME/man"
+
 #run qt apps on wayland
 export QT_QPA_PLATFORM=wayland
 
@@ -58,7 +61,9 @@ if [ -f /etc/profile.d/nix.sh ]; then
     source  /etc/profile.d/nix.sh
 fi
 
-export NIX_PATH="$NIX_PATH:/nix/var/nix/profiles/per-user/ultracode/channels"
+USER_NIX_PATH=/nix/var/nix/profiles/per-user/ultracode
+
+export NIX_PATH="$NIX_PATH:$USER_NIX_PATH/channels"
 
 # Add env to my neovim init file
 export NVIMRC="$XDG_CONFIG_HOME/nvim/init.lua"
