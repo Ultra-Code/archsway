@@ -15,4 +15,4 @@ APT::Install-Recommends "false";
 /etc/apt/preferences.d/99debian_experimental
 Package: *
 Pin: release a=experimental
-Pin-Priority: 900
+Pin-Priority: 500
