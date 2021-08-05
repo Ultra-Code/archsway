@@ -36,7 +36,7 @@ export MANPATH="/usr/share/man:/usr/local/share/man:$XDG_DATA_HOME/man"
 export QT_QPA_PLATFORM=wayland
 
 #theme qt apps with adawaita
-export QT_STYLE_OVERRIDE=kvantum
+export QT_STYLE_OVERRIDE=Adwaita-Dark
 
 #defines the base directory relative to which user-specific non-essential
 #runtime files and other file objects (such as sockets, named pipes, ...)

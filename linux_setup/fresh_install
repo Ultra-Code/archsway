@@ -29,6 +29,7 @@
 #QT GNOME integration
 *To run qtapps on wayland install qtwayland5 and for qtapps that require sqlite
     install libqt5sql5-sqlite
+*Install adwaita-qt to theme qt apps with adwaita. Then export Adawait-Dark as qt style
 
 #Desktop Environment Usability Improvements
 *Install sudo and add %username ALL=(ALL:ALL) ALL in the sudoer file
