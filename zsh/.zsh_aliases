@@ -2,6 +2,7 @@ alias ls='ls --color -F'
 alias l='ls -Alh'
 alias md='mkdir -p'
 alias rd=rmdir
+alias rf='rm -rf'
 alias _='sudo'
 
 alias grep='grep --color'
@@ -41,11 +42,8 @@ alias apw='aptitude why'
 #Nix aliases
 alias nix-shell='nix-shell --command $SHELL'
 
-#reload zsh in interactive mode
-alias zsi='exec env -i zsh'
-
 #reload zsh in interactive login mode
-alias zsl='exec env -i zsh -l'
+alias zs='exec env -i SSH_AGENT_PID=$SSH_AGENT_PID SSH_AUTH_SOCK=$SSH_AUTH_SOCK zsh -l'
 
 #Cmake
 alias cmgen='cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON'
