@@ -8,8 +8,8 @@
     unattended-upgrades are not installed
 
 #GNOME SHELL
-*Install gnome-session gdm gnome-shell gnome-backgrounds gnome-applets mutter
-    gjs for the gnome desktop environment
+*Install gnome-session gdm gnome-shell gnome-backgrounds gnome-applets adwaita-icon-theme
+    for the gnome desktop environment
 *To tweak and configure gnome shell install gnome-tweak-tool for gnome 40
 *For automatic network management install network-manager-gnome
 *Install gnome-control-center for easy configuration of settings or get better
