@@ -110,3 +110,7 @@ xtreamdownload manager
 
 #Shell
 zsh
+
+#Nix package manager
+Nix for reproducable package management
+direnv for specifying env variable for a particular development directory
