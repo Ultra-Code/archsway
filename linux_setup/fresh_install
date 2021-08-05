@@ -1,31 +1,44 @@
 #ON LINUX FRESH INSTALL
+
+#APT Configurations
 *Disable apt from automatically installing recommended packages by adding
     APT::Install-Recommends "false"; to /etc/apt/apt.conf.d/install_recommends
     before and install operations
 *Disable auto-apt upgrade and update by making sure apt-config-auto-update and
     unattended-upgrades are not installed
+
+#GNOME SHELL
 *Install gnome-session gdm gnome-shell gnome-backgrounds gnome-applets mutter
     gjs for the gnome desktop environment
+*To tweak and configure gnome shell install gnome-tweak-tool for gnome 40
 *For automatic network management install network-manager-gnome
+*Install gnome-control-center for easy configuration of settings or get better
+    aquinted with gsettings
+
+#Terminal Emulator
 *Verify if the kitty in repos is rescent enough else install with it install
     script available on it documentation site
+
+#Sound Server
 *Install pulseaudio as sound server and pluseaudio-module-bluetooth if you
     plane to use a bluetooth headset
+
+#Modem Manager
 *Install modemmanager with it recommmends to automatically connect modem
+
+#QT GNOME integration
 *To run qtapps on wayland install qtwayland5 and for qtapps that require sqlite
     install libqt5sql5-sqlite
-*To tweak and configure gnome shell install gnome-tweak-tool for gnome 40
+
+#Desktop Environment Usability Improvements
+*Install sudo and add %username ALL=(ALL:ALL) ALL in the sudoer file
 *For thumbnails for videos install ffmpegthumbnailer
 *Image viewer for gnome install eog .ie Eye of Gnome image view
 *Install xdm download manager for downloads
 *If a font manager is needed install gnome-font-viewer
 *If you want to be able to view the layout configuration of my keyboard install gkbd-capplet
 *To boot into gui by default enable graphic target with sudo systemctl set-default graphical.target
-*Install sudo and add %username ALL=(ALL:ALL) ALL in the sudoer file
-*Install gnome-control-center for easy configuration of settings or get better
-    aquinted with gsettings
-*Drivers for effective use of hardware firmware-misc-nonfree ,firmware-linux
-    and other appropriate hardware for various hardware
+*install wl-clipboard for wayland copy and paste cli implementation
 *File manager for gnome install nautilus
 *aria2 for command line downloads
 *zsh shell and zinit for plugins management
@@ -36,12 +49,19 @@
 *tlp for battery power management
 *vlc as preffered video player
 *build2 as build tool for c++
+
+#Drivers and firmwares for hardware
+*Drivers for effective use of hardware firmware-misc-nonfree ,firmware-linux
+    and other appropriate hardware for various hardware
 *intel-microcode for updated and correctly performing cpu
 *for intel gpu acceleration va-driver-all and vdpau-driver-all for nvidia
+
+# System Control and Configurations
 *enable sysrq and swappiness with vm.swappiness=7 kernel.sysrq=1 under
     /etc/sysctl.d/{name}.conf
 *setup my dns server in /etc/systemd/resolved.conf with cloud dns
 
+# BTRFS Filesystem Options
 *options for btrfs :NOTE make sure to to update kernel to the latest before you
     do any modifications to the options under
 *read intensive work-loads, specifying noatime significantly improves performance
