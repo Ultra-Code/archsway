@@ -33,9 +33,10 @@ alias ea="$EDITOR $ZDOTDIR/.zsh_aliases"
 
 #Aptitude aliases
 alias apu='sudo aptitude update'
-alias aps='sudo aptitude safe-upgrade'
-alias apf='sudo aptitude full-upgrade'
+alias apf='sudo aptitude safe-upgrade'
 alias app='sudo aptitude purge'
+alias aps='aptitude show'
+alias apw='aptitude why'
 
 #Nix aliases
 alias nix-shell='nix-shell --command $SHELL'
