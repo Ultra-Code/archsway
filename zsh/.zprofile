@@ -53,18 +53,6 @@ export HISTORY_IGNORE="(z|mv|rm|cp|l|vi|man|ln|tar|mkdir|cat|tree|git|g|.|~|d|a|
 export EDITOR="vi"
 export VISUAL="vi"
 
-# NIX_PATH point to latest nixpkgs release for reproducible builds
-# alway also use unstable chanel for packages
-# export NIX_PATH="nixpkgs=https://github.com/NixOS/nixpkgs/archive/release-21.05.tar.gz"
-# Export default nix envs
-if [ -f /etc/profile.d/nix.sh ]; then
-    source  /etc/profile.d/nix.sh
-fi
-
-USER_NIX_PATH=/nix/var/nix/profiles/per-user/ultracode
-
-export NIX_PATH="$NIX_PATH:$USER_NIX_PATH/channels"
-
 # Add env to my neovim init file
 export NVIMRC="$XDG_CONFIG_HOME/nvim/init.lua"
 
