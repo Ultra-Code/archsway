@@ -60,5 +60,3 @@ if [[ $ZDOTDIR/zkeybind.zsh ]];
 then
     source $ZDOTDIR/zkeybind.zsh
 fi
-
-eval "$(direnv hook zsh)"
