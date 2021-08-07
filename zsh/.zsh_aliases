@@ -43,7 +43,7 @@ alias apw='aptitude why'
 alias nix-shell='nix-shell --command $SHELL'
 
 #reload zsh in interactive login mode
-alias zs='exec env -i SSH_AGENT_PID=$SSH_AGENT_PID SSH_AUTH_SOCK=$SSH_AUTH_SOCK zsh -l'
+alias zs='exec env -i SSH_AGENT_PID=$SSH_AGENT_PID SSH_AUTH_SOCK=$SSH_AUTH_SOCK zsh -i'
 
 #Cmake
 alias cmgen='cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON'
