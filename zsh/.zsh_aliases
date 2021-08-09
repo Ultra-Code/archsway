@@ -17,11 +17,10 @@ alias gl='git log --graph --oneline --decorate'
 alias glp='git log -p'
 alias gd='git diff'
 
+alias vi='nvim'
+
 # open ~/.zshrc in using the default editor specified in $EDITOR
 alias ez="$EDITOR $ZDOTDIR/.zshrc"
-
-# source ~/.zshrc
-alias ep="$EDITOR $ZDOTDIR/.zprofile"
 
 #edit ~/.zshenv
 alias ee="$EDITOR $ZDOTDIR/.zshenv"
@@ -40,10 +39,10 @@ alias aps='aptitude show'
 alias apw='aptitude why'
 
 #Nix aliases
-alias nix-shell='nix-shell --command $SHELL'
+alias nix-shell='nix-shell --command $SHEll'
 
 #reload zsh in interactive login mode
-alias zs='exec env -i SSH_AGENT_PID=$SSH_AGENT_PID SSH_AUTH_SOCK=$SSH_AUTH_SOCK zsh -i'
+alias zs='exec env -i SSH_AGENT_PID=$SSH_AGENT_PID SSH_AUTH_SOCK=$SSH_AUTH_SOCK zsh'
 
 #Cmake
 alias cmgen='cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON'
