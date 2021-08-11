@@ -1,28 +1,7 @@
 export PATH="$PATH:$HOME/.local/bin"
 
-# Export default nix envs
-if [ -e /home/ultracode/.nix-profile/etc/profile.d/nix.sh ]
-then
-    source /home/ultracode/.nix-profile/etc/profile.d/nix.sh
-fi
-
-USER_NIX_PATH=/nix/var/nix/profiles/per-user/ultracode
-
-export NIX_PATH="$USER_NIX_PATH/channels:$HOME/.nix-defexpr/channels"
-
-export NIX_LINK="$HOME/.nix-profile"
-
-#set DOTFILES for personal config root directory
-export DOTFILES="$HOME/.dotfiles"
-
-#Set up zsh config root directory
-export ZDOTDIR="$DOTFILES/zsh"
-
-export ZSH_ALIASES="$ZDOTDIR/.zsh_aliases"
-
-# This sets up colors properly
-export TERM="xterm-256color"
-
+# set language
+export LC_ALL=es_US.UTF-8
 # set shell
 export SHELL=/usr/bin/zsh
 
@@ -44,7 +23,7 @@ export XDG_DATA_DIRS="/usr/local/share/:/usr/share:$HOME/.nix-profile/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 
 # add local man pages to manpath
-export MANPATH="/usr/share/man:/usr/local/share/man:$XDG_DATA_HOME/man:$HOME/.nix-profile/share/man"
+export MANPATH="${MANPATH:+$MANPATH:}/usr/share/man:/usr/local/share/man:$XDG_DATA_HOME/man"
 
 #run qt apps on wayland
 export QT_QPA_PLATFORM=wayland
@@ -52,10 +31,14 @@ export QT_QPA_PLATFORM=wayland
 #theme qt apps with adawaita
 export QT_STYLE_OVERRIDE=Adwaita-Dark
 
-#defines the base directory relative to which user-specific non-essential
-#runtime files and other file objects (such as sockets, named pipes, ...)
-#should be stored
-export XDG_RUNTIME_DIR=/run/user/1000
+#set DOTFILES for personal config root directory
+export DOTFILES="$HOME/.dotfiles"
+
+#Set up zsh config root directory
+export ZDOTDIR="$DOTFILES/zsh"
+
+export ZSH_ALIASES="$ZDOTDIR/.zsh_aliases"
+
 
 export HISTFILE="$ZDOTDIR/.zsh_history"    # History filepath
 export HISTSIZE=1000000000              # Refers to the maximum number of commands that are loaded into memory from the history file
@@ -64,11 +47,14 @@ export SAVEHIST=1000000000              # Refers to the Maximum number of comman
 #skip pattern at history write time
 export HISTORY_IGNORE="(z|mv|rm|cp|l|vi|man|ln|tar|mkdir|cat|tree|git|g|.|~|d|a|_|-|np|e)*"
 
+# Export default nix envs
+if [[ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]]
+then
+    source $HOME/.nix-profile/etc/profile.d/nix.sh
+fi
+
 export EDITOR="nvim"
 export VISUAL="nvim"
-
-# Add env to my neovim init file
-export NVIMRC="$XDG_CONFIG_HOME/nvim/init.lua"
 
 export FZF_DEFAULT_OPTS='--multi --cycle --height 60% --layout=reverse --border=rounded --info=inline'
 export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
