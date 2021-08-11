@@ -3,6 +3,7 @@
 #sample nautilus scripts
 #learn zsh scripting and convert it to pure zsh
 #in ~/.local/share/nautilus/scripts/
+#Dont forget to make the script executable with chmod +x
     # When a directory is selected, go there. Otherwise go to current
     # directory. If more than one directory is selected, show error.
     if [ -n "$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS" ]; then
@@ -30,4 +31,4 @@
     fi
 
     cd "$destination"
-    exec kitty -c NONE -o linux_display_server=Wayland -o foreground=#ffffff -o background=#181818
+    exec kitty -c NONE -o linux_display_server=Wayland -o foreground=#ffffff -o background=#181818 -o initial_window_width=80c -o initial_window_height=24c
