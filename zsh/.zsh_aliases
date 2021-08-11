@@ -35,6 +35,7 @@ alias ea="$EDITOR $ZDOTDIR/.zsh_aliases"
 alias apu='sudo aptitude update'
 alias apf='sudo aptitude safe-upgrade'
 alias app='sudo aptitude purge'
+alias api='sudo aptitude install'
 alias aps='aptitude show'
 alias apw='aptitude why'
 
@@ -42,7 +43,7 @@ alias apw='aptitude why'
 alias nix-shell='nix-shell --command $SHEll'
 
 #reload zsh in interactive login mode
-alias zs='exec env -i SSH_AGENT_PID=$SSH_AGENT_PID SSH_AUTH_SOCK=$SSH_AUTH_SOCK zsh'
+alias zs='exec env -i SSH_AGENT_PID=$SSH_AGENT_PID SSH_AUTH_SOCK=$SSH_AUTH_SOCK USER=$USER zsh'
 
 #Cmake
 alias cmgen='cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON'
