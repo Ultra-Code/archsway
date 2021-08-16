@@ -40,16 +40,17 @@ alias aps='aptitude show'
 alias apw='aptitude why'
 
 #Nix aliases
-alias nix-shell='nix-shell --command $SHEll'
+alias nix-shell="nix-shell --command zsh"
 
 #reload zsh in interactive login mode
-alias zs='exec env -i SSH_AGENT_PID=$SSH_AGENT_PID SSH_AUTH_SOCK=$SSH_AUTH_SOCK USER=$USER zsh'
+#alias zs='exec env -i SSH_AGENT_PID=$SSH_AGENT_PID SSH_AUTH_SOCK=$SSH_AUTH_SOCK USER=$USER zsh'
+alias zs="exec $SHELL"
 
 #Cmake
 alias cmgen='cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON'
 
 #Clang
-alias clf='ln -s ~/.clang* .'
+alias clf="ln $DOTFILES/clang/.clang-* ."
 
 alias cldb='b -vn clean update |& compiledb'
 
