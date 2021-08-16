@@ -23,6 +23,9 @@
 *Install pulseaudio as sound server and pluseaudio-module-bluetooth if you
     plane to use a bluetooth headset
 
+#MTP explorer for gnome
+*Install gvfs-backend to mount MTP volumes and access files on MTP devices
+
 #Modem Manager
 *Install modemmanager with it recommmends to automatically connect modem
 
@@ -47,7 +50,7 @@
 *man for reading man pages
 *firfox for browsing
 *neovim as preferred editor and remove vi from system
-*tlp for battery power management
+*tlp for battery power management with recommends ie tlp-rdw
 *vlc as preffered video player
 *build2 as build tool for c++
 
