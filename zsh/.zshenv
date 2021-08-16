@@ -1,7 +1,7 @@
 export PATH="$PATH:$HOME/.local/bin"
 
 # set language
-export LC_ALL=es_US.UTF-8
+export LANG=es_US.UTF-8
 # set shell
 export SHELL=/usr/bin/zsh
 
@@ -23,7 +23,7 @@ export XDG_DATA_DIRS="/usr/local/share/:/usr/share:$HOME/.nix-profile/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 
 # add local man pages to manpath
-export MANPATH="${MANPATH:+$MANPATH:}/usr/share/man:/usr/local/share/man:$XDG_DATA_HOME/man"
+export MANPATH="/usr/share/man:/usr/local/share/man:$XDG_DATA_HOME/man"
 
 #run qt apps on wayland
 export QT_QPA_PLATFORM=wayland
