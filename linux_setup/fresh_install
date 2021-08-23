@@ -38,6 +38,9 @@
 *Install sudo and add %username ALL=(ALL:ALL) ALL in the sudoer file
 *For thumbnails for videos install ffmpegthumbnailer
 *Image viewer for gnome install eog .ie Eye of Gnome image view
+*gnome-font-viewer preview fonts and create thumbnails for fonts.
+gnome-characters is a simple utility application to find and insert unusual characters.
+*baobab is a disk usage analyzer
 *Install xdm download manager for downloads
 *If a font manager is needed install gnome-font-viewer
 *If you want to be able to view the layout configuration of my keyboard install gkbd-capplet
