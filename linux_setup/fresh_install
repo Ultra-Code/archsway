@@ -30,6 +30,9 @@
 *Install modemmanager with it recommmends to automatically connect modem
 
 #QT GNOME integration
+NOTE: qtwayland5 runs on qt specific wayland and might note be necessay
+      it also causes some crashes with some apps like clemetine and needs
+      the QT_QPA_PLATFORM=wayland to be exported
 *To run qtapps on wayland install qtwayland5 and for qtapps that require sqlite
     install libqt5sql5-sqlite
 *Install adwaita-qt to theme qt apps with adwaita. Then export Adawait-Dark as qt style
