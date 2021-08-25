@@ -26,9 +26,6 @@ export XDG_CACHE_HOME="$HOME/.cache"
 # add local man pages to manpath
 export MANPATH="/usr/share/man:/usr/local/share/man:$XDG_DATA_HOME/man"
 
-#run qt apps on wayland
-#export QT_QPA_PLATFORM=wayland
-
 #theme qt apps with adawaita
 export QT_STYLE_OVERRIDE=Adwaita-Dark
 
