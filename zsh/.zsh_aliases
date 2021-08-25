@@ -25,7 +25,10 @@ alias ez="$EDITOR $ZDOTDIR/.zshrc"
 #edit ~/.zshenv
 alias ee="$EDITOR $ZDOTDIR/.zshenv"
 
-#source ~/.zshenv
+#edit zprofile
+alias ep="$EDITOR $ZDOTDIR/.zprofile"
+
+#edit ~/.zshenv
 alias eh="$EDITOR $ZDOTDIR/.zsh_history"
 
 #edit ~/.zsh_aliases
