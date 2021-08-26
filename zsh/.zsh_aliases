@@ -17,8 +17,6 @@ alias gl='git log --graph --oneline --decorate'
 alias glp='git log -p'
 alias gd='git diff'
 
-alias vi='nvim'
-
 # open ~/.zshrc in using the default editor specified in $EDITOR
 alias ez="$EDITOR $ZDOTDIR/.zshrc"
 
