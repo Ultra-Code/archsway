@@ -72,6 +72,11 @@ gnome-characters is a simple utility application to find and insert unusual char
 *intel-microcode for updated and correctly performing cpu
 *for intel gpu acceleration va-driver-all and vdpau-driver-all for nvidia
 
+#FS tools
+*exfatprogs for exfat
+*ntfsprogs/ntfs-3g for ntfs
+*dosfstools for fat
+
 # System Control and Configurations
 *enable sysrq and swappiness with vm.swappiness=7 kernel.sysrq=1 under
     /etc/sysctl.d/{name}.conf
