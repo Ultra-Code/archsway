@@ -18,20 +18,6 @@
 *Install gnome-control-center for easy configuration of settings or get better
     aquinted with gsettings
 
-#Terminal Emulator
-*Verify if the kitty in repos is rescent enough else install with it install
-    script available on it documentation site
-
-#Sound Server
-*Install pulseaudio as sound server and pluseaudio-module-bluetooth if you
-    plane to use a bluetooth headset
-
-#MTP explorer for gnome
-*Install gvfs-backend to mount MTP volumes and access files on MTP devices
-
-#Modem Manager
-*Install modemmanager with it recommmends to automatically connect modem
-
 #QT GNOME integration
 NOTE: qtwayland5 runs on qt specific wayland and might note be necessay
       it also causes some crashes with some apps like clemetine and needs
@@ -65,6 +51,13 @@ gnome-characters is a simple utility application to find and insert unusual char
 *tlp for battery power management with recommends ie tlp-rdw
 *vlc as preffered video player
 *build2 as build tool for c++
+*Verify if the kitty in repos is recent enough else install with it install script available on it documentation site
+*Install pulseaudio as sound server and pluseaudio-module-bluetooth if you plane to use a bluetooth headset
+*Install gvfs-backend to mount MTP volumes and access files on MTP devices
+*Install modemmanager with it recommmends to automatically connect modem
+*Install calc for a terminal calculator
+*Install dict dictd dict-vera dict-gcide dict-jargon dict-foldoc dict-wn dict-freedict-eng-spa dict-freedict-spa-eng
+    to provide a terminal dictionary with english meanings, computer and hacker jargons and es<->en translations
 
 #Drivers and firmwares for hardware
 *Drivers for effective use of hardware firmware-misc-nonfree ,firmware-linux
