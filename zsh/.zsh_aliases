@@ -38,6 +38,7 @@ alias apf='sudo aptitude safe-upgrade'
 alias app='sudo aptitude purge'
 alias api='sudo aptitude install'
 alias aps='aptitude show'
+alias aph='aptitude search'
 alias apw='aptitude why'
 
 #Nix aliases
