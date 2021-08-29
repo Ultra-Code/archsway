@@ -52,6 +52,7 @@ gnome-characters is a simple utility application to find and insert unusual char
 *vlc as preffered video player
 *build2 as build tool for c++
 *Verify if the kitty in repos is recent enough else install with it install script available on it documentation site
+    don't forget to start kitty in fullscrean with --start-as=fullscrean in gnome shortcut
 *Install pulseaudio as sound server and pluseaudio-module-bluetooth if you plane to use a bluetooth headset
 *Install gvfs-backend to mount MTP volumes and access files on MTP devices
 *Install modemmanager with it recommmends to automatically connect modem
