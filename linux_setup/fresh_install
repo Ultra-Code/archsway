@@ -58,6 +58,9 @@ gnome-characters is a simple utility application to find and insert unusual char
 *Install calc for a terminal calculator
 *Install dict dictd dict-vera dict-gcide dict-jargon dict-foldoc dict-wn dict-freedict-eng-spa dict-freedict-spa-eng
     to provide a terminal dictionary with english meanings, computer and hacker jargons and es<->en translations
+*Install ssh for connecting to remote computers
+*Install rsync for copy and syncing files on remote
+*Install progress for watching progress of coreutils commands
 
 #Drivers and firmwares for hardware
 *Drivers for effective use of hardware firmware-misc-nonfree ,firmware-linux
