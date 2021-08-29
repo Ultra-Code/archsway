@@ -7,7 +7,7 @@ fi
 #eval "$(stack --bash-completion-script stack)"
 
 # Completion for kitty
-#kitty + complete setup zsh | source /dev/stdin
+kitty + complete setup zsh | source /dev/stdin
 
 function d () {
   if [[ -n $1 ]]; then
