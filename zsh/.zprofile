@@ -54,6 +54,8 @@ fi
 export EDITOR="nvim"
 export VISUAL="nvim"
 
+export PROGRESS_ARGS='--monitor --wait'
+
 export FZF_DEFAULT_OPTS='--multi --cycle --height 60% --layout=reverse --border=rounded --info=inline'
 export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
 export FZF_CTRL_T_OPTS='--preview="cat {}"'
