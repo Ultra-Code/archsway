@@ -1,0 +1,10 @@
+[Match]
+Name=wlp2s0
+MACAddress=e4:42:a6:cf:37:0d
+
+[Network]
+DHCP=yes
+
+[DHCP]
+RouteMetric=9
+UseDNS=false
