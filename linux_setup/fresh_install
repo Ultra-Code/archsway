@@ -35,6 +35,7 @@ NOTE: qt5-gtk-platformtheme currently doesn't work on gnome 40
 *Image viewer for gnome install eog .ie Eye of Gnome image view
 *gnome-font-viewer preview fonts and create thumbnails for fonts.
 gnome-characters is a simple utility application to find and insert unusual characters.
+*Install ca-certificates for certificates for secure ssl connections
 *baobab is a disk usage analyzer
 *Install xdm download manager for downloads
 *If a font manager is needed install gnome-font-viewer
