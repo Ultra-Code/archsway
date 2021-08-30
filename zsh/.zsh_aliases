@@ -1,4 +1,5 @@
 alias ls='ls --color -F'
+alias lsh='ls --hyperlink=auto'
 alias l='ls -Alh'
 alias md='mkdir -p'
 alias rd=rmdir
