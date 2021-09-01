@@ -2,7 +2,7 @@
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 # To customize prompt, run `p10k configure` or edit ~/.dotfiles/zsh/.p10k.zsh.
@@ -10,7 +10,7 @@ fi
 
 #source before compinit
 if [[ -f $HOME/.dotfiles/zsh/.zinit/bin/zinit.zsh ]]; then
-source "$HOME/.dotfiles/zsh/.zinit/bin/zinit.zsh"
+    source "$HOME/.dotfiles/zsh/.zinit/bin/zinit.zsh"
 fi
 
 #Zinit plugins and snippets
@@ -29,12 +29,12 @@ zinit wait'3' lucid atload'_zshz_precmd' light-mode for \
 zinit wait'3' lucid light-mode blockf for \
      spwhitt/nix-zsh-completions
 
-#Setup completion system
-autoload -Uz compinit
-compinit
+zinit wait'3' lucid light-mode blockf for \
+    zsh-users/zsh-completions
 
-#Automatically load bash completion functions
-#autoload -U +X bashcompinit && bashcompinit
+#compinstall can be use to generate & configure your completion style
+# setup zsh completion system
+autoload -Uz compinit && compinit
 
 if [[ $ZDOTDIR/zoption.zsh ]];
 then

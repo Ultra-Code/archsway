@@ -17,4 +17,3 @@ function d () {
   fi
 }
 compdef _dirs d
-
