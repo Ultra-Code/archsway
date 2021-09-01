@@ -1,4 +1,11 @@
-zstyle ':completion:*' auto-description 'specify: %d'
+zstyle ':completion:*' auto-description 'info: %d'
+zstyle ':completion:*' expand prefix
+zstyle ':completion:*' file-sort access
+zstyle ':completion:*' insert-unambiguous true
+zstyle ':completion:*' list-suffixes true
+zstyle ':completion:*' menu select=long
+zstyle ':completion:*' original true
+zstyle ':completion:*' preserve-prefix '//[^/]##/'
 zstyle ':completion:*' completer _expand _complete _correct _approximate
 zstyle ':completion:*' format 'Completing %d'
 zstyle ':completion:*' group-name ''
@@ -24,4 +31,4 @@ zstyle ':completion:*:*:*:*:processes' command "ps -u $USERNAME -o pid,user,comm
 # Use caching so that commands like apt and dpkg complete are useable
 zstyle ':completion:*' use-cache yes
 zstyle ':completion:*' cache-path $ZSH_CACHE_DIR
-
+zstyle :compinstall filename $ZDOTDIR/.zshrc
