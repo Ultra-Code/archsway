@@ -1,0 +1,29 @@
+#Run rules only when a secondary usb-storage is added
+KERNEL!="sd[b-z][0-9]",GOTO="done"
+ACTION!="add",GOTO="done"
+
+#find filesystem type
+#PROGRAM="/bin/lsblk -no FSTYPE $devnode"
+#"/sbin/blkid -o value -s TYPE $devnode"
+
+#Shadow action
+#ACTION=="add",SUBSYSTEM=="block",KERNEL=="sd[b-z][0-9]",RUN+="/bin/sh -c 'echo == >> /home/ultracode/udev-env.txt; env >> /home/ultracode/udev-env.txt'"
+
+#RESULT!="f2fs",
+ENV{ID_FS_TYPE}!="f2fs",GOTO="other_filesystems"
+
+#when f2fs filesystem drive is added
+SUBSYSTEM=="block", ENV{ID_USB_DRIVER}=="usb-storage",ATTRS{removable}=="1",\
+ENV{SYSTEMD_MOUNT_OPTIONS}="defaults,gc_merge,checkpoint_merge,compress_algorithm=zstd:19,atgc",ENV{SYSTEMD_MOUNT_WHERE}="/media/$env{ID_FS_LABEL}",\
+RUN+="/bin/systemd-mount -t auto --no-block --discover --fsck=no --collect $devnode"
+
+GOTO="done"
+
+LABEL="other_filesystems"
+
+#for other filesystems use their defaults
+SUBSYSTEM=="block", ENV{ID_USB_DRIVER}=="usb-storage",ATTRS{removable}=="1",\
+ENV{SYSTEMD_MOUNT_OPTIONS}="defaults",ENV{SYSTEMD_MOUNT_WHERE}="/media/$env{ID_FS_LABEL}",\
+RUN+="/bin/systemd-mount -t auto --no-block --discover --fsck=no --collect $devnode"
+
+LABEL="done"
