@@ -1,0 +1,3 @@
+filesystem                                             mountpoint    fstype  options                                                                                dump    fscheck
+# manually added /dev/sda3 for home directory
+UUID=be0eb394-aaa3-4324-a024-2b07568a9659              /home           ext4    noauto,nofail,defaults,x-systemd.automount,noatime,commit=240,nobarrier,data=writeback  0       0
