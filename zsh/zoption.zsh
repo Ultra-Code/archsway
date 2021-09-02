@@ -1,8 +1,10 @@
 #Shell options
 setopt HIST_IGNORE_ALL_DUPS # Do not write a duplicate event to the history file.
 setopt HIST_SAVE_NO_DUPS #older commands that duplicate newer ones are omitted.
-setopt SHARE_HISTORY     # Enable shells to read and write to the most recent history
 setopt HIST_IGNORE_SPACE # ignore commands that start with space
+setopt HIST_REDUCE_BLANKS #Remove superfluous blanks from each command line being added to the history list
+setopt SHARE_HISTORY     # Enable shells to read and write to the most recent history
+setopt APPEND_HISTORY #zsh sessions will append their history list to the history file, rather than replace it
 
 #Make cd push the old directory onto the directory stack
 setopt AUTO_PUSHD
