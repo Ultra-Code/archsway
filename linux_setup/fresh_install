@@ -99,6 +99,9 @@ gnome-characters is a simple utility application to find and insert unusual char
     currently use a default level of 3
 :compress=zstd:12
     Enable autorecovery attempts if a bad tree root is found at mount time.
-    usebackuproot
+:usebackuproot
     Set the interval of periodic transaction commit when data are synchronized to permanent storage
 :commit=240
+    The free space cache greatly improves performance when reading block group free
+    space into memory
+:space_cache=v2
