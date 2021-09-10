@@ -1,0 +1,4 @@
+# System Control and Configurations
+*enable sysrq and swappiness with vm.swappiness=7 kernel.sysrq=1 under
+    /etc/sysctl.d/{name}.conf
+*setup my dns server in /etc/systemd/resolved.conf with cloud dns
