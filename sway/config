@@ -17,7 +17,7 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term kitty
+set $term "kitty --start-as=fullscreen"
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -247,8 +247,9 @@ bar {
 
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 1; done
-
+    status_command while echo "$(cat /sys/class/power_supply/BAT0/capacity)% $(cat /sys/class/power_supply/BAT0/status) $(date)" ; do sleep 1; done #date +'%Y-%m-%d %l:%M:%S %p'
+    #strip_workspace_numbers yes
+    workspace_buttons yes
     colors {
         statusline #ffffff
         background #323232
@@ -261,16 +262,18 @@ bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
 bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
 #Media keys
 bindsym XF86AudioPlay exec playerctl play-pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
+
 #To allow a keybinding to be executed while the lockscreen is active
 bindsym --locked XF86AudioPlay exec playerctl play-pause
 
 #Brightness
-bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
-bindsym XF86MonBrightnessUp exec brightnessctl set +5%
+bindsym XF86MonBrightnessDown exec brightnessctl set 1%-
+bindsym XF86MonBrightnessUp exec brightnessctl set +1%
 
 #Menu
 #bindsym XF86Search exec bemenu-run
@@ -344,11 +347,11 @@ font pango: JetBrainsMono Nerd Font Bold 11
  # #general settings
  # gaps inner 11 gaps outer 0
  # #hide mouse on inactivity
- # seat * hide_cursor 10000
+  seat * hide_cursor 10000
  # font Roboto:size=11
- # default_floating_border pixel 0
- # default_border pixel 0
- # hide_edge_borders both
+  default_floating_border none
+  default_border none
+  hide_edge_borders both
  # focus_follows_mouse no
 
 # Set colors
