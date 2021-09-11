@@ -1,3 +1,5 @@
+export MOZ_ENABLE_WAYLAND=1
+
 #Set up path for interactive envirionment
 export PATH=$HOME/.local/bin:$PATH
 
@@ -22,6 +24,9 @@ export XDG_DATA_DIRS="/usr/local/share/:/usr/share:$HOME/.nix-profile/share"
 
 #dir where user-specific non-essential (cached) data should be written
 export XDG_CACHE_HOME="$HOME/.cache"
+
+#Used for non-essential, user-specific data files such as sockets, named pipes
+export XDG_RUNTIME_DIR="/run/user/${UID}"
 
 # add local man pages to manpath
 export MANPATH="/usr/share/man:/usr/local/share/man:$XDG_DATA_HOME/man"
@@ -60,3 +65,8 @@ export FZF_DEFAULT_OPTS='--multi --cycle --height 60% --layout=reverse --border=
 export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
 export FZF_CTRL_T_OPTS='--preview="cat {}"'
 export FZF_ALT_C_OPTS='--preview="tree -C {}"'
+
+if [[ -z $DISPLAY && $(tty) == /dev/tty1 ]]; then
+        dbus-run-session sway
+  #MOZ_ENABLE_WAYLAND=1 QT_QPA_PLATFORM=wayland XDG_SESSION_TYPE=wayland exec dbus-run-session gnome-session #gnome-shell --wayland --no-x11
+fi
