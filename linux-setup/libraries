@@ -1,13 +1,20 @@
 #Graphic Libraries
-intel-media-va-driver-non-free
-mesa-va-drivers
+intel-media-driver
+mesa
+vulkan-intel for vulkan
 
 #Cpu
-intel-microcode
+intel-ucode
 
 #Drivers & Modules
-firmware-misc-nonfree
-firmware-linux-nonfree
+linux-firmware
+
+#fs tools
+exfatprogs
+btrfs-progs
+dosfstools
+f2fs-tools
+ntfsprogs
 
 #Tools
 tlp
@@ -22,12 +29,16 @@ install apt-show-version for seeing packages in thier various dists ->
 and if they are upgradable and thier version
 add relatime to filesystem options
 
-#Compiler and development tools
+#programming and development tools
 clang-format clang-tidy clangd for c++ programming
 zig and zls for zig programming
 libgtkmm-3-dev libgtkmm-3-docs and glade for gtkmm
 libglfw3-dev and libglfw3-wayland for window and opengl contex creations on wayland linux
 libepoxy for loading opengl functions
+build2 for c++
+
+#Sound server
+pulseaudio as sound server and pluseaudio-bluetooth if you plane to use a bluetooth headset
 
 #Database Administration
 DBeaver for database administration
@@ -38,11 +49,16 @@ audacity for audio editing
 
 #Dictionary Ware
 Artha
+dict dictd  with dbs dict-vera dict-gcide dict-jargon dict-foldoc dict-wn dict-freedict-eng-spa dict-freedict-spa-eng
 
 #Video editing
 Kdenlive for video editing
 Handbrake
 Open Shot
+
+#ssh
+ssh for connecting to remote computers
+rsync for copy and syncing files on remote
 
 #Picture making & editing & ui designing
 Krita for modeling and picture editing
@@ -52,10 +68,25 @@ Blender
 Gimp
 InkScape
 
+#command line utility
+progress for watching progress of coreutils commands
+
+#Networking
+For automatic network management install network-manager-gnome But for a more fine granded
+    control of network use systemd-networkd for managing interfaces and systemd-resolved
+    for dns resolution. Also the newly improved iwd can be used for wireless interface
+    management
+
 #IDE
 Qt Creator
 Eclipse
 Neovim
+
+#ssl connection
+ca-certificates for certificates for secure ssl connections
+
+#Wayland
+wl-clipboard for wayland copy and paste cli implementation
 
 #Note
 Vimwiki
@@ -87,6 +118,7 @@ Powerlevel10k
 
 #Thumbnailer
 gnome-ebup-thumbnailer for epub thumbnails
+thumbnails for videos install ffmpegthumbnailer
 
 #Firewall
 ufw and ufw-gui for managing firewalls
@@ -101,16 +133,35 @@ insomia
 
 #Torrenting
 qbittorent
+transmission
+
+#Calculator
+calc
+
+#Image viewer
+timg
+
+#System Info
+neofetch
 
 #Video Players
 Vlc
 
 #Download Manager
 xtreamdownload manager
+aria2
 
 #Shell
 zsh
+zinit for plugins management
+
+#Power Management
+tlp for battery power management with recommends ie tlp-rdw
 
 #Nix package manager
 Nix for reproducable package management
 direnv for specifying env variable for a particular development directory
+
+#Moderm manager
+modemmanager with usb_modeswitch .ie change cd mode to moderm mode
+
