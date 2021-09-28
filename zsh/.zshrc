@@ -17,13 +17,10 @@ fi
 zinit depth'1' light-mode for \
     romkatv/powerlevel10k
 
-zinit wait'3' lucid light-mode for \
-    zsh-users/zsh-history-substring-search
-
-zinit wait'3' lucid atload'_zsh_autosuggest_start' light-mode for \
+zinit wait lucid atload'_zsh_autosuggest_start' light-mode for \
     zsh-users/zsh-autosuggestions
 
-zinit wait'3' lucid atload'_zshz_precmd' light-mode for \
+zinit wait lucid atload'_zshz_precmd' light-mode for \
     agkozak/zsh-z
 
 zinit wait'3' lucid light-mode blockf for \
