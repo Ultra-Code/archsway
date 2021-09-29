@@ -34,3 +34,5 @@ setopt AUTO_MENU
 #move cursor to the end of the word if completion was started with it in within
 #word
 setopt ALWAYS_TO_END
+# Don't send SIGHUP to background processes when the shell exits.
+setopt NOHUP
