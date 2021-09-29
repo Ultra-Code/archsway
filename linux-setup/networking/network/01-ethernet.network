@@ -1,5 +1,5 @@
 [Match]
-Name=enp3s0
+Name=eno1
 MACAddress=f4:30:b9:97:fd:a3
 
 [Network]
