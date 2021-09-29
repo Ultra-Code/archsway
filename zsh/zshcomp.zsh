@@ -1,6 +1,6 @@
 #enable fuzzy auto-completion for Zsh:
-if [ -f /usr/share/doc/fzf/examples/completion.zsh ]; then
-   source /usr/share/doc/fzf/examples/completion.zsh
+if [ -f /usr/share/fzf/key-bindings.zsh ]; then
+   . /usr/share/fzf/key-bindings.zsh
 fi
 
 #completions for stack
