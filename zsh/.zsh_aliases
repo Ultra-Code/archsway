@@ -33,6 +33,8 @@ alias eh="$EDITOR $ZDOTDIR/.zsh_history"
 #edit ~/.zsh_aliases
 alias ea="$EDITOR $ZDOTDIR/.zsh_aliases"
 
+#edit $XDG_CONFIG_HOME/sway/config
+alias es="$EDITOR $DOTFILES/sway/config"
 #Aptitude aliases
 alias apu='sudo aptitude update'
 alias apf='sudo aptitude safe-upgrade'
@@ -78,3 +80,8 @@ alias 6='cd -6'
 alias 7='cd -7'
 alias 8='cd -8'
 alias 9='cd -9'
+
+alias lsblk="lsblk -oPATH,MOUNTPOINTS,LABEL,FSTYPE,SIZE,FSAVAIL,FSUSED,PARTUUID,MAJ:MIN"
+
+alias n='nnn -a'
+alias ln='ln -sf'
