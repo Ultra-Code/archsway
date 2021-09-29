@@ -1,0 +1,2 @@
+#automatically suspend USB devices when they are not in use
+ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"
