@@ -4,3 +4,22 @@ UUID=be0eb394-aaa3-4324-a024-2b07568a9659              /home           ext4    n
 
 #NOTE simple-mtpfs bin must be linked to /bin/mount.simple-mtpfs
 /dev/libmtp-1-2                                /home/ultracode/phone fuse.simple-mtpfs noauto,nofail,x-systemd.automount,x-systemd.idle-timeout=1s,defaults,noatime    0       0
+
+UUID=8a667e9f-fd64-44dd-85c2-1c8f20a200df       /               btrfs           rw,defaults,noatime,autodefrag,compress=zstd,commit=300,space_cache=v2,subvolid=5,subvol=/      0 0
+#optionaly set compress level by zstd:13
+
+# Static information about the filesystems.
+# See fstab(5) for details.
+
+# <file system> <dir> <type> <options> <dump> <pass>
+# /dev/sda3 LABEL=ROOT
+UUID=8a667e9f-fd64-44dd-85c2-1c8f20a200df       /               btrfs           noatime,autodefrag,compress=zstd:13,commit=300,space_cache=v2,subvolid=5,subvol=/       0 0
+
+# /dev/sda1 LABEL=ESP
+UUID=43E3-58A0          /boot           vfat            rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro   0 2
+
+# /dev/sda2 LABEL=SWAP
+UUID=7676d06c-03ad-44e1-afbd-a2965d12f43a       none            swap            defaults        0 0
+
+#/dev/sda4 LABEL=HOME
+UUID=be0eb394-aaa3-4324-a024-2b07568a9659       /home           ext4 nofail,noatime,nobarrier  0       0
