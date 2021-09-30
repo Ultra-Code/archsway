@@ -3,9 +3,6 @@ if [ -f /usr/share/fzf/key-bindings.zsh ]; then
    . /usr/share/fzf/key-bindings.zsh
 fi
 
-#completions for stack
-#eval "$(stack --bash-completion-script stack)"
-
 # Completion for kitty
 kitty + complete setup zsh | source /dev/stdin
 
@@ -17,3 +14,5 @@ function d () {
   fi
 }
 compdef _dirs d
+
+eval "$(zoxide init zsh)"
