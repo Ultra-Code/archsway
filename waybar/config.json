@@ -60,9 +60,10 @@
     "mpd": {
         "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist}-{album}-{title}({elapsedTime:%M:%S}/{totalTime:%M:%S}){songPosition}|{queueLength} {volume}%  ",
         "format-disconnected": "Disconnected  ",
-        "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
+        "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped  ",
         "unknown-tag": "N/A",
         "interval": 2,
+        "timeout": 10,
         "consume-icons": {
             "on": " "
         },
@@ -80,7 +81,9 @@
             "playing": ""
         },
         "tooltip-format": "MPD (connected)",
-        "tooltip-format-disconnected": "MPD (disconnected)"
+        "tooltip-format-disconnected": "MPD (disconnected)",
+        "on-scroll-up":"mpc prev",
+        "on-scroll-down":"mpc next"
     },
     "idle_inhibitor": {
         "format": "{icon}",
@@ -124,7 +127,8 @@
         "format-icons": [
             "",
             "",
-            "飯"
+            "飯",
+            "☀️"
         ]
     },
     "battery": {
@@ -133,9 +137,9 @@
             "warning": 30,
             "critical": 15
         },
-        "full-at": "90",
+        "full-at": "80",
         "format": "{capacity}% {icon} ",
-        "format-charging": "{capacity}%  ",
+        "format-charging": "{capacity}% ↯",
         "format-plugged": "{capacity}%  ",
         "format-alt": "{time} {icon}",
         // "format-good": "", // An empty format will hide the module
@@ -153,7 +157,7 @@
         "format-wifi": " 直 {essid} ({signalStrength}%)",
         "format-ethernet": " {ipaddr}/{cidr}",
         "format-linked": " {ifname} (No IP)",
-        "tooltip-format": "{ifname} via {gwaddr} ",
+        //"tooltip-format": "{ifname} via {gwaddr} ",
         "format-disconnected": "Disconnected ⚠",
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
     },
