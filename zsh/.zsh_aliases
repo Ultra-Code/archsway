@@ -37,7 +37,8 @@ alias ea="$EDITOR $ZDOTDIR/.zsh_aliases"
 alias es="$EDITOR $DOTFILES/sway/config"
 #Aptitude aliases
 alias pu='_ pacman -Syu'
-alias pp='_ pacman -Rsn'
+alias pr='_ pacman -Rsn'
+alias pp='_ pacman -Rcuns'
 alias pi='_ pacman -S'
 alias pii='pacman -Qi'
 alias pis='pacman -Qs'
@@ -46,7 +47,8 @@ alias psi='pacman -Si'
 alias pl='pacman -Qe'
 alias ply='pacman -Qmq'
 alias ppb='pacman -Qo'
-alias pc='_ pacman -Qdtq|_ pacman -Rsn -'
+alias pc='_ pacman -Qdtq| _ pacman -Rsn -'
+alias pcc='_ pacman -Sc'
 
 #Nix aliases
 alias nix-shell="nix-shell --command zsh"
