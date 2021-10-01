@@ -8,23 +8,6 @@ xwayland disable
 set $mod Mod4
 set $mod1 Mod1
 
-# Your preferred terminal emulator
-set $term kitty
-
-# Your preferred application launcher
-# Note: pass the final command to swaymsg so that the resulting window can be opened
-# on the original workspace that the command was run on.
-
-set $menu kitty --class="menu_launcher" -c -e zsh -c "printenv PATH | xargs -d : -I {} -r find -L {} -maxdepth 1 -type f -executable -printf '%f\n' 2>/dev/null| sort -u | fzf | xargs -r swaymsg -t command exec"
-for_window [app_id="menu_launcher"] floating enable, border none, resize set width 1000 px height 150 px,move position 0 px 0 px
-
-set $menu_desktop kitty --class="desktop_laucher" -e zsh -c "find /usr/share/applications -name '*.desktop' | xargs basename -s '.desktop' -a | fzf | xargs -r swaymsg -t command exec gtk-launch"
-
-for_window [app_id="desktop_laucher"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 10
-# Start your launcher
-bindsym $mod+d exec $menu_desktop
-
-
 ### Output configuration
 ### Set random wallpaper
 set $wallpapers_path $HOME/Pictures/Code
@@ -71,6 +54,9 @@ input * xkb_options compose:ralt
 #
 # Basics:
 #
+# Your preferred terminal emulator
+set $term kitty --single-instance --wait-for-single-instance-window-close
+
 # Start a terminal
 bindsym $mod+Return exec $term
 
@@ -160,7 +146,47 @@ bindsym $mod+period  move container to workspace next
 bindsym $mod+comma   move container to workspace prev
 # Note: workspaces can have any name you want, not just numbers.
 # We just use 1-10 as the default.
-#
+
+#window rules for my menu popup and drop down terminal using the scratchpad
+# for_window [title="^menu_term$"] floating enable, resize set width 50 ppt height 50 ppt, move center
+# for_window [title="^screensaver$"] fullscreen toggle global
+# for_window [title="^drop_down_term$"] floating enable, resize set width 100 ppt height 60 ppt, move position 0px 0px, move scratchpad
+# for_window [title="^pulsemixer_term$"] floating enable, resize set width 36 ppt height 39 ppt, move center
+#use a particular application's built-in window decorations over the sway
+#borders
+for_window [app_id="firefoxdeveloperedition"] focus,layout tabbed,border none
+assign [app_id="firefoxdeveloperedition"]  $ws2
+bindsym $mod+f exec firefox-developer-edition
+
+for_window [app_id="kitty"] border none
+assign [app_id="kitty"] $ws1
+
+for_window [app_id="mpv"] fullscreen enable,border none,focus
+assign [app_id="mpv"] $ws3
+
+# Your preferred application launcher
+# Note: pass the final command to swaymsg so that the resulting window can be opened
+# on the original workspace that the command was run on.
+set $menu $term --class="menu_launcher" -c -e zsh -c "printenv PATH | xargs -d : -I {} -r find -L {} -maxdepth 1 -type f -executable -printf '%f\n' 2>/dev/null| sort -u | fzf | xargs -r swaymsg -t command exec"
+for_window [app_id="menu_launcher"] floating enable, border none, resize set width 1000 px height 150 px,move position 0 px 0 px,focus
+
+set $menu_desktop $term --class="desktop_laucher" -e zsh -c "find /usr/share/applications -name '*.desktop' | xargs basename -s '.desktop' -a | fzf | xargs -r swaymsg -t command exec gtk-launch"
+
+for_window [app_id="desktop_laucher"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 10,focus
+# Start your launcher
+bindsym $mod+d exec $menu_desktop
+
+set $file_manager $term --class="nnn" -e zsh -cl "nnn -are;$SHELL" #this is to execute nnn -are in the -e zsh -cl then start a SHELL in the background
+
+for_window [app_id="nnn"] border none,focus
+assign [app_id="nnn"] $ws4
+
+bindsym $mod+e exec $file_manager
+
+# Bind App to workspace
+# Check class by : xprop
+# swaymsg -t get_tree
+
 # Layout stuff:
 #
 # You can "split" the current object of your focus with
@@ -171,7 +197,7 @@ bindsym $mod+v splitv
 
 # Switch the current container between different layout styles
 bindsym $mod+t layout tabbed
-bindsym $mod+e layout toggle split
+bindsym $mod+slash layout toggle split
 
 # Make the current focus fullscreen
 #bindsym $mod+f+s fullscreen
@@ -290,26 +316,6 @@ gsettings set $gnome-schema font-name 'JetBrains Mono Regular Nerd Font Complete
 
 # # Shutdown, Reboot, Lock Screen, and Logout
 
-#window rules for my menu popup and drop down terminal using the scratchpad
-# for_window [title="^menu_term$"] floating enable, resize set width 50 ppt height 50 ppt, move center
-# for_window [title="^screensaver$"] fullscreen toggle global
-# for_window [title="^drop_down_term$"] floating enable, resize set width 100 ppt height 60 ppt, move position 0px 0px, move scratchpad
-# for_window [title="^pulsemixer_term$"] floating enable, resize set width 36 ppt height 39 ppt, move center
-#use a particular application's built-in window decorations over the sway
-#borders
-for_window [app_id="firefoxdeveloperedition"] focus,layout tabbed,border none
-assign [app_id="firefoxdeveloperedition"]  $ws2
-bindsym $mod+f exec firefox-developer-edition
-
-for_window [app_id="kitty"] border none,focus
-assign [app_id="kitty"] $ws1
-
-for_window [app_id="mpv"] fullscreen enable,border none
-assign [app_id="mpv"] $ws3
-# Bind App to workspace
-# Check class by : xprop
-# swaymsg -t get_tree
-
 #hide mouse on inactivity
 seat * hide_cursor 10000
 seat * hide_cursor when-typing enable
@@ -348,7 +354,7 @@ hide_edge_borders --i3 smart
 font pango: JetBrainsMono Nerd Font 11
 
 #Autostart
-exec kitty --session $DOTFILES/kitty/session.conf
+#exec kitty --session $DOTFILES/kitty/session.conf
 
 #Include sway systemd configuration and environment variables
 include /etc/sway/config.d/*
@@ -359,3 +365,4 @@ exec systemctl --user start sway-session.target
 
 #for sway's output to be handled by journald
 #exec systemd-cat --identifier=sway sway
+exec eval `ssh-agent`
