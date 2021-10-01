@@ -9,6 +9,7 @@ ExecStart=/usr/bin/swayidle -w \
             timeout 300 'swaylock -f -c 000000' \
             timeout 600 'swaymsg "output * dpms off"' \
             resume 'swaymsg "output * dpms on"' \
+            lock 'swaylock -f -c 000000 -i ~/Pictures/Code/27106459-coding-wallpapers.png && systemctl suspend' \
             before-sleep 'swaylock -f -c 000000 -i ~/Pictures/Code/27106459-coding-wallpapers.png'
 
 [Install]
