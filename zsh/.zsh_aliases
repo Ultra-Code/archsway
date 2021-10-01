@@ -36,13 +36,17 @@ alias ea="$EDITOR $ZDOTDIR/.zsh_aliases"
 #edit $XDG_CONFIG_HOME/sway/config
 alias es="$EDITOR $DOTFILES/sway/config"
 #Aptitude aliases
-alias apu='sudo aptitude update'
-alias apf='sudo aptitude safe-upgrade'
-alias app='sudo aptitude purge'
-alias api='sudo aptitude install'
-alias aps='aptitude show'
-alias aph='aptitude search'
-alias apw='aptitude why'
+alias pu='_ pacman -Syu'
+alias pp='_ pacman -Rsn'
+alias pi='_ pacman -S'
+alias pii='pacman -Qi'
+alias pis='pacman -Qs'
+alias ps='pacman -Ss'
+alias psi='pacman -Si'
+alias pl='pacman -Qe'
+alias ply='pacman -Qmq'
+alias ppb='pacman -Qo'
+alias pc='_ pacman -Qdtq|_ pacman -Rsn -'
 
 #Nix aliases
 alias nix-shell="nix-shell --command zsh"
@@ -81,7 +85,11 @@ alias 7='cd -7'
 alias 8='cd -8'
 alias 9='cd -9'
 
-alias lsblk="lsblk -oPATH,MOUNTPOINTS,LABEL,FSTYPE,SIZE,FSAVAIL,FSUSED,PARTUUID,MAJ:MIN"
+alias lb="lsblk -oPATH,MOUNTPOINTS,LABEL,FSTYPE,SIZE,FSAVAIL,FSUSED,PARTUUID,MAJ:MIN"
 
-alias n='nnn -a'
+#alias n='nnn -a -P p'
 alias ln='ln -sf'
+alias r='ranger'
+
+alias cp='cpg -g'
+alias mv='mvg -g'
