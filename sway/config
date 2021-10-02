@@ -6,7 +6,7 @@ xwayland disable
 
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
-set $mod1 Mod1
+set $AltMod Mod1
 
 ### Output configuration
 ### Set random wallpaper
@@ -22,7 +22,7 @@ output * bg `find $wallpapers_path -type f | shuf -n 1` fill
 ### Idle configuration
 set $lock_bg ~/Pictures/Code/27106459-coding-wallpapers.png
 
-bindsym Alt+l exec swaylock -i $lock_bg
+bindsym $AltMod+l exec swaylock -i $lock_bg
 
 # exec swayidle -w \
 #          timeout 300 'swaylock -f -c 000000' \
@@ -94,7 +94,7 @@ mode "$mode_system" {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-bindsym $mod+s mode "$mode_system"
+bindsym $AltMod+m mode "$mode_system"
 
 # Moving around:
 # Move your focus around
