@@ -49,4 +49,6 @@ setopt CORRECT
 #MISC
 # Don't send SIGHUP to background processes when the shell exits.
 setopt NOHUP
+# avoid "beep"ing
+setopt NOBEEP
 
