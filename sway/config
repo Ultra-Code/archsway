@@ -71,7 +71,7 @@ bindsym $mod+Shift+q kill
 floating_modifier $mod normal
 
 # Reload the configuration file
-bindsym $mod+Shift+c reload
+bindsym $mod+r reload
 
 # Exit sway (logs you out of your Wayland session)
 bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
@@ -176,7 +176,7 @@ for_window [app_id="desktop_laucher"] floating enable, sticky enable, resize set
 # Start your launcher
 bindsym $mod+d exec $menu_desktop
 
-set $file_manager $term --class="nnn" -e zsh -cl "nnn -are;$SHELL" #this is to execute nnn -are in the -e zsh -cl then start a SHELL in the background
+set $file_manager $term --class="nnn" -e zsh -cl "nnn;$SHELL" #this is to execute nnn -are in the -e zsh -cl then start a SHELL in the background
 
 for_window [app_id="nnn"] border none,focus
 assign [app_id="nnn"] $ws4
@@ -239,7 +239,7 @@ bindsym Right resize grow width 10px
 bindsym Return mode "default"
 bindsym Escape mode "default"
 }
-bindsym $mod+r mode "resize"
+bindsym $AltMod+r mode "resize"
 
 bindsym --release Print exec grim $HOME/Pictures/"Captura de pantalla de $(date +%F_%X).png" #Take screenshot of a window
 bindsym --release Shift+Print exec grim -g "$(slurp)" $HOME/Pictures/"Captura de pantalla de $(date +%F_%X).png" #Take a screenshot of a region of a window
