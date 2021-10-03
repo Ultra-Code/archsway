@@ -1,5 +1,5 @@
 #use wayland for firefox
-export MOZ_ENABLE_WAYLAND=1
+#export MOZ_ENABLE_WAYLAND=1
 
 #use wayland for qt apps
 #export QT_QPA_PLATFORM=wayland-egl
@@ -33,8 +33,11 @@ export XDG_RUNTIME_DIR=/run/user/$UID
 # add local man pages to manpath
 export MANPATH="/usr/share/man:/usr/local/share/man:$XDG_DATA_HOME/man"
 
-#theme qt apps with adawaita
-export QT_STYLE_OVERRIDE=Adwaita-Dark
+#style qt apps with adwaita
+export QT_STYLE_OVERRIDE=Adwaita-dark
+
+#style gtk apps with Adwaita dark variant
+export GTK_THEME=Adwaita:dark
 
 #set DOTFILES for personal config root directory
 export DOTFILES="$HOME/.dotfiles"
@@ -46,8 +49,10 @@ export ZSH_ALIASES="$ZDOTDIR/.zsh_aliases"
 
 
 export HISTFILE="$ZDOTDIR/.zsh_history"    # History filepath
-export HISTSIZE=1000000000              # Refers to the maximum number of commands that are loaded into memory from the history file
-export SAVEHIST=1000000000              # Refers to the Maximum number of commands that are stored in the zsh history
+# The maximum number of events stored in the internal history list
+export HISTSIZE=1000
+# Refers to the Maximum number of commands that are stored in the zsh history
+export SAVEHIST=1000000000
 
 #skip pattern at history write time
 export HISTORY_IGNORE="(z|mv|rm|cp|l|vi|man|ln|tar|mkdir|cat|tree|git|g|.|~|d|a|-|np|e|print)*"
