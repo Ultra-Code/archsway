@@ -27,27 +27,6 @@
         "disable-scroll": true,
         "all-outputs": true,
         "disable-click": true
-        /* "format": "{name}: {icon}",
-        "format-icons": {
-                        "1": "", // Icon: terminal
-            "2": "", // Icon: code
-            "3": "龜", // Icon: firefox-browser
-            "4": "", // Icon: play-circle
-            "5": "", // Icon: mail
-            "6": "", // Icon: book
-            "10": "", // Icon: cloud-download-alt
-         "1:term": "",
-            "2:web": " ",
-            "3:code": " ",
-            "4:media": "",
-            "5:work": " ",
-            "6:docs": "",
-            "7": "",
-            "8": "",
-            "urgent": "",
-            "focused": "",
-            "default": ""
-        }*/
     },
     "sway/window": {
         "format": " {}"
