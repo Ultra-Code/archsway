@@ -20,9 +20,6 @@ output * bg `find $wallpapers_path -type f | shuf -n 1` fill
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
 ### Idle configuration
-set $lock_bg ~/Pictures/Code/27106459-coding-wallpapers.png
-
-bindsym $AltMod+l exec swaylock -i $lock_bg
 
 # exec swayidle -w \
 #          timeout 300 'swaylock -f -c 000000' \
@@ -82,7 +79,7 @@ bindsym $mod+l $lock_screen
 
 # set $mode_system System: (l) lock, (e) logout, (s) suspend, (r) reboot, (S) shutdown, (R) UEFI
 mode "$mode_system" {
-    bindsym l exec swaylock -i ~/Pictures/Code/430892.png , mode "default"
+    bindsym l exec swaylock -i ~/Pictures/Code/27106459-coding-wallpapers.png, mode "default"
     bindsym e exit
     bindsym s exec  systemctl hybrid-sleep,mode "default"
     bindsym r exec  systemctl reboot,mode "default"
@@ -112,13 +109,22 @@ bindsym $mod+Shift+Right move right
 # Workspaces:
 #
 # Switch to workspace
-set $ws1 "1:   "
-set $ws2 "2:   "
-set $ws3 "3:   "
-set $ws4 "4:   "
-set $ws5 "5:   "
-set $ws6 "6:   "
-set $ws7 "7:   "
+ # alt-icon 
+set $ws1 "  "
+ # 龜
+set $ws2 "  "
+set $ws3 "  "
+set $ws4 "  "
+# 
+set $ws5 "  "
+set $ws6 "  "
+set $ws7 "  "
+# 
+set $ws8 "  "
+# 
+set $ws9 "  "
+# 
+set $irc "  "
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace $ws2
 bindsym $mod+3 workspace $ws3
@@ -292,10 +298,10 @@ bindsym XF86MonBrightnessUp exec brightnessctl set +1%
 #GTK theme and font
 set $gnome-schema org.gnome.desktop.interface
 exec {
-gsettings set $gnome-schema gtk-theme 'Adwaita-dark'
+gsettings set $gnome-schema gtk-theme 'Adwaita:dark'
 gsettings set $gnome-schema icon-theme 'Adwaita'
 gsettings set $gnome-schema cursor-theme 'Adwaita'
-gsettings set $gnome-schema font-name 'JetBrains Mono Regular Nerd Font Complete Mono'
+gsettings set $gnome-schema font-name 'JetBrainsMono Nerd Font Mono 11'
 }
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -351,7 +357,7 @@ hide_edge_borders --i3 smart
 #client.focused_inactive	#262626 #262626 #262626 #262626 #262626
 
 # Font
-font pango: JetBrainsMono Nerd Font 11
+font pango: JetBrainsMono Nerd Font Mono 11
 
 #Autostart
 #exec kitty --session $DOTFILES/kitty/session.conf
