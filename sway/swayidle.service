@@ -6,10 +6,10 @@ PartOf=graphical-session.target
 [Service]
 Type=simple
 ExecStart=/usr/bin/swayidle -w \
-            timeout 300 'swaylock -f -c 000000' \
+            timeout 300 'swaylock -f -c 000000 -i ~/Pictures/Code/27106459-coding-wallpapers.png' \
             timeout 600 'swaymsg "output * dpms off"' \
+            timeout 660 'systemctl suspend' \
             resume 'swaymsg "output * dpms on"' \
-            lock 'swaylock -f -c 000000 -i ~/Pictures/Code/27106459-coding-wallpapers.png && systemctl suspend' \
             before-sleep 'swaylock -f -c 000000 -i ~/Pictures/Code/27106459-coding-wallpapers.png'
 
 [Install]
