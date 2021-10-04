@@ -73,10 +73,6 @@ bindsym $mod+r reload
 # Exit sway (logs you out of your Wayland session)
 bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 
-set $lock_screen swaylock -f -c 000000 && systemctl suspend
-bindsym $mod+l $lock_screen
-# Hibernate
-
 # set $mode_system System: (l) lock, (e) logout, (s) suspend, (r) reboot, (S) shutdown, (R) UEFI
 mode "$mode_system" {
     bindsym l exec swaylock -i ~/Pictures/Code/27106459-coding-wallpapers.png, mode "default"
@@ -368,7 +364,3 @@ include /etc/sway/config.d/*
 #start sway target
 #exec "systemctl --user import-environment; systemctl --user start sway-session.target"
 exec systemctl --user start sway-session.target
-
-#for sway's output to be handled by journald
-#exec systemd-cat --identifier=sway sway
-exec eval `ssh-agent`
