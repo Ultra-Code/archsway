@@ -96,5 +96,6 @@ export NNN_FCOLORS="$BLK$CHR$DIR$EXE$REG$HARDLINK$SYMLINK$MISSING$ORPHAN$FIFO$SO
 
 
 if [[ -z $WAYLAND_DISPLAY && $(tty) == /dev/tty1 ]]; then
+#for sway's output to be handled by journald
       exec systemd-cat --identifier=sway sway
 fi
