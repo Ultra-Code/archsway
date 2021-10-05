@@ -11,7 +11,7 @@ set $AltMod Mod1
 ### Output configuration
 ### Set random wallpaper
 set $wallpapers_path $HOME/Pictures/Code
-output * bg `find $wallpapers_path -type f | shuf -n 1` fill
+output * bg $(find $wallpapers_path -type f | shuf -n 1) fill
 
 # Example configuration:
 #
@@ -245,7 +245,7 @@ bindsym $AltMod+r mode "resize"
 
 bindsym --release Print exec grim $HOME/Pictures/"Captura de pantalla de $(date +%F_%X).png" #Take screenshot of a window
 bindsym --release Shift+Print exec grim -g "$(slurp)" $HOME/Pictures/"Captura de pantalla de $(date +%F_%X).png" #Take a screenshot of a region of a window
-bindsym --release Control_L+Print exec grim - | wl-copy #Take a screenshot and copy to clipboard
+bindsym --release Control+Print exec grim - | wl-copy #Take a screenshot and copy to clipboard
 
 # Status Bar:
 # Read `man 5 sway-bar` for more information about this section.
