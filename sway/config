@@ -70,13 +70,13 @@ floating_modifier $mod normal
 # Reload the configuration file
 bindsym $mod+r reload
 
-# Exit sway (logs you out of your Wayland session)
-bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 
-# set $mode_system System: (l) lock, (e) logout, (s) suspend, (r) reboot, (S) shutdown, (R) UEFI
-mode "$mode_system" {
+# set $power_mangement System: (l) lock, (e) logout, (s) suspend, (r) reboot, (S) shutdown, (R) UEFI
+set $power_mangement "power_mangement"
+mode $power_mangement {
     bindsym l exec swaylock -i ~/Pictures/Code/27106459-coding-wallpapers.png, mode "default"
-    bindsym e exit
+    # Exit sway (logs you out of your Wayland session)
+    bindsym e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
     bindsym s exec  systemctl hybrid-sleep,mode "default"
     bindsym r exec  systemctl reboot,mode "default"
     bindsym Shift+s exec  systemctl poweroff -i, mode "default"
@@ -87,7 +87,7 @@ mode "$mode_system" {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-bindsym $AltMod+m mode "$mode_system"
+bindsym $AltMod+p mode $power_mangement
 
 # Moving around:
 # Move your focus around
@@ -106,43 +106,42 @@ bindsym $mod+Shift+Right move right
 #
 # Switch to workspace
  # alt-icon 
-set $ws1 "  "
+set $terminal    "1:  "
  # 龜
-set $ws2 "  "
-set $ws3 "  "
-set $ws4 "  "
-# 
-set $ws5 "  "
-set $ws6 "  "
-set $ws7 "  "
+set $browser     "2:  "
 # 
-set $ws8 "  "
+set $mpv         "3:  "
+set $coding      "4:  "
+set $filemanager "5:  "
+# 
+set $utility     "6:  "
+set $downloads   "7:  "
 # 
-set $ws9 "  "
+set $documents   "8:  "
 # 
-set $irc "  "
-bindsym $mod+1 workspace $ws1
-bindsym $mod+2 workspace $ws2
-bindsym $mod+3 workspace $ws3
-bindsym $mod+4 workspace $ws4
-bindsym $mod+5 workspaperiod
-bindsym $mod+6 workspace $ws6
-bindsym $mod+7 workspace $ws7
-bindsym $mod+8 workspace 8
-bindsym $mod+9 workspace 9
+set $chating     "9:  "
+bindsym $mod+1 workspace $terminal
+bindsym $mod+2 workspace $browser
+bindsym $mod+3 workspace $mpv
+bindsym $mod+4 workspace $coding
+bindsym $mod+5 workspape $filemanager
+bindsym $mod+6 workspace $utility
+bindsym $mod+7 workspace $downloads
+bindsym $mod+8 workspace $documents
+bindsym $mod+9 workspace $chating
 bindsym $mod+0 workspace 10
 bindsym $mod+Shift+Tab workspace prev
 bindsym $mod+Tab workspace next
 # Move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace $ws1
-bindsym $mod+Shift+2 move container to workspace $ws2
-bindsym $mod+Shift+3 move container to workspace $ws3
-bindsym $mod+Shift+4 move container to workspace $ws4
-bindsym $mod+Shift+5 move container to workspace $ws5
-bindsym $mod+Shift+6 move container to workspace $ws6
-bindsym $mod+Shift+7 move container to workspace $ws7
-bindsym $mod+Shift+8 move container to workspace 8
-bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+1 move container to workspace $terminal
+bindsym $mod+Shift+2 move container to workspace $browser
+bindsym $mod+Shift+3 move container to workspace $mpv
+bindsym $mod+Shift+4 move container to workspace $coding
+bindsym $mod+Shift+5 move container to workspace $filemanager
+bindsym $mod+Shift+6 move container to workspace $utility
+bindsym $mod+Shift+7 move container to workspace $downloads
+bindsym $mod+Shift+8 move container to workspace $documents
+bindsym $mod+Shift+9 move container to workspace $chating
 bindsym $mod+Shift+0 move container to workspace 10
 bindsym $mod+period  move container to workspace next
 bindsym $mod+comma   move container to workspace prev
@@ -157,14 +156,20 @@ bindsym $mod+comma   move container to workspace prev
 #use a particular application's built-in window decorations over the sway
 #borders
 for_window [app_id="firefoxdeveloperedition"] focus,layout tabbed,border none
-assign [app_id="firefoxdeveloperedition"]  $ws2
+assign [app_id="firefoxdeveloperedition"]  $browser
 bindsym $mod+f exec firefox-developer-edition
 
 for_window [app_id="kitty"] border none
-assign [app_id="kitty"] $ws1
+assign [app_id="kitty"] $terminal
 
 for_window [app_id="mpv"] fullscreen enable,border none,focus
-assign [app_id="mpv"] $ws3
+assign [app_id="mpv"] $mpv
+
+for_window [app_id="libreoffice-*"] focus,layout tabbed
+assign [app_id="libreoffice-*"] $documents
+
+for_window [app_id="org.pwmt.zathura"] focus,layout tabbed
+assign [app_id="org.pwmt.zathura"] $documents
 
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
@@ -181,7 +186,7 @@ bindsym $mod+d exec $menu_desktop
 set $file_manager $term --class="nnn" -e zsh -cl "nnn;$SHELL" #this is to execute nnn -are in the -e zsh -cl then start a SHELL in the background
 
 for_window [app_id="nnn"] border none,focus
-assign [app_id="nnn"] $ws4
+assign [app_id="nnn"] $filemanager
 
 bindsym $mod+e exec $file_manager
 
