@@ -4,8 +4,6 @@ KERNEL=="ADP?", SUBSYSTEM=="power_supply", ATTR{online}=="1",  GOTO="AC_POWER"
 
 RUN+="/bin/zsh -c 'echo  power > /sys/devices/system/cpu/cpufreq/policy?/energy_performance_preference'"
 
-RUN+="/bin/zsh -c 'echo  powersupersave > /sys/module/pcie_aspm/parameters/policy'"
-
 RUN+="/bin/zsh -c 'echo  med_power_with_dipm > /sys/class/scsi_host/host?/link_power_management_policy'"
 
 RUN+="/bin/zsh -c 'echo  powersave > /sys/devices/system/cpu/cpu?/cpufreq/scaling_governor'"
@@ -25,8 +23,6 @@ GOTO="END"
 LABEL="AC_POWER"
 
 RUN+="/bin/zsh -c 'echo  performance > /sys/devices/system/cpu/cpufreq/policy?/energy_performance_preference'"
-
-RUN+="/bin/zsh -c 'echo  performance > /sys/module/pcie_aspm/parameters/policy'"
 
 RUN+="/bin/zsh -c 'echo  max_performance > /sys/class/scsi_host/host?/link_power_management_policy'"
 
