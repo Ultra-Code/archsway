@@ -1,6 +1,6 @@
 ACTION!="change|add",GOTO="END"
 
-KERNEL=="ADP?", SUBSYSTEM=="power_supply", ATTR{online}=="1",  GOTO="AC_POWER"
+ENV{POWER_SUPPLY_NAME}=="ADP1", ENV{POWER_SUPPLY_ONLINE}=="1",SUBSYSTEM=="power_supply",  GOTO="AC_POWER"
 
 RUN+="/bin/zsh -c 'echo  power > /sys/devices/system/cpu/cpufreq/policy?/energy_performance_preference'"
 
