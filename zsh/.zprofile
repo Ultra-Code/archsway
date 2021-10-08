@@ -85,6 +85,10 @@ export NNN_OPTS=ae
 #NNN list of used plugins
 export NNN_PLUG='p:preview-tui;u:getplugs;c:fzcd;j:autojump'
 
+#set NNN_PREVIEWDIR to non volatile dir like $XDG_CACHE_HOME/nnn/previews
+#if you want to keep previews on disk between reboots
+export NNN_PREVIEWDIR=$XDG_CACHE_HOME/nnn/previews
+
 #ENABLE file icons
 export ICONLOOKUP=1
 
