@@ -1,6 +1,5 @@
 [Match]
-Description=name of interface
-#en=ethernet on pci bus 00 slot 20 which has multiple functions 
+#en=ethernet on pci bus 00 slot 20 which has multiple functions
 #and we are using function 0 .ie f0 and on port * .ie u*
 Name=enp0s20f0u*
 #Space separated list of mac addresses
