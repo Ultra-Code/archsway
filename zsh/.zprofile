@@ -1,40 +1,5 @@
-#use wayland for firefox
-#export MOZ_ENABLE_WAYLAND=1
-
-#use wayland for qt apps
-#export QT_QPA_PLATFORM=wayland-egl
-
 #Set up path for interactive envirionment
 export PATH=$HOME/.local/bin:$PATH
-
-# set language
-export LANG=es_US.UTF-8
-
-# set shell
-export SHELL=/usr/bin/zsh
-
-#directory where user-specific configuration files should be written
-export XDG_CONFIG_HOME=$HOME/.config
-
-#defines the preference-ordered set of base directories to search
-#for configuration files in addition to the $XDG_CONFIG_HOME base directory
-export XDG_CONFIG_DIR=$HOME/.config:/etc/xdg
-
-#dir where user-specific data files should be written
-export XDG_DATA_HOME=$HOME/.local/share
-
-#defines the preference-ordered set of base directories to search for
-#data files in addition to the $XDG_DATA_HOME base directory
-export XDG_DATA_DIRS=/usr/local/share:/usr/share:$HOME/.nix-profile/share
-
-#dir where user-specific non-essential (cached) data should be written
-export XDG_CACHE_HOME=$HOME/.cache
-
-#Used for non-essential, user-specific data files such as sockets, named pipes
-export XDG_RUNTIME_DIR=/run/user/$UID
-
-# add local man pages to manpath
-export MANPATH=/usr/share/man:/usr/local/share/man:$XDG_DATA_HOME/man
 
 #style qt apps with adwaita
 export QT_STYLE_OVERRIDE=Adwaita-dark
@@ -49,7 +14,6 @@ export DOTFILES=$HOME/.dotfiles
 export ZDOTDIR=$DOTFILES/zsh
 
 export ZSH_ALIASES=$ZDOTDIR/.zsh_aliases
-
 
 export HISTFILE=$ZDOTDIR/.zsh_history    # History filepath
 # The maximum number of events stored in the internal history list
@@ -68,8 +32,6 @@ fi
 
 export EDITOR=nvim
 export VISUAL=nvim
-
-export PROGRESS_ARGS='--monitor --wait'
 
 export FZF_DEFAULT_OPTS='--multi --cycle --height 60% --layout=reverse --border=rounded --info=inline'
 export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
@@ -107,7 +69,7 @@ if [[ ! $SSH_AUTH_SOCK ]]; then
     source $XDG_RUNTIME_DIR/ssh-agent.env >/dev/null
 fi
 
-if [[ -z $WAYLAND_DISPLAY && $(tty) == /dev/tty1 ]]; then
+if [[ $(tty) == /dev/tty1 ]]; then
 #for sway's output to be handled by journald
       exec systemd-cat --identifier=sway sway
 fi
