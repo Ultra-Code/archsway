@@ -10,6 +10,7 @@ enable DNSOverTLS for resolved
 iwd for wifi and enable it dhcp client
 symlink /run/systemd/resolve/stub-resolv.con to /etc/resolv.conf for dns resolution
 disable unneeded services that run at boot like man-db.timer and mask ldconfig.service,systemd-rfkill*
+disable journaling to persistent storage by setting Storage in journal.conf to volatile and masking systemd-journal-flush.service
 link kitty to xterm
 configure hardware acceleration and Intel_graphics and Intel_GVT-g
 enable powersaving options
