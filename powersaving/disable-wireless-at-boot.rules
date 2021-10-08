@@ -1,5 +1,11 @@
+ACTION!="add",GOTO="END"
+
 # disable bluetooth
+# apply rule only on buot up with ACTION add
 SUBSYSTEM=="rfkill", ATTR{type}=="bluetooth", ATTR{soft}=="0", ATTR{state}="0"
+#SUBSYSTEM=="rfkill", ENV{RFKILL_TYPE}=="bluetooth", ENV{RFKILL_STATE}="0"
 
 # disable wlan
 SUBSYSTEM=="rfkill", ATTR{type}=="wlan", ATTR{soft}=="0", ATTR{state}="0"
+
+LABEL="END"
