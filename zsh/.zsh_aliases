@@ -7,7 +7,8 @@ alias rf='rm -rf'
 alias _='sudo'
 
 alias grep='grep --color'
-alias egrep='egrep --color'
+alias egrep='grep -P' #USE grep in PCRE mode
+alias sed="sed -E" #use sed with ERX mode
 
 alias gs='git status'
 alias ga='git add'
@@ -42,7 +43,7 @@ alias pp='_ pacman -Rcuns'
 alias pi='_ pacman -S'
 alias pii='pacman -Qi'
 alias pis='pacman -Qs'
-alias ps='pacman -Ss'
+alias pss='pacman -Ss'
 alias psi='pacman -Si'
 alias pl='pacman -Qe'
 alias plf='pacman -Ql'
