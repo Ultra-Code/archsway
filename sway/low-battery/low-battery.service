@@ -1,0 +1,6 @@
+[Unit]
+Description=low battery notification service for sway using swaynag
+
+[Service]
+Type=forking
+ExecStart=%E/systemd/user/low-battery.sh

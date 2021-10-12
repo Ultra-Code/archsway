@@ -1,0 +1,11 @@
+[Unit]
+Description=low battery notification timer for sway using swaynag
+Requires=sway-session.target
+After=sway-session.target
+
+[Timer]
+OnCalendar=minutely
+
+
+[Install]
+WantedBy=sway-session.target
