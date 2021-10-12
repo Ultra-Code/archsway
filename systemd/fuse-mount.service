@@ -1,0 +1,10 @@
+[Unit]
+Description=Mount mtp device with android file transfer
+
+[Service]
+Type=forking
+ExecStart=/bin/aft-mtp-mount /home/ultracode/phone
+ExecStop=/bin/fusermount -u  /home/ultracode/phone
+
+[Install]
+WantedBy=multi-user.target
