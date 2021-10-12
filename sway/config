@@ -248,9 +248,11 @@ bindsym Escape mode "default"
 }
 bindsym $AltMod+r mode "resize"
 
-bindsym --release Print exec grim $HOME/Pictures/"Captura de pantalla de $(date +%F_%X).png" #Take screenshot of a window
-bindsym --release Shift+Print exec grim -g "$(slurp)" $HOME/Pictures/"Captura de pantalla de $(date +%F_%X).png" #Take a screenshot of a region of a window
-bindsym --release Control+Print exec grim - | wl-copy #Take a screenshot and copy to clipboard
+set $scree_shot_sound paplay /usr/share/sounds/freedesktop/stereo/screen-capture.oga
+
+bindsym --release Print exec grim $HOME/Pictures/"Captura de pantalla de $(date +%F_%X).png" && $scree_shot_sound #Take screenshot of a window
+bindsym --release Shift+Print exec grim -g "$(slurp)" $HOME/Pictures/"Captura de pantalla de $(date +%F_%X).png" && $scree_shot_sound #Take a screenshot of a region of a window
+bindsym --release Control+Print exec grim - | wl-copy  && $scree_shot_sound #Take a screenshot and copy to clipboard
 
 # Status Bar:
 # Read `man 5 sway-bar` for more information about this section.
