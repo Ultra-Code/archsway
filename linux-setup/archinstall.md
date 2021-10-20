@@ -18,6 +18,9 @@ add resume kernel parameter to the boot loader and resume hook to to
 mkinitcpio.conf and rebuild kernel for hibernation and it variant to work
 modify relector configuration in /etc/xdg/reflector/reflector.conf to sort
 based on download rate with --sort rate
+add %ultracode ALL=(ALL) ALL and Defaults:ultracode timestamp_timeout=30 to
+sudoers using visudo to allow ultracode access to all command and password
+cache for 30 min
 
 #INSTALLS
 install mesa as dri userspace driver and intel-media-driver as va-api for intel
