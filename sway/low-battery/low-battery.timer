@@ -4,8 +4,7 @@ Requires=sway-session.target
 After=sway-session.target
 
 [Timer]
-OnCalendar=minutely
-
+OnUnitActiveSec=3 minutes
 
 [Install]
 WantedBy=sway-session.target
