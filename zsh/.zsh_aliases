@@ -37,20 +37,20 @@ alias ea="$EDITOR $ZDOTDIR/.zsh_aliases"
 #edit $XDG_CONFIG_HOME/sway/config
 alias es="$EDITOR $DOTFILES/sway/config"
 #Aptitude aliases
-alias pu='_ pacman -Syu'
-alias pr='_ pacman -Rsn'
-alias pp='_ pacman -Rcuns'
-alias pi='_ pacman -S'
-alias pii='pacman -Qi'
-alias pis='pacman -Qs'
-alias pss='pacman -Ss'
-alias psi='pacman -Si'
-alias pl='pacman -Qe'
-alias plf='pacman -Ql'
-alias ply='pacman -Qmq'
-alias ppb='pacman -Qo'
-alias pc='_ pacman -Qdtq| _ pacman -Rsn -'
-alias pcc='_ pacman -Sc'
+alias pmu='_ pacman -Syu'
+alias pmr='_ pacman -Rsn'
+alias pmp='_ pacman -Rcuns'
+alias pmi='_ pacman -S'
+alias pmii='pacman -Qi'
+alias pmis='pacman -Qs'
+alias pmss='pacman -Ss'
+alias pmsi='pacman -Si'
+alias pml='pacman -Qe'
+alias pmlf='pacman -Ql'
+alias pmly='pacman -Qmq'
+alias pmpb='pacman -Qo'
+alias pmc='_ pacman -Qdtq| _ pacman -Rsn -'
+alias pmcc='_ pacman -Sc'
 
 #Nix aliases
 alias nix-shell="nix-shell --command zsh"

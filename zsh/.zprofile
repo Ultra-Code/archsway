@@ -22,7 +22,7 @@ export HISTSIZE=1000
 export SAVEHIST=1000000000
 
 #skip pattern at history write time
-export HISTORY_IGNORE='(z|mv|rm|cp|l|vi|man|ln|tar|mkdir|cat|tree|git|g|.|~|d|a|-|np|e|print)*'
+export HISTORY_IGNORE='(z|mv|rm|cp|l|vi|man|ln|tar|mkdir|cat|tree|git|g|.|~|d|a|-|np|e|print|pm)*'
 
 # Export default nix envs
 if [[ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]]
