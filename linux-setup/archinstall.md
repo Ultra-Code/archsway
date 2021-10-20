@@ -16,6 +16,8 @@ configure hardware acceleration and Intel_graphics and Intel_GVT-g
 enable powersaving options
 add resume kernel parameter to the boot loader and resume hook to to
 mkinitcpio.conf and rebuild kernel for hibernation and it variant to work
+modify relector configuration in /etc/xdg/reflector/reflector.conf to sort
+based on download rate with --sort rate
 
 #INSTALLS
 install mesa as dri userspace driver and intel-media-driver as va-api for intel
@@ -43,6 +45,7 @@ remove dictd online server in /etc/dict/dict.conf
 yay for AUR packagem mangement
 android-file-transfer with libmtp for connecting android phones mtp management
 clangd with it extra-tools from the clang package for c++ text editor lsp support
+compiledb for generating compile_commands.json
 language servers for development vscode-langservers-extracted lua-language-server @tailwindcss/language-server typescript typescript-language-server @volar/server eslint cppcheck
 stylua for lua formating
 mpd for music deamon and ncmpcpp for ui interface and mpc for controlling playing
@@ -59,6 +62,7 @@ imagemagick for use by kitty for terminal image preview
 zoixide for efficient dir movement
 advcpmv/advcp for cp/mv with progress information
 qt5-wayland for runing qt5 apps under wayland
+pip python package installer
 
 #Configuring
 #Firefox
