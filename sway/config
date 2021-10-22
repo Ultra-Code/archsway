@@ -51,12 +51,6 @@ input * xkb_options compose:ralt
 #
 # Basics:
 #
-# Your preferred terminal emulator
-set $term kitty --single-instance --wait-for-single-instance-window-close
-
-# Start a terminal
-bindsym $mod+Return exec $term
-
 # Kill focused window
 bindsym $mod+Shift+q kill
 
@@ -76,12 +70,12 @@ set $power_mangement "power_mangement"
 mode $power_mangement {
     bindsym l exec swaylock -i ~/Pictures/Code/27106459-coding-wallpapers.png, mode "default"
     # Exit sway (logs you out of your Wayland session)
-    bindsym e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+    bindsym e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit' -s "No", mode "default"
     bindsym s exec  systemctl hybrid-sleep,mode "default"
     bindsym r exec  systemctl reboot,mode "default"
     bindsym Shift+s exec  systemctl poweroff -i, mode "default"
     bindsym Shift+r exec  systemctl reboot --firmware-setup, mode "default"
-    bindsym z exec swaynag -t warning -m 'Sleepy time?!?!' -b 'ZzZz...' 'systemctl suspend-then-hibernate'
+    bindsym z exec swaynag -t warning -m 'Sleepy time?!?!' -b 'ZzZz...' 'systemctl suspend-then-hibernate' -s "No", mode "default"
 
     # return to default mode
     bindsym Return mode "default"
@@ -155,11 +149,11 @@ bindsym $mod+comma   move container to workspace prev
 # for_window [title="^pulsemixer_term$"] floating enable, resize set width 36 ppt height 39 ppt, move center
 #use a particular application's built-in window decorations over the sway
 #borders
-for_window [app_id="firefoxdeveloperedition"] focus,layout tabbed,border none
+for_window [app_id="firefoxdeveloperedition"] focus,layout tabbed
 assign [app_id="firefoxdeveloperedition"]  $browser
 bindsym $mod+f exec firefox-developer-edition
 
-for_window [app_id="kitty"] border none
+for_window [app_id="kitty"] focus
 assign [app_id="kitty"] $terminal
 
 for_window [app_id="mpv"] fullscreen enable,border none,focus
@@ -189,6 +183,18 @@ for_window [app_id="nnn"] border none,focus
 assign [app_id="nnn"] $filemanager
 
 bindsym $mod+e exec $file_manager
+
+# Your preferred terminal emulator
+set $term kitty --single-instance --wait-for-single-instance-window-close
+set $code $term --class="developer" --session $DOTFILES/kitty/session.conf
+
+for_window [app_id="coding"] focus
+assign [app_id="coding"] $coding
+
+bindsym $mod+Shift+Return exec $code
+
+# Start a terminal
+bindsym $mod+Return exec $term
 
 # Bind App to workspace
 # Check class by : xprop
