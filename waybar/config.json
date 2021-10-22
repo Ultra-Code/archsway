@@ -26,7 +26,7 @@
     "sway/workspaces": {
         "disable-scroll": true,
         "all-outputs": true,
-        "disable-click": true
+        "disable-click": false
     },
     "sway/window": {
         "format": " {}"
