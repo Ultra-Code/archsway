@@ -299,7 +299,7 @@ bindsym XF86AudioNext  exec "mpc next"
 bindsym XF86AudioPrev  exec "mpc prev"
 bindsym XF86AudioPause exec "mpc pause"
 #To allow a keybinding to be executed while the lockscreen is active
-bindsym --locked XF86AudioPlay exec "mpc pause"
+bindsym --locked XF86AudioPlay exec "mpc toggle"
 
 #Brightness
 bindsym XF86MonBrightnessDown exec brightnessctl set 1%-
@@ -372,7 +372,7 @@ hide_edge_borders --i3 smart
 font pango: JetBrainsMono Nerd Font Mono 11
 
 #Autostart
-#exec kitty --session $DOTFILES/kitty/session.conf
+#exec_always kitty --single-instance --wait-for-single-instance-window-close
 
 #Include sway systemd configuration and environment variables
 include /etc/sway/config.d/*
