@@ -48,7 +48,7 @@ alias pmsi='pacman -Si'
 alias pml='pacman -Qe'
 alias pmlf='pacman -Ql'
 alias pmly='pacman -Qmq'
-alias pmpb='pacman -Qo'
+alias pmb='pacman -Qo'
 alias pmc='_ pacman -Qdtq| _ pacman -Rsn -'
 alias pmcc='_ pacman -Sc'
 
