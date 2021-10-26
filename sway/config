@@ -165,6 +165,17 @@ assign [app_id="libreoffice-*"] $documents
 for_window [app_id="org.pwmt.zathura"] focus,layout tabbed
 assign [app_id="org.pwmt.zathura"] $documents
 
+for_window [app_id="apvlv"] focus,layout tabbed
+assign [app_id="apvlv"] $documents
+
+# Your preferred terminal emulator
+set $term kitty
+set $code $term --class="coding" --session $DOTFILES/kitty/session.conf
+
+# Start a terminal
+bindsym $mod+Return exec $term
+bindsym $mod+Shift+Return exec $code
+
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -185,17 +196,8 @@ assign [app_id="nnn"] $filemanager
 
 bindsym $mod+e exec $file_manager
 
-# Your preferred terminal emulator
-set $term kitty --single-instance --wait-for-single-instance-window-close
-set $code $term --class="developer" --session $DOTFILES/kitty/session.conf
-
 for_window [app_id="coding"] focus
 assign [app_id="coding"] $coding
-
-bindsym $mod+Shift+Return exec $code
-
-# Start a terminal
-bindsym $mod+Return exec $term
 
 # Bind App to workspace
 # Check class by : xprop
