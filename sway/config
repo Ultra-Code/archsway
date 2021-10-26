@@ -173,9 +173,10 @@ for_window [app_id="menu_launcher"] floating enable, border none, resize set wid
 
 set $menu_desktop $term --class="desktop_laucher" -e zsh -c "find /usr/share/applications -name '*.desktop' | xargs basename -s '.desktop' -a | fzf | xargs -r swaymsg -t command exec gtk-launch"
 
-for_window [app_id="desktop_laucher"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 10,focus
+for_window [app_id="desktop_laucher"] floating enable , resize set 20 ppt 20 ppt,move position 0 ppt 0ppt,border none, focus
+
 # Start your launcher
-bindsym $mod+d exec $menu_desktop
+bindsym $mod+a exec $menu_desktop
 
 set $file_manager $term --class="nnn" -e zsh -cl "nnn;$SHELL" #this is to execute nnn -are in the -e zsh -cl then start a SHELL in the background
 
