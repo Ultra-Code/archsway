@@ -378,5 +378,4 @@ font pango: JetBrainsMono Nerd Font Mono 11
 include /etc/sway/config.d/*
 
 #start sway target
-#exec "systemctl --user import-environment; systemctl --user start sway-session.target"
-exec systemctl --user start sway-session.target
+exec "systemctl --user import-environment WAYLAND_DISPLAY SWAYSOCK; systemctl --user start sway-session.target"
