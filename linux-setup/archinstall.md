@@ -3,7 +3,7 @@ systemd-boot as boot manager
 packman hook for updating systemd-boot on systemd update
 base , dosfstools , btrfs-progs ,exfatprogs,f2fs-tools,intel-ucode,iwd,kitty
 linux-firmware,linux-zen,man-db,man-pages,lynx,neovim,sudo,zsh
-In the freshly installed system use ttf-inconsolata as the prefered font and nerd-fonts-jetbrains-mono from AUR
+In the freshly installed system use ttf-dejavu as the system font and ttf-iosevka-nerd and noto-font-emoji as prefered font
 Use systemd-resolvd and netorkd for networking with it required configuration
 configure dns for 1.1.1.1 but this might not be needed since it's the default on arch linux
 enable DNSOverTLS for resolved
