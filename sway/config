@@ -305,20 +305,6 @@ bindsym --locked XF86AudioPlay exec "mpc toggle"
 bindsym XF86MonBrightnessDown exec brightnessctl set 1%-
 bindsym XF86MonBrightnessUp exec brightnessctl set +1%
 
-#Menu
-#bindsym XF86Search exec bemenu-run
-#GTK theme and font
-set $gnome-schema org.gnome.desktop.interface
-exec {
-gsettings set $gnome-schema gtk-theme 'Adwaita:dark'
-gsettings set $gnome-schema icon-theme 'Adwaita'
-gsettings set $gnome-schema cursor-theme 'Adwaita'
-gsettings set $gnome-schema font-name 'JetBrainsMono Nerd Font Mono 11'
-}
-
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
-
 # Press $mod+o followed by either f, t, Esc or Return to launch firefox,
 # thunderbird or return to the default mode, respectively.
 # set $mode_launcher Launcher
@@ -367,9 +353,6 @@ hide_edge_borders --i3 smart
 # border_images.urgent ~/.config/sway/shadows.png
 #client.unfocused	#262626 #262626 #262626 #262626 #262626
 #client.focused_inactive	#262626 #262626 #262626 #262626 #262626
-
-# Font
-font pango: JetBrainsMono Nerd Font Mono 11
 
 #Autostart
 #exec_always kitty --single-instance --wait-for-single-instance-window-close
