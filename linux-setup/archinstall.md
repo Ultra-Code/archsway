@@ -77,13 +77,15 @@ your user's ID which can be obtained by running id -u to move disk cache to ram
 increase session save interval to 10 minutes (600000 milliseconds) by setting browser.sessionstore.interval to 600000
 pref("media.ffmpeg.vaapi.enabled", true);
 pref("media.ffvpx.enabled", false);
-pref("media.rdd-ffvpx.enabled", false)
-pref("media.rdd-vpx.enabled",false)
+#pref("media.rdd-ffvpx.enabled", false)
+#pref("media.rdd-vpx.enabled",false)
+#pref("media.rdd-ffmpeg.enabled",true)
 pref("media.rdd-process.enabled", false);
 pref("media.navigator.mediadatadecoder_vpx_enabled",true)
 #pref("security.sandbox.content.level", 0); vaapi can be enabled without this option
 
 #Enable webrender compositor
 pref("gfx.webrender.all",true)
-pref("gfx.webrender.compositor.force-enabled",true) //improve webrendering performance
+pref("gfx.webrender.compositor",true)
+#pref("gfx.webrender.compositor.force-enabled",true) //improve webrendering performance but causes ui gliches
 Enable DNS over HTTPS in firefox
