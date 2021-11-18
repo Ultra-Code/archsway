@@ -93,7 +93,6 @@ alias lb="lsblk -oPATH,MOUNTPOINTS,LABEL,FSTYPE,SIZE,FSAVAIL,FSUSED,PARTUUID,MAJ
 
 #alias n='nnn -a -P p'
 alias ln='ln -sf'
-alias r='ranger'
 
 alias cp='cpg -g'
 alias mv='mvg -g'
