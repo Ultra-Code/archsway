@@ -101,27 +101,27 @@ bindsym $mod+Shift+Right move right
 # Switch to workspace
  # alt-icon 
 set $terminal    "1:  "
+set $coding      "2:  "
  # 龜
-set $browser     "2:  "
-# 
-set $mpv         "3:  "
-set $coding      "4:  "
-set $filemanager "5:  "
-# 
-set $utility     "6:  "
-set $downloads   "7:  "
+set $browser     "3:  "
 # 
-set $documents   "8:  "
+set $documents   "4:  "
+set $filemanager "5:  "
+# 
+set $mpv         "6:  "
+# 
+set $utility     "7:  "
+set $downloads   "8:  "
 # 
 set $chating     "9:  "
 bindsym $mod+1 workspace $terminal
-bindsym $mod+2 workspace $browser
-bindsym $mod+3 workspace $mpv
-bindsym $mod+4 workspace $coding
+bindsym $mod+2 workspace $coding
+bindsym $mod+3 workspace $browser
+bindsym $mod+4 workspace $documents
 bindsym $mod+5 workspape $filemanager
-bindsym $mod+6 workspace $utility
-bindsym $mod+7 workspace $downloads
-bindsym $mod+8 workspace $documents
+bindsym $mod+6 workspace $mpv
+bindsym $mod+7 workspace $utility
+bindsym $mod+8 workspace $downloads
 bindsym $mod+9 workspace $chating
 bindsym $mod+0 workspace 10
 bindsym $mod+Shift+Tab workspace prev
