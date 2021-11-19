@@ -16,9 +16,6 @@ setopt SHARE_HISTORY
 setopt AUTO_PUSHD
 #Don't push multiple copies of the same directory onto the directory stack
 setopt PUSHD_IGNORE_DUPS
-#Exchanges the meanings of `+' and `-' when used with a
-#number to specify a directory in the stack.
-setopt PUSHDMINUS
 
 #command is the name of a directory, perform the cd command to that directory
 setopt AUTO_CD
