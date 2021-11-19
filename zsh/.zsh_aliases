@@ -84,7 +84,7 @@ for index ({0..9}) alias $index="cd +${index}"; unset index
 
 alias lb="lsblk -oPATH,MOUNTPOINTS,LABEL,FSTYPE,SIZE,FSAVAIL,FSUSED,PARTUUID,MAJ:MIN"
 
-#alias n='nnn -a -P p'
+alias N='_ -E nnn'
 alias ln='ln -sf'
 
 alias cp='cpg -g'
