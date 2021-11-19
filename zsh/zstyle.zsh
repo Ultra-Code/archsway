@@ -1,6 +1,5 @@
 zstyle ':completion:*' auto-description 'info: %d'
 zstyle ':completion:*' expand prefix
-zstyle ':completion:*' file-sort access
 zstyle ':completion:*' insert-unambiguous true
 zstyle ':completion:*' list-suffixes true
 zstyle ':completion:*' menu select=long
