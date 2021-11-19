@@ -1,12 +1,19 @@
 #use zsh in vim mode
 bindkey -v
 
-#use history-substring-search key bindings
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
+#NOTE:module zsh/complist must be loaded before autoloading compinit
+#hjkl to navigate the completion menu
+#the module complist give you access to menuselect
+#to customize the menu selection during completion
+zmodload zsh/complist
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
 
-bindkey '^[OA' history-substring-search-up
-bindkey '^[OB' history-substring-search-down
+#use vim key bindings kj for scrolling history in vim command mode
+bindkey -M vicmd 'k' vi-up-line-or-history
+bindkey -M vicmd 'j' vi-down-line-or-history
 
 #fzf keybindings for Zsh:
 if [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]; then
