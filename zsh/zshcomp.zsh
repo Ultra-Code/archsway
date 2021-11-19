@@ -6,15 +6,6 @@ fi
 # Completion for kitty
 kitty + complete setup zsh | source /dev/stdin
 
-function d () {
-  if [[ -n $1 ]]; then
-    dirs "$@"
-  else
-    dirs -v | head -10
-  fi
-}
-compdef _dirs d
-
 eval "$(zoxide init zsh)"
 
 n ()

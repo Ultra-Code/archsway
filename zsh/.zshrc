@@ -26,18 +26,9 @@ zinit wait'3' lucid light-mode blockf for \
 zinit wait'3' lucid light-mode blockf for \
     zsh-users/zsh-completions
 
-#compinstall can be use to generate & configure your completion style
-# setup zsh completion system
-autoload -Uz compinit && compinit
-
 if [[ $ZDOTDIR/zoption.zsh ]];
 then
     source $ZDOTDIR/zoption.zsh
-fi
-
-if [[ $ZDOTDIR/zshcomp.zsh ]];
-then
-    source $ZDOTDIR/zshcomp.zsh
 fi
 
 if [[ $ZDOTDIR/zstyle.zsh ]];
@@ -53,4 +44,13 @@ fi
 if [[ $ZDOTDIR/zkeybind.zsh ]];
 then
     source $ZDOTDIR/zkeybind.zsh
+fi
+
+#compinstall can be use to generate & configure your completion style
+# setup zsh completion system
+autoload -Uz compinit && compinit
+
+if [[ $ZDOTDIR/zshcomp.zsh ]];
+then
+    source $ZDOTDIR/zshcomp.zsh
 fi
