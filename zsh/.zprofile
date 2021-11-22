@@ -17,12 +17,12 @@ export ZSH_ALIASES=$ZDOTDIR/.zsh_aliases
 
 export HISTFILE=$ZDOTDIR/.zsh_history    # History filepath
 # The maximum number of events stored in the internal history list
-export HISTSIZE=1000
+export HISTSIZE=15000
 # Refers to the Maximum number of commands that are stored in the zsh history
-export SAVEHIST=1000000000
+export SAVEHIST=10000
 
 #skip pattern at history write time
-export HISTORY_IGNORE='(z|mv|rm|cp|l|vi|man|ln|tar|mkdir|cat|tree|git|g|.|~|d|a|-|np|e|print|pm|yay)*'
+export HISTORY_IGNORE='(vi|man|cat|.|~|npm|printenv|yay|z )*'
 
 # Export default nix envs
 if [[ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]]
