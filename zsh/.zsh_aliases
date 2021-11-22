@@ -1,76 +1,82 @@
-alias ls='ls --color -F'
-alias lsh='ls --hyperlink=auto'
-alias l='ls -Alh'
-alias md='mkdir -p'
-alias rd=rmdir
-alias rf='rm -rf'
+alias ls=' ls --color -F'
+alias lsh=' ls --hyperlink=auto'
+alias l=' ls -Alh'
+alias md=' mkdir -p'
+alias rd=' rmdir -pv'
+alias rm=' rm -rvI'
 alias _='sudo'
+
+alias N=' _ -E nnn'
+alias ln=' ln -sf'
+
+alias cp=' cpg -g'
+alias mv=' mvg -g'
 
 alias grep='grep --color'
 alias egrep='grep -P' #USE grep in PCRE mode
 alias sed="sed -E" #use sed with ERX mode
 
-alias gs='git status'
-alias ga='git add'
-alias gp='git push'
-alias gpu='git pull'
-alias gc='git commit'
-alias gl='git log --graph --oneline --decorate'
-alias glp='git log -p'
-alias gd='git diff'
+alias gs=' git status'
+alias ga=' git add'
+alias gp=' git push'
+alias gpu=' git pull'
+alias gc=' git commit'
+alias gl=' git log --graph --oneline --decorate'
+alias glp=' git log -p'
+alias gd=' git diff'
 
 # open ~/.zshrc in using the default editor specified in $EDITOR
-alias ez="$EDITOR $ZDOTDIR/.zshrc"
+alias ez=" $EDITOR $ZDOTDIR/.zshrc"
 
 #edit ~/.zshenv
-alias ee="$EDITOR $ZDOTDIR/.zshenv"
+alias ee=" $EDITOR $ZDOTDIR/.zshenv"
 
 #edit zprofile
-alias ep="$EDITOR $ZDOTDIR/.zprofile"
+alias ep=" $EDITOR $ZDOTDIR/.zprofile"
 
 #edit ~/.zshenv
-alias eh="$EDITOR $ZDOTDIR/.zsh_history"
+alias eh=" $EDITOR $ZDOTDIR/.zsh_history"
 
 #edit ~/.zsh_aliases
-alias ea="$EDITOR $ZDOTDIR/.zsh_aliases"
+alias ea=" $EDITOR $ZDOTDIR/.zsh_aliases"
 
 #edit $XDG_CONFIG_HOME/sway/config
-alias es="$EDITOR $DOTFILES/sway/config"
+alias es=" $EDITOR $DOTFILES/sway/config"
 #Aptitude aliases
-alias pmu='_ pacman -Syu'
-alias pmr='_ pacman -Rsn'
-alias pmp='_ pacman -Rcuns'
-alias pmi='_ pacman -S'
-alias pmii='pacman -Qi'
-alias pmis='pacman -Qs'
-alias pmss='pacman -Ss'
-alias pmsi='pacman -Si'
-alias pml='pacman -Qe'
-alias pmlf='pacman -Ql'
-alias pmly='pacman -Qmq'
-alias pmb='pacman -Qo'
-alias pmc='_ pacman -Qdtq| _ pacman -Rsn -'
-alias pmcc='_ pacman -Sc'
+alias pmu=' _ pacman -Syu'
+alias pmr=' _ pacman -Rsn'
+alias pmp=' _ pacman -Rcuns'
+alias pmi=' _ pacman -S'
+alias pmii=' pacman -Qi'
+alias pmis=' pacman -Qs'
+alias pmss=' pacman -Ss'
+alias pmsi=' pacman -Si'
+alias pml=' pacman -Qe'
+alias pmlf=' pacman -Ql'
+alias pmly=' pacman -Qmq'
+alias pmb=' pacman -Qo'
+alias pmc=' _ pacman -Qdtq| _ pacman -Rsn -'
+alias pmcc=' _ pacman -Sc'
 
 #Nix aliases
 alias nix-shell="nix-shell --command zsh"
 
 #reload zsh in interactive login mode
 #alias zs='exec env -i SSH_AGENT_PID=$SSH_AGENT_PID SSH_AUTH_SOCK=$SSH_AUTH_SOCK USER=$USER zsh'
-alias zs="exec $SHELL"
+alias zs=" exec $SHELL -l"
 
 #Cmake
-alias cmgen='cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON'
+alias cmgen=' cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON'
 
 #Clang
-alias clf="ln $DOTFILES/clang/.clang-* ."
+alias clf=" ln $DOTFILES/clang/.clang-* ."
 
-alias cldb='b -vn clean update |& compiledb'
+alias cldb=' b -vn clean update |& compiledb'
 
 #Systemd services
-alias enabled_services='systemctl list-unit-files --type=service --state=enabled'
-alias running_services='systemctl list-units  --type=service  --state=running'
-alias all_services='systemctl -at service'
+alias enabled_services=' systemctl list-unit-files --type=service --state=enabled'
+alias running_services=' systemctl list-units  --type=service  --state=running'
+alias all_services=' systemctl -at service'
 
 # Changing/making/removing directory
 alias -g ...='../..'
@@ -78,14 +84,8 @@ alias -g ....='../../..'
 alias -g .....='../../../..'
 alias -g ......='../../../../..'
 
-alias -- -='cd -'
-alias d='dirs -v'
-for index ({0..9}) alias $index="cd +${index}"; unset index
+alias -- -=' cd -'
+alias d=' dirs -v'
+for index ({0..9}) alias $index=" cd +${index}"; unset index
 
-alias lb="lsblk -oPATH,MOUNTPOINTS,LABEL,FSTYPE,SIZE,FSAVAIL,FSUSED,PARTUUID,MAJ:MIN"
-
-alias N='_ -E nnn'
-alias ln='ln -sf'
-
-alias cp='cpg -g'
-alias mv='mvg -g'
+alias lb=" lsblk -oPATH,MOUNTPOINTS,LABEL,FSTYPE,SIZE,FSAVAIL,FSUSED,PARTUUID,MAJ:MIN"
