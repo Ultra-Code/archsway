@@ -31,11 +31,6 @@ then
     source $ZDOTDIR/zoption.zsh
 fi
 
-if [[ $ZDOTDIR/zstyle.zsh ]];
-then
-    source $ZDOTDIR/zstyle.zsh
-fi
-
 if [[ $ZSH_ALIASES ]];
 then
     source $ZSH_ALIASES
@@ -49,6 +44,11 @@ fi
 #compinstall can be use to generate & configure your completion style
 # setup zsh completion system
 autoload -Uz compinit && compinit
+
+if [[ $ZDOTDIR/zstyle.zsh ]];
+then
+    source $ZDOTDIR/zstyle.zsh
+fi
 
 if [[ $ZDOTDIR/zshcomp.zsh ]];
 then
