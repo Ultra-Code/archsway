@@ -20,3 +20,5 @@ if [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]; then
    source /usr/share/doc/fzf/examples/key-bindings.zsh
 fi
 
+#Enable Shift-Tab for reverse scrolling menu complete
+bindkey '^[[Z' reverse-menu-complete
