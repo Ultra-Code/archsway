@@ -1,6 +1,6 @@
 #Shell options
 # Do not write a duplicate event to the history file.
-setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_EXPIRE_DUPS_FIRST
 #older commands that duplicate newer ones are omitted when writing out from the
 #internal to external history
 setopt HIST_SAVE_NO_DUPS
