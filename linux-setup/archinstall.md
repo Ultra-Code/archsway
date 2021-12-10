@@ -42,7 +42,7 @@ xorg-xwayland for runing x on wayland if need be
 sway as window manager with swayidle and swaylock for idle and lock mangement
 waybar for swaybar management
 grim and slurp for screenshot
-zathura as ebook viewer
+zathura as pdf viewer with poppler backend and foliate as epub reader
 dictd serve with dict client and some dictionary sources for yay like dict-wikt-en-all dict-freedict-eng-spa dict-freedict-spa-eng dict-foldoc dict-gcide dict-wn
 remove dictd online server in /etc/dict/dict.conf
 yay for AUR packagem mangement
