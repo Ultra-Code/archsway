@@ -164,11 +164,12 @@ assign [app_id="libreoffice-*"] $documents
 
 for_window [app_id="org.pwmt.zathura"] focus,layout tabbed
 assign [app_id="org.pwmt.zathura"] $documents
+
 for_window [app_id="com.github.johnfactotum.Foliate"] focus,layout tabbed
 assign [app_id="com.github.johnfactotum.Foliate"] $documents
 
-for_window [app_id="apvlv"] focus,layout tabbed
-assign [app_id="apvlv"] $documents
+for_window [app_id="imv"] focus,layout tabbed,fullscreen enable
+assign [app_id="imv"] $utility
 
 # Your preferred terminal emulator
 set $term kitty
