@@ -9,7 +9,7 @@ alias _='sudo'
 alias N=' _ -E nnn'
 alias ln=' ln -sriv'
 
-alias cp=' cpg -g'
+alias cp=' cpg -gr'
 alias mv=' mvg -g'
 
 alias grep='grep --color'
