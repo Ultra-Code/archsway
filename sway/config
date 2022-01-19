@@ -149,9 +149,9 @@ bindsym $mod+comma   move container to workspace prev
 # for_window [title="^pulsemixer_term$"] floating enable, resize set width 36 ppt height 39 ppt, move center
 #use a particular application's built-in window decorations over the sway
 #borders
-for_window [app_id="firefoxdeveloperedition"] focus,layout tabbed
-assign [app_id="firefoxdeveloperedition"]  $browser
-bindsym $mod+f exec firefox-developer-edition
+for_window [app_id="firefox"] focus,layout tabbed
+assign [app_id="firefox"]  $browser
+bindsym $mod+f exec firefox
 
 for_window [app_id="kitty"] focus
 assign [app_id="kitty"] $terminal
