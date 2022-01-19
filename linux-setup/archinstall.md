@@ -24,7 +24,7 @@ cache for 30 min
 
 #INSTALLS
 install mesa as dri userspace driver and intel-media-driver as va-api for intel
-firefox-developer-edition for browsing
+firefox for browsing
 pulseaudio and libpulse for audio and controling audio
 brightnessctl for controling backlight
 fzf for fuzzy search
@@ -34,7 +34,7 @@ gammastep for controlling nightlight
 reflector for choosing fastest pacman server list
 rsync and openssh for syncing file with remote over ssh
 git for version control
-gcc for c++ development
+clang for c++ development
 node and npm for ts development
 nix package management for reproducible development
 transmission/qbittorrent for torrent management
@@ -42,7 +42,7 @@ xorg-xwayland for runing x on wayland if need be
 sway as window manager with swayidle and swaylock for idle and lock mangement
 waybar for swaybar management
 grim and slurp for screenshot
-zathura as pdf viewer with poppler backend and foliate as epub reader
+firefox as pdf reader or zathura and foliate as epub reader
 dictd serve with dict client and some dictionary sources for yay like dict-wikt-en-all dict-freedict-eng-spa dict-freedict-spa-eng dict-foldoc dict-gcide dict-wn
 remove dictd online server in /etc/dict/dict.conf
 yay for AUR packagem mangement
@@ -69,23 +69,13 @@ pip python package installer
 
 #Configuring
 #Firefox
-look and verify hardware acceleration is working MOZ_LOG="PlatformDecoderModule:5" firefox-developer-edition
-Enable WebRender by going to about:config and setting gfx.webrender.all to true
-media.hardware-video-decoding.force-enabled to true for force-enabled hardware-video-decoding
-set browser.cache.disk.parent_directory to /run/user/UID/firefox, where UID is
-your user's ID which can be obtained by running id -u to move disk cache to ram
-increase session save interval to 10 minutes (600000 milliseconds) by setting browser.sessionstore.interval to 600000
-pref("media.ffmpeg.vaapi.enabled", true);
-pref("media.ffvpx.enabled", false);
-#pref("media.rdd-ffvpx.enabled", false)
-#pref("media.rdd-vpx.enabled",false)
-#pref("media.rdd-ffmpeg.enabled",true)
-pref("media.rdd-process.enabled", false);
-pref("media.navigator.mediadatadecoder_vpx_enabled",true)
-#pref("security.sandbox.content.level", 0); vaapi can be enabled without this option
-
-#Enable webrender compositor
-pref("gfx.webrender.all",true)
-pref("gfx.webrender.compositor",true)
-#pref("gfx.webrender.compositor.force-enabled",true) //improve webrendering performance but causes ui gliches
+LINK: https://wiki.archlinux.org/title/Firefox#Hardware_video_acceleration
+Configuration for firefox Hardware video acceleration
+pref("media.ffmpeg.vaapi.enabled",true);
+pref("media.rdd-ffmpeg.enabled",true);
+pref("media.rdd-process.enabled", false); #enable this until vaapi is enabled for Intel iHD driver intel-media-driver
+look and verify hardware acceleration is working MOZ_LOG="PlatformDecoderModule:5" firefox
+LINK: https://wiki.archlinux.org/title/Firefox/Tweaks#Move_disk_cache_to_RAM
+pref("browser.cache.disk.parent_directory","/run/user/UID/firefox"); where UID is your user's ID which can be obtained by running id -u to move disk cache to ram
+increase session save interval to 6 minutes (360000 milliseconds) by setting pref("browser.sessionstore.interval",360000)
 Enable DNS over HTTPS in firefox
