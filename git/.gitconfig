@@ -14,7 +14,15 @@
 	conflictStyle = diff3
 [diff]
 	tool = vimdiff
+	submodule = log
 [mergetool]
 	prompt = false
 [pull]
 	rebase = true
+[status]
+	submodulesummary = true
+[submodule]
+	recurse = true
+	update = rebase
+[push]
+	recurseSubmodules = check
