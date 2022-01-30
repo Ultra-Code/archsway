@@ -16,6 +16,7 @@ alias grep='grep --color'
 alias egrep='grep -P' #USE grep in PCRE mode
 alias sed="sed -E" #use sed with ERX mode
 
+alias gcl=' git clone ----recurse-submodules'
 alias gs=' git status'
 alias ga=' git add'
 alias gp=' git push'
@@ -24,6 +25,9 @@ alias gc=' git commit'
 alias gl=' git log --graph --oneline --decorate'
 alias glp=' git log -p'
 alias gd=' git diff'
+alias gmu=' git submodule update --init --recursive'
+alias gmpu=' git submodule update --remote' # --rebase'
+alias gmlp=' git log -p --submodule'
 
 # open ~/.zshrc in using the default editor specified in $EDITOR
 alias ez=" $EDITOR $ZDOTDIR/.zshrc"
