@@ -73,7 +73,6 @@ LINK: https://wiki.archlinux.org/title/Firefox#Hardware_video_acceleration
 Configuration for firefox Hardware video acceleration
 pref("media.ffmpeg.vaapi.enabled",true);
 pref("media.rdd-ffmpeg.enabled",true);
-pref("media.rdd-process.enabled", false); #enable this until vaapi is enabled for Intel iHD driver intel-media-driver
 look and verify hardware acceleration is working MOZ_LOG="PlatformDecoderModule:5" firefox
 LINK: https://wiki.archlinux.org/title/Firefox/Tweaks#Move_disk_cache_to_RAM
 pref("browser.cache.disk.parent_directory","/run/user/UID/firefox"); where UID is your user's ID which can be obtained by running id -u to move disk cache to ram
