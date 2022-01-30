@@ -76,6 +76,7 @@ mode $power_mangement {
     bindsym Shift+s exec  systemctl poweroff -i, mode "default"
     bindsym Shift+r exec  systemctl reboot --firmware-setup, mode "default"
     bindsym z exec swaynag -t warning -m 'Sleepy time?!?!' -b 'ZzZz...' 'systemctl suspend-then-hibernate' -s "No", mode "default"
+    bindsym h exec systemctl hibernate,mode "default"
 
     # return to default mode
     bindsym Return mode "default"
@@ -192,7 +193,7 @@ for_window [app_id="desktop_laucher"] floating enable , resize set 20 ppt 20 ppt
 # Start your launcher
 bindsym $mod+a exec $menu_desktop
 
-set $file_manager $term --class="nnn" -e zsh -cl "nnn;$SHELL" #this is to execute nnn -are in the -e zsh -cl then start a SHELL in the background
+set $file_manager $term --class="nnn" -e zsh # -cl "nnn;$SHELL" #this is to execute nnn -are in the -e zsh -cl then start a SHELL in the background
 
 for_window [app_id="nnn"] border none,focus
 assign [app_id="nnn"] $filemanager
@@ -331,7 +332,6 @@ seat * hide_cursor when-typing enable
 
 # # Window borders
 # Removes the title bar of each window.
-#default_border pixel 0
 default_border none
 default_floating_border none
 smart_gaps on
