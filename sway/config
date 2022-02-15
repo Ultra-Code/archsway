@@ -105,9 +105,9 @@ set $terminal    "1:  "
 set $coding      "2:  "
  # 龜
 set $browser     "3:  "
+set $filemanager "4:  "
 # 
-set $documents   "4:  "
-set $filemanager "5:  "
+set $documents   "5:  "
 # 
 set $mpv         "6:  "
 # 
@@ -118,8 +118,8 @@ set $chating     "9:  "
 bindsym $mod+1 workspace $terminal
 bindsym $mod+2 workspace $coding
 bindsym $mod+3 workspace $browser
-bindsym $mod+4 workspace $documents
-bindsym $mod+5 workspape $filemanager
+bindsym $mod+4 workspace $filemanager
+bindsym $mod+5 workspace $documents
 bindsym $mod+6 workspace $mpv
 bindsym $mod+7 workspace $utility
 bindsym $mod+8 workspace $downloads
@@ -150,14 +150,14 @@ bindsym $mod+comma   move container to workspace prev
 # for_window [title="^pulsemixer_term$"] floating enable, resize set width 36 ppt height 39 ppt, move center
 #use a particular application's built-in window decorations over the sway
 #borders
-for_window [app_id="firefox"] focus,layout tabbed
+for_window [app_id="firefox"] focus,layout tabbed,fullscreen enable
 assign [app_id="firefox"]  $browser
 bindsym $mod+f exec firefox
 
 for_window [app_id="kitty"] focus
 assign [app_id="kitty"] $terminal
 
-for_window [app_id="mpv"] fullscreen enable,border none,focus
+for_window [app_id="mpv"] fullscreen enable,focus
 assign [app_id="mpv"] $mpv
 
 for_window [app_id="libreoffice-*"] focus,layout tabbed
@@ -174,7 +174,7 @@ assign [app_id="imv"] $utility
 
 # Your preferred terminal emulator
 set $term kitty
-set $code $term --class="coding" --session $DOTFILES/kitty/session.conf
+set $code $term --class="coding" --session $DOTFILES/kitty/session.conf --start-as fullscreen
 
 # Start a terminal
 bindsym $mod+Return exec $term
@@ -184,18 +184,18 @@ bindsym $mod+Shift+Return exec $code
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
 set $menu $term --class="menu_launcher" -c -e zsh -c "printenv PATH | xargs -d : -I {} -r find -L {} -maxdepth 1 -type f -executable -printf '%f\n' 2>/dev/null| sort -u | fzf | xargs -r swaymsg -t command exec"
-for_window [app_id="menu_launcher"] floating enable, border none, resize set width 1000 px height 150 px,move position 0 px 0 px,focus
+for_window [app_id="menu_launcher"] floating enable, resize set width 1000 px height 150 px,move position 0 px 0 px,focus
 
 set $menu_desktop $term --class="desktop_laucher" -e zsh -c "find /usr/share/applications -name '*.desktop' | xargs basename -s '.desktop' -a | fzf | xargs -r swaymsg -t command exec gtk-launch"
 
-for_window [app_id="desktop_laucher"] floating enable , resize set 20 ppt 20 ppt,move position 0 ppt 0ppt,border none, focus
+for_window [app_id="desktop_laucher"] floating enable , resize set 20 ppt 20 ppt,move position 0 ppt 0ppt, focus
 
 # Start your launcher
 bindsym $mod+a exec $menu_desktop
 
 set $file_manager $term --class="nnn" -e zsh # -cl "nnn;$SHELL" #this is to execute nnn -are in the -e zsh -cl then start a SHELL in the background
 
-for_window [app_id="nnn"] border none,focus
+for_window [app_id="nnn"] focus
 assign [app_id="nnn"] $filemanager
 
 bindsym $mod+e exec $file_manager
