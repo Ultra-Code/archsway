@@ -24,6 +24,8 @@ cache for 30 min
 
 #INSTALLS
 install mesa as dri userspace driver and intel-media-driver as va-api for intel
+yt-dlp youtube downloader
+aria2c as download manager
 firefox for browsing
 pulseaudio and libpulse for audio and controling audio
 brightnessctl for controling backlight
