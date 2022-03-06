@@ -22,12 +22,12 @@ output * bg $(find $wallpapers_path -type f | shuf -n 1) fill
 ### Idle configuration
 ## NOTE: if using systemd configure logind.conf's IdleAction and IdleActionSec to tell systemd what action to execute
 ##       when idle and after what time the system is assumed to be in an idle state
-##       create a user service with idlehint like in https://github.com/Ultra-Code/dotfiles/blob/master/sway/swayidle.service#L8
+##       create a user service with idlehint like in https://github.com/Ultra-Code/dotfiles/blob/master/archlinux/sway/swayidle.service#L8
 ##       https://wiki.archlinux.org/title/Sway#Manage_Sway-specific_daemons_with_systemd
 
 # From my configuration this will lock your screen after 300 seconds of inactivity with a wallpaper, then turn off
 # your displays after another 300 seconds,notify systemd that the system is idle after 180 seconds, and based on the
-# configuration in https://github.com/Ultra-Code/dotfiles/blob/master/systemd/logind.conf#L39 execute hybrid-sleep
+# configuration in https://github.com/Ultra-Code/dotfiles/blob/master/archlinux/systemd/logind.conf#L39 execute hybrid-sleep
 # after 7min of inactivity and when resuming from inactivity turn your screens back on.
 # It will also lock your screen before your computer goes to sleep.
 
@@ -145,14 +145,15 @@ bindsym $mod+comma   move container to workspace prev
 # Note: workspaces can have any name you want, not just numbers.
 # We just use 1-10 as the default.
 
-for_window [app_id="firefox"] layout tabbed,focus,floating enable
+for_window [app_id="firefox" title="About Mozilla Firefox|Picture-in-Picture|Password Required - Mozilla Firefox|Page Info — (.*)"] floating enable
+for_window [app_id="firefox"] focus,layout tabbed
 assign [app_id="firefox"]  $browser
 bindsym $mod+f exec firefox
 
 for_window [app_id="kitty"] focus
 assign [app_id="kitty"] $terminal
 
-for_window [app_id="mpv"] fullscreen enable,focus
+for_window [app_id="mpv"] focus,fullscreen enable
 assign [app_id="mpv"] $mpv
 
 for_window [app_id="libreoffice-*"] focus
@@ -164,7 +165,7 @@ assign [app_id="org.pwmt.zathura"] $documents
 for_window [app_id="com.github.johnfactotum.Foliate"] focus
 assign [app_id="com.github.johnfactotum.Foliate"] $documents
 
-for_window [app_id="imv"] fullscreen enable,focus
+for_window [app_id="imv"] focus,fullscreen enable
 assign [app_id="imv"] $utility
 
 # Your preferred terminal emulator

@@ -6,12 +6,13 @@
     // Choose the order of the modules
     "modules-left": [
         "sway/workspaces",
+        "sway/mode",
         "cpu",
         "memory"
     ],
     "modules-center": [
         "mpd"
-        //"sway/window"
+        //"sway/window",
     ],
     "modules-right": [
         "idle_inhibitor",
@@ -32,9 +33,8 @@
         "format": " {}"
     },
     "sway/mode": {
-        "format": "<span style=\"italic\">  {}</span>", // Icon: expand-arrows-alt
-        "tooltip": false
-        //"format": "<span style=\"italic\">{}</span>"
+        "format": " {}",
+        "max-length": 50
     },
     "mpd": {
         "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist}-{album}-{title}({elapsedTime:%M:%S}/{totalTime:%M:%S}){songPosition}|{queueLength} {volume}%  ",
@@ -61,8 +61,8 @@
         },
         "tooltip-format": "MPD (connected)",
         "tooltip-format-disconnected": "MPD (disconnected)",
-        "on-scroll-up":"mpc prev",
-        "on-scroll-down":"mpc next"
+        "on-scroll-up": "mpc prev",
+        "on-scroll-down": "mpc next"
     },
     "idle_inhibitor": {
         "format": "{icon} ",

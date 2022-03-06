@@ -16,7 +16,7 @@ alias grep='grep --color'
 alias egrep='grep -P' #USE grep in PCRE mode
 alias sed="sed -E" #use sed with ERX mode
 
-alias gcl=' git clone ----recurse-submodules'
+alias gcl=' git clone --recurse-submodules'
 alias gs=' git status'
 alias ga=' git add'
 alias gp=' git push'
@@ -25,6 +25,8 @@ alias gc=' git commit'
 alias gl=' git log --graph --oneline --decorate'
 alias glp=' git log -p'
 alias gd=' git diff'
+alias gm=' git mv'
+alias gr=' git rm -rvI'
 alias gmu=' git submodule update --init --recursive'
 alias gmpu=' git submodule update --remote' # --rebase'
 alias gmlp=' git log -p --submodule'
@@ -45,7 +47,7 @@ alias eh=" $EDITOR $ZDOTDIR/.zsh_history"
 alias ea=" $EDITOR $ZDOTDIR/.zsh_aliases"
 
 #edit $XDG_CONFIG_HOME/sway/config
-alias es=" $EDITOR $DOTFILES/sway/config"
+alias es=" $EDITOR $DOTFILES/archlinux/sway/config"
 #Aptitude aliases
 alias pmu=' _ pacman -Syu'
 alias pmr=' _ pacman -Rsn'
