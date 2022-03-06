@@ -4,7 +4,7 @@
 #disable XWayland entirely and run a "pure" Wayland session
 xwayland disable
 
-# Logo key. Use Mod1 for Alt.
+# Logo key .ie widows key. Use Mod1 for Alt.
 set $mod Mod4
 set $AltMod Mod1
 
@@ -20,15 +20,16 @@ output * bg $(find $wallpapers_path -type f | shuf -n 1) fill
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
 ### Idle configuration
+## NOTE: if using systemd configure logind.conf's IdleAction and IdleActionSec to tell systemd what action to execute
+##       when idle and after what time the system is assumed to be in an idle state
+##       create a user service with idlehint like in https://github.com/Ultra-Code/dotfiles/blob/master/sway/swayidle.service#L8
+##       https://wiki.archlinux.org/title/Sway#Manage_Sway-specific_daemons_with_systemd
 
-# exec swayidle -w \
-#          timeout 300 'swaylock -f -c 000000' \
-#          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-#          before-sleep 'swaylock -f -c 000000 -i $lock_bg'
-
-# This will lock your screen after 300 seconds of inactivity, then turn off
-# your displays after another 300 seconds, and turn your screens back on when
-# resumed. It will also lock your screen before your computer goes to sleep.
+# From my configuration this will lock your screen after 300 seconds of inactivity with a wallpaper, then turn off
+# your displays after another 300 seconds,notify systemd that the system is idle after 180 seconds, and based on the
+# configuration in https://github.com/Ultra-Code/dotfiles/blob/master/systemd/logind.conf#L39 execute hybrid-sleep
+# after 7min of inactivity and when resuming from inactivity turn your screens back on.
+# It will also lock your screen before your computer goes to sleep.
 
 ### Input configuration
 
@@ -65,7 +66,7 @@ floating_modifier $mod normal
 bindsym $mod+r reload
 
 
-# set $power_mangement System: (l) lock, (e) logout, (s) suspend, (r) reboot, (S) shutdown, (R) UEFI
+# set $power_mangement System: (l) lock, (e) logout, (s) hybrid-sleep, (r) reboot, (S) shutdown, (R) UEFI , (z) suspend-then-hibernate , (h) hibernate
 set $power_mangement "power_mangement"
 mode $power_mangement {
     bindsym l exec swaylock -i ~/Pictures/Code/27106459-coding-wallpapers.png, mode "default"
@@ -96,7 +97,7 @@ bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
-#
+
 # Workspaces:
 #
 # Switch to workspace
@@ -105,9 +106,9 @@ set $terminal    "1:  "
 set $coding      "2:  "
  # 龜
 set $browser     "3:  "
-set $filemanager "4:  "
+set $documents   "4:  "
 # 
-set $documents   "5:  "
+set $filemanager "5:  "
 # 
 set $mpv         "6:  "
 # 
@@ -118,8 +119,8 @@ set $chating     "9:  "
 bindsym $mod+1 workspace $terminal
 bindsym $mod+2 workspace $coding
 bindsym $mod+3 workspace $browser
-bindsym $mod+4 workspace $filemanager
-bindsym $mod+5 workspace $documents
+bindsym $mod+4 workspace $documents
+bindsym $mod+5 workspace $filemanager
 bindsym $mod+6 workspace $mpv
 bindsym $mod+7 workspace $utility
 bindsym $mod+8 workspace $downloads
@@ -127,15 +128,16 @@ bindsym $mod+9 workspace $chating
 bindsym $mod+0 workspace 10
 bindsym $mod+Shift+Tab workspace prev
 bindsym $mod+Tab workspace next
+
 # Move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $terminal
-bindsym $mod+Shift+2 move container to workspace $browser
-bindsym $mod+Shift+3 move container to workspace $mpv
-bindsym $mod+Shift+4 move container to workspace $coding
+bindsym $mod+Shift+2 move container to workspace $coding
+bindsym $mod+Shift+3 move container to workspace $browser
+bindsym $mod+Shift+4 move container to workspace $documents
 bindsym $mod+Shift+5 move container to workspace $filemanager
-bindsym $mod+Shift+6 move container to workspace $utility
-bindsym $mod+Shift+7 move container to workspace $downloads
-bindsym $mod+Shift+8 move container to workspace $documents
+bindsym $mod+Shift+6 move container to workspace $mpv
+bindsym $mod+Shift+7 move container to workspace $utility
+bindsym $mod+Shift+8 move container to workspace $downloads
 bindsym $mod+Shift+9 move container to workspace $chating
 bindsym $mod+Shift+0 move container to workspace 10
 bindsym $mod+period  move container to workspace next
@@ -143,14 +145,7 @@ bindsym $mod+comma   move container to workspace prev
 # Note: workspaces can have any name you want, not just numbers.
 # We just use 1-10 as the default.
 
-#window rules for my menu popup and drop down terminal using the scratchpad
-# for_window [title="^menu_term$"] floating enable, resize set width 50 ppt height 50 ppt, move center
-# for_window [title="^screensaver$"] fullscreen toggle global
-# for_window [title="^drop_down_term$"] floating enable, resize set width 100 ppt height 60 ppt, move position 0px 0px, move scratchpad
-# for_window [title="^pulsemixer_term$"] floating enable, resize set width 36 ppt height 39 ppt, move center
-#use a particular application's built-in window decorations over the sway
-#borders
-for_window [app_id="firefox"] focus,layout tabbed,fullscreen enable
+for_window [app_id="firefox"] layout tabbed,focus,floating enable
 assign [app_id="firefox"]  $browser
 bindsym $mod+f exec firefox
 
@@ -160,21 +155,21 @@ assign [app_id="kitty"] $terminal
 for_window [app_id="mpv"] fullscreen enable,focus
 assign [app_id="mpv"] $mpv
 
-for_window [app_id="libreoffice-*"] focus,layout tabbed
+for_window [app_id="libreoffice-*"] focus
 assign [app_id="libreoffice-*"] $documents
 
-for_window [app_id="org.pwmt.zathura"] focus,layout tabbed
+for_window [app_id="org.pwmt.zathura"] focus
 assign [app_id="org.pwmt.zathura"] $documents
 
-for_window [app_id="com.github.johnfactotum.Foliate"] focus,layout tabbed
+for_window [app_id="com.github.johnfactotum.Foliate"] focus
 assign [app_id="com.github.johnfactotum.Foliate"] $documents
 
-for_window [app_id="imv"] focus,layout tabbed,fullscreen enable
+for_window [app_id="imv"] fullscreen enable,focus
 assign [app_id="imv"] $utility
 
 # Your preferred terminal emulator
 set $term kitty
-set $code $term --class="coding" --session $DOTFILES/kitty/session.conf --start-as fullscreen
+set $code $term --class="coding" --session $DOTFILES/kitty/session.conf
 
 # Start a terminal
 bindsym $mod+Return exec $term
@@ -193,7 +188,7 @@ for_window [app_id="desktop_laucher"] floating enable , resize set 20 ppt 20 ppt
 # Start your launcher
 bindsym $mod+a exec $menu_desktop
 
-set $file_manager $term --class="nnn" -e zsh # -cl "nnn;$SHELL" #this is to execute nnn -are in the -e zsh -cl then start a SHELL in the background
+set $file_manager $term --class="nnn"  -e nnn #zsh -cl "nnn;$SHELL" this is to execute nnn -are in the -e zsh -cl then start a SHELL in the background
 
 for_window [app_id="nnn"] focus
 assign [app_id="nnn"] $filemanager
@@ -203,34 +198,46 @@ bindsym $mod+e exec $file_manager
 for_window [app_id="coding"] focus
 assign [app_id="coding"] $coding
 
-# Bind App to workspace
-# Check class by : xprop
-# swaymsg -t get_tree
-
 # Layout stuff:
 #
 # You can "split" the current object of your focus with
-# $mod+b or $mod+v, for horizontal and vertical splits
+# $mod+h or $mod+v, for horizontal and vertical splits
 # respectively.
 bindsym $mod+h splith
 bindsym $mod+v splitv
 
 # Switch the current container between different layout styles
+bindsym $mod+s layout stacking
 bindsym $mod+t layout tabbed
 bindsym $mod+slash layout toggle split
 
 # Make the current focus fullscreen
-#bindsym $mod+f+s fullscreen
+# bindsym $mod+f fullscreen
 
 # Toggle the current focus between tiling and floating mode
 bindsym $mod+space floating toggle
 
-# Swap focus between the tiling area and the floating area
+# Moves focus between the floating and tiled layers
 bindsym $mod+Shift+space focus mode_toggle
 
 # Move focus to the parent container
-#bindsym $mod+a focus parent
-#
+# bindsym $mod+a focus parent
+
+#Focus
+focus_follows_mouse yes
+
+#hide mouse on inactivity
+seat * hide_cursor 10000
+seat * hide_cursor when-typing enable
+
+# # Window borders
+# Removes the title bar of each window.
+default_border none
+default_floating_border none
+smart_gaps on
+hide_edge_borders --i3 smart
+
+
 # Scratchpad:
 #
 # Sway has a "scratchpad", which is a bag of holding for windows.
@@ -243,16 +250,18 @@ bindsym $mod+minus move scratchpad
 # If there are multiple scratchpad windows, this command cycles through them.
 bindsym $mod+Shift+minus scratchpad show
 
+
 # Resizing containers:
 
 mode "resize" {
 # left will shrink the containers width
 # right will grow the containers width
-# up will shrink the containers height
-# down will grow the containers height
+# up will grow the containers height
+# down will shrink the containers height
+
 bindsym Left resize shrink width 10px
-bindsym Down resize grow height 10px
-bindsym Up resize shrink height 10px
+bindsym Down resize shrink height 10px
+bindsym Up resize grow height 10px
 bindsym Right resize grow width 10px
 
 # Return to default mode
@@ -269,22 +278,6 @@ bindsym --release Control+Print exec grim - | wl-copy  && $scree_shot_sound #Tak
 
 # Status Bar:
 # Read `man 5 sway-bar` for more information about this section.
-# bar {
- #status_command waybar
-# font pongo: Font Awesome 5 Free
-
-#     # When the status_command prints a new line to stdout, swaybar updates.
-#     # The default just shows the current date and time.
-#     #status_command while echo "$(cat /sys/class/power_supply/BAT0/capacity)% $(cat /sys/class/power_supply/BAT0/status) $(date)" ; do sleep 1; done #date +'%Y-%m-%d %l:%M:%S %p'
-#     #strip_workspace_numbers yes
-#     #workspace_buttons yes
-#     # colors {
-#     #     statusline #ffffff
-#     #     background #323232
-#     #     inactive_workspace #32323200 #32323200 #5c5c5c
-#     # }
-#}
-
 bar {
   swaybar_command waybar
   workspace_buttons yes
@@ -308,57 +301,6 @@ bindsym --locked XF86AudioPlay exec "mpc toggle"
 #Brightness
 bindsym XF86MonBrightnessDown exec brightnessctl set 1%-
 bindsym XF86MonBrightnessUp exec brightnessctl set +1%
-
-# Press $mod+o followed by either f, t, Esc or Return to launch firefox,
-# thunderbird or return to the default mode, respectively.
-# set $mode_launcher Launcher
-# bindsym $mod+o mode "$mode_launcher"
-
-# mode "$mode_launcher" {
-#     bindsym m exec terminator
-#     bindsym n exec nautilus
-#     bindsym v exec virt-manager
-#     bindsym d exec deepin-screenshot
-#     bindsym Return mode "default"
-# }
-
-# # Shutdown, Reboot, Lock Screen, and Logout
-
-#hide mouse on inactivity
-seat * hide_cursor 10000
-seat * hide_cursor when-typing enable
-
-# focus_follows_mouse no
-
-# # Window borders
-# Removes the title bar of each window.
-default_border none
-default_floating_border none
-smart_gaps on
-hide_edge_borders --i3 smart
-
-# Set colors
-# set $cl_high #009ddc
-# set $cl_indi #d9d8d8
-# set $cl_back #231f20
-# set $cl_fore #d9d8d8
-# set $cl_urge #ee2e24
-# border colors
-#  Colors                border   bg       text     indi     childborder
-# client.focused		#ff6e67 #ff6e67 #ff6e67 #ffc1bd #ff6e67
-#client.focused          #bababa #bababa #bababa #dadada #bababa
-# client.unfocused	#b8b8b8 #b8b8b8 #b8b8b8 #b8b8b8 #b8b8b8
-# client.focused_inactive	#b8b8b8 #b8b8b8 #b8b8b8 #b8b8b8 #b8b8b8
-
-# border_images.focused ~/.config/sway/shadows.png
-# border_images.focused_inactive ~/.config/sway/shadows.png
-# border_images.unfocused ~/.config/sway/shadows.png
-# border_images.urgent ~/.config/sway/shadows.png
-#client.unfocused	#262626 #262626 #262626 #262626 #262626
-#client.focused_inactive	#262626 #262626 #262626 #262626 #262626
-
-#Autostart
-#exec_always kitty --single-instance --wait-for-single-instance-window-close
 
 #Include sway systemd configuration and environment variables
 include /etc/sway/config.d/*
