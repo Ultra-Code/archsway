@@ -4,9 +4,6 @@ export PATH=$HOME/.local/bin:$PATH
 #style qt apps with adwaita
 export QT_STYLE_OVERRIDE=Adwaita-dark
 
-#style gtk apps with Adwaita dark variant
-export GTK_THEME=Adwaita:dark
-
 #set DOTFILES for personal config root directory
 export DOTFILES=$HOME/.dotfiles
 

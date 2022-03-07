@@ -65,6 +65,25 @@ floating_modifier $mod normal
 # Reload the configuration file
 bindsym $mod+r reload
 
+# Font
+# Check https://docs.gtk.org/Pango/type_func.FontDescription.from_string.html#description for description of the
+# pango font format
+
+font pango:Iosevka Nerd Font Mono Normal Medium 11
+
+#GTK+ ui settings
+set $gnome-schema org.gnome.desktop.interface
+
+exec_always {
+    #style gtk apps with Adwaita dark variant
+    gsettings set $gnome-schema gtk-theme 'Adwaita-dark'
+    gsettings set $gnome-schema icon-theme 'Adwaita'
+    gsettings set $gnome-schema cursor-size 24
+    gsettings set $gnome-schema cursor-theme 'Adwaita'
+    gsettings set $gnome-schema font-name 'Iosevka Nerd Font Mono Normal Medium 11'
+    gsettings set $gnome-schema monospace-font-name 'Iosevka Nerd Font Mono Normal Medium 11'
+    gsettings set $gnome-schema document-font-name 'Iosevka Nerd Font Mono Normal Medium 11'
+}
 
 # set $power_mangement System: (l) lock, (e) logout, (s) hybrid-sleep, (r) reboot, (S) shutdown, (R) UEFI , (z) suspend-then-hibernate , (h) hibernate
 set $power_mangement "power_mangement"
@@ -191,6 +210,7 @@ bindsym $mod+a exec $menu_desktop
 
 #NOTE: if ^G is to be used then zsh -ci "nnn;$SHELL" this is to execute nnn -are in the zsh -ci then start a SHELL in
 #the background so ^G will cd to your last dir in the background SHELL
+#and for the Exec in nnn.desktop kitty --single-instance --instance-group "nnn" --detach --class "nnn" --title "file manager" zsh -lc "nnn %f"
 set $file_manager $term --single-instance --instance-group "nnn" --detach --class "nnn" --title "file manager" zsh -ci nnn
 
 for_window [app_id="nnn"] focus
@@ -233,11 +253,10 @@ focus_follows_mouse yes
 seat * hide_cursor 10000
 seat * hide_cursor when-typing enable
 
-# # Window borders
-# Removes the title bar of each window.
-default_border none
+# Window borders
+default_border pixel 9
 default_floating_border none
-smart_gaps on
+#hide the title bar on tabbed and stacked containers with one child
 hide_edge_borders --i3 smart
 
 
