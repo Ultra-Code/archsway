@@ -7,6 +7,7 @@ alias rm=' rm -rvI'
 alias _='sudo'
 
 alias N=' _ -E nnn'
+alias Vi=' _ -E vi'
 alias ln=' ln -sriv'
 
 alias cp=' cpg -gr'
