@@ -17,7 +17,7 @@ sway as window manager with swayidle and swaylock for idle and lock mangement an
 - sudo
 - zsh
 - lynx
-On the freshly installed system use ttf-liberation for serif and sans-serif and ttf-iosevka-nerd for monospace and noto-font-emoji for emoji
+On the freshly installed system use ttf-dejavu for serif and sans-serif and ttf-iosevka-nerd for monospace and noto-font-emoji for emoji
 Use systemd-resolvd and netorkd for networking with it required configuration in https://github.com/Ultra-Code/dotfiles/blob/master/archlinux/networking/resolve.conf and https://github.com/Ultra-Code/dotfiles/blob/master/archlinux/networking/network
 configure dns for 1.1.1.1 but this might not be needed since it's the default on arch linux
 enable DNSOverTLS for resolved
