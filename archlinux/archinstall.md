@@ -40,6 +40,7 @@ advcpmv/advcp for cp/mv with progress information
 android-file-transfer with libmtp for connecting android phones mtp management
 aria2c as download manager
 install tools in the base-devel group ,this can be found out with pacman -Qg base-devel
+bat is a Cat clone with syntax highlighting and git integration
 brightnessctl for controling backlight
 calc as terminal calculator
 clang for c++ development
@@ -54,16 +55,20 @@ language servers for development
     - cppcheck
     - stylua for lua formating
 dictd serve with dict client and some dictionary sources for yay like dict-wikt-en-all dict-freedict-eng-spa dict-freedict-spa-eng dict-foldoc dict-gcide dict-wn NOTE: remove dictd online server in /etc/dict/dict.conf
+exa a modern replacement for ls and tree
+fd a simple, fast and user-friendly alternative to find
 ffmpegthumbnailer & gnome-epub-thumbnailer for thumbnails
 firefox as pdf reader or zathura and firefox-ublock-origin as adblocker and foliate as epub reader
 fzf for fuzzy search
 gammastep for controlling nightlight
 git for version control
+git-delta for Syntax-highlighting pager for git and diff output
 grim and slurp for screenshot
 imagemagick for use by kitty for terminal image preview
 imv as image viewer
 intel-gpu-tools for monitoring gpu usage
 install mesa as dri userspace driver and intel-media-driver as va-api for intel
+jq a Command-line JSON processor
 libreoffice-fresh for working with openoffice documents
 lldb for debuging zig c and c++
 mpd for music deamon and ncmpcpp for ui interface and mpc for controlling playing
@@ -71,8 +76,10 @@ mpv as multimedia player
 neofetch for displaying system information
 nnn as filemanger
 node and npm for ts development
-rsync and openssh for syncing file with remote over ssh
+openssh and rsync for syncing file with remote over ssh
 pulseaudio and libpulse for audio and controling audio
+ripgrep(rg) for searching for patterns an alternative to grep
+sd Intuitive find & replace an alternative to sed
 wl-clipboard for wayland clipboard
 reflector for choosing fastest pacman server list
 qt5-wayland for runing qt5 apps under wayland
