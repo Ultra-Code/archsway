@@ -13,11 +13,6 @@ then
     source $ZDOTDIR/zoption.zsh
 fi
 
-if [[ $ZSH_ALIASES ]];
-then
-    source $ZSH_ALIASES
-fi
-
 if [[ $ZDOTDIR/zkeybind.zsh ]];
 then
     source $ZDOTDIR/zkeybind.zsh
@@ -52,3 +47,10 @@ zinit wait'3' lucid light-mode blockf for \
 
 zinit wait'3' lucid light-mode blockf for \
     zsh-users/zsh-completions
+
+
+if [[ $ZSH_ALIASES ]];
+then
+    unalias -m '*'
+    source $ZSH_ALIASES
+fi

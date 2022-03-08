@@ -1,6 +1,7 @@
 #enable fuzzy auto-completion for Zsh:
 if [ -f /usr/share/fzf/key-bindings.zsh ]; then
    . /usr/share/fzf/key-bindings.zsh
+   . /usr/share/fzf/completion.zsh
 fi
 
 # Completion for kitty

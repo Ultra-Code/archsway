@@ -33,6 +33,8 @@ setopt COMPLETE_IN_WORD
 setopt GLOB_COMPLETE
 #Try  to correct the spelling of commands
 setopt CORRECT
+#Lay  out  the  matches  in completion lists sorted horizontally
+setopt LIST_ROWS_FIRST
 
 #MISC
 # Don't send SIGHUP to background processes when the shell exits.
