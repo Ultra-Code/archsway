@@ -7,6 +7,9 @@ fi
 # Completion for kitty
 kitty + complete setup zsh | source /dev/stdin
 
+# add rg completion function to fpath
+fpath+=(_rg)
+
 eval "$(zoxide init zsh)"
 
 n ()
@@ -23,12 +26,6 @@ n ()
     #    (or, to a custom path: NNN_TMPFILE=/tmp/.lastd)
     # or, export NNN_TMPFILE after nnn invocation
     NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
-
-    # Unmask ^Q (, ^V etc.) (if required, see `stty -a`) to Quit nnn
-    # stty start undef
-    # stty stop undef
-    # stty lwrap undef
-    # stty lnext undef
 
     nnn "$@"
 

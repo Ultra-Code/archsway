@@ -1,22 +1,24 @@
 alias ls=' ls --hyperlink --color=always --classify'
-alias l=' exa --color=always --long --header --group --inode --git --git-ignore --classify --all  --icons'
+alias l=' exa --color=always --long --header --group --inode --links --extended --git --git-ignore --classify --all  --icons'
 alias lr=' l --recurse'
 alias -g tree=' exa --tree'
-alias md=' mkdir -p'
-alias rd=' rmdir -pv'
-alias rm=' rm -rvI'
-alias _='sudo -E'
+alias md=' mkdir --parents --verbose'
+alias rd=' rmdir --parents --verbose'
+alias rm=' rm --interactive=once --verbose --recursive'
+alias _='sudo --preserve-env'
 
 alias N=' _ nnn'
 alias Vi=' _ vi'
-alias ln=' ln -sriv'
+alias lnh=' /bin/ln --interactive --logical --verbose'
+alias ln=' ln --interactive --symbolic --relative --logical --verbose'
 
-alias cp=' cpg -gr'
-alias mv=' mvg -g'
+alias cp=' cpg --progress-bar --interactive --dereference --recursive --update --verbose --reflink=auto --sparse=auto --archive'
+alias mv=' mvg -g --interactive --update --verbose' #issue with --progress-bar in command report it
 
-alias grep='grep --color'
-alias egrep='grep -P' #USE grep in PCRE mode
-alias sed="sed -E" #use sed with ERX mode
+alias cat=' bat --paging=never'
+
+alias grep=' rg --column --smart-case'
+alias sed=' sd'
 
 alias gcl=' git clone --recurse-submodules'
 alias gs=' git status'
@@ -30,7 +32,7 @@ alias glp=' git log -p'
 alias gd=' git diff'
 alias gg=' git grep'
 alias gm=' git mv'
-alias gr=' git rm -rvI'
+alias gr=' git rm -r'
 alias gmu=' git submodule update --init --recursive'
 alias gmpu=' git submodule update --remote' # --rebase'
 alias gmlp=' git log -p --submodule'
@@ -54,7 +56,7 @@ alias ea=" $EDITOR $ZDOTDIR/.zsh_aliases"
 alias es=" $EDITOR $DOTFILES/archlinux/sway/config"
 
 #Source changes in specified files into zsh
-alias sz=" exec zsh -l"
+alias sz=" exec zsh"
 alias se=" source $ZDOTDIR/.zshenv"
 alias sp=" source $ZDOTDIR/.zprofile"
 
@@ -63,6 +65,8 @@ alias pmu=' _ pacman -Syu'
 alias pmr=' _ pacman -Rsn'
 alias pmp=' _ pacman -Rcuns'
 alias pmi=' _ pacman -S'
+alias pmfi=' pacman -Slq | fzf --multi --preview "pacman -Si {1}" | xargs -ro sudo pacman -S'
+alias pmfr='pacman -Qq | fzf --multi --preview "pacman -Qi {1}" | xargs -ro sudo pacman -Rns'
 alias pmii=' pacman -Qi'
 alias pmis=' pacman -Qs'
 alias pmss=' pacman -Ss'
