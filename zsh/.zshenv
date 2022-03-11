@@ -1,3 +1,6 @@
+#specify name of current desktop
+export XDG_CURRENT_DESKTOP='sway'
+
 #set DOTFILES for personal config root directory
 export DOTFILES=$HOME/.dotfiles
 
