@@ -26,13 +26,13 @@ symlink /run/systemd/resolve/stub-resolv.con to /etc/resolv.conf for dns resolut
 disable unneeded services that run at boot like man-db.timer and mask ldconfig.service,systemd-rfkill*
 disable journaling to persistent storage by setting Storage in journal.conf to volatile and masking systemd-journal-flush.service
 link kitty to xterm
-configure hardware acceleration and Intel_graphics and Intel_GVT-g
-enable powersaving options https://wiki.archlinux.org/title/Power_management
-add resume kernel parameter to the boot loader and resume hook to to
-add systemd to HOOKS in /etc/mkinitcpio.conf and rebuild kernel for hibernation and it variant to work
+configure hardware acceleration and Intel_graphics and Intel_GVT-g https://wiki.archlinux.org/title/Intel_graphics
+manual powermangement with config files in powersaving/ of .dotfiles https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate
+add resume kernel parameter to the boot loader and resume hook to mkinitcpio
+add resume to HOOKS in /etc/mkinitcpio.conf and rebuild kernel for hibernation and it variant to work
+enable powersaving options https://wiki.archlinux.org/title/Power_management https://wiki.archlinux.org/title/Laptop https://wiki.archlinux.org/title/CPU_frequency_scaling https://wiki.archlinux.org/title/Udev
 modify relector configuration in /etc/xdg/reflector/reflector.conf to sort based on download rate with --sort rate
 add %ultracode ALL=(ALL) ALL and Defaults:ultracode timestamp_timeout=30 to sudoers using visudo to allow ultracode access to all command and password cache for 30 min
-manual powermangement with config file in powersaving dir in .dotfiles
 configure what powerbutton and lidclose does with /etc/systemd/logind.conf
 
 #INSTALLS

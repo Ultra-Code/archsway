@@ -1,5 +1,5 @@
 alias ls=' ls --hyperlink --color=always --classify'
-alias l=' exa --color=always --long --header --group --inode --links --extended --git --git-ignore --classify --all  --icons'
+alias l=' exa --color=always --long --header --group --inode --links --extended --git --git-ignore --classify --all  --icons --ignore-glob=.git'
 alias lr=' l --recurse'
 alias -g tree=' exa --tree'
 alias md=' mkdir --parents --verbose'
@@ -9,16 +9,13 @@ alias _='sudo --preserve-env'
 
 alias N=' _ nnn'
 alias Vi=' _ vi'
-alias lnh=' /bin/ln --interactive --logical --verbose'
-alias ln=' ln --interactive --symbolic --relative --logical --verbose'
+alias lns=' ln --interactive --symbolic --relative --logical --verbose'
+alias ln=' ln --interactive --logical --verbose'
 
 alias cp=' cpg --progress-bar --interactive --dereference --recursive --update --verbose --reflink=auto --sparse=auto --archive'
 alias mv=' mvg -g --interactive --update --verbose' #issue with --progress-bar in command report it
 
 alias cat=' bat --paging=never'
-
-alias grep=' rg --column --smart-case'
-alias sed=' sd'
 
 alias gcl=' git clone --recurse-submodules'
 alias gs=' git status'
@@ -107,3 +104,5 @@ alias d=' dirs -v'
 for index ({0..9}) alias $index=" cd +${index}"; unset index
 
 alias lb=" lsblk -oPATH,MOUNTPOINTS,LABEL,FSTYPE,SIZE,FSAVAIL,FSUSED,PARTUUID,MAJ:MIN"
+
+alias help=run-help

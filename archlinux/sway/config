@@ -202,7 +202,7 @@ set $menu $term --class "menu_launcher" -c zsh -c "printenv PATH | xargs -d : -I
 for_window [app_id="menu_launcher"] floating enable, resize set width 1000 px height 150 px,move position 0 px 0 px,focus
 
 set $menu_desktop $term --class "desktop_laucher" --title "launcher" --instance-group "launcher" \
-        zsh -c "find /usr/share/applications -name '*.desktop' | xargs basename -s '.desktop' -a | \
+        zsh -c "sleep 0.01;find /usr/share/applications -name '*.desktop' | xargs basename -s '.desktop' -a | \
         fzf --no-multi --height 100% --layout reverse-list --margin 3% --padding 3% --info hidden \
         --header-first --header '                                      sway desktop app launcher' \
         --prompt 'desktop launcher> ' | \
@@ -229,7 +229,7 @@ assign [app_id="coding"] $coding
 for_window [app_id="todo" title="todo list"] floating enable,resize set width 45 ppt height 75 ppt, move position 27 ppt 7ppt, border none
 
 set $todo $term --class "todo" --title "todo list" --instance-group "todos" \
-zsh -c "$EDITOR ~/neorg/todos/todo.norg"
+zsh -c "sleep 0.01;$EDITOR ~/neorg/todos/todo.norg"
 
 bindsym $mod+l exec $todo
 
@@ -313,10 +313,11 @@ bindsym --release Control+Print exec grim - | wl-copy  && $scree_shot_sound #Tak
 
 # Status Bar:
 # Read `man 5 sway-bar` for more information about this section.
-bar {
-  swaybar_command waybar
-  workspace_buttons yes
-}
+# I replaced it with a waybar service
+# bar {
+#   swaybar_command waybar
+#   workspace_buttons yes
+# }
 
 #Audio
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +1%
@@ -333,15 +334,13 @@ bindsym XF86AudioPause exec "mpc pause"
 #To allow a keybinding to be executed while the lockscreen is active
 bindsym --locked XF86AudioPlay exec "mpc toggle"
 
-#Brightness
+# Brightness
 bindsym XF86MonBrightnessDown exec brightnessctl set 1%-
 bindsym XF86MonBrightnessUp exec brightnessctl set +1%
 
-#Include sway systemd configuration and environment variables
+# Include sway systemd configuration and environment variables
 include /etc/sway/config.d/*
 
-#Autostart
-exec mako
-
-#start sway target
-exec "systemctl --user import-environment WAYLAND_DISPLAY SWAYSOCK; systemctl --user start sway-session.target"
+# Autostart
+# start sway target
+exec systemctl --user start sway-session.target

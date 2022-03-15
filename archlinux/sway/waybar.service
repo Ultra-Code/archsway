@@ -1,0 +1,12 @@
+[Unit]
+Description=Menu bar for sway
+Documentation=man:waybar(5)
+BindsTo=sway-session.target
+
+[Service]
+Type=simple
+ExecStart=/bin/waybar
+
+[Install]
+WantedBy=sway-session.target
+

@@ -48,6 +48,8 @@ zinit wait'3' lucid light-mode blockf for \
 zinit wait'3' lucid light-mode blockf for \
     zsh-users/zsh-completions
 
+#help for zsh builtin cmds
+autoload -Uz run-help
 
 if [[ $ZSH_ALIASES ]];
 then
