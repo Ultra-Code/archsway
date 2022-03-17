@@ -1,0 +1,9 @@
+[Unit]
+Description=Timer for cleaning up neovim's backup and swap files
+
+[Timer]
+OnCalendar=weekly
+Persistent=true
+
+[Install]
+WantedBy=timers.target
