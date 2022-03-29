@@ -79,11 +79,11 @@ export NNN_ARCHIVE="\\.(7z|a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|l
 
 #set NNN_PREVIEWDIR to non volatile dir like $XDG_CACHE_HOME/nnn/previews
 #if you want to keep previews on disk between reboots
-export NNN_PREVIEWDIR=~/.cache/nnn/previews
+export NNN_PREVIEWDIR=$XDG_CACHE_HOME/nnn/previews
 
-#b for visiting bookmarks and , for temporary bookmarks
-#B for permanent bookmarks and b <CR> for going to bookmarks dir of nnn
-export NNN_BMS="d:$HOME/Documents"
+# b for visiting bookmarks and , for temporary bookmarks
+# B for permanent bookmarks and b <CR> for going to bookmarks dir of nnn
+export NNN_BMS="b:$HOME/Documents;s:$HOME/Videos/Series;l:$HOME/Documents/COMPUTER SCIENCE/UNDERGRADUATE;d:$HOME/Downloads"
 
 #ENABLE file icons
 export ICONLOOKUP=1
