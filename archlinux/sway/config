@@ -167,7 +167,7 @@ bindsym $mod+comma   move container to workspace prev
 for_window [app_id="firefox" title="About Mozilla Firefox|Picture-in-Picture|Password Required - Mozilla Firefox|Page Info — (.*)"] floating enable, border none
 for_window [app_id="firefox"] focus,layout tabbed
 assign [app_id="firefox"]  $browser
-bindsym $mod+f exec firefox
+bindsym $mod+b exec firefox
 
 for_window [app_id="kitty"] focus
 assign [app_id="kitty"] $terminal
@@ -178,11 +178,8 @@ assign [app_id="mpv"] $mpv
 for_window [app_id="libreoffice-*"] focus
 assign [app_id="libreoffice-*"] $documents
 
-for_window [app_id="org.pwmt.zathura"] focus
-assign [app_id="org.pwmt.zathura"] $documents
-
-for_window [app_id="com.github.johnfactotum.Foliate"] focus
-assign [app_id="com.github.johnfactotum.Foliate"] $documents
+for_window [app_id="FBReader"] focus,fullscreen enable
+assign [app_id="FBReader"] $documents
 
 for_window [app_id="imv"] focus,fullscreen enable
 assign [app_id="imv"] $utility
@@ -216,7 +213,7 @@ bindsym $mod+a exec $menu_desktop
 #NOTE: if ^G is to be used then zsh -c "nnn;$SHELL" this is to execute nnn -are in the zsh -c then start a SHELL in
 #the background so ^G will cd to your last dir in the background SHELL
 #and for the Exec in nnn.desktop kitty --single-instance --instance-group "nnn" --detach --class "nnn" --title "file manager" zsh -c "nnn %f"
-set $file_manager $term --instance-group "nnn" --detach --class "nnn" --title "file manager" zsh -c nnn
+set $file_manager $term --instance-group "nnn" --detach --class "nnn" --title "file manager" zsh -c 'nnn -aruS'
 
 for_window [app_id="nnn"] focus
 assign [app_id="nnn"] $filemanager
@@ -248,7 +245,7 @@ bindsym $mod+t layout tabbed
 bindsym $mod+slash layout toggle all
 
 # Make the current focus fullscreen
-# bindsym $mod+f fullscreen
+bindsym $mod+f fullscreen
 
 # Toggle the current focus between tiling and floating mode
 bindsym $mod+space floating toggle
@@ -331,8 +328,11 @@ bindsym XF86AudioStop  exec "mpc stop"
 bindsym XF86AudioNext  exec "mpc next"
 bindsym XF86AudioPrev  exec "mpc prev"
 bindsym XF86AudioPause exec "mpc pause"
+
 #To allow a keybinding to be executed while the lockscreen is active
 bindsym --locked XF86AudioPlay exec "mpc toggle"
+bindsym --locked XF86AudioNext  exec "mpc next"
+bindsym --locked XF86AudioPrev  exec "mpc prev"
 
 # Brightness
 bindsym XF86MonBrightnessDown exec brightnessctl set 1%-

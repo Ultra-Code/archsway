@@ -43,7 +43,8 @@ install tools in the base-devel group ,this can be found out with pacman -Qg bas
 bat is a Cat clone with syntax highlighting and git integration
 brightnessctl for controling backlight
 calc as terminal calculator
-clang for c++ development
+clang/gcc for c++ development
+additional useful tools for c/c++ development make,pkgconf,patch,fakeroot
 language servers for development
     - vscode-langservers-extracted
     - lua-language-server
@@ -58,7 +59,7 @@ dictd serve with dict client and some dictionary sources for yay like dict-wikt-
 exa a modern replacement for ls and tree
 fd a simple, fast and user-friendly alternative to find
 ffmpegthumbnailer & gnome-epub-thumbnailer for thumbnails
-firefox as pdf reader or zathura and firefox-ublock-origin as adblocker and foliate as epub reader
+firefox as pdf reader or zathura and firefox-ublock-origin as adblocker and fbreader/foliate as epub reader
 fzf for fuzzy search
 gammastep for controlling nightlight
 git for version control
