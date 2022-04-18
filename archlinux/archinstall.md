@@ -1,6 +1,7 @@
 #needed base system modules
 systemd-boot as boot manager
-packman hook for updating systemd-boot on systemd update
+enbaling systemd-boot-update service to update systemd-boot on systemd upgrade
+
 sway as window manager with swayidle and swaylock for idle and lock mangement and waybar for swaybar management
 - base
 - btrfs-progs
@@ -17,8 +18,10 @@ sway as window manager with swayidle and swaylock for idle and lock mangement an
 - sudo
 - zsh
 - lynx
+
+since networking bits are already setup in the iso , You can just copy them .ie /etc/systemd/network/* to the mounted partition and start the nessesary services iwd,systemd-networkd,systemd-resolvd
+Or use configuration in https://github.com/Ultra-Code/dotfiles/blob/master/archlinux/networking/resolve.conf and https://github.com/Ultra-Code/dotfiles/blob/master/archlinux/networking/network
 On the freshly installed system use ttf-dejavu for serif and sans-serif and ttf-iosevka-nerd for monospace and noto-font-emoji for emoji
-Use systemd-resolvd and netorkd for networking with it required configuration in https://github.com/Ultra-Code/dotfiles/blob/master/archlinux/networking/resolve.conf and https://github.com/Ultra-Code/dotfiles/blob/master/archlinux/networking/network
 configure dns for 1.1.1.1 but this might not be needed since it's the default on arch linux
 enable DNSOverTLS for resolved
 iwd for wifi and enable it dhcp client
@@ -27,7 +30,7 @@ disable unneeded services that run at boot like man-db.timer and mask ldconfig.s
 disable journaling to persistent storage by setting Storage in journal.conf to volatile and masking systemd-journal-flush.service
 link kitty to xterm
 configure hardware acceleration and Intel_graphics and Intel_GVT-g https://wiki.archlinux.org/title/Intel_graphics
-manual powermangement with config files in powersaving/ of .dotfiles https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate
+manual powermangement with udev rules and modprobe config files in https://github.com/Ultra-Code/dotfiles/blob/master/archlinux/powersaving .udev rules go to /etc/udev/rules.d and modprobe configs in /etc/modprobe.d https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate
 add resume kernel parameter to the boot loader and resume hook to mkinitcpio
 add resume to HOOKS in /etc/mkinitcpio.conf and rebuild kernel for hibernation and it variant to work
 enable powersaving options https://wiki.archlinux.org/title/Power_management https://wiki.archlinux.org/title/Laptop https://wiki.archlinux.org/title/CPU_frequency_scaling https://wiki.archlinux.org/title/Udev
