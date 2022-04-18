@@ -245,7 +245,10 @@ bindsym $mod+t layout tabbed
 bindsym $mod+slash layout toggle all
 
 # Make the current focus fullscreen
-bindsym $mod+f fullscreen
+bindsym $mod+f fullscreen toggle
+
+# inhibit idle for all views when in fullscreen
+for_window [app_id=".*"] inhibit_idle fullscreen
 
 # Toggle the current focus between tiling and floating mode
 bindsym $mod+space floating toggle
@@ -315,6 +318,14 @@ bindsym --release Control+Print exec grim - | wl-copy  && $scree_shot_sound #Tak
 #   swaybar_command waybar
 #   workspace_buttons yes
 # }
+
+# binding to enable and disable waybar
+bindsym $mod+w exec systemctl --user start waybar
+bindsym $mod+Shift+w exec systemctl --user stop waybar
+
+# binding to enable and disable gammastep
+bindsym $mod+g exec systemctl --user start gammastep
+bindsym $mod+Shift+g exec systemctl --user stop gammastep
 
 #Audio
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +1%
