@@ -5,8 +5,33 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
      source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# shell prompt fn to display the level of nesting
+# add shell_level to POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS
+function prompt_shell_level(){
+[[ $SHLVL -gt 1 ]] && p10k segment -i '🙋' -t '%F{blue}%L zsh'
+}
+
+# shell prompt fn for instant prompt
+function instant_prompt_shell_level(){
+  prompt_shell_level
+}
+
 # To customize prompt, run `p10k configure` or edit ~/.dotfiles/zsh/.p10k.zsh.
-[[ ! -f ~/.dotfiles/zsh/.p10k.zsh ]] || source ~/.dotfiles/zsh/.p10k.zsh
+[[ ! -f ~/.dotfiles/zsh/.p10k.zsh ]] || { source ~/.dotfiles/zsh/.p10k.zsh
+
+  typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
+
+    load                  # CPU load
+    ram                   # free RAM
+    time                  # current time
+    battery               # internal battery
+    shell_level           # shell level of nesting
+    # =========================[ Line #2 ]=========================
+    newline               # \n
+    vi_mode               # vi mode (you don't need this if you've enabled prompt_char)
+)
+}
+
 
 if [[ $ZDOTDIR/zoption.zsh ]];
 then

@@ -62,11 +62,11 @@ export FZF_COMPLETION_TRIGGER='~~'
 # Options to fzf command
 export FZF_COMPLETION_OPTS='--border --info=inline'
 export FZF_DEFAULT_COMMAND='fd --type file --color=always'
-export FZF_DEFAULT_OPTS=' --multi --cycle --height=60% --layout=reverse --border=rounded --info=inline --ansi'
+export FZF_DEFAULT_OPTS=' --multi --cycle --height=60% --layout=default --border=none --info=inline --ansi'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND --type directory"
 # export FZF_CTRL_T_OPTS='--preview="bat --style=numbers --color=always --line-range :500 {}"'
 export FZF_CTRL_T_OPTS=''
-export FZF_ALT_C_OPTS='--preview="exa --tree {}"'
+export FZF_ALT_C_OPTS='--border=rounded --preview="exa --tree {}"'
 
 #NNN file manager
 export NNN_OPTS=ae
@@ -83,7 +83,7 @@ export NNN_PREVIEWDIR=$XDG_CACHE_HOME/nnn/previews
 
 # b for visiting bookmarks and , for temporary bookmarks
 # B for permanent bookmarks and b <CR> for going to bookmarks dir of nnn
-export NNN_BMS="b:$HOME/Documents;s:$HOME/Videos/Series;l:$HOME/Documents/COMPUTER SCIENCE/UNDERGRADUATE;d:$HOME/Downloads"
+export NNN_BMS="b:$HOME/Documents;s:$HOME/Videos/Sitcom;l:$HOME/Documents/COMPUTER SCIENCE/UNDERGRADUATE;d:$HOME/Downloads"
 
 #ENABLE file icons
 export ICONLOOKUP=1
