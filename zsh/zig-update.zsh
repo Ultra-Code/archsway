@@ -6,43 +6,58 @@ TMPDIR=/tmp/zig-update
 
 REPO_ENTRY=x86_64-linux
 
+REPO=$TMPDIR/zig-repo.json
+
 function die()
 {
         echo $@
-        rm -r $TMPDIR
         exit 1
 }
 
-        if [ ! -d $ROOT ]; then
-        echo "Root directory $ROOT does not exist!"
-        exit 1
-fi
+function start()
+{
+    if [ ! -d $ROOT ]; then
+        die "Root directory $ROOT does not exist!"
+    fi
 
-REPO=$TMPDIR/zig-repo.json
+    mkdir -p $TMPDIR
 
-mkdir -p $TMPDIR
+    echo "Downloading repository..."
 
-echo "Downloading repository..."
+}
+
+start
+
+function finish()
+{
+        echo $@
+        echo "Current version is now: $(zig-dev version)"
+        rm -r $TMPDIR
+        exit 0
+}
 
 curl -s $REPO_URL | jq ".master[\"$REPO_ENTRY\"]" > $REPO || die "failed to aquire repo!"
 
 TARBALL=$(jq --raw-output '.tarball' $REPO)
 SHASUM=$(jq --raw-output '.shasum' $REPO)
 SIZE=$(jq --raw-output '.size' $REPO)
+BASENAME=$(basename $TARBALL)
+VERSION=$( echo "$BASENAME" | sed 's/.tar.xz$//')
 
-VERSION=$(basename $TARBALL | sed 's/.tar.xz$//')
+[[ $VERSION != "" ]] || die "Could not extract version info"
 
-[ $VERSION != "" ] || die "Could not extract version info"
-
-if [ -d $ROOT/$VERSION ]; then
+if  [[ $ROOT/zig-current  -ef $ROOT/$VERSION ]]; then
         echo "$VERSION is already the current version!"
 else
         echo "Updating to $VERSION"
 
-        if curl $TARBALL | tar -xJC $ROOT; then
+        if curl --output-dir $TMPDIR --remote-name  -C - $TARBALL && tar -C $ROOT -xJf $TMPDIR/$BASENAME; then
 
             if [ -h $ROOT/zig-current ]; then
                 rm $ROOT/zig-current || die "failed to remove $ROOT/zig-current so that we can set new symlink!"
+
+                fd --type=directory --changed-before=1week --max-depth=1 '.' $ROOT --exec-batch rm -rf {} || die "failed to remove old zig master installation"
+
                 ln -s $ROOT/$VERSION $ROOT/zig-current || die "failed to symlink $ROOT/$VERSION to $ROOT/zig-current!"
             else
                 ln -s $ROOT/$VERSION $ROOT/zig-current || die "failed to set new symlink!"
@@ -55,12 +70,10 @@ else
                 ln -s $ROOT/zig-current/zig $HOME/.local/bin/zig-dev || die "failed to set new symlink to ~/.local/bin/zig-dev!"
             fi
 
+            finish "finished updating to $VERSION"
+
         else
                 echo "Update failed!"
                 rm -rf $ROOT/$VERSION
         fi
 fi
-
-echo "Current version is now: $(zig-dev version)"
-
-rm -r $TMPDIR
