@@ -27,7 +27,7 @@ n ()
     # or, export NNN_TMPFILE after nnn invocation
     NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
 
-    nnn -aruS
+    nnn -aru -s n
 
     if [ -f "$NNN_TMPFILE" ]; then
             . "$NNN_TMPFILE"

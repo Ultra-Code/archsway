@@ -1,3 +1,4 @@
+NOTE: make sure to mount btfs with compression zstd on first mount on live iso
 #needed base system modules
 systemd-boot as boot manager
 enbaling systemd-boot-update service to update systemd-boot on systemd upgrade

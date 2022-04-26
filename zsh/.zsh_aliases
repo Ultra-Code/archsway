@@ -104,3 +104,5 @@ alias lb=" lsblk -oPATH,MOUNTPOINTS,LABEL,FSTYPE,SIZE,FSAVAIL,FSUSED,PARTUUID,MA
 alias help=run-help
 
 alias du=' du -h -d 1'
+
+alias which=' whence -vaS'
