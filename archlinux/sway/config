@@ -85,8 +85,7 @@ exec_always {
     gsettings set $gnome-schema document-font-name 'Iosevka Nerd Font Mono Normal Medium 11'
 }
 
-# set $power_mangement System: (l) lock, (e) logout, (s) hybrid-sleep, (r) reboot, (S) shutdown, (R) UEFI , (z) suspend-then-hibernate , (h) hibernate
-set $power_mangement "power_mangement"
+set $power_mangement "System: (l) lock, (e) logout, (s) hybrid-sleep, (r) reboot, (S) shutdown, (R) UEFI , (z) suspend-then-hibernate , (h) hibernate"
 mode $power_mangement {
     bindsym l exec swaylock -i ~/Pictures/Code/27106459-coding-wallpapers.png, mode "default"
     # Exit sway (logs you out of your Wayland session)

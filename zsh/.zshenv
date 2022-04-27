@@ -14,7 +14,7 @@ export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.local/state
 
 #set DOTFILES for personal config root directory
-export DOTFILES=$HOME/.dotfiles
+export DOTFILES=$XDG_CONFIG_HOME/dotfiles
 
 #ZDOTDIR is set in /etc/zsh/zshenv
 export ZSH_ALIASES=$ZDOTDIR/.zsh_aliases

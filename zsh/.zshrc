@@ -58,7 +58,7 @@ then
 fi
 
 #source zinit
-source "$HOME/.dotfiles/zsh/zinit.zsh"
+source $ZDOTDIR/zinit.zsh
 
 #Zinit plugins and snippets
 zinit depth'1' light-mode for \
