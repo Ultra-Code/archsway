@@ -58,7 +58,7 @@ alias sp=" source $ZDOTDIR/.zprofile"
 #Aptitude aliases
 alias pmu=' _ pacman -Syu'
 alias pmr=' _ pacman -Rsn'
-alias pmi=' _ pacman -Sy'
+alias pmi=' _ pacman -S'
 alias pmp=' _ pacman -Rcunsv'
 alias pmfi=' pacman -Slq | fzf --multi --preview "pacman -Si {1}" | xargs -ro sudo pacman -S'
 alias pmfr='pacman -Qq | fzf --multi --preview "pacman -Qi {1}" | xargs -ro sudo pacman -Rns'

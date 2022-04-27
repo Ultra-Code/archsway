@@ -31,7 +31,7 @@ lyrics_directory = ~/.config/.lyrics
 #
 ## Needed for tag editor and file operations to work.
 ##
-mpd_music_dir = ~/Music
+mpd_music_dir = ~/files/Music
 #
 #mpd_crossfade_time = 5
 #
