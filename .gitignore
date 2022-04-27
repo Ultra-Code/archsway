@@ -1,5 +1,5 @@
-#ignore zcomp files
-zsh/.zcompdump*
+#ignore zcompdump and zcompcache files
+zsh/.zcomp*
 
 #p10k configure file
 zsh/.p10k.zsh
