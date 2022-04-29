@@ -1,3 +1,6 @@
+for new setup home should be a subvolume/partition mounted on the /root which is preferably btrfs/f2fs
+and FILES partition mounted to home/{data,/files} FILES should be 120-140GiB and root should have a max of 60GiB
+export ZDOTDIR in /etc/zsh/zshenv to $HOME/.config/dotfiles
 NOTE: make sure to mount btfs with compression zstd on first mount on live iso
 #needed base system modules
 systemd-boot as boot manager
@@ -38,6 +41,12 @@ enable powersaving options https://wiki.archlinux.org/title/Power_management htt
 modify relector configuration in /etc/xdg/reflector/reflector.conf to sort based on download rate with --sort rate
 add %ultracode ALL=(ALL) ALL and Defaults:ultracode timestamp_timeout=30 to sudoers using visudo to allow ultracode access to all command and password cache for 30 min
 configure what powerbutton and lidclose does with /etc/systemd/logind.conf
+For pacman enable the following options under option section in /etc/pacman.conf
+[options]
+Color
+CheckSpace
+VerbosePkgLists
+ParallelDownloads = 5
 
 #INSTALLS
 advcpmv/advcp for cp/mv with progress information
