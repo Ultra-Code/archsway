@@ -31,6 +31,9 @@ export VISUAL=nvim
 #style qt apps with adwaita
 export QT_STYLE_OVERRIDE=Adwaita-dark
 
+#use dark variant of Adwaita
+export GTK_THEME=Adwaita:dark
+
 # The maximum number of events stored in the internal history list
 export HISTSIZE=15000
 # Refers to the Maximum number of commands that are stored in the zsh history
@@ -62,7 +65,7 @@ export FZF_COMPLETION_TRIGGER='~~'
 # Options to fzf command
 export FZF_COMPLETION_OPTS='--border --info=inline'
 export FZF_DEFAULT_COMMAND='fd --type file --color=always'
-export FZF_DEFAULT_OPTS=' --multi --cycle --height=60% --layout=default --border=none --info=inline --ansi'
+export FZF_DEFAULT_OPTS=' --multi --cycle --height=60% --layout=reverse --border=none --info=inline --ansi'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND --type directory"
 # export FZF_CTRL_T_OPTS='--preview="bat --style=numbers --color=always --line-range :500 {}"'
 export FZF_CTRL_T_OPTS=''
@@ -83,7 +86,7 @@ export NNN_PREVIEWDIR=$XDG_CACHE_HOME/nnn/previews
 
 # b for visiting bookmarks and , for temporary bookmarks
 # B for permanent bookmarks and b <CR> for going to bookmarks dir of nnn
-export NNN_BMS="b:$HOME/Documents;s:$HOME/Videos/Sitcom;l:$HOME/Documents/COMPUTER SCIENCE/UNDERGRADUATE;d:$HOME/Downloads"
+export NNN_BMS="b:$HOME/files/Documents;s:$HOME/files/Videos/Sitcom;l:$HOME/files/Documents/COMPUTER SCIENCE/UNDERGRADUATE;d:$HOME/Downloads"
 
 #ENABLE file icons
 export ICONLOOKUP=1

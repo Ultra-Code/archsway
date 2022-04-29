@@ -52,8 +52,7 @@ alias es=" $EDITOR $DOTFILES/archlinux/sway/config"
 
 #Source changes in specified files into zsh
 alias sz=" exec zsh"
-alias se=" source $ZDOTDIR/.zshenv"
-alias sp=" source $ZDOTDIR/.zprofile"
+alias sp=" exec zsh -l"
 
 #Aptitude aliases
 alias pmu=' _ pacman -Syu'

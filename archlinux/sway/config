@@ -83,6 +83,7 @@ exec_always {
     gsettings set $gnome-schema font-name 'Iosevka Nerd Font Mono Normal Medium 11'
     gsettings set $gnome-schema monospace-font-name 'Iosevka Nerd Font Mono Normal Medium 11'
     gsettings set $gnome-schema document-font-name 'Iosevka Nerd Font Mono Normal Medium 11'
+    gsettings set $gnome-schema color-scheme 'prefer-dark'
 }
 
 set $power_mangement "(l)ock,(e)logout,(s)hybrid-sleep,(r)eboot,(S)hutdown,(R)UEFI,(z)suspend-then-hibernate,(h)ibernate"
