@@ -1,27 +1,3 @@
-#specify name of current desktop
-export XDG_CURRENT_DESKTOP='sway'
-
-# Look at all system udev rules and try to work out and understand them and use the understanding to finish powersaver
-export XDG_CONFIG_HOME=$HOME/.config
-
-#Where user-specific non-essential (cached) data should be written (analogous to /var/cache).
-export XDG_CACHE_HOME=$HOME/.cache
-
-#Where user-specific data files should be written (analogous to /usr/share).
-export XDG_DATA_HOME=$HOME/.local/share
-
-#Where user-specific state files should be written (analogous to /var/lib).
-export XDG_STATE_HOME=$HOME/.local/state
-
-#set DOTFILES for personal config root directory
-export DOTFILES=$XDG_CONFIG_HOME/dotfiles
-
-#ZDOTDIR is set in /etc/zsh/zshenv
-export ZSH_ALIASES=$ZDOTDIR/.zsh_aliases
-
-# History filepath
-export HISTFILE=$ZDOTDIR/.zsh_history
-
 #Set up path for interactive envirionment
 export PATH=$HOME/.local/bin:$PATH
 
@@ -34,13 +10,8 @@ export QT_STYLE_OVERRIDE=Adwaita-dark
 #use dark variant of Adwaita
 export GTK_THEME=Adwaita:dark
 
-# The maximum number of events stored in the internal history list
-export HISTSIZE=15000
-# Refers to the Maximum number of commands that are stored in the zsh history
-export SAVEHIST=10000
-
 #skip pattern at history write time
-export HISTORY_IGNORE='(vi|man|cat|.|~|npm|printenv|yay)*'
+export HISTORY_IGNORE='(vi|cat|.|~|npm|printenv|yay)*'
 
 #source nix profile which export default nix envs
 if [[ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]]
@@ -56,6 +27,12 @@ export BAT_THEME="Monokai Extended Bright"
 
 #location for sqlite history file
 export SQLITE_HISTORY=$XDG_DATA_HOME/sqlite_history
+
+#location for gnupg data files
+export GNUPGHOME=$XDG_DATA_HOME/gnupg
+
+#python history file
+export PYTHONHISTFILE=$XDG_DATA_HOME/python_history
 
 #cal history
 export CALCHISTFILE=$XDG_DATA_HOME/calc_history
