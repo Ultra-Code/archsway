@@ -81,7 +81,7 @@ grim and slurp for screenshot
 imagemagick for use by kitty for terminal image preview
 imv as image viewer
 intel-gpu-tools for monitoring gpu usage
-install mesa as dri userspace driver and intel-media-driver as va-api for intel
+install mesa for opengl and as dri userspace driver and intel-media-driver as va-api for intel
 jq a Command-line JSON processor
 libreoffice-fresh for working with openoffice documents
 lldb for debuging zig c and c++
@@ -91,13 +91,14 @@ neofetch for displaying system information
 nnn as filemanger
 node and npm for ts development
 openssh and rsync for syncing file with remote over ssh
-pulseaudio and libpulse for audio and controling audio
+pipewire-pulse as pulseaudio/bluetooth audio server and WirePlumber as pipewire session manager
 ripgrep(rg) for searching for patterns an alternative to grep
 sd Intuitive find & replace an alternative to sed
 wl-clipboard for wayland clipboard
 reflector for choosing fastest pacman server list
 qt5-wayland for runing qt5 apps under wayland
 usb_modeswitch for enabling modem mode for zero-cd based modems
+xdg-desktop-portal-wrl for WebRTC screen sharing
 yay for AUR packagem mangement
 yt-dlp youtube downloader
 zig zls-bin for zig development
