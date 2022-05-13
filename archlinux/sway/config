@@ -33,17 +33,17 @@ output * bg $(find $wallpapers_path -type f | shuf -n 1) fill
 
 ### Input configuration
 
-input "2:14:ETPS/2_Elantech_Touchpad" {
+input * {
   tap enabled
   natural_scroll enabled
   middle_emulation enabled
   click_method clickfinger
   pointer_accel 0.5 # set mouse sensitivity (between -1 and 1)
+  #Set compose key as right alt
+  #for feather reading man 7 xkeyboard-config
+  xkb_options compose:ralt
 }
 
-#Set compose key as right alt
-#for feather reading man 7 xkeyboard-config
-input * xkb_options compose:ralt
 #
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
@@ -195,16 +195,15 @@ bindsym $mod+Shift+Return exec $code
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu $term --class "menu_launcher" -c zsh -c "printenv PATH | xargs -d : -I {} -r find -L {} -maxdepth 1 -type f -executable -printf '%f\n' 2>/dev/null| sort -u | fzf | xargs -r swaymsg -t command exec"
+set $menu $term --class "menu_launcher" zsh -c "printenv PATH | xargs -d : -I {} -r find -L {} -maxdepth 1 -type f -executable -printf '%f\n' 2>/dev/null| sort -u | fzf | xargs -r swaymsg -t command exec"
 for_window [app_id="menu_launcher"] floating enable, resize set width 1000 px height 150 px,move position 0 px 0 px,focus
 
 set $menu_desktop $term --class "desktop_laucher" --title "launcher" --instance-group "launcher" \
-        zsh -c "sleep 0.01;find /usr/share/applications -name '*.desktop' | xargs basename -s '.desktop' -a | \
+        zsh -c "sleep 0.01;find /usr/share/applications -name '*.desktop' | xargs basename -s '.desktop' | \
         fzf --no-multi --height 100% --layout reverse-list --margin 3% --padding 3% --info hidden \
-        --header-first --header '                                      sway desktop app launcher' \
+        --header-first --header '\t\t\t\t\t sway desktop app launcher' \
         --prompt 'desktop launcher> ' | \
         xargs -r swaymsg -t command exec gtk-launch"
-
 for_window [app_id="desktop_laucher"] focus, floating enable , resize set width 45 ppt height 30 ppt, move position 30 ppt 5ppt, border none
 
 # Start your launcher
@@ -223,10 +222,10 @@ bindsym $mod+e exec $file_manager
 for_window [app_id="coding"] focus
 assign [app_id="coding"] $coding
 
-for_window [app_id="todo" title="todo list"] floating enable,resize set width 45 ppt height 75 ppt, move position 27 ppt 7ppt, border none
+for_window [app_id="todo" title="todo list"] floating enable,sticky enable,resize set width 45 ppt height 75 ppt, move position 27 ppt 7ppt, border none
 
 set $todo $term --class "todo" --title "todo list" --instance-group "todos" \
-zsh -c "sleep 0.01;$EDITOR ~/.local/neorg/todos/todo.norg"
+           zsh -c "sleep 0.1;$EDITOR ~/.local/neorg/todos/todo.norg"
 
 bindsym $mod+l exec $todo
 
@@ -236,8 +235,7 @@ bindsym $mod+l exec $todo
 # You can "split" the current object of your focus with
 # $mod+h or $mod+v, for horizontal and vertical splits
 # respectively.
-bindsym $mod+h splith
-bindsym $mod+v splitv
+bindsym mod+h split toggle
 
 # Switch the current container between different layout styles
 bindsym $mod+s layout stacking
@@ -257,7 +255,7 @@ bindsym $mod+space floating toggle
 bindsym $mod+Shift+space focus mode_toggle
 
 # Move focus to the parent container
-# bindsym $mod+a focus parent
+bindsym $mod+p focus parent
 
 #Focus
 focus_follows_mouse yes
