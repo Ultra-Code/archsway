@@ -49,6 +49,13 @@ zinit wait'3' lucid light-mode blockf for \
 #help for zsh builtin cmds
 autoload -Uz run-help
 
+#load zcalc for peforming math operations
+autoload -Uz zcalc
+
+function zc(){
+    zcalc -f -e "$@"
+}
+
 if [[ $ZSH_ALIASES ]];
 then
     unalias -m '*'

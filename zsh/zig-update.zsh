@@ -17,7 +17,8 @@ function die()
 function start()
 {
     if [ ! -d $ROOT ]; then
-        die "Root directory $ROOT does not exist!"
+        mkdir -p $ROOT
+        echo "Root directory $ROOT has been created!"
     fi
 
     mkdir -p $TMPDIR

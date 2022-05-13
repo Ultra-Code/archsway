@@ -1,5 +1,9 @@
 #ignore zcompdump and zcompcache files
-zsh/.zcomp*
+zsh/.zcompdump
+zsh/.zcompcache/
+
+#ignore zcalc history
+zsh/.zcalc_history
 
 #p10k configure file
 zsh/.p10k.zsh

@@ -11,6 +11,8 @@ setopt HIST_IGNORE_SPACE
 setopt HIST_REDUCE_BLANKS
 #use a single, shared history file across the sessions and append to it rather than overwrite
 setopt SHARE_HISTORY
+#Remove function definitions from the history list.
+setopt HIST_NO_FUNCTIONS
 
 #Make cd push the old directory onto the directory stack
 setopt AUTO_PUSHD
