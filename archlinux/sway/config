@@ -104,6 +104,17 @@ mode $power_mangement {
 }
 bindsym $AltMod+p mode $power_mangement
 
+set $wireless "(w)ifi (b)luetooth (o)ff"
+mode $wireless {
+    bindsym w exec rfkill toggle wlan,mode "default"
+    bindsym b exec rfkill toggle bluetooth,mode "default"
+    bindsym o exec rfkill block all,mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $AltMod+w mode $wireless
+
 # Moving around:
 # Move your focus around
 bindsym $mod+Left focus left
