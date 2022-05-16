@@ -4,6 +4,6 @@ Name=wlan0
 [Network]
 DHCP=yes
 
-[DHCP]
+[DHCPv4]
 RouteMetric=9
 UseDNS=false

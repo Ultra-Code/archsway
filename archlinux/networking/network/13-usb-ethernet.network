@@ -12,6 +12,6 @@ Description="The mobile ethernet interface"
 DHCP=yes
 
 #The Lower the value for metric the more preferred the network
-[DHCP]
+[DHCPv4]
 RouteMetric=7
 UseDNS=false
