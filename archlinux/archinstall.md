@@ -103,6 +103,7 @@ yay for AUR packagem mangement
 yt-dlp youtube downloader
 zig zls-bin for zig development
 zoxide for efficient dir movement
+zsh-autosuggestions zsh-completions zsh-history-substring-search zsh-syntax-highlighting zsh-theme-powerlevel10k complements zsh
 nix package management for reproducible development
 
 #Configuring

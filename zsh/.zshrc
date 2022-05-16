@@ -1,8 +1,8 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.dotfiles/zsh/.zshrc.
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/dotfiles/zsh/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 
@@ -29,22 +29,6 @@ if [[ $ZDOTDIR/zshcomp.zsh ]];
 then
     source $ZDOTDIR/zshcomp.zsh
 fi
-
-#source zinit
-source $ZDOTDIR/zinit.zsh
-
-#Zinit plugins and snippets
-zinit depth'1' light-mode for \
-    romkatv/powerlevel10k
-
-zinit wait lucid atload'_zsh_autosuggest_start' light-mode for \
-    zsh-users/zsh-autosuggestions
-
-zinit wait'3' lucid light-mode blockf for \
-     spwhitt/nix-zsh-completions
-
-zinit wait'3' lucid light-mode blockf for \
-    zsh-users/zsh-completions
 
 #help for zsh builtin cmds
 autoload -Uz run-help
@@ -85,3 +69,8 @@ function instant_prompt_shell_level(){
     battery               # internal battery
 )
 }
+
+if [[ $ZDOTDIR/zplugins.zsh ]];
+then
+    source $ZDOTDIR/zplugins.zsh
+fi
