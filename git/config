@@ -1,28 +1,28 @@
 [user]
-	name = Ultra-Code
-	email = mega.alpha100@gmail.com
+        name = Ultra-Code
+        email = mega.alpha100@gmail.com
 [gc]
-	autoDetach = false
+        autoDetach = false
 [core]
-	editor = vi
+        editor = vi
         pager = delta
 [pull]
-	rebase = true
+        rebase = true
 [status]
-	submodulesummary = true
+        submodulesummary = true
 [submodule]
-	recurse = true
-	update = rebase
+        recurse = true
+        update = rebase
 [push]
-	recurseSubmodules = check
+        recurseSubmodules = check
 [merge]
-	tool = vimdiff
-	conflictStyle = diff3
+        tool = vimdiff
+        conflictStyle = diff3
 [mergetool]
-	prompt = false
+        prompt = false
 [diff]
-	tool = vimdiff
-	submodule = log
+        tool = vimdiff
+        submodule = log
         colorMoved = default
 [interactive]
         diffFilter = delta --color-only
@@ -31,5 +31,22 @@
         side-by-side = true
         hyperlinks = true #commit will link to the commit on vc site
 [pager]
-	blame = delta
-	grep = delta
+        blame = delta
+        grep = delta
+[alias]
+        p = push
+        s = status -s
+        cl = clone --recurse-submodules
+        c = commit
+        a = add
+        pu = pull
+        l = log --graph --oneline --decorate
+        lp = log -p
+        d = diff
+        g = grep
+        m = mv
+        r = rm -r
+        mu = submodule update --init --recursive
+        mpu = submodule update --remote --rebase
+        mlp = log --submodule -p
+        sh = show
