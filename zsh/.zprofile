@@ -1,3 +1,5 @@
+#NOTE: make sure to export ZDOTDIR to $DOTFILES/zsh in /etc/zsh/zshenv
+
 #specify name of current desktop
 export XDG_CURRENT_DESKTOP='sway'
 
@@ -12,9 +14,6 @@ export XDG_DATA_HOME=$HOME/.local/share
 
 #Where user-specific state files should be written (analogous to /var/lib).
 export XDG_STATE_HOME=$HOME/.local/state
-
-#Set up zsh config root directory
-export ZDOTDIR=$HOME/.config/dotfiles/zsh
 
 #set DOTFILES for personal config root directory
 export DOTFILES=$XDG_CONFIG_HOME/dotfiles

@@ -3,4 +3,4 @@ Description=Service to clean up nvim backup files
 
 [Service]
 Type=simple
-ExecStart=/bin/fd --type file --changed-before 3days . %h/.local/share/nvim/swap %h/.local/share/nvim/undo %h/.local/share/nvim/backup --exec-batch rm {}
+ExecStart=/bin/fd --type file --changed-before 3days . %h/.local/share/nvim/swap %h/.local/share/nvim/undo --exec-batch rm {}
