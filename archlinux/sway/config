@@ -20,10 +20,14 @@ output * bg $(find $wallpapers_path -type f | shuf -n 1) fill
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
 ### Idle configuration
-## NOTE: if using systemd configure logind.conf's IdleAction and IdleActionSec to tell systemd what action to execute
-##       when idle and after what time the system is assumed to be in an idle state
-##       create a user service with idlehint like in https://github.com/Ultra-Code/dotfiles/blob/master/archlinux/sway/swayidle.service#L8
-##       https://wiki.archlinux.org/title/Sway#Manage_Sway-specific_daemons_with_systemd
+#NOTE: if using systemd,configure logind.conf's IdleAction and IdleActionSec to tell systemd what action to execute when idle
+#        and after what time the system is assumed to be in an idle state which swayidle notifies systemd with idlehint <timeout>
+exec swayidle -w \
+            timeout 300 'swaylock -f -i ~/files/Pictures/Code/27106459-coding-wallpapers.png' \
+            timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+            before-sleep 'swaylock -f -i ~/files/Pictures/Code/27106459-coding-wallpapers.png' \
+            after-resume 'swaymsg "output * dpms on"' \
+            idlehint 780
 
 # From my configuration this will lock your screen after 300 seconds of inactivity with a wallpaper, then turn off
 # your displays after another 300 seconds,notify systemd that the system is idle after 180 seconds, and based on the
@@ -104,11 +108,12 @@ mode $power_mangement {
 }
 bindsym $AltMod+p mode $power_mangement
 
-set $wireless "(w)ifi (b)luetooth (o)ff"
+set $wireless "(w)ifi (s)can Wifi (b)luetooth (o)ff"
 mode $wireless {
     bindsym w exec rfkill toggle wlan,mode "default"
     bindsym b exec rfkill toggle bluetooth,mode "default"
     bindsym o exec rfkill block all,mode "default"
+    bindsym s exec iwctl station wlan0 scan,mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
