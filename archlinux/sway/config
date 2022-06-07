@@ -90,17 +90,18 @@ exec_always {
     gsettings set $gnome-schema color-scheme 'prefer-dark'
 }
 
-set $power_mangement "(l)ock,(e)logout,(s)hybrid-sleep,(r)eboot,(S)hutdown,(R)UEFI,(z)suspend-then-hibernate,(h)ibernate"
+set $power_mangement "(s)uspend,(h)ybrid-sleep,suspend-(t)hen-hibernate,h(i)bernate,(l)ock,(e)xit,(r)eboot,(R)UEFI,(S)hutdown"
 mode $power_mangement {
+    bindsym s exec systemctl suspend,mode "default"
+    bindsym h exec  systemctl hybrid-sleep,mode "default"
+    bindsym t exec swaynag -t warning -m 'Sleepy time?!?!' -b 'ZzZz...' 'systemctl suspend-then-hibernate' -s "No", mode "default"
+    bindsym i exec systemctl hibernate,mode "default"
     bindsym l exec swaylock -i ~/files/Pictures/Code/27106459-coding-wallpapers.png, mode "default"
     # Exit sway (logs you out of your Wayland session)
     bindsym e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit' -s "No", mode "default"
-    bindsym s exec  systemctl hybrid-sleep,mode "default"
     bindsym r exec  systemctl reboot,mode "default"
-    bindsym Shift+s exec  systemctl poweroff -i, mode "default"
     bindsym Shift+r exec  systemctl reboot --firmware-setup, mode "default"
-    bindsym z exec swaynag -t warning -m 'Sleepy time?!?!' -b 'ZzZz...' 'systemctl suspend-then-hibernate' -s "No", mode "default"
-    bindsym h exec systemctl hibernate,mode "default"
+    bindsym Shift+s exec  systemctl poweroff -i, mode "default"
 
     # return to default mode
     bindsym Return mode "default"
@@ -321,9 +322,12 @@ bindsym $AltMod+r mode "resize"
 
 set $scree_shot_sound paplay /usr/share/sounds/freedesktop/stereo/screen-capture.oga
 
-bindsym --release Print exec grim $HOME/Pictures/"Captura de pantalla de $(date +%F_%X).png" && $scree_shot_sound #Take screenshot of a window
-bindsym --release Shift+Print exec grim -g "$(slurp)" $HOME/Pictures/"Captura de pantalla de $(date +%F_%X).png" && $scree_shot_sound #Take a screenshot of a region of a window
-bindsym --release Control+Print exec grim - | wl-copy  && $scree_shot_sound #Take a screenshot and copy to clipboard
+#Take screenshot of a window
+bindsym --release Print exec grim $HOME/files/Pictures/"Captura de pantalla de $(date +%F_%X).png" && $scree_shot_sound
+#Take a screenshot of a region of a window
+bindsym --release Shift+Print exec grim -g "$(slurp)" $HOME/files/Pictures/"Captura de pantalla de $(date +%F_%X).png" && $scree_shot_sound
+#Take a screenshot and copy to clipboard
+bindsym --release Control+Print exec grim - | wl-copy  && $scree_shot_sound
 
 # Status Bar:
 # Read `man 5 sway-bar` for more information about this section.

@@ -43,10 +43,15 @@
         l = log --graph --oneline --decorate
         lp = log -p
         d = diff
-        g = grep
+        g = grep --recurse-submodules -I
         m = mv
         r = rm -r
         mu = submodule update --init --recursive
         mpu = submodule update --remote --rebase
         mlp = log --submodule -p
         sh = show
+        lt = log --stat -1
+[grep]
+        column = true
+        lineNumber = true
+        extendedRegexp = true

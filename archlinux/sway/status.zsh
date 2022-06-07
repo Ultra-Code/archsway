@@ -1,38 +1,12 @@
 #!/bin/zsh
-#inspiration from https://gitlab.com/bullbytes/dotfiles/-/blob/master/sway/status.sh
-#https://u|nix.stackexchange.com/questions/473788/simple-swaybar-example
-#https://github.com/zakariaGatter/i3blocks-gate/blob/master/i3b-gate
-
-  # Emojis and characters for the status bar:
-  # Electricity: ⚡  ↯  🔌 ⏻
-  # Audio: 🔈 🔊🔉 🎧 🎶 🎵 🎤 🎙️
-  # Circles: 🔵 🔘 ⚫ ⚪ 🔴 ⭕
-  # Time: https://stackoverflow.com/questions/5437674/what-unicode-characters-represent-time
-  # Folder:  📁
-  # Mail: ✉  📫 📬 📭 📪 📧 ✉️ 📨 💌 📩 📤 📥 📮 📯 🏤 🏣
-  # Computer: 💻 🖥️  💾  💽
-  # Network, communication: 📶   📡  📱 ☎️  📞 📟
-  # Checkmarks and crosses: ✅  ❎
-  # Keys and locks: 🗝 🔑 🗝️ 🔐 🔒 🔏 🔓
-  # Separators: \| ❘ ❙ ❚ ⎟⎥ ⎮  ⎢
-  # Printer:
-  # Misc: 🐧 🗽 💎 💡 ⭐ ↑ ↓  ⚠ ⚙️  🧲 🌐 🌍 🏠 🤖 🧪 🛡️ 🔗 📦🎁 ⏾
-
-  # Sun: 🌅 🌄 ☀️  🌞 🌞
-  # Moon: 🌙 🌑 🌕 🌝 🌜 🌗 🌘 🌚 🌒 🌔 🌛 🌓 🌖
-  # City: 🌇 🌃 🌆
-  # Stars: 🌟 🌠 🌌
-
 
 function status_bar() {
-
 # The abbreviated weekday (e.g., "Sat"), followed by day , short month .eg "may" , year and current time
 # date like sáb 07 may 2022 and the time (e.g., 14:01). Check `man date` on how to format time and date.
     date_formatted=$(date "+%a %d %b %Y %R")
 
-    uptime_formatted=$(uptime | sed -En 's|.+\w+?\s?([[:digit:]]\s\w+),?\w+?\s([[:digit:]:]+\s?(min)?),.*|\1 \2|p')
+    uptime_formatted=$(uptime | sed -En 's|.+up\s+([[:digit:]:]+\s?(min)?\|[[:digit:]]\s+days?,\s+[[:digit:]:]+\s?(min)?),.*$|\1|p')
 
-# Get the Linux version but remove the "-1-ARCH" part
     linux_version=$(uname -r | cut -d '-' -f1)
 
 
@@ -101,7 +75,8 @@ function batteryInfo(){
         float full_energy=$(( (full_charge*voltage_now) / (10**6) ))
 
         float -F 2 time_to_full_charge=$(( (full_energy-energy_now) / power_now))
-        if [[ $time_to_full_charge -lt 1.0 ]];then
+
+        if [[ $battery_status != "Full" ]];then
             echo "🔌 $charging $(formatTime $time_to_full_charge) to full"
         else
             echo  "🔌 $charging Full"
@@ -255,7 +230,7 @@ function memInfo(){
 }
 
 # The argument to `sleep` is in seconds
-while true; do
+(while true; do
    status_bar
     sleep 1
-done
+done) &
