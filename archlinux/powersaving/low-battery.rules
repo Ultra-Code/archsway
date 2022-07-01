@@ -1,2 +1,7 @@
-# Suspend the system when battery level drops to 7% or lower
-SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="[0-7]", RUN+="/usr/bin/systemctl hybrid-sleep"
+ACTION!="change",GOTO="END"
+SUBSYSTEM!="power_supply" , GOTO="END"
+
+# hibernate the system when battery level drops to 3% or lower
+SUBSYSTEM=="power_supply",ENV{POWER_SUPPLY_NAME}=="BAT[0-9]", ATTR{status}=="Discharging", ATTR{capacity}=="[0-3]", RUN+="/usr/bin/systemctl hibernate"
+
+LABEL="END"

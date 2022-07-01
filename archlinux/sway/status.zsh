@@ -118,14 +118,26 @@ function mpdInfo(){
 }
 
 function audioInfo(){
+
+  # # Get active sink
+  local active_sink=$(pactl list sinks | sed -En '\@^\s+\w+:\s+RUNNING@,$p')
+  if [[ $active_sink == "" ]];then
+      active_sink=$(pactl list sinks)
+  fi
+  # # Get volume and mute status with PulseAudio
+  local volume=$( echo $active_sink | egrep '^\s+Volume' | cut -d '/' -f2 | tr -d ' ')
+  local mute_state=$( echo $active_sink | grep 'Mute' | cut -d ':' -f2 | tr -d ' ')
+  local output_type=$(echo $active_sink | grep 'Active Port' | cut -d ':' -f2 | tr -d ' ')
       # Get volume and mute status with PulseAudio
-  local volume=$(pactl list sinks | egrep '^\s+Volume' | cut -d '/' -f2 | tr -d ' ')
-  local mute_state=$(pactl list sinks | grep 'Mute' | cut -d ':' -f2 | tr -d ' ')
-  local output_type=$(pactl list sinks | grep 'Active Port' | cut -d ':' -f2 | tr -d ' ')
+  # local volume=$(pactl list sinks | sed '0,\@^\s+Volume@! {\@^\s+Volume@ s|.+/\s+([[:digit:]]+%).*|\1|p}')
+  # local mute_state=$(pactl list sinks | grep 'Mute' | cut -d ':' -f2 | tr -d ' ')
+  # local output_type=$(pactl list sinks | sed '0,\@^\s+Volume@! {\@^\s+Volume@ s|.+/\s+([[:digit:]]+%).*|\1|p}')
 
   if [[ $mute_state == "no" ]];then
        if [[ $output_type == "analog-output-headphones" ]];then
             echo "🎧 $volume"
+        elif [[ $output_type == "headphone-output" ]];then
+            echo " 🎧 $volume"
         else
            echo "🔊 $volume"
         fi
