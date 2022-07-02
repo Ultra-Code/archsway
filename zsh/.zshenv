@@ -22,9 +22,6 @@ fi
 #Pager to use for man
 export MANPAGER="$SHELL -c 'col --no-backspaces --spaces | bat -l man --plain'"
 
-#theme for bat and delta
-export BAT_THEME="Monokai Extended Bright"
-
 #location for sqlite history file
 export SQLITE_HISTORY=$XDG_DATA_HOME/sqlite_history
 
@@ -41,12 +38,11 @@ export CALCHISTFILE=$XDG_DATA_HOME/calc_history
 export FZF_COMPLETION_TRIGGER='~~'
 # Options to fzf command
 export FZF_COMPLETION_OPTS='--border --info=inline'
-export FZF_DEFAULT_COMMAND='fd --type file --color=always'
-export FZF_DEFAULT_OPTS=' --multi --cycle --height=60% --layout=reverse --border=none --info=inline --ansi'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND --type directory"
-# export FZF_CTRL_T_OPTS='--preview="bat --style=numbers --color=always --line-range :500 {}"'
-export FZF_CTRL_T_OPTS=''
-export FZF_ALT_C_OPTS='--border=rounded --preview="exa --tree {}"'
+export FZF_DEFAULT_COMMAND="find * -name '.*' -prune -or -type f -print"
+export FZF_DEFAULT_OPTS='--multi --cycle --height=60% --layout=reverse --border=none --info=inline --ansi'
+export FZF_CTRL_T_COMMAND="find * -regex '.+\.\w+.+$' -prune -or -print"
+export FZF_CTRL_T_OPTS='--border=rounded'
+export FZF_ALT_C_OPTS='--border=rounded --preview="ls --recursive --color=always {}"'
 
 #NNN file manager
 export NNN_OPTS=ae

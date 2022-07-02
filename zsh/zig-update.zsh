@@ -57,7 +57,7 @@ else
             if [ -h $ROOT/zig-current ]; then
                 rm $ROOT/zig-current || die "failed to remove $ROOT/zig-current so that we can set new symlink!"
 
-                fd --type=directory --changed-before=1week --max-depth=1 '.' $ROOT --exec-batch rm -rf {} || die "failed to remove old zig master installation"
+                find -O3 $ROOT -maxdepth 1 -mindepth 1 -ctime +3 -type d -execdir rm -rf {} + || die "failed to remove old zig master installation"
 
                 ln -s $ROOT/$VERSION $ROOT/zig-current || die "failed to symlink $ROOT/$VERSION to $ROOT/zig-current!"
             else

@@ -1,15 +1,15 @@
-alias ls=' ls --hyperlink --color=always --classify'
-alias l=' exa --color=always --long --header --group --inode --links --extended --git --classify --all  --icons --ignore-glob=.git'
-alias lr=' l --recurse'
-alias tree=' exa --tree'
-alias grep='grep --extended-regexp --color'
+alias l='  ls --almost-all --color --classify --format=long --human-readable --inode --ignore-backups --ignore=.git'
+alias lh=' l --hyperlink'
+alias lr=' l --recursive'
+alias grep='grep --extended-regexp --color --ignore-case'
 alias rg='grep --extended-regexp --color --recursive --line-number -I --exclude=".*" --exclude-dir=".git" --exclude-dir="*cache*"'
 alias sed='sed --regexp-extended --silent'
 alias md=' mkdir --parents --verbose'
 alias rd=' rmdir --parents --verbose'
 alias rm=' rm --interactive=once --verbose --recursive'
 alias _='sudo --preserve-env'
-alias g='git'
+alias bat=' bat --style=numbers,changes,header-filename --theme=Coldark-Dark'
+alias bh=' bat --plain --language=help'
 alias nc=' ncmpcpp'
 
 alias N=' _ nnn -aruS'
@@ -17,8 +17,18 @@ alias Vi=' _ vi'
 alias lns=' ln --interactive --symbolic --relative --logical --verbose'
 alias ln=' ln --interactive --logical --verbose'
 
-alias cp=' cpg --progress-bar --interactive --dereference --recursive --update --verbose --reflink=auto --sparse=auto --archive'
-alias mv=' mvg -g --interactive --update --verbose' #issue with --progress-bar in command report it
+alias cp=' cp --interactive --dereference --recursive --update --verbose --reflink=auto --sparse=auto --archive'
+alias mv=' mv --interactive --update --verbose'
+
+
+alias lb=" lsblk -oPATH,MOUNTPOINTS,LABEL,FSTYPE,SIZE,FSAVAIL,FSUSED,PARTUUID,MAJ:MIN"
+
+alias help=run-help
+
+alias du=' du -h -d 1'
+
+alias which=' whence -vaS'
+
 
 #edit .zshrc using $EDITOR
 alias ez=" $EDITOR $ZDOTDIR/.zshrc"
@@ -60,17 +70,6 @@ alias pmb=' pacman -Qo'
 alias pmc=' _ pacman -Qdtq| _ pacman -Rsn -'
 alias pmcc=' _ pacman -Sc'
 
-#Nix aliases
-alias nix-shell="nix-shell --command zsh"
-
-#Cmake
-alias cmgen=' cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON'
-
-#Clang
-alias clf=" ln $DOTFILES/clang/.clang-* ."
-
-alias cldb=' b -vn clean update |& compiledb'
-
 #Systemd services
 alias enabled_services=' systemctl list-unit-files --type=service --state=enabled'
 alias running_services=' systemctl list-units  --type=service  --state=running'
@@ -86,10 +85,3 @@ alias -- -=' cd -'
 alias d=' dirs -v'
 for index ({0..9}) alias $index=" cd +${index}"; unset index
 
-alias lb=" lsblk -oPATH,MOUNTPOINTS,LABEL,FSTYPE,SIZE,FSAVAIL,FSUSED,PARTUUID,MAJ:MIN"
-
-alias help=run-help
-
-alias du=' du -h -d 1'
-
-alias which=' whence -vaS'

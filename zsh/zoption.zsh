@@ -37,10 +37,3 @@ setopt GLOB_COMPLETE
 setopt CORRECT
 #Lay  out  the  matches  in completion lists sorted horizontally
 setopt LIST_ROWS_FIRST
-
-#MISC
-# Don't send SIGHUP to background processes when the shell exits.
-setopt NOHUP
-# avoid "beep"ing
-setopt NOBEEP
-

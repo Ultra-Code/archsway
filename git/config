@@ -1,11 +1,8 @@
 [user]
         name = Ultra-Code
         email = mega.alpha100@gmail.com
-[gc]
-        autoDetach = false
 [core]
-        editor = vi
-        pager = delta
+        editor = nvim
 [pull]
         rebase = true
 [status]
@@ -16,23 +13,13 @@
 [push]
         recurseSubmodules = check
 [merge]
-        tool = vimdiff
+        tool = nvimdiff3
         conflictStyle = diff3
 [mergetool]
         prompt = false
 [diff]
-        tool = vimdiff
         submodule = log
-        colorMoved = default
-[interactive]
-        diffFilter = delta --color-only
-[delta]
-        navigate = true  # use n and N to move between diff sections
-        side-by-side = true
-        hyperlinks = true #commit will link to the commit on vc site
-[pager]
-        blame = delta
-        grep = delta
+        colorMoved = zebra
 [alias]
         p = push
         s = status -s

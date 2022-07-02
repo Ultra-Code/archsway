@@ -229,7 +229,7 @@ bindsym $mod+a exec $menu_desktop
 #NOTE: if ^G is to be used then zsh -c "nnn;$SHELL" this is to execute nnn -are in the zsh -c then start a SHELL in
 #the background so ^G will cd to your last dir in the background SHELL
 #and for the Exec in nnn.desktop kitty --detach --class "nnn" --title "file manager" zsh -c "nnn %f"
-set $file_manager $term --detach --class "nnn" --title "file manager" zsh -c 'ranger'
+set $file_manager $term --detach --class "nnn" --title "file manager" zsh -c 'lf'
 
 for_window [app_id="nnn"] focus
 assign [app_id="nnn"] $filemanager
@@ -331,15 +331,36 @@ bindsym --release Control+Print exec grim - | wl-copy  && $scree_shot_sound
 
 # Status Bar:
 # Read `man 5 sway-bar` for more information about this section.
-# I replaced it with a waybar service
-# bar {
-#   swaybar_command waybar
-#   workspace_buttons yes
-# }
+bar {
+    position top
+    workspace_buttons yes
+    separator_symbol "|"
+    # Keep in mind that the current directory of this config file is $HOME
+    status_command ~/.config/sway/status.zsh
+    mode invisible
+    colors {
+        # Text color of status bar
+        statusline #ffffff
+        # Background of status bar
+        background #323232
+        # Separator color
+        separator   #ffffff
 
-# binding to enable and disable waybar
-bindsym $mod+w exec systemctl --user start waybar
-bindsym $mod+Shift+w exec systemctl --user stop waybar
+        focused_workspace  #4c7899 #285577 #ffffff
+        active_workspace   #333333 #5f676a #ffffff
+        #sway default for inactive workspaces
+        inactive_workspace #32323200 #32323200 #5c5c5c
+        urgent_workspace   #2f343a #900000 #ffffff
+        binding_mode       #2f343a #900000 #ffffff
+    }
+}
+
+#Use 'swaymsg -t get_bar_config' to get the available bar
+#binding to disable swaybar
+bindsym $mod+shift+w bar mode invisible
+
+#binding to enable swaybar
+bindsym $mod+w bar mode dock
 
 # binding to enable and disable gammastep
 bindsym $mod+g exec systemctl --user start gammastep

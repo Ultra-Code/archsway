@@ -4,7 +4,8 @@
 # 2. Interactively restart Ripgrep with reload action
 #    * Press ctrl-f to switch to fzf-only filtering
 # 3. Open the file in Vim
-RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
+# RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
+RG_PREFIX="grep --extended-regexp --color=always --recursive --line-number -I --exclude='.*' --exclude-dir='.git' --exclude-dir='*cache*' --ignore-case"
 INITIAL_QUERY=${*:-}
   FZF_DEFAULT_COMMAND="$RG_PREFIX $(printf %q $INITIAL_QUERY)" \
   fzf --ansi \
