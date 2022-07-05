@@ -39,7 +39,7 @@ add resume kernel parameter to the boot loader and resume hook to mkinitcpio
 add resume to HOOKS in /etc/mkinitcpio.conf and rebuild kernel for hibernation and it variant to work
 enable powersaving options https://wiki.archlinux.org/title/Power_management https://wiki.archlinux.org/title/Laptop https://wiki.archlinux.org/title/CPU_frequency_scaling https://wiki.archlinux.org/title/Udev
 modify relector configuration in /etc/xdg/reflector/reflector.conf to sort based on download rate with --sort rate
-add %ultracode ALL=(ALL) ALL and Defaults:ultracode timestamp_timeout=30 to sudoers using visudo to allow ultracode access to all command and password cache for 30 min
+modify sudoers with visudo using example https://github.com/Ultra-Code/dotfiles/blob/master/archlinux/sudoers file
 configure what powerbutton and lidclose does with /etc/systemd/logind.conf
 For pacman enable the following options under option section in /etc/pacman.conf
 [options]
