@@ -199,8 +199,8 @@ for_window [app_id="firefox"] focus,layout tabbed
 assign [app_id="firefox"]  $browser
 bindsym $mod+b exec firefox
 
-for_window [app_id="kitty"] focus
-assign [app_id="kitty"] $terminal
+for_window [app_id="foot"] focus
+assign [app_id="foot"] $terminal
 
 for_window [app_id="mpv"] focus,fullscreen enable
 assign [app_id="mpv"] $mpv
@@ -216,11 +216,12 @@ assign [app_id="imv"] $utility
 
 # Your preferred terminal emulator
 set $term footclient
-set $code kitty --class "coding" --title "programming mode" --session $DOTFILES/kitty/session.conf
+# set $code kitty --class "coding" --title "programming mode" --session $DOTFILES/kitty/session.conf
+set $megacode $term --app-id "coding" --title "programming mode"
 
 # Start a terminal
 bindsym $mod+Return exec footclient
-bindsym $mod+Shift+Return exec $code
+bindsym $mod+Shift+Return exec $megacode
 
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
@@ -244,8 +245,8 @@ bindsym $mod+a exec $menu_desktop
 #and for the Exec in nnn.desktop footclient --app-id "nnn" --title "file manager" zsh -c "nnn %f"
 set $file_manager kitty --class "lf" --title "file manager" zsh -c 'lf'
 
-for_window [app_id="nnn"] focus
-assign [app_id="nnn"] $filemanager
+for_window [app_id="lf"] focus
+assign [app_id="lf"] $filemanager
 
 bindsym $mod+e exec $file_manager
 
