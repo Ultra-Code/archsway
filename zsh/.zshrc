@@ -40,6 +40,11 @@ function zc(){
     zcalc -f -e "$@"
 }
 
+function prompt_precmd_for_ctrl_z_x() {
+    print -Pn "\e]133;A\e\\"
+}
+precmd_functions+=(propmt_precmd_for_ctrl_z_x)
+
 if [[ $ZSH_ALIASES ]];
 then
     unalias -m '*'
