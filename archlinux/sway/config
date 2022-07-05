@@ -112,17 +112,27 @@ mode $power_mangement {
 }
 bindsym $AltMod+p mode $power_mangement
 
-set $wireless "(w)ifi (s)can Wifi (b)luetooth (o)ff"
-mode $wireless {
+set $wifi "(w)ifi (s)can Wifi (o)ff"
+mode $wifi {
     bindsym w exec rfkill toggle wlan,mode "default"
-    bindsym b exec rfkill toggle bluetooth,mode "default"
     bindsym o exec rfkill block all,mode "default"
     bindsym s exec iwctl station wlan0 scan,mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-bindsym $AltMod+w mode $wireless
+bindsym $AltMod+w mode $wifi
+
+set $bluetooth "(b)luetooth (s)can bluetooth (o)ff"
+mode $bluetooth {
+    bindsym b exec rfkill toggle bluetooth,mode "default"
+    bindsym o exec rfkill block all,mode "default"
+    bindsym s exec bluetoothctl -- connect 41:42:AB:B9:CA:65,mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $AltMod+b mode $bluetooth
 
 # Moving around:
 # Move your focus around
