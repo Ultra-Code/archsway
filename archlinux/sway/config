@@ -8,35 +8,7 @@ xwayland disable
 set $mod Mod4
 set $AltMod Mod1
 
-### Output configuration
-### Set random wallpaper
-set $wallpapers_path $HOME/files/Pictures/Code
-output * bg $(find $wallpapers_path -type f | shuf -n 1) fill
-
-# Example configuration:
-#
-#   output HDMI-A-1 resolution 1920x1080 position 1920,0
-#
-# You can get the names of your outputs by running: swaymsg -t get_outputs
-
-### Idle configuration
-#NOTE: if using systemd,configure logind.conf's IdleAction and IdleActionSec to tell systemd what action to execute when idle
-#        and after what time the system is assumed to be in an idle state which swayidle notifies systemd with idlehint <timeout>
-exec swayidle -w \
-            timeout 300 'swaylock -f -i ~/files/Pictures/Code/27106459-coding-wallpapers.png' \
-            timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-            before-sleep 'swaylock -f -i ~/files/Pictures/Code/27106459-coding-wallpapers.png' \
-            after-resume 'swaymsg "output * dpms on"' \
-            idlehint 780
-
-# From my configuration this will lock your screen after 300 seconds of inactivity with a wallpaper, then turn off
-# your displays after another 300 seconds,notify systemd that the system is idle after 180 seconds, and based on the
-# configuration in https://github.com/Ultra-Code/dotfiles/blob/master/archlinux/systemd/logind.conf#L39 execute hybrid-sleep
-# after 7min of inactivity and when resuming from inactivity turn your screens back on.
-# It will also lock your screen before your computer goes to sleep.
-
 ### Input configuration
-
 input * {
   tap enabled
   drag enabled
@@ -51,7 +23,37 @@ input * {
   xkb_options compose:ralt
 }
 
+#hide mouse on inactivity
+seat * hide_cursor 10000
+seat * hide_cursor when-typing enable
+
+### Output configuration
+# Example configuration:
 #
+#   output HDMI-A-1 resolution 1920x1080 position 1920,0
+#
+# You can get the names of your outputs by running: swaymsg -t get_outputs
+
+### Set random wallpaper
+set $wallpapers_path $HOME/files/Pictures/Code
+output * bg $(find $wallpapers_path -type f | shuf -n 1) fill
+
+### Idle configuration
+#NOTE: if using systemd,configure logind.conf's IdleAction and IdleActionSec to tell systemd what action to execute when idle
+#        and after what time the system is assumed to be in an idle state which swayidle notifies systemd with idlehint <timeout>
+
+# From my configuration this will lock your screen after 300 seconds of inactivity with a wallpaper, then turn off
+# your displays after another 300 seconds,notify systemd that the system is idle after 180 seconds, and based on the
+# configuration in https://github.com/Ultra-Code/dotfiles/blob/master/archlinux/systemd/logind.conf#L39 execute hybrid-sleep
+# after 7min of inactivity and when resuming from inactivity turn your screens back on.
+# It will also lock your screen before your computer goes to sleep.
+exec swayidle -w \
+            timeout 300 'swaylock -f -i ~/files/Pictures/Code/27106459-coding-wallpapers.png' \
+            timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+            before-sleep 'swaylock -f -i ~/files/Pictures/Code/27106459-coding-wallpapers.png' \
+            after-resume 'swaymsg "output * dpms on"' \
+            idlehint 780
+
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
 
@@ -72,68 +74,6 @@ floating_modifier $mod normal
 # Reload the configuration file
 bindsym $mod+r reload
 
-# Font
-# Check https://docs.gtk.org/Pango/type_func.FontDescription.from_string.html#description for description of the
-# pango font format
-
-font pango:Iosevka Nerd Font Mono Normal Medium 11
-
-#GTK+ ui settings
-set $gnome-schema org.gnome.desktop.interface
-
-exec_always {
-    #style gtk apps with Adwaita dark variant
-    gsettings set $gnome-schema gtk-theme 'Adwaita-dark'
-    gsettings set $gnome-schema icon-theme 'Adwaita'
-    gsettings set $gnome-schema cursor-size 24
-    gsettings set $gnome-schema cursor-theme 'Adwaita'
-    gsettings set $gnome-schema font-name 'Iosevka Nerd Font Mono Normal Medium 11'
-    gsettings set $gnome-schema monospace-font-name 'Iosevka Nerd Font Mono Normal Medium 11'
-    gsettings set $gnome-schema document-font-name 'Iosevka Nerd Font Mono Normal Medium 11'
-    gsettings set $gnome-schema color-scheme 'prefer-dark'
-}
-
-set $power_mangement "(s)uspend,(h)ybrid-sleep,suspend-(t)hen-hibernate,h(i)bernate,(l)ock,(e)xit,(r)eboot,(R)UEFI,(S)hutdown"
-mode $power_mangement {
-    bindsym s exec systemctl suspend,mode "default"
-    bindsym h exec  systemctl hybrid-sleep,mode "default"
-    bindsym t exec swaynag -t warning -m 'Sleepy time?!?!' -b 'ZzZz...' 'systemctl suspend-then-hibernate' -s "No", mode "default"
-    bindsym i exec systemctl hibernate,mode "default"
-    bindsym l exec swaylock -i ~/files/Pictures/Code/27106459-coding-wallpapers.png, mode "default"
-    # Exit sway (logs you out of your Wayland session)
-    bindsym e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit' -s "No", mode "default"
-    bindsym r exec  systemctl reboot,mode "default"
-    bindsym Shift+r exec  systemctl reboot --firmware-setup, mode "default"
-    bindsym Shift+s exec  systemctl poweroff -i, mode "default"
-
-    # return to default mode
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-bindsym $AltMod+p mode $power_mangement
-
-set $wifi "(w)ifi (s)can Wifi (o)ff"
-mode $wifi {
-    bindsym w exec rfkill toggle wlan,mode "default"
-    bindsym o exec rfkill block all,mode "default"
-    bindsym s exec iwctl station wlan0 scan,mode "default"
-
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-bindsym $AltMod+w mode $wifi
-
-set $bluetooth "(b)luetooth (s)can bluetooth (o)ff"
-mode $bluetooth {
-    bindsym b exec rfkill toggle bluetooth,mode "default"
-    bindsym o exec rfkill block all,mode "default"
-    bindsym s exec bluetoothctl -- connect 41:42:AB:B9:CA:65,mode "default"
-
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-bindsym $AltMod+b mode $bluetooth
-
 # Moving around:
 # Move your focus around
 bindsym $mod+Left focus left
@@ -146,120 +86,6 @@ bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
-
-# Workspaces:
-#
-# Switch to workspace
- # alt-icon 
-set $terminal    "1:  "
-set $coding      "2:  "
- # 龜
-set $browser     "3:  "
-set $documents   "4:  "
-# 
-set $filemanager "5:  "
-# 
-set $mpv         "6:  "
-# 
-set $utility     "7:  "
-set $downloads   "8:  "
-# 
-set $chating     "9:  "
-bindsym $mod+1 workspace $terminal
-bindsym $mod+2 workspace $coding
-bindsym $mod+3 workspace $browser
-bindsym $mod+4 workspace $documents
-bindsym $mod+5 workspace $filemanager
-bindsym $mod+6 workspace $mpv
-bindsym $mod+7 workspace $utility
-bindsym $mod+8 workspace $downloads
-bindsym $mod+9 workspace $chating
-bindsym $mod+0 workspace 10
-bindsym $mod+Shift+Tab workspace prev
-bindsym $mod+Tab workspace next
-
-# Move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace $terminal
-bindsym $mod+Shift+2 move container to workspace $coding
-bindsym $mod+Shift+3 move container to workspace $browser
-bindsym $mod+Shift+4 move container to workspace $documents
-bindsym $mod+Shift+5 move container to workspace $filemanager
-bindsym $mod+Shift+6 move container to workspace $mpv
-bindsym $mod+Shift+7 move container to workspace $utility
-bindsym $mod+Shift+8 move container to workspace $downloads
-bindsym $mod+Shift+9 move container to workspace $chating
-bindsym $mod+Shift+0 move container to workspace 10
-bindsym $mod+period  move container to workspace next
-bindsym $mod+comma   move container to workspace prev
-# Note: workspaces can have any name you want, not just numbers.
-# We just use 1-10 as the default.
-
-for_window [app_id="firefox" title="About Mozilla Firefox|Picture-in-Picture|Password Required - Mozilla Firefox|Page Info — (.*)|Firefox — Sharing Indicator"] floating enable, border none
-for_window [app_id="firefox"] focus,layout tabbed
-assign [app_id="firefox"]  $browser
-bindsym $mod+b exec firefox
-
-for_window [app_id="foot"] focus
-assign [app_id="foot"] $terminal
-
-for_window [app_id="mpv"] focus,fullscreen enable
-assign [app_id="mpv"] $mpv
-
-for_window [app_id="libreoffice-*"] focus
-assign [app_id="libreoffice-*"] $documents
-
-for_window [app_id="FBReader"] focus,fullscreen enable
-assign [app_id="FBReader"] $documents
-
-for_window [app_id="imv"] focus,fullscreen enable
-assign [app_id="imv"] $utility
-
-# Your preferred terminal emulator
-set $term footclient
-# set $code kitty --class "coding" --title "programming mode" --session $DOTFILES/kitty/session.conf
-set $megacode $term --app-id "coding" --title "programming mode"
-
-# Start a terminal
-bindsym $mod+Return exec footclient
-bindsym $mod+Shift+Return exec $megacode
-
-# Your preferred application launcher
-# Note: pass the final command to swaymsg so that the resulting window can be opened
-# on the original workspace that the command was run on.
-set $menu $term --app-id "exe_launcher" --title "launcher" zsh -c "printenv PATH | xargs -d : -I {} -r find -L {} -maxdepth 1 -type f -executable -printf '%f\n' 2>/dev/null| sort -u | fzf | xargs -r swaymsg -t command exec"
-for_window [app_id="menu_launcher"] floating enable, resize set width 1000 px height 150 px,move position 0 px 0 px,focus
-
-set $menu_desktop $term --app-id "desktop_laucher" --title "launcher" \
-        zsh -c "sleep 0.01;find /usr/share/applications -name '*.desktop' | xargs basename -s '.desktop' | \
-        fzf --no-multi --height 100% --layout reverse-list --margin 3% --padding 3% --info hidden \
-        --header-first --header '\t\t\t\t\t sway desktop app launcher' \
-        --prompt 'desktop launcher> ' | \
-        xargs -r swaymsg -t command exec gtk-launch"
-for_window [app_id="desktop_laucher"] focus, floating enable , resize set width 45 ppt height 30 ppt, move position 30 ppt 5ppt, border none
-
-# Start your launcher
-bindsym $mod+a exec $menu_desktop
-
-#NOTE: if ^G is to be used then zsh -c "nnn;$SHELL" this is to execute nnn -are in the zsh -c then start a SHELL in
-#the background so ^G will cd to your last dir in the background SHELL
-#and for the Exec in nnn.desktop footclient --app-id "nnn" --title "file manager" zsh -c "nnn %f"
-set $file_manager kitty --class "lf" --title "file manager" zsh -c 'lf'
-
-for_window [app_id="lf"] focus
-assign [app_id="lf"] $filemanager
-
-bindsym $mod+e exec $file_manager
-
-for_window [app_id="coding"] focus
-assign [app_id="coding"] $coding
-
-for_window [app_id="todo" title="todo list"] floating enable,sticky enable,resize set width 45 ppt height 75 ppt, move position 27 ppt 7ppt
-
-set $todo $term --app-id "todo" --title "todo list" \
-           zsh -c "sleep 0.05;$EDITOR ~/.local/neorg/todos/todo.norg"
-
-bindsym $mod+l exec $todo
-
 
 # Layout stuff:
 #
@@ -291,10 +117,6 @@ bindsym $mod+p focus parent
 #Focus
 focus_follows_mouse yes
 
-#hide mouse on inactivity
-seat * hide_cursor 10000
-seat * hide_cursor when-typing enable
-
 # Window borders
 # Set default border style for new tiled windows.
 # NOTE: having boaders allow you to resize window without having to use float_mod + right_click
@@ -317,6 +139,135 @@ bindsym $mod+minus move scratchpad
 # Show the next scratchpad window or hide the focused scratchpad window.
 # If there are multiple scratchpad windows, this command cycles through them.
 bindsym $mod+Shift+minus scratchpad show
+
+#Audio
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +1%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -1%
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+#Media keys
+bindsym XF86AudioPlay  exec "mpc toggle"
+bindsym XF86AudioStop  exec "mpc stop"
+bindsym XF86AudioNext  exec "mpc next"
+bindsym XF86AudioPrev  exec "mpc prev"
+bindsym XF86AudioPause exec "mpc pause"
+
+#To allow a keybinding to be executed while the lockscreen is active
+bindsym --locked XF86AudioPlay exec "mpc toggle"
+bindsym --locked XF86AudioNext  exec "mpc next"
+bindsym --locked XF86AudioPrev  exec "mpc prev"
+
+# Brightness
+bindsym XF86MonBrightnessDown exec brightnessctl set 1%-
+bindsym XF86MonBrightnessUp exec brightnessctl set +1%
+
+
+# Workspaces:
+#
+# Switch to workspace
+# alt-icon 
+set $terminal    "1:  "
+set $coding      "2:  "
+ # 龜
+set $browser     "3:  "
+set $documents   "4:  "
+# 
+set $filemanager "5:  "
+# 
+set $mpv         "6:  "
+# 
+set $utility     "7:  "
+set $downloads   "8:  "
+# 
+set $chating     "9:  "
+bindsym $mod+1 workspace $terminal
+bindsym $mod+2 workspace $coding
+bindsym $mod+3 workspace $browser
+bindsym $mod+4 workspace $documents
+bindsym $mod+5 workspace $filemanager
+bindsym $mod+6 workspace $mpv
+bindsym $mod+7 workspace $utility
+bindsym $mod+8 workspace $downloads
+bindsym $mod+9 workspace $chating
+bindsym $mod+0 workspace 10
+bindsym $mod+Shift+Tab workspace prev
+bindsym $mod+Tab workspace next
+
+# Note: workspaces can have any name you want, not just numbers.
+# We just use 1-10 as the default.
+# Move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $terminal
+bindsym $mod+Shift+2 move container to workspace $coding
+bindsym $mod+Shift+3 move container to workspace $browser
+bindsym $mod+Shift+4 move container to workspace $documents
+bindsym $mod+Shift+5 move container to workspace $filemanager
+bindsym $mod+Shift+6 move container to workspace $mpv
+bindsym $mod+Shift+7 move container to workspace $utility
+bindsym $mod+Shift+8 move container to workspace $downloads
+bindsym $mod+Shift+9 move container to workspace $chating
+bindsym $mod+Shift+0 move container to workspace 10
+bindsym $mod+period  move container to workspace next
+bindsym $mod+comma   move container to workspace prev
+
+for_window [app_id="firefox" title="About Mozilla Firefox|Picture-in-Picture|Password Required - Mozilla Firefox|Page Info — (.*)|Firefox — Sharing Indicator"] floating enable,border none
+for_window [app_id="firefox"] focus,layout tabbed
+assign [app_id="firefox"]  $browser
+bindsym $mod+b exec firefox
+
+for_window [app_id="foot"] focus
+assign [app_id="foot" title="terminal"] $terminal
+# Your preferred terminal emulator
+set $term footclient --title "terminal"
+# Start a terminal
+bindsym $mod+Return exec $term
+
+for_window [app_id="coding"] focus
+assign [app_id="coding"] $coding
+# set $code kitty --class "coding" --title "programming mode" --session $DOTFILES/kitty/session.conf
+set $megacode $term --app-id "coding" --title "programming mode"
+bindsym $mod+Shift+Return exec $megacode
+
+for_window [app_id="mpv"] focus,fullscreen enable
+assign [app_id="mpv"] $mpv
+
+for_window [app_id="libreoffice-*"] focus
+assign [app_id="libreoffice-*"] $documents
+
+for_window [app_id="FBReader"] focus,fullscreen enable
+assign [app_id="FBReader"] $documents
+
+for_window [app_id="imv"] focus,fullscreen enable
+assign [app_id="imv"] $utility
+
+# Your preferred application launcher
+# Note: pass the final command to swaymsg so that the resulting window can be opened
+# on the original workspace that the command was run on.
+for_window [app_id="menu_launcher"] floating enable, resize set width 1000 px height 150 px,move position 0 px 0 px,focus
+set $menu $term --app-id "exe_launcher" --title "launcher" zsh -c "printenv PATH | xargs -d : -I {} -r find -L {} -maxdepth 1 -type f -executable -printf '%f\n' 2>/dev/null| sort -u | fzf | xargs -r swaymsg -t command exec"
+
+for_window [app_id="desktop_laucher"] focus, floating enable , resize set width 45 ppt height 30 ppt, move position 30 ppt 5ppt,border none
+set $menu_desktop $term --app-id "desktop_laucher" --title "launcher" \
+        zsh -c "sleep 0.01;find /usr/share/applications -name '*.desktop' | xargs basename -s '.desktop' | \
+        fzf --no-multi --height 100% --layout reverse-list --margin 3% --padding 3% --info hidden \
+        --header-first --header '\t\t\t\t\t sway desktop app launcher' \
+        --prompt 'desktop launcher> ' | \
+        xargs -r swaymsg -t command exec gtk-launch"
+
+# Start your launcher
+bindsym $mod+a exec $menu_desktop
+
+#NOTE: if ^G is to be used then zsh -c "nnn;$SHELL" this is to execute nnn -are in the zsh -c then start a SHELL in
+# the background so ^G will cd to your last dir in the background SHELL
+# and for the Exec in nnn.desktop footclient --app-id "nnn" --title "file manager" zsh -c "nnn %f"
+for_window [app_id="lf"] focus
+assign [app_id="lf"] $filemanager
+set $file_manager kitty --class "lf" --title "file manager" zsh -c 'lf'
+bindsym $mod+e exec $file_manager
+
+for_window [app_id="todo" title="todo list"] floating enable,sticky enable,resize set width 45 ppt height 75 ppt, move position 27 ppt 7ppt
+set $todo $term --app-id "todo" --title "todo list" zsh -c "sleep 0.05;$EDITOR ~/.local/neorg/todos/todo.norg"
+bindsym $mod+l exec $todo
 
 
 # Resizing containers:
@@ -384,27 +335,67 @@ bindsym $mod+w bar mode dock
 bindsym $mod+g exec systemctl --user start gammastep
 bindsym $mod+Shift+g exec systemctl --user stop gammastep
 
-#Audio
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +1%
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -1%
-bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+# Font
+# Check https://docs.gtk.org/Pango/type_func.FontDescription.from_string.html#description for description of the
+# pango font format
 
-#Media keys
-bindsym XF86AudioPlay  exec "mpc toggle"
-bindsym XF86AudioStop  exec "mpc stop"
-bindsym XF86AudioNext  exec "mpc next"
-bindsym XF86AudioPrev  exec "mpc prev"
-bindsym XF86AudioPause exec "mpc pause"
+font pango:Iosevka Nerd Font Mono Normal Medium 11
 
-#To allow a keybinding to be executed while the lockscreen is active
-bindsym --locked XF86AudioPlay exec "mpc toggle"
-bindsym --locked XF86AudioNext  exec "mpc next"
-bindsym --locked XF86AudioPrev  exec "mpc prev"
+#GTK+ ui settings
+set $gnome-schema org.gnome.desktop.interface
 
-# Brightness
-bindsym XF86MonBrightnessDown exec brightnessctl set 1%-
-bindsym XF86MonBrightnessUp exec brightnessctl set +1%
+exec_always {
+    #style gtk apps with Adwaita dark variant
+    gsettings set $gnome-schema gtk-theme 'Adwaita-dark'
+    gsettings set $gnome-schema icon-theme 'Adwaita'
+    gsettings set $gnome-schema cursor-size 24
+    gsettings set $gnome-schema cursor-theme 'Adwaita'
+    gsettings set $gnome-schema font-name 'Iosevka Nerd Font Mono Normal Medium 11'
+    gsettings set $gnome-schema monospace-font-name 'Iosevka Nerd Font Mono Normal Medium 11'
+    gsettings set $gnome-schema document-font-name 'Iosevka Nerd Font Mono Normal Medium 11'
+    gsettings set $gnome-schema color-scheme 'prefer-dark'
+}
+
+set $power_mangement "(s)uspend,(h)ybrid-sleep,suspend-(t)hen-hibernate,h(i)bernate,(l)ock,(e)xit,(r)eboot,(R)UEFI,(S)hutdown"
+mode $power_mangement {
+    bindsym s exec systemctl suspend,mode "default"
+    bindsym h exec  systemctl hybrid-sleep,mode "default"
+    bindsym t exec swaynag -t warning -m 'Sleepy time?!?!' -b 'ZzZz...' 'systemctl suspend-then-hibernate' -s "No",mode "default"
+    bindsym i exec systemctl hibernate,mode "default"
+    bindsym l exec swaylock -i ~/files/Pictures/Code/27106459-coding-wallpapers.png,mode "default"
+    # Exit sway (logs you out of your Wayland session)
+    bindsym e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit' -s "No",mode "default"
+    bindsym r exec  systemctl reboot,mode "default"
+    bindsym Shift+r exec  systemctl reboot --firmware-setup,mode "default"
+    bindsym Shift+s exec  systemctl poweroff -i,mode "default"
+
+    # return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $AltMod+p mode $power_mangement
+
+set $wifi "(w)ifi (s)can Wifi (o)ff"
+mode $wifi {
+    bindsym w exec rfkill toggle wlan,mode "default"
+    bindsym o exec rfkill block all,mode "default"
+    bindsym s exec iwctl station wlan0 scan,mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $AltMod+w mode $wifi
+
+set $bluetooth "(b)luetooth (s)can bluetooth (o)ff"
+mode $bluetooth {
+    bindsym b exec rfkill toggle bluetooth,mode "default"
+    bindsym o exec rfkill block all,mode "default"
+    bindsym s exec bluetoothctl -- connect 41:42:AB:B9:CA:65,mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $AltMod+b mode $bluetooth
 
 # Include sway systemd configuration and environment variables
 include /etc/sway/config.d/*
