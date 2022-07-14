@@ -119,19 +119,14 @@ function mpdInfo(){
 
 function audioInfo(){
 
-  # # Get active sink
-  local active_sink=$(pactl list sinks | sed -En '\@^\s+\w+:\s+RUNNING@,$p')
-  if [[ $active_sink == "" ]];then
-      active_sink=$(pactl list sinks)
-  fi
-  # # Get volume and mute status with PulseAudio
-  local volume=$( echo $active_sink | egrep '^\s+Volume' | cut -d '/' -f2 | tr -d ' ')
+  # Get Default sink
+  local sink=$(pactl info | sed -En '\@Default Sink: \w+@ {s|\w+\s+\w+:\s+([[:graph:]]+$)|\1|p}')
+  # Get active sink
+  local active_sink=$(pactl list sinks | sed -En '\@\s+Name:\s+'"${sink}"'$@,$p')
+  # Get volume and mute status with PulseAudio
   local mute_state=$( echo $active_sink | grep 'Mute' | cut -d ':' -f2 | tr -d ' ')
+  local volume=$( echo $active_sink | egrep '^\s+Volume' | cut -d '/' -f2 | tr -d ' ')
   local output_type=$(echo $active_sink | grep 'Active Port' | cut -d ':' -f2 | tr -d ' ')
-      # Get volume and mute status with PulseAudio
-  # local volume=$(pactl list sinks | sed '0,\@^\s+Volume@! {\@^\s+Volume@ s|.+/\s+([[:digit:]]+%).*|\1|p}')
-  # local mute_state=$(pactl list sinks | grep 'Mute' | cut -d ':' -f2 | tr -d ' ')
-  # local output_type=$(pactl list sinks | sed '0,\@^\s+Volume@! {\@^\s+Volume@ s|.+/\s+([[:digit:]]+%).*|\1|p}')
 
   if [[ $mute_state == "no" ]];then
        if [[ $output_type == "analog-output-headphones" ]];then
@@ -180,7 +175,7 @@ function networkInfo() {
   net_info=$(cat /proc/net/arp | sed -En '2 s|^([[:digit:].]+).*|\1|p')
   # interface=$(echo $net_info | cut -d ' ' -f2)
   interface=$(cat /proc/net/arp | sed -En '2 s|.*\s+(\w+)$|\1|p')
-  wifi_name=$(iwctl station wlan0 show | grep -E '\s+Connected\s+network' | sed -E 's|\s+\w+\s+\w+\s+(\w+\s*\w*).*|\1|g')
+  wifi_name=$(iwctl station wlan0 show | grep -E '\s+Connected\s+network' | sed -E 's|\s+\w+\s+\w+\s+(\w+\s?\w*?).*|\1|g')
   ip=$(echo $net_info | cut -d ' ' -f4)
         if [[ $net_info == "" ]];then
             for device in /sys/class/rfkill/* ;do
