@@ -23,6 +23,13 @@ alias mv=' mv --interactive --update --verbose'
 
 alias lb=" lsblk -oPATH,MOUNTPOINTS,LABEL,FSTYPE,SIZE,FSAVAIL,FSUSED,PARTUUID,MAJ:MIN"
 
+alias tarx=' bsdtar -xvf '
+alias tarv=' bsdtar -tvf '
+alias tarzip=' bsdtar -a --option="zip:compression=deflate" -cvf '
+alias targzip=' bsdtar -a --option="gzip:compression-level=9" -cvf '
+alias tarzst=' bsdtar -a --option="zstd:compression-level=22,zstd:threads=0" -cvf '
+alias tarxz=' bsdtar -a --option="xz:compression-level=9,xz:threads=0" -cvf '
+
 alias help=run-help
 
 alias du=' du -h -d 1'

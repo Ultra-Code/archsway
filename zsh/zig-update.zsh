@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-ROOT=$HOME/Downloads/Compressed
+ROOT=$HOME/.local/zig
 REPO_URL=https://ziglang.org/download/index.json
 TMPDIR=/tmp/zig-update
 
