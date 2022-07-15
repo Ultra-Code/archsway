@@ -1,7 +1,18 @@
 ACTION!="change",GOTO="END"
-SUBSYSTEM!="power_supply" , GOTO="END"
+SUBSYSTEM!="power_supply",GOTO="END"
 
-# hibernate the system when battery level drops to 3% or lower
-SUBSYSTEM=="power_supply",ENV{POWER_SUPPLY_NAME}=="BAT[0-9]", ATTR{status}=="Discharging", ATTR{capacity}=="[0-3]", RUN+="/usr/bin/systemctl hibernate"
+ATTR{capacity}=="[1-3]",GOTO="HYBRID-SLEEP"
+
+# hibernate system at 0%
+ENV{POWER_SUPPLY_NAME}=="BAT[0-9]", ATTR{status}=="Discharging", ATTR{capacity}=="0", RUN+="/usr/bin/systemctl hibernate"
+
+GOTO="END"
+
+LABEL="HYBRID-SLEEP"
+
+# hybrid-sleep the system when battery level drops below 4%
+ENV{POWER_SUPPLY_NAME}=="BAT[0-9]", ATTR{status}=="Discharging", ATTR{capacity}=="[1-3]", RUN+="/usr/bin/systemctl hybrid-sleep"
 
 LABEL="END"
+
+vim: ft=udevrules
