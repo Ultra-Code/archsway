@@ -1,29 +1,65 @@
-#Run rules only when a secondary usb-storage is added
-KERNEL!="sd[b-z][0-9]",GOTO="done"
+vim: ft=udevrules
 ACTION!="add",GOTO="done"
+#Run rules only when a secondary usb-storage is added
+SUBSYSTEM!="block",GOTO="done"
+KERNEL!="sd[b-z][0-9]|sd[b-z]",GOTO="done"
 
 #find filesystem type
 #PROGRAM="/bin/lsblk -no FSTYPE $devnode"
 #"/sbin/blkid -o value -s TYPE $devnode"
 
 #Shadow action
-#ACTION=="add",SUBSYSTEM=="block",KERNEL=="sd[b-z][0-9]",RUN+="/bin/sh -c 'echo == >> /home/ultracode/udev-env.txt; env >> /home/ultracode/udev-env.txt'"
+#ACTION=="add",SUBSYSTEM=="block",KERNEL=="sd[b-z][0-9]",RUN+="/bin/sh -c 'echo $(date) $(env) >> /home/ultracode/udev-env.txt'"
 
-#RESULT!="f2fs",
-ENV{ID_FS_TYPE}!="f2fs",GOTO="other_filesystems"
+#use ntfs3 as the default driver for ntfs partitions
+ENV{ID_FS_TYPE}=="ntfs", ENV{ID_FS_TYPE}="ntfs3"
+
+ENV{DEVTYPE}=="partition",ENV{ID_TYPE}=="disk",GOTO="HDD"
+
+ENV{ID_FS_TYPE}=="ntfs3",GOTO="NTFS"
+
+ENV{ID_FS_TYPE}=="f2fs",GOTO="F2FS"
+
+GOTO="OTHER_FS"
+
+#ENV{ID_USB_DRIVER}=="usb-storage",ENV{ID_FS_TYPE}=="ntfs3",ATTRS{removable}=="1",ATTRS{queue/rotational}=="1",GOTO="HDD"
+
+#TODO:verify the ID_USB_DRIVER ENV exist for both flash and hdd
+#Use prealloc – decreases fragmentation in case of parallel write operations (most useful for HDD).
+#TODO: for now we assume all external hard disk are ntfs but implement for other fs in the future
+LABEL="HDD"
+
+#if its a canonical rotational external disk
+ATTR{queue/rotational}!="1",ATTR{removable}=="0",GOTO="SSD"
+
+ENV{SYSTEMD_MOUNT_OPTIONS}="defaults,noatime,prealloc",ENV{SYSTEMD_MOUNT_WHERE}="/media/$env{ID_FS_LABEL}",\
+RUN+="/bin/systemd-mount -t ntfs3  --fsck=off --automount=yes --timeout-idle-sec=1s --collect $devnode"
+
+GOTO="DONE"
+
+LABEL="SSD"
+#IF SSD
+# TODO: improve check for the case where storage is ssd
+ATTR{queue/rotational}=="0",ATTR{removable}=="0",\
+ENV{SYSTEMD_MOUNT_OPTIONS}="defaults,noatime",ENV{SYSTEMD_MOUNT_WHERE}="/media/$env{ID_FS_LABEL}",\
+RUN+="/bin/systemd-mount -t ntfs3  --fsck=off --automount=yes --timeout-idle-sec=1s --collect $devnode"
+
+GOTO="DONE"
+
+LABEL="F2FS"
 
 #when f2fs filesystem drive is added
-SUBSYSTEM=="block", ENV{ID_USB_DRIVER}=="usb-storage",ATTRS{removable}=="1",\
+ENV{ID_USB_DRIVER}=="usb-storage",ATTRS{removable}=="1",\
 ENV{SYSTEMD_MOUNT_OPTIONS}="defaults,gc_merge,checkpoint_merge,compress_algorithm=zstd:19,atgc",ENV{SYSTEMD_MOUNT_WHERE}="/media/$env{ID_FS_LABEL}",\
 RUN+="/bin/systemd-mount -t auto --no-block --discover --fsck=no --collect $devnode"
 
-GOTO="done"
+GOTO="DONE"
 
-LABEL="other_filesystems"
+LABEL="OTHER_FS"
 
 #for other filesystems use their defaults
-SUBSYSTEM=="block", ENV{ID_USB_DRIVER}=="usb-storage",ATTRS{removable}=="1",\
+ENV{ID_USB_DRIVER}=="usb-storage",ATTRS{removable}=="1",\
 ENV{SYSTEMD_MOUNT_OPTIONS}="defaults",ENV{SYSTEMD_MOUNT_WHERE}="/media/$env{ID_FS_LABEL}",\
 RUN+="/bin/systemd-mount -t auto --no-block --discover --fsck=no --collect $devnode"
 
-LABEL="done"
+LABEL="DONE"
