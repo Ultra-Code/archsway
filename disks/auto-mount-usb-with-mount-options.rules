@@ -33,7 +33,7 @@ LABEL="HDD"
 ATTR{queue/rotational}!="1",ATTR{removable}=="0",GOTO="SSD"
 
 ENV{SYSTEMD_MOUNT_OPTIONS}="defaults,noatime,prealloc",ENV{SYSTEMD_MOUNT_WHERE}="/media/$env{ID_FS_LABEL}",\
-RUN+="/bin/systemd-mount -t ntfs3  --fsck=off --automount=yes --timeout-idle-sec=1s --collect $devnode"
+RUN+="/bin/systemd-mount -t ntfs3  --discover --fsck=off --collect $devnode"
 
 GOTO="DONE"
 
@@ -42,7 +42,7 @@ LABEL="SSD"
 # TODO: improve check for the case where storage is ssd
 ATTR{queue/rotational}=="0",ATTR{removable}=="0",\
 ENV{SYSTEMD_MOUNT_OPTIONS}="defaults,noatime",ENV{SYSTEMD_MOUNT_WHERE}="/media/$env{ID_FS_LABEL}",\
-RUN+="/bin/systemd-mount -t ntfs3  --fsck=off --automount=yes --timeout-idle-sec=1s --collect $devnode"
+RUN+="/bin/systemd-mount -t ntfs3 --discover --fsck=off --collect $devnode"
 
 GOTO="DONE"
 
@@ -52,6 +52,15 @@ LABEL="F2FS"
 ENV{ID_USB_DRIVER}=="usb-storage",ATTRS{removable}=="1",\
 ENV{SYSTEMD_MOUNT_OPTIONS}="defaults,gc_merge,checkpoint_merge,compress_algorithm=zstd:19,atgc",ENV{SYSTEMD_MOUNT_WHERE}="/media/$env{ID_FS_LABEL}",\
 RUN+="/bin/systemd-mount -t auto --no-block --discover --fsck=no --collect $devnode"
+
+GOTO="DONE"
+
+LABEL="NTFS"
+
+#when ntfs filesystem drive is added
+ENV{ID_USB_DRIVER}=="usb-storage",ATTRS{removable}=="1",\
+ENV{SYSTEMD_MOUNT_OPTIONS}="defaults,noatime",ENV{SYSTEMD_MOUNT_WHERE}="/media/$env{ID_FS_LABEL}",\
+RUN+="/bin/systemd-mount -t ntfs3 --no-block --discover --fsck=no --collect $devnode"
 
 GOTO="DONE"
 
