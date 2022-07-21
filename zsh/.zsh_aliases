@@ -4,6 +4,7 @@ alias lr=' l --recursive'
 alias grep='grep --extended-regexp --color --ignore-case'
 alias rg='grep --extended-regexp --color --recursive --line-number -I --exclude=".*" --exclude-dir=".git" --exclude-dir="*cache*"'
 alias sed='sed --regexp-extended --silent'
+alias sedi=' sed --in-place=.bak'
 alias md=' mkdir --parents --verbose'
 alias rd=' rmdir --parents --verbose'
 alias rm=' rm --interactive=once --verbose --recursive'
@@ -53,7 +54,7 @@ alias eh=" $EDITOR $ZDOTDIR/.zsh_history"
 alias ea=" $EDITOR $ZDOTDIR/.zsh_aliases"
 
 #edit $XDG_CONFIG_HOME/sway/config
-alias es=" $EDITOR $DOTFILES/archlinux/sway/config"
+alias es=" $EDITOR $DOTFILES/sway/config"
 
 #Source changes in specified files into zsh
 alias sz=" exec zsh"
@@ -91,4 +92,3 @@ alias -g ......='../../../../..'
 alias -- -=' cd -'
 alias d=' dirs -v'
 for index ({0..9}) alias $index=" cd +${index}"; unset index
-
