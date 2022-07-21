@@ -14,7 +14,7 @@ INITIAL_QUERY=${*:-}
       --bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
       --bind "ctrl-f:unbind(change,ctrl-f)+change-prompt(2. fzf> )+clear-query+enable-search+rebind(ctrl-r)" \
       --bind "ctrl-r:unbind(ctrl-r)+change-prompt(1. ripgrep> )+disable-search+reload($RG_PREFIX {q} || true)+rebind(change,ctrl-f)" \
-      --bind "enter:execute:nvim {1}" \
+      --bind "enter:execute:nvim +{2} {1}" \
       --prompt '1. ripgrep> ' \
       --delimiter : \
       --preview 'bat --color=always {1} --highlight-line {2}' \
