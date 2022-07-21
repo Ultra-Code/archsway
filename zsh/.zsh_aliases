@@ -8,7 +8,7 @@ alias md=' mkdir --parents --verbose'
 alias rd=' rmdir --parents --verbose'
 alias rm=' rm --interactive=once --verbose --recursive'
 alias _='sudo --preserve-env'
-alias bat=' bat --style=numbers,changes'
+alias bat=' bat --style=numbers,changes,header-filename --theme=Coldark-Dark'
 alias bh=' bat --plain --language=help'
 alias nc=' ncmpcpp'
 
