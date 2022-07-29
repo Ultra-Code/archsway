@@ -167,35 +167,40 @@ function wifiStrength(){
 
 }
 
-function networkInfo() {
+function networkInfo {
   #for bandwidth (in/out) information is needed check /proc/net/dev
   # Print interface names with IPv4 addresses
   # Skip the first line since that's the loopback interface
   # net_info=$(ip -4 -oneline address | egrep --invert-match '1:' | tr --squeeze-repeats ' ')
-  net_info=$(cat /proc/net/arp | sed -En '2 s|^([[:digit:].]+).*|\1|p')
-  # interface=$(echo $net_info | cut -d ' ' -f2)
-  interface=$(cat /proc/net/arp | sed -En '2 s|.*\s+(\w+)$|\1|p')
-  wifi_name=$(iwctl station wlan0 show | grep -E '\s+Connected\s+network' | sed -E 's|\s+\w+\s+\w+\s+(\w+\s?\w*?).*|\1|g')
-  ip=$(echo $net_info | cut -d ' ' -f4)
-        if [[ $net_info == "" ]];then
-            for device in /sys/class/rfkill/* ;do
-                integer dev_state
-                if [[  $(cat $device/state) -eq 1 ]];then
-                    echo -n "$(cat $device/type) : up "
-                    dev_state+=$(cat $device/state)
-                else
-                    dev_state+=$(cat $device/state)
-                fi
-            done
+    local net_info=$(cat /proc/net/arp | sed -En '2 s|^([[:digit:].]+).*|\1|p')
+    local interface=$(cat /proc/net/arp | sed -En '2 s|.*\s+(\w+)$|\1|p')
+    local ip=$(echo $net_info | cut -d ' ' -f4)
 
-            (( $dev_state == 0 )) && echo "net : down"
-        elif [[ $interface =~ "wl*" ]];then
-            echo "直 $interface: $wifi_name ($(wifiStrength))%"
-        elif [[ $interface =~ "en*" ]];then
-            echo " $interface: $ip"
-        else
-            echo "$interface: $ip"
-        fi
+    if [[ $interface =~ "en*" ]];then
+        echo -n " $interface: $ip "
+    fi
+
+    local wifi_name=$(iwctl station wlan0 show | grep -E '\s+Connected\s+network' | sed -E 's|\s+\w+\s+\w+\s+(\w+\s?\w*?).*|\1|g')
+    local is_wlan_down=$(rfkill list wlan | sed -En 's|\s+Soft\s+blocked:\s+(\w+).*$|\1|p')
+    if [[ $interface =~ "wl*" ]];then
+        echo -n "直 $interface: $wifi_name ($(wifiStrength))% "
+    elif [[ -z $wifi_name && $is_wlan_down == "no" ]]
+    then
+        echo -n "wlan : up"
+    fi
+
+    local bt_name=$(bluetoothctl info | sed -En 's|\s+Name:\s+([[:graph:]]+).*$|\1|p')
+    local is_bt_down=$(rfkill list bluetooth | sed -En 's|\s+Soft\s+blocked:\s+(\w+).*$|\1|p')
+    if [[ -n $bt_name ]];then
+        echo -n "bt: $bt_name "
+    elif [[ -z $bt_name && $is_bt_down == "no" ]];then
+        echo -n "bt : up"
+    fi
+
+    if [[ -z $interface && $is_wlan_down == "yes" && $is_bt_down == "yes" ]]
+    then
+        echo "net : down"
+    fi
 }
 
 function cpuInfo(){
