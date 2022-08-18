@@ -76,16 +76,16 @@ bindsym $mod+r reload
 
 # Moving around:
 # Move your focus around
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 
 # Move the focused window with the same, but add Shift
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 
 # Layout stuff:
 #
@@ -257,8 +257,8 @@ set $file_manager $term --class "lf" --title "file manager" zsh -c 'lf'
 bindsym $mod+e exec $file_manager
 
 for_window [app_id="todo" title="todo list"] floating enable,sticky enable,resize set width 45 ppt height 75 ppt, move position 27 ppt 7ppt
-set $todo $term --class "todo" --title "todo list" zsh -c "sleep 0.05;$EDITOR ~/.local/neorg/todos/todo.norg"
-bindsym $mod+l exec $todo
+set $todo $term --class "todo" --title "todo list" zsh -c "sleep 0.5;$EDITOR ~/.local/neorg/todos/todo.norg"
+bindsym $mod+o exec $todo
 
 
 # Resizing containers:
@@ -341,9 +341,9 @@ exec_always {
     gsettings set $gnome-schema icon-theme 'Adwaita'
     gsettings set $gnome-schema cursor-size 24
     gsettings set $gnome-schema cursor-theme 'Adwaita'
-    gsettings set $gnome-schema font-name 'Iosevka Nerd Font Mono Normal Medium 11'
-    gsettings set $gnome-schema monospace-font-name 'Iosevka Nerd Font Mono Normal Medium 11'
-    gsettings set $gnome-schema document-font-name 'Iosevka Nerd Font Mono Normal Medium 11'
+    gsettings set $gnome-schema font-name 'Iosevka Nerd Font Mono Normal Medium 12'
+    gsettings set $gnome-schema monospace-font-name 'Iosevka Nerd Font Mono Normal Medium 12'
+    gsettings set $gnome-schema document-font-name 'Iosevka Nerd Font Mono Normal Medium 12'
     gsettings set $gnome-schema color-scheme 'prefer-dark'
 }
 

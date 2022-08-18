@@ -6,4 +6,4 @@ FZF_DEFAULT_COMMAND='find /usr/share/applications -name "*.desktop" | xargs base
         --bind 'ctrl-e:reload(printenv PATH | xargs -d : -I {} -r find -L {} -maxdepth 1 -type f -executable -printf "%f\n" 2>/dev/null| sort -u)+change-prompt(executable > )+rebind(alt-enter)+unbind(enter)' \
         --bind 'alt-enter:execute(swaymsg -t command exec kitty {})+abort' \
         --prompt 'desktop > ' \
-        --header-first --header "                                         sway app launcher"
+        --header-first --header "					sway app launcher"
