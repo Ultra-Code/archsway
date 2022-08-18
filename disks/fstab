@@ -14,4 +14,4 @@ UUID=7676d06c-03ad-44e1-afbd-a2965d12f43a     none                      swap    
 
 #/dev/sda4 LABEL=HOME
 #commit=sec isn't enabled because journally is turned off
-UUID=be0eb394-aaa3-4324-a024-2b07568a9659     /home                     ext4                  defaults,noatime,nobarrier,errors=remount-ro                                                               0          2
+UUID=be0eb394-aaa3-4324-a024-2b07568a9659     /home                     ext4                  defaults,noatime,nobarrier,errors=remount-ro                                                               0          0

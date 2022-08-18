@@ -72,7 +72,6 @@ ParallelDownloads = 5
 - bat is a Cat clone with syntax highlighting and git integration
 - bluez and bluez-utils for bluetooth
 - brightnessctl for controling backlight
-- calc as terminal calculator
 - clang/gcc for c++ development
 - additional useful tools for c/c++ development make,pkgconf,patch,fakeroot
 language servers for development
