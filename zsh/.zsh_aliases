@@ -8,13 +8,13 @@ alias sedi=' sed --in-place=.bak'
 alias md=' mkdir --parents --verbose'
 alias rd=' rmdir --parents --verbose'
 alias rm=' rm --interactive=once --verbose --recursive'
-alias _='sudo --preserve-env'
+alias _='sudo '
 alias bat=' bat --style=numbers,changes'
 alias bh=' bat --plain --language=help'
 alias nc=' ncmpcpp'
 
-alias N=' _ nnn -aruS'
-alias Vi=' _ vi'
+alias Lf=' _ --preserve-env lf'
+alias Vi=' _ --preserve-env vi'
 alias lns=' ln --interactive --symbolic --relative --logical --verbose'
 alias ln=' ln --interactive --logical --verbose'
 
@@ -94,7 +94,7 @@ alias d=' dirs -v'
 for index ({0..9}) alias $index=" cd +${index}"; unset index
 
 function a2l(){
-  addr2line --functions --inlines --pretty-print --exe $argv[1] --addresses $argv[2,#argv]
+  addr2line --functions --inlines --pretty-print --demangle --exe $argv[1] --addresses $argv[2,#argv]
 }
 
 function zc(){

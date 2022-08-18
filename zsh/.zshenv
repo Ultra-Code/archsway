@@ -11,7 +11,7 @@ export QT_STYLE_OVERRIDE=Adwaita-dark
 export GTK_THEME=Adwaita:dark
 
 #skip pattern at history write time
-export HISTORY_IGNORE='(vi|cat|man|.|~|npm|printenv|yay)*'
+export HISTORY_IGNORE='(vi|cat|man|.|~|npm|printenv|yay|zc|a2l)*'
 
 #source nix profile which export default nix envs
 if [[ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]]
