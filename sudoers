@@ -1,3 +1,4 @@
+vim: ft=sudoers
 ## sudoers file.
 ##
 ## This file MUST be edited with the 'visudo' command as root.
@@ -29,7 +30,7 @@
 # 			    /usr/bin/pkill, /usr/bin/top
 # Cmnd_Alias	REBOOT = /sbin/halt, /sbin/reboot, /sbin/poweroff
 Cmnd_Alias  STORAGE     =   /usr/bin/mount -o nosuid\,nodev\,noexec, /usr/bin/umount
-Cmnd_Alias  SYSTEMD     =   /usr/bin/journalctl, /usr/bin/systemctl
+Cmnd_Alias  SYSTEMD     =   /usr/bin/systemctl
 Cmnd_Alias  PKGMAN      =   /usr/bin/pacman
 
 ##
@@ -85,8 +86,9 @@ Cmnd_Alias  PKGMAN      =   /usr/bin/pacman
 root ALL=(ALL:ALL) ALL
 
 firefox ALL=(ALL:ALL) ALL
-firefox ALL=(firefox) NOPASSWD: STORAGE,SYSTEMD,PKGMAN
-Defaults:firefox timestamp_timeout=60
+firefox ALL=(root) NOPASSWD: STORAGE,SYSTEMD,PKGMAN
+#Defaults:firefox timestamp_timeout=60
+
 ## Uncomment to allow members of group wheel to execute any command
 # %wheel ALL=(ALL:ALL) ALL
 
