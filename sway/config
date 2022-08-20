@@ -210,8 +210,10 @@ bindsym $mod+Shift+0 move container to workspace 10
 bindsym $mod+period  move container to workspace next
 bindsym $mod+comma   move container to workspace prev
 
-for_window [app_id="firefox" title="About Mozilla Firefox|Picture-in-Picture|Password Required - Mozilla Firefox|Page Info — (.*)|Firefox — Sharing Indicator"] floating enable,border none
 for_window [app_id="firefox"] focus,layout tabbed
+for_window [app_id="firefox" title="About Mozilla Firefox|Picture-in-Picture|Password Required - Mozilla Firefox|Page Info — (.*)"] floating enable,border none
+for_window [app_id="firefox" title="Firefox — Sharing Indicator" ] floating enable,border none,resize set width 45 px height 30 px,move position 3 px 3 px
+no_focus [title="Firefox — Sharing Indicator"]
 assign [app_id="firefox"]  $browser
 bindsym $mod+b exec firefox
 
