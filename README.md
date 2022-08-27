@@ -73,17 +73,20 @@ ParallelDownloads = 5
 - bluez and bluez-utils for bluetooth
 - brightnessctl for controling backlight
 - clang/gcc for c++ development
-- additional useful tools for c/c++ development make,pkgconf,patch,fakeroot
-language servers for development
-    - vscode-langservers-extracted
-    - lua-language-server
-    - @tailwindcss/language-server
-    - typescript
-    - typescript-language-server
-    - @volar/server
-    - eslint
-    - cppcheck
-- dictd serve with dict client and some dictionary sources for yay like dict-wikt-en-all dict-freedict-eng-spa dict-freedict-spa-eng dict-foldoc dict-gcide dict-wn NOTE: remove dictd online server in /etc/dict/dict.conf
+- c/c++ build tools make,pkgconf,patch,fakeroot
+- language servers for
+    - cpp development
+        - cppcheck
+    - web development
+        - vscode-langservers-extracted
+        - @tailwindcss/language-server
+        - typescript
+        - typescript-language-server
+        - @volar/server
+        - eslint
+    - lau development
+        - lua-language-server
+- dictd server with dict client and some dictionary sources for yay like dict-wikt-en-all dict-freedict-eng-spa dict-freedict-spa-eng dict-foldoc dict-gcide dict-wn NOTE: remove dictd online server in /etc/dict/dict.conf
 - ffmpegthumbnailer & gnome-epub-thumbnailer for thumbnails
 - firefox as pdf reader or zathura and firefox-ublock-origin as adblocker and fbreader/foliate as epub reader
 - fzf for fuzzy search

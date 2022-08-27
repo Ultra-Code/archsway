@@ -186,7 +186,7 @@ function networkInfo {
         echo -n "直 $interface: $wifi_name ($(wifiStrength))% "
     elif [[ -z $wifi_name && $is_wlan_down == "no" ]]
     then
-        echo -n "wlan : up"
+        echo -n "wlan : up "
     fi
 
     local bt_name=$(bluetoothctl info | sed -En 's|\s+Name:\s+([[:graph:]]+).*$|\1|p')
