@@ -10,7 +10,7 @@ NOTE: make sure to mount btfs with compression zstd on first mount on live iso
 ## needed base system modules
 
 - systemd-boot as boot manager
-- enbaling systemd-boot-update service to update systemd-boot on systemd upgrade
+- enabling systemd-boot-update service to update systemd-boot on systemd upgrade
 - sway as window manager with swayidle and swaylock for idle and lock mangement and waybar for swaybar management
     - base
     - btrfs-progs
@@ -97,9 +97,9 @@ ParallelDownloads = 5
 - imv as image viewer
 - install mesa for opengl and as dri userspace driver and intel-media-driver as va-api for intel
 - jq a Command-line JSON processor
-- libreoffice-fresh for working with openoffice documents and hunspell-en_us for spellcheck https://ask.libreoffice.org/t/how-do-you-get-the-spell-checker-to-work/28998
-- lldb for debuging zig c and c++
-- mpd for music deamon and ncmpcpp for ui interface and mpc for controlling playing
+- libreoffice-fresh for working with openoffice documents and hunspell-en_us for spellcheck, [for help setting up spellcheck](https://ask.libreoffice.org/t/how-do-you-get-the-spell-checker-to-work/28998)
+- lldb for debugging zig c and c++
+- mpd for music daemon and ncmpcpp for ui interface and mpc for controlling playing
 - mpv as multimedia player
 - neofetch for displaying system information
 - lf as filemanger
@@ -112,7 +112,7 @@ ParallelDownloads = 5
 - qt5-wayland for runing qt5 apps under wayland
 - xdg-desktop-portal-wrl for WebRTC screen sharing
 - yay for AUR packagem mangement
-- yt-dlp youtube downloader
+- yt-dlp YouTube downloader
 - zig zls-bin for zig development
-- zoxide for efficient dir movement
+- zoxide for efficient directory movement
 - zsh-autosuggestions zsh-completions zsh-history-substring-search zsh-syntax-highlighting zsh-theme-powerlevel10k complements zsh
