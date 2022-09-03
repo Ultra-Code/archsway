@@ -285,9 +285,9 @@ bindsym $AltMod+r mode "resize"
 set $scree_shot_sound paplay /usr/share/sounds/freedesktop/stereo/screen-capture.oga
 
 #Take screenshot of a window
-bindsym --release Print exec grim $HOME/files/Pictures/"Captura de pantalla de $(date +%F_%X).png" && $scree_shot_sound
+bindsym --release Print exec grim $HOME/files/Pictures/Screenshot/"Captura de pantalla de $(date +%F_%X).png" && $scree_shot_sound
 #Take a screenshot of a region of a window
-bindsym --release Shift+Print exec grim -g "$(slurp)" $HOME/files/Pictures/"Captura de pantalla de $(date +%F_%X).png" && $scree_shot_sound
+bindsym --release Shift+Print exec grim -g "$(slurp)" $HOME/files/Pictures/Screenshot/"Captura de pantalla de $(date +%F_%X).png" && $scree_shot_sound
 #Take a screenshot and copy to clipboard
 bindsym --release Control+Print exec grim - | wl-copy  && $scree_shot_sound
 

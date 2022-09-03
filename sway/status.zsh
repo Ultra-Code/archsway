@@ -5,7 +5,7 @@ function status_bar() {
 # date like sáb 07 may 2022 and the time (e.g., 14:01). Check `man date` on how to format time and date.
     date_formatted=$(date "+%a %d %b %Y %R")
 
-    uptime_formatted=$(uptime | sed -En 's|.+up\s+([[:digit:]:]+\s?(min)?\|[[:digit:]]\s+days?,\s+[[:digit:]:]+\s?(min)?),.*$|\1|p')
+    uptime_formatted=$(uptime | sed -En 's|.+up\s+([[:digit:]:]+\s?(min)?\|[[:digit:]]+\s+days?,\s+[[:digit:]:]+\s?(min)?),.*$|\1|p')
 
     linux_version=$(uname -r | cut -d '-' -f1)
 
@@ -180,7 +180,7 @@ function networkInfo {
         echo -n " $interface: $ip "
     fi
 
-    local wifi_name=$(iwctl station wlan0 show | grep -E '\s+Connected\s+network' | sed -E 's|\s+\w+\s+\w+\s+(\w+\s?\w*?).*|\1|g')
+    local wifi_name=$(iwctl station wlan0 show | grep -E '\s+Connected\s+network' | sed -E 's|\s+\w+\s+\w+\s+([[:alnum:]]+[[:punct:][:space:]]+?[[:alnum:]]+?).*|\1|g')
     local is_wlan_down=$(rfkill list wlan | sed -En 's|\s+Soft\s+blocked:\s+(\w+).*$|\1|p')
     if [[ $interface =~ "wl*" ]];then
         echo -n "直 $interface: $wifi_name ($(wifiStrength))% "
