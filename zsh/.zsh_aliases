@@ -21,6 +21,11 @@ alias ln=' ln --interactive --logical --verbose'
 alias cp=' cp --interactive --dereference --recursive --update --verbose --reflink=auto --sparse=auto --archive'
 alias mv=' mv --interactive --update --verbose'
 
+#mounting and unmount drives without user password
+alias mount=' _ mount -o nosuid\,nodev\,noexec'
+alias lmount=' /bin/mount'
+alias umount=' _ umount '
+
 
 alias lb=" lsblk -oPATH,MOUNTPOINTS,LABEL,FSTYPE,SIZE,FSAVAIL,FSUSED,PARTUUID,MAJ:MIN"
 
