@@ -50,7 +50,6 @@ NOTE: make sure to mount btfs with compression zstd on first mount on live iso
 - modify sudoers with visudo using example in [suders file](https://github.com/Ultra-Code/archsway/blob/master/sudoers)
 - configure what powerbutton and lidclose does with /etc/systemd/logind.conf
 - For pacman enable the following options under option section in /etc/pacman.conf
-
 ```zsh
 [options]
 Color
@@ -58,8 +57,10 @@ CheckSpace
 VerbosePkgLists
 ParallelDownloads = 5
 ```
+- configure /etc/motd with the Message Of The Day Eg.`WELCOME MASTER MALPHA! WE ARE READY TO SERVE YOU!!!`
+
 ## Configuring Firefox
-- Enable firefox [Hardware video acceleration](https://wiki.archlinux.org/title/Firefox#Hardware_video_acceleration) by setting media.ffmpeg.vaapi.enabled to true
+- Enable firefox [Hardware video acceleration](https://wiki.archlinux.org/title/Firefox#Hardware_video_acceleration) by setting media.ffmpeg.vaapi.enabled to true and Hardware WebRender by setting gfx.webrender.all to true
 - [move disk cache to ram](https://wiki.archlinux.org/title/Firefox/Tweaks#Move_disk_cache_to_RAM) by setting browser.cache.disk.parent_directory to /run/user/UID/firefox
 - where UID is your user's ID which can be obtained by running id -u
 - increase session save interval to 6 minutes (360000 milliseconds) by setting browser.sessionstore.interval to 360000
