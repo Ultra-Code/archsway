@@ -8,10 +8,11 @@ alias sedi=' sed --in-place=.bak'
 alias md=' mkdir --parents --verbose'
 alias rd=' rmdir --parents --verbose'
 alias rm=' rm --interactive=once --verbose --recursive'
-alias _='sudo '
 alias bat=' bat --style=numbers,changes'
 alias bh=' bat --plain --language=help'
 alias nc=' ncmpcpp'
+
+alias _='sudo '
 
 alias Lf=' _ --preserve-env lf'
 alias Vi=' _ --preserve-env vi'
@@ -22,7 +23,7 @@ alias cp=' cp --interactive --dereference --recursive --update --verbose --refli
 alias mv=' mv --interactive --update --verbose'
 
 #mounting and unmount drives without user password
-alias mount=' _ mount -o nosuid\,nodev\,noexec'
+alias mount=' _ mount -o nosuid\,nodev\,noexec\,rw'
 alias lmount=' /bin/mount'
 alias umount=' _ umount '
 
@@ -82,6 +83,25 @@ alias pmly=' pacman -Qmq'
 alias pmb=' pacman -Qo'
 alias pmc=' _ pacman -Qdtq| _ pacman -Rsn -'
 alias pmcc=' _ pacman -Sc'
+
+#Git aliases
+alias gp=' git push'
+alias gs=' git status -s'
+alias gcl=' git clone --recurse-submodules'
+alias gc=' git commit'
+alias ga=' git add'
+alias gpu=' git pull'
+alias gl=' git log --graph --oneline --decorate'
+alias glp=' git log -p'
+alias gd=' git diff'
+alias gg=' git grep --recurse-submodules -I'
+alias gm=' git mv'
+alias gr=' git rm -r'
+alias gmu=' git submodule update --init --recursive'
+alias gmpu=' git submodule update --remote --rebase'
+alias gmlp=' git log --submodule -p'
+alias gsh=' git show'
+alias glt=' git log --stat -1'
 
 #Systemd services
 alias enabled_services=' systemctl list-unit-files --type=service --state=enabled'

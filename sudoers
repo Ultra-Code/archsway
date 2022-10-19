@@ -86,7 +86,7 @@ Cmnd_Alias  PKGMAN      =   /usr/bin/pacman
 root ALL=(ALL:ALL) ALL
 
 firefox ALL=(ALL:ALL) ALL
-firefox ALL=(root) NOPASSWD: STORAGE,SYSTEMD,PKGMAN
+firefox ALL=(ALL) NOPASSWD: STORAGE,SYSTEMD,PKGMAN
 #Defaults:firefox timestamp_timeout=60
 
 ## Uncomment to allow members of group wheel to execute any command
