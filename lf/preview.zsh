@@ -97,20 +97,20 @@ function handle_image() {
 
                 exit 1;;
 
-        */*office*|*/*document*)
-            if [[ $(isImageNew) == "true" ]];then
-            #image is store in the cache dir with same name as FILE
-                libreoffice --convert-to jpg "$FILE" --outdir ${CACHE_PATH:A} &>/dev/null
-            #get the CACHED_FILE's dirname and append the file without its previous extension since its now jpeg so
-            #instead append .jpg and move to the CACHED_FILE
-            local current_img="${CACHE_PATH:A}/${${FILE:t}%.*}.jpg"
-
-                mv "$current_img" "$CACHED_FILE"
-            fi
-
-            preview $CACHED_FILE
-            ;;
-
+        # */*office*|*/*document*)
+        #     if [[ $(isImageNew) == "true" ]];then
+        #     #image is store in the cache dir with same name as FILE
+        #         libreoffice --convert-to jpg "$FILE" --outdir ${CACHE_PATH:A} &>/dev/null
+        #     #get the CACHED_FILE's dirname and append the file without its previous extension since its now jpeg so
+        #     #instead append .jpg and move to the CACHED_FILE
+        #     local current_img="${CACHE_PATH:A}/${${FILE:t}%.*}.jpg"
+        #
+        #         mv "$current_img" "$CACHED_FILE"
+        #     fi
+        #
+        #     preview $CACHED_FILE
+        #     ;;
+        #
 
         ## ePub, MOBI, FB2 (using Calibre)
         application/epub+zip|application/x-mobipocket-ebook|\

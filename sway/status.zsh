@@ -104,7 +104,7 @@ function brightnessInfo(){
 }
 
 function mpdInfo(){
-    local mpd_tack_info=$(mpc | egrep '^\[')
+    local mpd_tack_info=$(mpc | grep -E '^\[')
     local mpd_status=$(echo $mpd_tack_info | tr --squeeze-repeats ' ' | cut -d ' ' -f1)
     local track_lenght=$(echo $mpd_tack_info | tr --squeeze-repeats ' ' | cut -d ' ' -f3)
 
@@ -125,7 +125,7 @@ function audioInfo(){
   local active_sink=$(pactl list sinks | sed -En '\@\s+Name:\s+'"${sink}"'$@,$p')
   # Get volume and mute status with PulseAudio
   local mute_state=$( echo $active_sink | grep 'Mute' | cut -d ':' -f2 | tr -d ' ')
-  local volume=$( echo $active_sink | egrep '^\s+Volume' | cut -d '/' -f2 | tr -d ' ')
+  local volume=$( echo $active_sink | grep -E '^\s+Volume' | cut -d '/' -f2 | tr -d ' ')
   local output_type=$(echo $active_sink | grep 'Active Port' | cut -d ':' -f2 | tr -d ' ')
 
   if [[ $mute_state == "no" ]];then
@@ -171,7 +171,7 @@ function networkInfo {
   #for bandwidth (in/out) information is needed check /proc/net/dev
   # Print interface names with IPv4 addresses
   # Skip the first line since that's the loopback interface
-  # net_info=$(ip -4 -oneline address | egrep --invert-match '1:' | tr --squeeze-repeats ' ')
+  # net_info=$(ip -4 -oneline address | grep -E --invert-match '1:' | tr --squeeze-repeats ' ')
     local net_info=$(cat /proc/net/arp | sed -En '2 s|^([[:digit:].]+).*|\1|p')
     local interface=$(cat /proc/net/arp | sed -En '2 s|.*\s+(\w+)$|\1|p')
     local ip=$(echo $net_info | cut -d ' ' -f4)

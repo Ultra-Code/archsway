@@ -233,8 +233,8 @@ assign [app_id="mpv"] $mpv
 for_window [app_id="libreoffice-*"] focus
 assign [app_id="libreoffice-*"] $documents
 
-for_window [app_id="FBReader"] focus,fullscreen enable
-assign [app_id="FBReader"] $documents
+for_window [app_id="com.github.johnfactotum.Foliate"] focus,fullscreen enable
+assign [app_id="com.github.johnfactotum.Foliate"] $documents
 
 for_window [app_id="imv"] focus,fullscreen enable
 assign [app_id="imv"] $utility
