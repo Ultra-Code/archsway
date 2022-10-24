@@ -31,9 +31,9 @@ NOTE: make sure to mount btfs with compression zstd on first mount on live iso
 
 - since networking bits are already setup in the iso , You can just copy them .ie /etc/systemd/network/* to the mounted partition and start the nessesary services iwd,systemd-networkd,systemd-resolvd
   Or use configuration in [networking/resolve.conf](https://github.com/Ultra-Code/archsway/blob/master/networking/resolve.conf) and  [networking/network](https://github.com/Ultra-Code/archsway/blob/master/networking/network)
-- On the freshly installed system use ttf-dejavu for serif, cantarell for sans-serif, ttc-iosevka for monospace,
+- On the freshly installed system use ttf-dejavu as default system font, ttf-caladea for serif, cantarell for sans-serif, ttc-iosevka for monospace,
   ttf-nerd-fonts-symbols-1000-em for nerd font symbols  and noto-font-emoji for emoji
-  _NOTE_: don't forget to `lns /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf /etc/fonts/conf.d/`
+  _NOTE_: don't forget to `ln -s /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf /etc/fonts/conf.d/`
 - configure dns for 1.1.1.1 but this might not be needed since it's the default on arch linux
 - enable DNSOverTLS for resolved
 - iwd for wifi and enable it dhcp client
