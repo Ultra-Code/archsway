@@ -180,7 +180,7 @@ function networkInfo {
         echo -n " $interface: $ip "
     fi
 
-    local wifi_name=$(iwctl station wlan0 show | grep -E '\s+Connected\s+network' | sed -E 's|\s+\w+\s+\w+\s+([[:alnum:]]+[[:punct:][:space:]]+?[[:alnum:]]+?).*|\1|g')
+    local wifi_name=$(iwctl station wlan0 show | grep -E '\s+Connected\s+network' | sed -E 's|\s+\w+\s+\w+\s+([[:alnum:]]+[[:punct:][:space:]]{1}[[:alnum:]]+?).*|\1|g')
     local is_wlan_down=$(rfkill list wlan | sed -En 's|\s+Soft\s+blocked:\s+(\w+).*$|\1|p')
     if [[ $interface =~ "wl*" ]];then
         echo -n "直 $interface: $wifi_name ($(wifiStrength))% "
