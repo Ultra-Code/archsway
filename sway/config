@@ -141,10 +141,17 @@ bindsym $mod+minus move scratchpad
 bindsym $mod+Shift+minus scratchpad show
 
 #Audio
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +1%
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -1%
-bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+#https://gitlab.freedesktop.org/pipewire/pipewire/-/wikis/Migrate-PulseAudio#sinksource-port-volumemuteport-latency
+#https://wiki.archlinux.org/title/WirePlumber#Tips_and_tricks
+#https://unix.stackexchange.com/questions/260981/what-do-the-sink-and-source-keywords-mean-in-pulseaudio
+#To raise the volume
+bindsym XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+
+#To lower the volume
+bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-
+#To mute/unmute the volume
+bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+#To mute/unmute the microphone
+bindsym XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 
 #Media keys
 bindsym XF86AudioPlay  exec "mpc toggle"
@@ -282,7 +289,7 @@ bindsym Escape mode "default"
 }
 bindsym $AltMod+r mode "resize"
 
-set $scree_shot_sound paplay /usr/share/sounds/freedesktop/stereo/screen-capture.oga
+set $scree_shot_sound pw-play /usr/share/sounds/freedesktop/stereo/screen-capture.oga
 
 #Take screenshot of a window
 bindsym --release Print exec grim $HOME/files/Pictures/Screenshot/"Captura de pantalla de $(date +%F_%X).png" && $scree_shot_sound

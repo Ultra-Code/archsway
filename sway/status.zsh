@@ -118,26 +118,22 @@ function mpdInfo(){
 }
 
 function audioInfo(){
+  #PipeWire audio info
+  local volume_state=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | cut -d ' ' -f 2)
+  local mute_state=$(echo $volume | cut -d '[' -f 2 | tr -d ']')
+  local output_type=$(wpctl inspect @DEFAULT_AUDIO_SINK@| grep 'api' --max-count=1)
+  integer volume=$((volume_state * 100))
 
-  # Get Default sink
-  local sink=$(pactl info | sed -En '\@Default Sink: \w+@ {s|\w+\s+\w+:\s+([[:graph:]]+$)|\1|p}')
-  # Get active sink
-  local active_sink=$(pactl list sinks | sed -En '\@\s+Name:\s+'"${sink}"'$@,$p')
-  # Get volume and mute status with PulseAudio
-  local mute_state=$( echo $active_sink | grep 'Mute' | cut -d ':' -f2 | tr -d ' ')
-  local volume=$( echo $active_sink | grep -E '^\s+Volume' | cut -d '/' -f2 | tr -d ' ')
-  local output_type=$(echo $active_sink | grep 'Active Port' | cut -d ':' -f2 | tr -d ' ')
-
-  if [[ $mute_state == "no" ]];then
-       if [[ $output_type == "analog-output-headphones" ]];then
-            echo "🎧 $volume"
-        elif [[ $output_type == "headphone-output" ]];then
-            echo " 🎧 $volume"
+  if [[ $mute_state != "MUTED" ]];then
+       if [[ $output_type =~ "alsa" ]];then
+            echo "🔊 $volume%"
+        elif [[ $output_type =~ "bluez" ]];then
+            echo " 🎧 $volume%"
         else
-           echo "🔊 $volume"
+            echo "🎧 $volume%"
         fi
    else
-      echo "🔇 $volume"
+      echo "🔇 $volume%"
  fi
 
 }

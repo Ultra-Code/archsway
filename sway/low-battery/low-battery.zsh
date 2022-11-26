@@ -18,7 +18,7 @@ then
 elif [[ $BATTERY_CAPACITY -lt 16  &&  $BATTERY_STATUS == 'Discharging' ]]
 then
    local CRITICAL_BATTERY_SOUND='/usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga'
-    paplay $CRITICAL_BATTERY_SOUND
+    pw-play $CRITICAL_BATTERY_SOUND
 
     swaynag -t error -m "Battery Critical : About To Shutdown Connect Charger Immediately : Battery Level is ${BATTERY_CAPACITY}%!" \
         -b 'Hybrid-sleep' 'systemctl hybrid-sleep' -b 'Hibernate' 'systemctl hibernate' \
@@ -28,7 +28,7 @@ then
 elif [[ $BATTERY_CAPACITY -lt 21  &&  $BATTERY_STATUS == 'Discharging' ]]
 then
    local VERY_LOW_BATTERY_SOUND='/usr/share/sounds/freedesktop/stereo/phone-outgoing-busy.oga'
-    paplay $VERY_LOW_BATTERY_SOUND
+    pw-play $VERY_LOW_BATTERY_SOUND
 
     swaynag -t warning -m "Very Low Battery : Connect Charger : Battery Level is ${BATTERY_CAPACITY}%!" \
         -b 'Hybrid-sleep' 'systemctl hybrid-sleep' -b 'Hibernate' 'systemctl hibernate' \
@@ -38,7 +38,7 @@ then
 elif [[ $BATTERY_CAPACITY -lt 25  &&  $BATTERY_STATUS == 'Discharging' ]]
 then
     local LOW_BATTERY_SOUND='/usr/share/sounds/freedesktop/stereo/suspend-error.oga'
-    paplay $LOW_BATTERY_SOUND
+    pw-play $LOW_BATTERY_SOUND
 
     swaynag -t warning -m "Low Battery : Battery Level is ${BATTERY_CAPACITY}%!" \
         -b 'Hybrid-sleep' 'systemctl hybrid-sleep' -s 'NO'
