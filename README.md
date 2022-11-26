@@ -107,7 +107,7 @@ ParallelDownloads = 5
 - neofetch for displaying system information
 - lf as filemanger
 - openssh and rsync for syncing file with remote over ssh
-- pipewire-pulse as pulseaudio/bluetooth audio server and WirePlumber as pipewire session manager
+- pipewire and pipewire-audio for audio/video routing and processing and WirePlumber as pipewire session manager
 - reflector for choosing fastest pacman server list
 - texinfo for info pages
 - usb_modeswitch for enabling modem mode for zero-cd based modems
