@@ -23,11 +23,8 @@ alias cp=' cp --interactive --dereference --recursive --update --verbose --refli
 alias mv=' mv --interactive --update --verbose'
 
 #mounting and unmount drives without user password
-alias mount=' _ mount -o nosuid\,nodev\,noexec\,rw'
-alias lmount=' /bin/mount'
-alias umount=' _ umount '
-
-
+alias mount=' _ systemd-mount --no-block --fsck=no --collect --owner=$USER'
+alias umount=' _ systemd-umount'
 alias lb=" lsblk -oPATH,MOUNTPOINTS,LABEL,FSTYPE,SIZE,FSAVAIL,FSUSED,PARTUUID,MAJ:MIN"
 
 alias tarx=' bsdtar -xvf '

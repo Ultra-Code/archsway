@@ -1,4 +1,5 @@
 vim: ft=sudoers
+## https://wiki.archlinux.org/title/Sudo#Example_entries && https://wiki.archlinux.org/title/Sudo#Tips_and_tricks
 ## sudoers file.
 ##
 ## This file MUST be edited with the 'visudo' command as root.
@@ -26,10 +27,7 @@ vim: ft=sudoers
 ## Cmnd alias specification
 ##
 ## Groups of commands.  Often used to group related commands together.
-# Cmnd_Alias	PROCESSES = /usr/bin/nice, /bin/kill, /usr/bin/renice, \
-# 			    /usr/bin/pkill, /usr/bin/top
-# Cmnd_Alias	REBOOT = /sbin/halt, /sbin/reboot, /sbin/poweroff
-Cmnd_Alias  STORAGE     =   /usr/bin/mount -o nosuid\,nodev\,noexec, /usr/bin/umount
+Cmnd_Alias  STORAGE     =   /usr/bin/systemd-mount, /usr/bin/systemd-umount
 Cmnd_Alias  SYSTEMD     =   /usr/bin/systemctl
 Cmnd_Alias  PKGMAN      =   /usr/bin/pacman
 
