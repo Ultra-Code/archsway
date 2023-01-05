@@ -141,6 +141,7 @@ bindsym $mod+minus move scratchpad
 bindsym $mod+Shift+minus scratchpad show
 
 #Audio
+#Media keys:/usr/share/X11/xkb/symbols/inet https://wiki.linuxquestions.org/wiki/XF86_keyboard_symbols
 #https://gitlab.freedesktop.org/pipewire/pipewire/-/wikis/Migrate-PulseAudio#sinksource-port-volumemuteport-latency
 #https://wiki.archlinux.org/title/WirePlumber#Tips_and_tricks
 #https://unix.stackexchange.com/questions/260981/what-do-the-sink-and-source-keywords-mean-in-pulseaudio
@@ -169,7 +170,8 @@ bindsym --locked XF86AudioPrev  exec "mpc prev"
 bindsym XF86MonBrightnessDown exec brightnessctl set 1%-
 bindsym XF86MonBrightnessUp exec brightnessctl set +1%
 
-
+#TODO add script to get projector name to focus
+#bindsym XF86Display exec swaymsg focus output "Seiko Epson Corporation EPSON PJ 0x00000101"
 # Workspaces:
 #
 # Switch to workspace

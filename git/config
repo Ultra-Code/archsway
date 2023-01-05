@@ -24,3 +24,5 @@
         column = true
         lineNumber = true
         extendedRegexp = true
+[init]
+	defaultBranch = master

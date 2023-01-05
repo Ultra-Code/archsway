@@ -91,7 +91,7 @@ ParallelDownloads = 5
         - lua-language-server
 - dictd server with dict client and some dictionary sources for yay like dict-wikt-en-all dict-freedict-eng-spa dict-freedict-spa-eng dict-foldoc dict-gcide dict-wn NOTE: remove dictd online server in /etc/dict/dict.conf
 - ffmpegthumbnailer & gnome-epub-thumbnailer for thumbnails
-- firefox as pdf reader or zathura and firefox-ublock-origin as adblocker and fbreader/foliate as epub reader
+- firefox as pdf reader or zathura and firefox-ublock-origin as adblocker and foliate/fbreader as epub reader
 - fzf for fuzzy search
 - gammastep for controlling nightlight
 - git for version control
