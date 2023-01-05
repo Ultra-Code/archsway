@@ -1,4 +1,14 @@
 #!/bin/zsh
+#inspirations from
+#https://github.com/mumin16/arch-sway
+#https://gitlab.com/bullbytes/dotfiles/-/blob/master/sway/status.sh
+#https://u|nix.stackexchange.com/questions/473788/simple-swaybar-example
+#https://github.com/zakariaGatter/i3blocks-gate/blob/master/i3b-gate
+
+# sway config in ~/.config/sway/config :
+# bar {
+#   status_command exec ~/.config/sway/swaybar.sh
+# }
 
 function status_bar() {
 # The abbreviated weekday (e.g., "Sat"), followed by day , short month .eg "may" , year and current time
@@ -185,14 +195,16 @@ function networkInfo {
         echo -n "wlan : up "
     fi
 
-    local bt_name=$(bluetoothctl info | sed -En 's|\s+Name:\s+([[:graph:]]+).*$|\1|p')
+    local bt_service=$(systemctl status bluetooth | grep 'running')
     local is_bt_down=$(rfkill list bluetooth | sed -En 's|\s+Soft\s+blocked:\s+(\w+).*$|\1|p')
-    if [[ -n $bt_name ]];then
-        echo -n "bt: $bt_name "
-    elif [[ -z $bt_name && $is_bt_down == "no" ]];then
-        echo -n "bt : up"
+    if [[ -n $bt_service ]]; then
+        local bt_name=$(bluetoothctl info | sed -En 's|\s+Name:\s+([[:graph:]]+).*$|\1|p')
+        if [[ -n $bt_name ]];then
+            echo -n "bt: $bt_name "
+        elif [[ -z $bt_name && $is_bt_down == "no" ]];then
+            echo -n "bt : up"
+        fi
     fi
-
     if [[ -z $interface && $is_wlan_down == "yes" && $is_bt_down == "yes" ]]
     then
         echo "net : down"
