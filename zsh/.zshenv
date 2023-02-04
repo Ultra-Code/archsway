@@ -44,33 +44,6 @@ export FZF_CTRL_T_COMMAND="find * -regex '.+\.\w+.+$' -prune -or -print"
 export FZF_CTRL_T_OPTS='--border=rounded'
 export FZF_ALT_C_OPTS='--border=rounded --preview="ls --recursive --color=always {}"'
 
-#NNN file manager
-export NNN_OPTS=ae
-
-#NNN list of used plugins
-export NNN_PLUG='p:preview-tui;u:getplugs;c:fzcd;j:autojump'
-
-#ARCHIVE types supported by bsdtar
-export NNN_ARCHIVE="\\.(7z|a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|rar|rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)$"
-
-#set NNN_PREVIEWDIR to non volatile dir like $XDG_CACHE_HOME/nnn/previews
-#if you want to keep previews on disk between reboots
-export NNN_PREVIEWDIR=$XDG_CACHE_HOME/nnn/previews
-
-# b for visiting bookmarks and , for temporary bookmarks
-# B for permanent bookmarks and b <CR> for going to bookmarks dir of nnn
-export NNN_BMS="b:$HOME/files/Documents;s:$HOME/files/Videos/Sitcom;l:$HOME/files/Documents/COMPUTER SCIENCE/UNDERGRADUATE;d:$HOME/Downloads"
-
-#ENABLE file icons
-export ICONLOOKUP=1
-
-#Colors for nnn context
-export NNN_COLORS='3456'
-
-BLK=c1 CHR=e2 DIR=27 EXE=2e REG=00 HARDLINK=60
-SYMLINK=33 MISSING=f7 ORPHAN=c6 FIFO=d6 SOCK=ab OTHER=c4
-export NNN_FCOLORS=$BLK$CHR$DIR$EXE$REG$HARDLINK$SYMLINK$MISSING$ORPHAN$FIFO$SOCK$OTHER
-
 #Credit to https://github.com/trapd00r/LS_COLORS
 export LS_COLORS="bd=38;5;68:ca=38;5;17:cd=38;5;113;1:di=38;5;30:do=38;5;127:ex=38;5;208;1:pi=38;5;126:fi=0:ln=target:mh=38;5;222;1:no=0:or=48;5;196;38;5;232;1:ow=38;5;220;1:sg=48;5;3;38;5;0:\
 su=38;5;220;1;3;100;1:so=38;5;197:st=38;5;86;48;5;234:tw=48;5;235;38;5;139;3:*LS_COLORS=48;5;89;38;5;197;1;3;4;7:*README=38;5;220;1:*README.rst=38;5;220;1:*README.md=38;5;220;1:\

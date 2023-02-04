@@ -45,11 +45,8 @@ function preview(){
   #The cleaner is only called if previewing is enabled, the previewer is set, and the previously selected file had its preview cache disabled
     if [[ -n $WAYLAND_DISPLAY ]]
     then
-            kitty +icat --silent --scale-up --transfer-mode file --place "${WIDTH}x${HEIGHT}@${XOFFSET}x${YOFFSET}" "$1" && exit 1;
+            kitty +kitten icat --transfer-mode=memory --scale-up --place "${WIDTH}x${HEIGHT}@${XOFFSET}x${YOFFSET}" "$1" && exit 1;
     fi
-
-
-
 }
 
 
