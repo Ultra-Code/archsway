@@ -16,6 +16,8 @@ alias _='sudo '
 
 alias Lf=' _ --preserve-env lf'
 alias Vi=' _ --preserve-env vi'
+alias fm=' ranger'
+alias Fm=' _ --preserve-env ranger'
 alias lns=' ln --interactive --symbolic --relative --logical --verbose'
 alias ln=' ln --interactive --logical --verbose'
 

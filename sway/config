@@ -264,9 +264,9 @@ bindsym $mod+a exec $menu_desktop
 #NOTE: if ^G is to be used then zsh -c "nnn;$SHELL" this is to execute nnn -are in the zsh -c then start a SHELL in
 # the background so ^G will cd to your last dir in the background SHELL
 # and for the Exec in nnn.desktop $term --class "nnn" --title "file manager" zsh -c "nnn %f"
-for_window [app_id="lf"] focus
-assign [app_id="lf"] $filemanager
-set $file_manager $term --class "lf" --title "file manager" zsh -c 'lf'
+for_window [app_id="fm"] focus
+assign [app_id="fm"] $filemanager
+set $file_manager $term --class "fm" --title "file manager" zsh -c 'ranger'
 bindsym $mod+e exec $file_manager
 
 for_window [app_id="todo" title="todo list"] floating enable,sticky enable,resize set width 45 ppt height 75 ppt, move position 27 ppt 7ppt
