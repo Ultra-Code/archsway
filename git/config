@@ -12,6 +12,7 @@
         update = rebase
 [push]
         recurseSubmodules = check
+        autoSetupRemote = true
 [merge]
         tool = nvimdiff3
         conflictStyle = diff3
@@ -25,4 +26,4 @@
         lineNumber = true
         extendedRegexp = true
 [init]
-	defaultBranch = master
+        defaultBranch = master
