@@ -14,8 +14,8 @@ alias nc=' ncmpcpp'
 
 alias _='sudo '
 
-alias Lf=' _ --preserve-env lf'
-alias Vi=' _ --preserve-env vi'
+alias vi=' nvim'
+alias Vi=' _ --preserve-env nvim'
 alias fm=' ranger'
 alias Fm=' _ --preserve-env ranger'
 alias lns=' ln --interactive --symbolic --relative --logical --verbose'
