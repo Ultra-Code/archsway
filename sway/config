@@ -311,7 +311,7 @@ bar {
     # Keep in mind that the current directory of this config file is $HOME
     status_command ~/.config/sway/status.zsh
     mode invisible
-    font Iosevka Term,Iosevka Term Medium:style=Medium 11
+    font JetBrains Mono,JetBrains Mono Medium:style=Medium,Regular 10
     colors {
         # Text color of status bar
         statusline #ffffff
@@ -344,7 +344,7 @@ bindsym $mod+Shift+g exec systemctl --user stop gammastep
 # Check https://docs.gtk.org/Pango/type_func.FontDescription.from_string.html#description for description of the
 # pango font format
 
-font pango:Iosevka Term,Iosevka Term Medium:style=Medium 11
+font pango:JetBrains Mono,JetBrains Mono Medium:style=Medium,Regular 12
 
 #GTK+ ui settings
 set $gnome-schema org.gnome.desktop.interface
@@ -355,9 +355,6 @@ exec_always {
     gsettings set $gnome-schema icon-theme 'Adwaita'
     gsettings set $gnome-schema cursor-size 24
     gsettings set $gnome-schema cursor-theme 'Adwaita'
-    gsettings set $gnome-schema font-name 'Cantarell 12'
-    gsettings set $gnome-schema monospace-font-name 'Iosevka 12'
-    gsettings set $gnome-schema document-font-name 'DejaVu Sans 12'
     gsettings set $gnome-schema color-scheme 'prefer-dark'
 }
 
