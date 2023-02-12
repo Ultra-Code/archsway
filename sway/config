@@ -311,7 +311,7 @@ bar {
     # Keep in mind that the current directory of this config file is $HOME
     status_command ~/.config/sway/status.zsh
     mode invisible
-    font JetBrains Mono,JetBrains Mono Medium:style=Medium,Regular 10
+    font pango:Noto Sans Mono,Noto Sans Mono Medium:style=Medium,Regular 10
     colors {
         # Text color of status bar
         statusline #ffffff
@@ -344,7 +344,7 @@ bindsym $mod+Shift+g exec systemctl --user stop gammastep
 # Check https://docs.gtk.org/Pango/type_func.FontDescription.from_string.html#description for description of the
 # pango font format
 
-font pango:JetBrains Mono,JetBrains Mono Medium:style=Medium,Regular 12
+font pango:Noto Sans Mono,Noto Sans Mono Medium:style=Medium,Regular 10
 
 #GTK+ ui settings
 set $gnome-schema org.gnome.desktop.interface
