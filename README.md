@@ -22,7 +22,7 @@ NOTE: make sure to mount btfs with compression zstd on first mount on live iso
     - kitty
     - linux-firmware
     - linux-zen
-    - man-db man-pages
+    - man-db [man-pages](https://wiki.archlinux.org/title/Man_page)
     - neovim
     - sudo
     - zsh (make zsh the default shell `chsh -s $(which zsh)`)
@@ -31,6 +31,7 @@ NOTE: make sure to mount btfs with compression zstd on first mount on live iso
 
 - since networking bits are already setup in the iso , You can just copy them .ie /etc/systemd/network/* to the mounted partition and start the necessary services iwd,systemd-networkd,systemd-resolvd
   Or use configuration in [networking/resolve.conf](https://github.com/Ultra-Code/archsway/blob/master/networking/resolve.conf) and  [networking/network](https://github.com/Ultra-Code/archsway/blob/master/networking/network)
+- Enable synchronizing the system clock across the network by enabling [systemd-timesyncd.service](https://wiki.archlinux.org/title/Systemd-timesyncd)
 - On the freshly installed system use the following fonts
     + use fonts with great unicode support like noto-fonts or ttf-dejavu or gnu-free-fonts as system default font
     + ttf-jetbrains-mono or ttc-iosevka for monospace,
@@ -53,7 +54,7 @@ NOTE: make sure to mount btfs with compression zstd on first mount on live iso
 - modify relector configuration in /etc/xdg/reflector/reflector.conf to sort based on download rate with --sort rate
 - modify sudoers with visudo using example in [suders file](https://github.com/Ultra-Code/archsway/blob/master/sudoers)
 - configure what powerbutton and lidclose does with /etc/systemd/logind.conf
-- For pacman enable the following options under option section in /etc/pacman.conf
+- For [pacman](https://wiki.archlinux.org/title/Pacman) enable the following options under option section in /etc/pacman.conf
 ```zsh
 [options]
 Color
@@ -62,6 +63,7 @@ VerbosePkgLists
 ParallelDownloads = 5
 ```
 - configure /etc/motd with the Message Of The Day Eg.`WELCOME MASTER MALPHA! WE ARE READY TO SERVE YOU!!!`
+- after installation make sure to go through [Archlinux General Recommendation](https://wiki.archlinux.org/title/General_recommendations)
 
 ## Configuring Firefox
 - Enable firefox [Hardware video acceleration](https://wiki.archlinux.org/title/Firefox#Hardware_video_acceleration) by setting media.ffmpeg.vaapi.enabled to true and Hardware WebRender by setting gfx.webrender.all to true
