@@ -1,3 +1,3 @@
 #!/bin/zsh
 
-kitty +icat --clear --silent --transfer-mode file
+kitten icat --transfer-mode=memory --clear --stdin=no < /dev/null > /dev/tty
