@@ -9,10 +9,12 @@ readonly YOFFSET=$5
 FILE_EXT=${FILE:e}
 #convert to lower case
 readonly FILE_EXT=${FILE_EXT:l}
-readonly CACHE_PATH="$HOME/.cache/lf"
+readonly CACHE_PATH="${TMPDIR:-/tmp}/lf_cache"
+
 #mime type of file
 readonly MIMETYPE=$(file --dereference --brief --mime-type "$FILE")
 
+#my improvement on https://raw.githubusercontent.com/duganchen/kitty-pistol-previewer/main/vidthumb
 function cache(){
     if (( $# < 2 )); then
     print "usage: $0 CACHE_PATH File" >&2
@@ -45,7 +47,7 @@ function preview(){
   #The cleaner is only called if previewing is enabled, the previewer is set, and the previously selected file had its preview cache disabled
     if [[ -n $WAYLAND_DISPLAY ]]
     then
-            kitten icat --transfer-mode=memory --stdin=no --place "${WIDTH}x${HEIGHT}@${XOFFSET}x${YOFFSET}" "$FILE" < /dev/null > /dev/tty && exit 1;
+            kitten icat --transfer-mode=file --stdin=no --place "${WIDTH}x${HEIGHT}@${XOFFSET}x${YOFFSET}" "$1" < /dev/null > /dev/tty && exit 1;
     fi
 }
 
@@ -236,54 +238,3 @@ handle_fallback
 }
 
 start_preview
-
-
-# function vidthumb(){
-# if ! [ -f "$1" ]; then
-#         exit 1
-# fi
-#
-# cache="$HOME/.cache/vidthumb"
-# index="$cache/index.json"
-# movie="$(realpath "$1")"
-#
-# mkdir -p "$cache"
-#
-# if [ -f "$index" ]; then
-#         thumbnail="$(jq -r ". \"$movie\"" <"$index")"
-#         if [[ "$thumbnail" != "null" ]]; then
-#                 if [[ ! -f "$cache/$thumbnail" ]]; then
-#                         exit 1
-#                 fi
-#                 echo "$cache/$thumbnail"
-#                 exit 0
-#         fi
-# fi
-#
-# thumbnail="$(uuidgen).jpg"
-#
-# if ! ffmpegthumbnailer -i "$movie" -o "$cache/$thumbnail" -s 0 2>/dev/null; then
-#         exit 1
-# fi
-#
-# if [[ ! -f "$index" ]]; then
-#         echo "{\"$movie\": \"$thumbnail\"}" >"$index"
-# fi
-# json="$(jq -r --arg "$movie" "$thumbnail" ". + {\"$movie\": \"$thumbnail\"}" <"$index")"
-# echo "$json" >"$index"
-#
-# echo "$cache/$thumbnail"
-# }
-#
-# if [[ "$MIMETYPE" =~ ^image ]]; then
-#     kitty +icat --silent --transfer-mode stream --place "${WIDTH}x${HEIGHT}@${XOFFSET}x${YOFFSET}" "$FILE"
-#     exit 1
-# fi
-#
-# if [[ "$MIMETYPE" =~ ^video ]]; then
-#     # vidthumb is from here:
-#     # https://raw.githubusercontent.com/duganchen/kitty-pistol-previewer/main/vidthumb
-#     kitty +icat --silent --transfer-mode stream --place "${WIDTH}x${HEIGHT}@${XOFFSET}x${YOFFSET}" "$(vidthumb "$FILE")"
-#     exit 1
-# fi
-#
