@@ -88,6 +88,7 @@ alias pmcc=' _ pacman -Sc'
 #Git aliases
 alias gp=' git push'
 alias gs=' git status -s'
+alias gst=' git status'
 alias gcl=' git clone --recurse-submodules'
 alias gc=' git commit'
 alias ga=' git add'

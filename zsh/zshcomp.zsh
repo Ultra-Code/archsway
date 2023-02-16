@@ -5,7 +5,9 @@ if [ -f /usr/share/fzf/key-bindings.zsh ]; then
 fi
 
 # Completion for kitty
-kitty +complete setup zsh | source /dev/stdin
+if (($+commands[kitty]));then
+    kitty kitten +complete setup zsh | source /dev/stdin
+fi
 
 # add rg completion function to fpath
 fpath+=(_rg)
