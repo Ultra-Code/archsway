@@ -4,30 +4,54 @@
 #disable XWayland entirely and run a "pure" Wayland session
 xwayland disable
 
-# Logo key .ie widows key. Use Mod1 for Alt.
+#
+# Variables
+#
+# Mod1 -> Alt_L, Mod2 -> NumLock, Super key(Mod4) -> widows key, Mod5 -> Altgr_R
+# for modifer keys /usr/share/X11/xkb/symbols/pc https://wiki.archlinux.org/title/Xmodmap#Modifier_keys
+# for key symbols and XF86 media keys /usr/include/X11/{keysymdef,XF86keysym}.h
 set $mod Mod4
-set $AltMod Mod1
+set $AltMod Mod5
 
-### Input configuration
-input * {
-  tap enabled
-  drag enabled
-  natural_scroll enabled
-  middle_emulation enabled
-  click_method clickfinger
-  click_method button_areas
-  # set mouse sensitivity (between -1 and 1)
-  pointer_accel 0.5
-  #Set compose key as right alt
-  #for feather reading man 7 xkeyboard-config
-  xkb_options compose:ralt
-}
+# Home row direction keys, like vim
+set $left h
+set $down j
+set $up k
+set $right l
 
-#hide mouse on inactivity
-seat * hide_cursor 10000
-seat * hide_cursor when-typing enable
+# Your preferred terminal emulator
+set $term kitty
 
-### Output configuration
+# Path to a collection of wallpapers
+set $wallpapers_path $HOME/files/Pictures/Code
+
+# Your preferred application launcher
+# Note: pass the final command to swaymsg so that the resulting window can be opened
+# on the original workspace that the command was run on.
+#run kitty directly instead of $term so that launcher can be started in all sway instances instead of only the
+#instance where kitty was first executed due to the --single-instance option
+set $menu $term --class "desktop-launcher" $DOTFILES/sway/launcher.zsh
+
+# Preferred sound for screenshot
+set $scree_shot_sound pw-play /usr/share/sounds/freedesktop/stereo/screen-capture.oga
+
+# Your preferred file manger
+set $file_manager $term --class "fm" --title "file manager" zsh -c 'ranger'
+
+# Your preferred todo app
+set $todo $term --class "todo" --title "todo list" zsh -c "sleep 0.5;$EDITOR ~/.local/neorg/todos/todo.norg"
+
+
+#
+# Font
+#
+# Check https://docs.gtk.org/Pango/type_func.FontDescription.from_string.html#description for description of the
+# pango font format
+font pango:Noto Sans Mono,Noto Sans Mono Medium:style=Medium,Regular 10
+
+#
+# Output configuration
+#
 # Example configuration:
 #
 #   output HDMI-A-1 resolution 1920x1080 position 1920,0
@@ -35,10 +59,11 @@ seat * hide_cursor when-typing enable
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
 ### Set random wallpaper
-set $wallpapers_path $HOME/files/Pictures/Code
 output * bg $(find $wallpapers_path -type f | shuf -n 1) fill
 
-### Idle configuration
+#
+# Idle configuration
+#
 #NOTE: if using systemd,configure logind.conf's IdleAction and IdleActionSec
 #to tell systemd what action to execute when idle and after what time the
 #system is assumed to be in an idle state which swayidle notifies systemd
@@ -51,20 +76,73 @@ output * bg $(find $wallpapers_path -type f | shuf -n 1) fill
 # It will also lock your screen before your computer goes to sleep.
 exec swayidle -w \
             timeout 300 'swaylock -f -i ~/files/Pictures/Code/27106459-coding-wallpapers.png' \
-            timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+            timeout 600 'swaymsg "output * power off"' \
+            resume 'swaymsg "output * power on"' \
             before-sleep 'swaylock -f -i ~/files/Pictures/Code/27106459-coding-wallpapers.png' \
-            after-resume 'swaymsg "output * power on"' \
             idlehint 780
 
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
 
-### Key bindings
 #
-# Basics:
+# Input configuration
 #
+input * {
+  #Enables or disables disable-while-typing
+  dwt enabled
+  #Enables or disables tap
+  tap enabled
+  #Enables or disables tap-and-drag
+  drag enabled
+  #Set the scroll method
+  scroll_method two_finger
+  #Enables or disables natural (inverted) scrolling
+  natural_scroll enabled
+  #Enables or disables middle click emulation
+  middle_emulation enabled
+  #Set the click method for the specified device
+  click_method clickfinger
+  click_method button_areas
+  #Sets the pointer acceleration profile
+  accel_profile adaptive
+  # set mouse sensitivity (between -1 and 1)
+  pointer_accel 0.5
+  #Sets the layout of the keyboard like us or de
+  xkb_layout us
+  #Sets the variant of the keyboard
+  #https://en.wikipedia.org/wiki/QWERTY#US-International
+  xkb_variant altgr-intl
+  #Set compose key as right alt;man 7 xkeyboard-config
+  #https://en.wikipedia.org/wiki/Compose_key
+  xkb_options compose:rctrl
+}
+
+#hide mouse on inactivity
+seat * hide_cursor 10000
+seat * hide_cursor when-typing enable
+
+#
+# Key bindings
+#
+# Start a terminal
+bindsym $mod+Return exec $term
+bindsym $mod+Shift+Return exec $term --class "coding"
+
 # Kill focused window
 bindsym $mod+Shift+q kill
+
+bindsym $mod+b exec firefox
+
+# Start your launcher
+bindsym $mod+a exec $menu
+# Start file manager
+bindsym $mod+e exec $file_manager
+# Open todo
+bindsym $mod+o exec $todo
+
+# binding to enable and disable gammastep
+bindsym $mod+g exec systemctl --user start gammastep
+bindsym $mod+Shift+g exec systemctl --user stop gammastep
 
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.
@@ -78,17 +156,18 @@ bindsym $mod+r reload
 
 # Moving around:
 # Move your focus around
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
 
 # Move the focused window with the same, but add Shift
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
 
+#
 # Layout stuff:
 #
 # You can "split" the current object of your focus with
@@ -103,9 +182,6 @@ bindsym $mod+slash layout toggle all
 
 # Make the current focus fullscreen
 bindsym $mod+f fullscreen toggle
-
-# inhibit idle for all views when in fullscreen
-for_window [app_id=".*"] inhibit_idle fullscreen
 
 # Toggle the current focus between tiling and floating mode
 bindsym $mod+space floating toggle
@@ -142,8 +218,10 @@ bindsym $mod+minus move scratchpad
 # If there are multiple scratchpad windows, this command cycles through them.
 bindsym $mod+Shift+minus scratchpad show
 
-#Audio
-#Media keys:/usr/share/X11/xkb/symbols/inet https://wiki.linuxquestions.org/wiki/XF86_keyboard_symbols
+#
+# Audio
+#
+#Media keys: /usr/share/X11/xkb/symbols/inet https://wiki.linuxquestions.org/wiki/XF86_keyboard_symbols
 #https://gitlab.freedesktop.org/pipewire/pipewire/-/wikis/Migrate-PulseAudio#sinksource-port-volumemuteport-latency
 #https://wiki.archlinux.org/title/WirePlumber#Tips_and_tricks
 #https://unix.stackexchange.com/questions/260981/what-do-the-sink-and-source-keywords-mean-in-pulseaudio
@@ -174,6 +252,8 @@ bindsym XF86MonBrightnessUp exec brightnessctl set +1%
 
 #TODO add script to get projector name to focus
 #bindsym XF86Display exec swaymsg focus output "Seiko Epson Corporation EPSON PJ 0x00000101"
+
+#
 # Workspaces:
 #
 # Switch to workspace
@@ -221,22 +301,19 @@ bindsym $mod+Shift+0 move container to workspace 10
 bindsym $mod+period  move container to workspace next
 bindsym $mod+comma   move container to workspace prev
 
+# inhibit idle for all views when in fullscreen
+for_window [app_id=".*"] inhibit_idle fullscreen
+
+# Firefox
 for_window [app_id="firefox"] focus,layout tabbed
 for_window [app_id="firefox" title="About Mozilla Firefox|Picture-in-Picture|Password Required - Mozilla Firefox|Page Info — (.*)"] floating enable,border none
+assign [app_id="firefox"]  $browser
+
 for_window [app_id="firefox" title="Firefox — Sharing Indicator" ] floating enable,border none,resize set width 45 px height 30 px,move position 3 px 3 px
 no_focus [title="Firefox — Sharing Indicator"]
-assign [app_id="firefox"]  $browser
-bindsym $mod+b exec firefox
-
-# Your preferred terminal emulator
-set $term kitty  --single-instance
-# Start a terminal
-bindsym $mod+Return exec $term
 
 for_window [app_id="coding"] focus
 assign [app_id="coding"] $coding
-set $megacode $term --class "coding"
-bindsym $mod+Shift+Return exec $megacode
 
 for_window [app_id="mpv"] focus,fullscreen enable
 assign [app_id="mpv"] $mpv
@@ -250,32 +327,28 @@ assign [app_id="com.github.johnfactotum.Foliate"] $documents
 for_window [app_id="imv"] focus,fullscreen enable
 assign [app_id="imv"] $utility
 
-# Your preferred application launcher
-# Note: pass the final command to swaymsg so that the resulting window can be opened
-# on the original workspace that the command was run on.
 for_window [app_id="desktop-launcher"] focus, floating enable , resize set width 45 ppt height 30 ppt, move position 30 ppt 5ppt,border none
-#run kitty directly instead of $term so that launcher can be started in all sway instances instead of only the
-#instance where kitty was first executed due to the --single-instance option
-set $menu_desktop kitty --class "desktop-launcher" $DOTFILES/sway/launcher.zsh
 
-# Start your launcher
-bindsym $mod+a exec $menu_desktop
-
-#NOTE: if ^G is to be used then zsh -c "nnn;$SHELL" this is to execute nnn -are in the zsh -c then start a SHELL in
-# the background so ^G will cd to your last dir in the background SHELL
-# and for the Exec in nnn.desktop $term --class "nnn" --title "file manager" zsh -c "nnn %f"
 for_window [app_id="fm"] focus
 assign [app_id="fm"] $filemanager
-set $file_manager $term --class "fm" --title "file manager" zsh -c 'ranger'
-bindsym $mod+e exec $file_manager
 
 for_window [app_id="todo" title="todo list"] floating enable,sticky enable,resize set width 45 ppt height 75 ppt, move position 27 ppt 7ppt
-set $todo $term --class "todo" --title "todo list" zsh -c "sleep 0.5;$EDITOR ~/.local/neorg/todos/todo.norg"
-bindsym $mod+o exec $todo
 
 
+#
+# Screenshot
+#
+#Take screenshot of a window
+bindsym --release Print exec grim $HOME/files/Pictures/Screenshot/"Captura de pantalla de $(date +%F_%X).png" && $scree_shot_sound
+#Take a screenshot of a region of a window
+bindsym --release Shift+Print exec grim -g "$(slurp)" $HOME/files/Pictures/Screenshot/"Captura de pantalla de $(date +%F_%X).png" && $scree_shot_sound
+#Take a screenshot and copy to clipboard
+bindsym --release Control+Print exec grim - | wl-copy  && $scree_shot_sound
+
+
+#
 # Resizing containers:
-
+#
 mode "resize" {
 # left will shrink the containers width
 # right will grow the containers width
@@ -293,16 +366,60 @@ bindsym Escape mode "default"
 }
 bindsym $AltMod+r mode "resize"
 
-set $scree_shot_sound pw-play /usr/share/sounds/freedesktop/stereo/screen-capture.oga
+#
+# Power Management Mode
+#
+set $power_mangement "(s)uspend,hy(b)rid-sleep,(h)ibernate,(r)eboot,(e)xit,suspend-(t)hen-hibernate,(l)ock,(R)UEFI,(S)hutdown"
+mode $power_mangement {
+    bindsym s exec systemctl suspend,mode "default"
+    bindsym b exec  systemctl hybrid-sleep,mode "default"
+    bindsym h exec systemctl hibernate,mode "default"
+    bindsym r exec  systemctl reboot,mode "default"
+    # Exit sway (logs you out of your Wayland session)
+    bindsym e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit' -s "No",mode "default"
+    bindsym t exec swaynag -t warning -m 'Sleepy time?!?!' -b 'ZzZz...' 'systemctl suspend-then-hibernate' -s "No",mode "default"
+    bindsym l exec swaylock -i ~/files/Pictures/Code/27106459-coding-wallpapers.png,mode "default"
+    bindsym Shift+r exec  systemctl reboot --firmware-setup,mode "default"
+    bindsym Shift+s exec  systemctl poweroff -i,mode "default"
 
-#Take screenshot of a window
-bindsym --release Print exec grim $HOME/files/Pictures/Screenshot/"Captura de pantalla de $(date +%F_%X).png" && $scree_shot_sound
-#Take a screenshot of a region of a window
-bindsym --release Shift+Print exec grim -g "$(slurp)" $HOME/files/Pictures/Screenshot/"Captura de pantalla de $(date +%F_%X).png" && $scree_shot_sound
-#Take a screenshot and copy to clipboard
-bindsym --release Control+Print exec grim - | wl-copy  && $scree_shot_sound
+    # return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $AltMod+p mode $power_mangement
 
+#
+# Wifi Mode
+#
+set $wifi "(w)ifi (s)can Wifi (o)ff"
+mode $wifi {
+    bindsym w exec rfkill toggle wlan,mode "default"
+    bindsym o exec rfkill block all,mode "default"
+    bindsym s exec iwctl station wlan0 scan,mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $AltMod+w mode $wifi
+
+
+#
+# Bluetooth Mode
+#
+set $bluetooth "(b)luetooth (s)can bluetooth (o)ff"
+mode $bluetooth {
+    bindsym b exec rfkill toggle bluetooth,mode "default"
+    bindsym o exec rfkill block all,mode "default"
+    bindsym s exec bluetoothctl -- connect 41:42:AB:B9:CA:65,mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $AltMod+b mode $bluetooth
+
+#
 # Status Bar:
+#
 # Read `man 5 sway-bar` for more information about this section.
 bar {
     position top
@@ -328,27 +445,17 @@ bar {
         binding_mode       #2f343a #900000 #ffffff
     }
 }
-
-#Use 'swaymsg -t get_bar_config' to get the available bar
 #binding to disable swaybar
 bindsym $mod+shift+w bar mode invisible
-
 #binding to enable swaybar
 bindsym $mod+w bar mode dock
 
-# binding to enable and disable gammastep
-bindsym $mod+g exec systemctl --user start gammastep
-bindsym $mod+Shift+g exec systemctl --user stop gammastep
 
-# Font
-# Check https://docs.gtk.org/Pango/type_func.FontDescription.from_string.html#description for description of the
-# pango font format
-
-font pango:Noto Sans Mono,Noto Sans Mono Medium:style=Medium,Regular 10
+# Include sway systemd configuration and environment variables
+include /etc/sway/config.d/*
 
 #GTK+ ui settings
 set $gnome-schema org.gnome.desktop.interface
-
 exec_always {
     #style gtk apps with Adwaita dark variant
     gsettings set $gnome-schema gtk-theme 'Adwaita-dark'
@@ -358,50 +465,7 @@ exec_always {
     gsettings set $gnome-schema color-scheme 'prefer-dark'
 }
 
-set $power_mangement "(s)uspend,hy(b)rid-sleep,(h)ibernate,(r)eboot,(e)xit,suspend-(t)hen-hibernate,(l)ock,(R)UEFI,(S)hutdown"
-mode $power_mangement {
-    bindsym s exec systemctl suspend,mode "default"
-    bindsym b exec  systemctl hybrid-sleep,mode "default"
-    bindsym h exec systemctl hibernate,mode "default"
-    bindsym r exec  systemctl reboot,mode "default"
-    # Exit sway (logs you out of your Wayland session)
-    bindsym e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit' -s "No",mode "default"
-    bindsym t exec swaynag -t warning -m 'Sleepy time?!?!' -b 'ZzZz...' 'systemctl suspend-then-hibernate' -s "No",mode "default"
-    bindsym l exec swaylock -i ~/files/Pictures/Code/27106459-coding-wallpapers.png,mode "default"
-    bindsym Shift+r exec  systemctl reboot --firmware-setup,mode "default"
-    bindsym Shift+s exec  systemctl poweroff -i,mode "default"
-
-    # return to default mode
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-bindsym $AltMod+p mode $power_mangement
-
-set $wifi "(w)ifi (s)can Wifi (o)ff"
-mode $wifi {
-    bindsym w exec rfkill toggle wlan,mode "default"
-    bindsym o exec rfkill block all,mode "default"
-    bindsym s exec iwctl station wlan0 scan,mode "default"
-
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-bindsym $AltMod+w mode $wifi
-
-set $bluetooth "(b)luetooth (s)can bluetooth (o)ff"
-mode $bluetooth {
-    bindsym b exec rfkill toggle bluetooth,mode "default"
-    bindsym o exec rfkill block all,mode "default"
-    bindsym s exec bluetoothctl -- connect 41:42:AB:B9:CA:65,mode "default"
-
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-bindsym $AltMod+b mode $bluetooth
-
-# Include sway systemd configuration and environment variables
-include /etc/sway/config.d/*
-
 # Autostart
+exec if pgrep -x $term; then ;else $term --single-instance; fi
 # start sway target
-exec systemctl --user start sway-session.target
+exec_always "systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP; systemctl --user start sway-session.target"
