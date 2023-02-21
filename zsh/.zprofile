@@ -38,7 +38,7 @@ if [[ ! $SSH_AUTH_SOCK ]]; then
     source $XDG_RUNTIME_DIR/ssh-agent.env >/dev/null
 fi
 
-if [[ $(tty) == /dev/tty1 ]]; then
+if [[ $(tty) =~ "/dev/tty[1-3]" ]]; then
 #for sway's output to be handled by journald
       exec systemd-cat --identifier=sway sway
 fi
