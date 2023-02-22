@@ -20,17 +20,16 @@ set $down j
 set $up k
 set $right l
 
+# variable to store virtual terminal number
+set $vtnr $(printenv XDG_VTNR)
+
 # Your preferred terminal emulator
-set $term kitty --single-instance
+set $term kitty --single-instance  --instance-group "$vtnr"
 
 # Path to a collection of wallpapers
 set $wallpapers_path $HOME/files/Pictures/Code
 
 # Your preferred application launcher
-# Note: pass the final command to swaymsg so that the resulting window can be opened
-# on the original workspace that the command was run on.
-#run kitty directly instead of $term so that launcher can be started in all sway instances instead of only the
-#instance where kitty was first executed due to the --single-instance option
 set $menu $term --class "desktop-launcher" $DOTFILES/sway/launcher.zsh
 
 # Preferred sound for screenshot
@@ -454,10 +453,6 @@ bindsym $mod+shift+w bar mode invisible
 #binding to enable swaybar
 bindsym $mod+w bar mode dock
 
-
-# Include sway systemd configuration and environment variables
-include /etc/sway/config.d/*
-
 #GTK+ ui settings
 set $gnome-schema org.gnome.desktop.interface
 exec_always {
@@ -469,7 +464,10 @@ exec_always {
     gsettings set $gnome-schema color-scheme 'prefer-dark'
 }
 
+# Include sway systemd configuration and environment variables
+include /etc/sway/config.d/*
+
 # Autostart
-exec $term
 # start sway target
-exec_always "systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP; systemctl --user start sway-session.target"
+exec $term
+exec systemctl --user start sway-session.target
