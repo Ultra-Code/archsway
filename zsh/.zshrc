@@ -74,6 +74,15 @@ autoload -Uz run-help
 #load zcalc for peforming math operations
 autoload -Uz zcalc
 
+#emit OSC-133;A sequence before each prompt to enable jumping
+#bettwen prompts in foot with ctrl+shit+{z(up),x(down)}
+if [[ $TERM == "foot" ]];
+then
+    function precmd() {
+        print -Pn "\e]133;A\e\\"
+    }
+fi
+
 if [[ $ZSH_ALIASES ]];
 then
     unalias -m '*'
