@@ -12,8 +12,8 @@ xwayland disable
 # ISO_Level3_shift(Mod5) -> Altgr_R
 # for modifer keys /usr/share/X11/xkb/symbols/pc https://wiki.archlinux.org/title/Xmodmap#Modifier_keys
 # for key symbols and XF86 media keys /usr/include/X11/{keysymdef,XF86keysym}.h
-set $mod Mod1
-set $AltMod Mod5
+set $mod Alt
+set $AltMod Control
 
 # Home row direction keys, like vim
 set $left h
@@ -37,9 +37,9 @@ set $todo $term --app-id "todo" --title "todo list" zsh -c "sleep 0.5;$EDITOR ~/
 #
 # Font
 #
-# Check https://docs.gtk.org/Pango/type_func.FontDescription.from_string.html#description for description of the
-# pango font format
-font pango:Noto Sans Mono,Noto Sans Mono Medium:style=Medium,Regular 10
+#Check https://docs.gtk.org/Pango/type_func.FontDescription.from_string.html#description
+#for description of the pango font format
+font pango: FreeMono, FreeMono:style=Regular,normal 10
 
 #
 # Output configuration
@@ -49,8 +49,10 @@ font pango:Noto Sans Mono,Noto Sans Mono Medium:style=Medium,Regular 10
 #   output HDMI-A-1 resolution 1920x1080 position 1920,0
 #
 # You can get the names of your outputs by running: swaymsg -t get_outputs
-output WL-1 resolution 1366x768
-
+output WL-1 {
+    resolution 1366x768
+    bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1366x768.png fill
+}
 #
 # Input configuration
 #
@@ -78,12 +80,16 @@ input * {
   pointer_accel 0.5
   #Sets the layout of the keyboard like us or de
   xkb_layout us
-  #Sets the variant of the keyboard
+  #Sets the variant of the keyboard as null(default),altgr-intl
   #https://en.wikipedia.org/wiki/QWERTY#US-International
-  xkb_variant altgr-intl
+  xkb_variant ,
   #Set compose key as right alt;man 7 xkeyboard-config
   #https://en.wikipedia.org/wiki/Compose_key
-  xkb_options compose:rctrl
+  #specify that 3rd level modifier is the right alt
+  #https://askubuntu.com/questions/41213/what-does-key-to-choose-5th-level-in-gnome-keyboard-properties-do
+  #https://medium.com/@damko/a-simple-humble-but-comprehensive-guide-to-xkb-for-linux-6f1ad5e13450
+  #Switching to another layout with Super+space
+  xkb_options compose:ralt,lv3:switch,grp:alt_space_toggle
 }
 
 #hide mouse on inactivity
@@ -316,7 +322,7 @@ bar {
     workspace_buttons yes
     separator_symbol "|"
     mode invisible
-    font pango:Noto Sans Mono,Noto Sans Mono Medium:style=Medium,Regular 10
+    font pango: FreeMono, FreeMono:style=Regular,normal 10
     colors {
         # Text color of status bar
         statusline #ffffff

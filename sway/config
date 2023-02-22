@@ -46,8 +46,8 @@ set $todo $term --class "todo" --title "todo list" zsh -c "sleep 0.5;$EDITOR ~/.
 #
 # Font
 #
-# Check https://docs.gtk.org/Pango/type_func.FontDescription.from_string.html#description for description of the
-# pango font format
+#Check https://docs.gtk.org/Pango/type_func.FontDescription.from_string.html#description
+#for description of the pango font format
 font pango:Noto Sans Mono,Noto Sans Mono Medium:style=Medium,Regular 10
 
 #
@@ -470,6 +470,6 @@ exec_always {
 }
 
 # Autostart
-exec if pgrep -x $term; then ;else $term --single-instance; fi
+exec $term
 # start sway target
 exec_always "systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP; systemctl --user start sway-session.target"
