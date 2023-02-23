@@ -13,7 +13,7 @@ xwayland disable
 # for modifer keys /usr/share/X11/xkb/symbols/pc https://wiki.archlinux.org/title/Xmodmap#Modifier_keys
 # for key symbols and XF86 media keys /usr/include/X11/{keysymdef,XF86keysym}.h
 set $mod Alt
-set $AltMod Control
+set $AltMod Control+Alt
 
 # Home row direction keys, like vim
 set $left h
@@ -348,16 +348,5 @@ bindsym $mod+w bar mode dock
 # Include sway systemd configuration and environment variables
 include /etc/sway/config.d/*
 
-#GTK+ ui settings
-set $gnome-schema org.gnome.desktop.interface
-exec_always {
-    #style gtk apps with Adwaita dark variant
-    gsettings set $gnome-schema gtk-theme 'Adwaita-dark'
-    gsettings set $gnome-schema icon-theme 'Adwaita'
-    gsettings set $gnome-schema cursor-size 24
-    gsettings set $gnome-schema cursor-theme 'Adwaita'
-    gsettings set $gnome-schema color-scheme 'prefer-dark'
-}
-
 # Autostart
-exec foot --server
+exec foot --log-level=warning --server
