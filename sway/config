@@ -12,7 +12,7 @@ xwayland disable
 # for modifer keys /usr/share/X11/xkb/symbols/pc https://wiki.archlinux.org/title/Xmodmap#Modifier_keys
 # for key symbols and XF86 media keys /usr/include/X11/{keysymdef,XF86keysym}.h
 set $mod Mod4
-set $AltMod Mod5
+set $AltMod Mod1
 
 # Home row direction keys, like vim
 set $left h
