@@ -12,8 +12,8 @@ xwayland disable
 # ISO_Level3_shift(Mod5) -> Altgr_R
 # for modifer keys /usr/share/X11/xkb/symbols/pc https://wiki.archlinux.org/title/Xmodmap#Modifier_keys
 # for key symbols and XF86 media keys /usr/include/X11/{keysymdef,XF86keysym}.h
-set $mod Alt
-set $AltMod Control+Alt
+set $mod Mod1
+set $AltMod Ctrl+Mod1
 
 # Home row direction keys, like vim
 set $left h
@@ -32,9 +32,6 @@ set $file_manager $term --app-id "fm" --title "file manager" zsh -c 'ranger'
 
 # Your preferred todo app
 set $todo $term --app-id "todo" --title "todo list" zsh -c "sleep 0.5;$EDITOR ~/.local/neorg/todos/todo.norg"
-
-
-#
 # Font
 #
 #Check https://docs.gtk.org/Pango/type_func.FontDescription.from_string.html#description
@@ -89,7 +86,7 @@ input * {
   #https://askubuntu.com/questions/41213/what-does-key-to-choose-5th-level-in-gnome-keyboard-properties-do
   #https://medium.com/@damko/a-simple-humble-but-comprehensive-guide-to-xkb-for-linux-6f1ad5e13450
   #Switching to another layout with Super+space
-  xkb_options compose:ralt,lv3:switch,grp:alt_space_toggle
+  xkb_options compose:rctrl,lv3:ralt_switch,grp:alt_space_toggle
 }
 
 #hide mouse on inactivity
