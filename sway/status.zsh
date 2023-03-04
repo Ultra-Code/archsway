@@ -130,7 +130,7 @@ function mpdInfo(){
 function audioInfo(){
   #PipeWire audio info
   local audio_sink=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
-  local volume_state=$( echo $audio_sink | cut -d ' ' -f 2)
+  local volume_state=$(echo $audio_sink | cut -d ' ' -f 2)
   local mute_state=$(echo $audio_sink | cut -d '[' -f 2 | tr -d ']')
   local output_type=$(wpctl inspect @DEFAULT_AUDIO_SINK@| grep 'api' --max-count=1)
   integer volume=$((volume_state * 100))

@@ -107,7 +107,7 @@ input * {
   # set mouse sensitivity (between -1 and 1)
   pointer_accel 0.5
   #Sets the layout of the keyboard like us or de
-  xkb_layout us,us
+  xkb_layout us
   #Sets the variant of the keyboard as null(default),altgr-intl
   #https://en.wikipedia.org/wiki/QWERTY#US-International
   xkb_variant ,altgr-intl
@@ -330,7 +330,7 @@ assign [app_id="com.github.johnfactotum.Foliate"] $documents
 for_window [app_id="imv"] focus,fullscreen enable
 assign [app_id="imv"] $utility
 
-for_window [app_id="desktop-launcher"] focus, floating enable , resize set width 45 ppt height 30 ppt, move position 30 ppt 5ppt,border none
+for_window [app_id="desktop-launcher"] focus, floating enable , resize set width 45 ppt height 70 ppt, move position 30 ppt 5ppt,border none
 
 for_window [app_id="fm"] focus
 assign [app_id="fm"] $filemanager
