@@ -11,6 +11,7 @@ if ! user_input="$(mktemp --tmpdir "${name}.input.XXXXXXXXX")";then
     print 'error: Failed to create tmp file. $TMPDIR (or /tmp if $TMPDIR is unset) may not be writable.\n' >&2
     exit 4
 fi
+trap "rm -f $user_input &> /dev/null" EXIT
 
 #https://unix.stackexchange.com/questions/710366/is-there-a-zsh-equivalent-of-bash-builtin-readarray
 #https://www.reddit.com/r/zsh/comments/tt6gm8/why_doesnt_zsh_have_an_equivalent_of_bashs/
@@ -71,5 +72,3 @@ echo "desktop" > $user_input &&
     --bind "ctrl-e:unbind(ctrl-e)+reload($ALT_COMMAND)+change-prompt(executable >)+execute-silent(echo 'terminal' > '$user_input')+rebind(ctrl-d)" \
     --bind "?:preview($HELP)" \
     --preview-window "bottom,40%"
-
-rm -f $user_input &> /dev/null
