@@ -86,7 +86,7 @@ exec swayidle -w \
 #
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
-input * {
+input type:touchpad {
   #Enables or disables disable-while-typing
   dwt enabled
   #Enables or disables tap
@@ -106,11 +106,14 @@ input * {
   accel_profile adaptive
   # set mouse sensitivity (between -1 and 1)
   pointer_accel 0.5
+}
+
+input type:keyboard {
   #Sets the layout of the keyboard like us or de
   xkb_layout us
   #Sets the variant of the keyboard as null(default),altgr-intl
   #https://en.wikipedia.org/wiki/QWERTY#US-International
-  xkb_variant ,altgr-intl
+  xkb_variant ,
   #Set compose key as right alt;man 7 xkeyboard-config
   #https://en.wikipedia.org/wiki/Compose_key
   #specify that 3rd level modifier is the right alt
@@ -187,10 +190,10 @@ bindsym $mod+slash layout toggle all
 bindsym $mod+f fullscreen toggle
 
 # Toggle the current focus between tiling and floating mode
-bindsym $mod+space floating toggle
+bindsym $mod+Shift+space floating toggle
 
-# Moves focus between the floating and tiled layers
-bindsym $mod+Shift+space focus mode_toggle
+# Swap focus between the tiling area and the floating area
+bindsym $mod+space focus mode_toggle
 
 # Move focus to the parent container
 bindsym $mod+p focus parent
@@ -449,7 +452,7 @@ bar {
     }
 }
 #binding to disable swaybar
-bindsym $mod+shift+w bar mode invisible
+bindsym $mod+Shift+w bar mode invisible
 #binding to enable swaybar
 bindsym $mod+w bar mode dock
 
