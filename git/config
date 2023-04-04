@@ -27,3 +27,7 @@
         extendedRegexp = true
 [init]
         defaultBranch = master
+[color]
+        ui = auto
+
+vim:ft=gitconfig
