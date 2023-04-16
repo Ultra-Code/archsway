@@ -93,7 +93,9 @@ ParallelDownloads = 5
         - eslint
     - lau development
         - lua-language-server
-- dictd server with dict client and some dictionary sources for yay like dict-wikt-en-all dict-freedict-eng-spa dict-freedict-spa-eng dict-foldoc dict-gcide dict-wn NOTE: remove dictd online server in /etc/dict/dict.conf
+- dictd server with dict client and some dictionary sources for yay like dict-wikt-en-all dict-freedict-eng-spa dict-freedict-spa-eng dict-foldoc dict-gcide dict-wn
+    - NOTE: to disable online mode comment out `server dict.org` in  /etc/dict/dict.conf
+    - Make sure locale is properly configured in `DICTD_ARGS` of /etc/conf.d/dictd else the service unit will fail
 - ffmpegthumbnailer & gnome-epub-thumbnailer for thumbnails
 - firefox as pdf reader or zathura and firefox-ublock-origin as adblocker and foliate/fbreader as epub reader
 - fzf for fuzzy search
