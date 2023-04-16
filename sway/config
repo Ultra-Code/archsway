@@ -120,7 +120,7 @@ input type:keyboard {
   #https://askubuntu.com/questions/41213/what-does-key-to-choose-5th-level-in-gnome-keyboard-properties-do
   #https://medium.com/@damko/a-simple-humble-but-comprehensive-guide-to-xkb-for-linux-6f1ad5e13450
   #Switching to another layout with Super+space
-  xkb_options compose:rctrl,grp:win_space_toggle
+  xkb_options compose:ralt,grp:win_space_toggle
 }
 
 #hide mouse on inactivity
