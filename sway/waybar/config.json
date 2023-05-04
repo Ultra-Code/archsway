@@ -33,7 +33,7 @@
         "format": " {}"
     },
     "sway/mode": {
-        "format": " {}",
+        "format": "󰃼 {}",
         "max-length": 50
     },
     "mpd": {
@@ -68,7 +68,7 @@
         "format": "{icon} ",
         "format-icons": {
             "activated": "",
-            "deactivated": ""
+            "deactivated": "󰈉"
         }
     },
     "tray": {
@@ -87,7 +87,7 @@
     },
     "memory": {
         "format": "   {used:0.1f}G",
-        "format-alt": "  {used:0.1f}G/{total:0.1f}G"
+        "format-alt": "  󰀹 {used:0.1f}G/{total:0.1f}G"
     },
     "temperature": {
         // "thermal-zone": 2,
@@ -96,17 +96,17 @@
         // "format-critical": "{temperatureC}°C {icon}",
         "format": "{temperatureC}°C {icon}",
         "format-icons": [
-            "",
+            "󰿸",
             "",
-            ""
+            "󰏈"
         ]
     },
     "backlight": {
         "format": "{percent}% {icon}",
         "format-icons": [
-            "",
+            "󰉄",
             "",
-            "飯",
+            "󰔫",
             "☀️"
         ]
     },
@@ -133,10 +133,10 @@
     },
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
-        "format-wifi": " 直 {essid} ({signalStrength}%)",
+        "format-wifi": " 󰖩 {essid} ({signalStrength}%)",
         "format-ethernet": " {ipaddr}/{cidr}",
         "format-linked": " {ifname} (No IP)",
-        //"tooltip-format": "{ifname} via {gwaddr} ",
+        //"tooltip-format": "{ifname} via {gwaddr} 󰊗",
         "format-disconnected": "Disconnected ⚠",
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
     },
@@ -144,14 +144,14 @@
         // "scroll-step": 1, // %, can be a float
         "format": "{volume}% {icon} ",
         "format-bluetooth": "{volume}% {icon}",
-        "format-bluetooth-muted": " {icon}",
-        "format-muted": " {format_source}",
+        "format-bluetooth-muted": "󰆪 {icon}",
+        "format-muted": "󰆪 {format_source}",
         "format-source": "{volume}% ",
         "format-source-muted": "",
         "format-icons": {
             "headphone": "",
-            "hands-free": "",
-            "headset": "",
+            "hands-free": "󰓃",
+            "headset": "󰋎",
             "phone": "",
             "portable": "",
             "car": "",

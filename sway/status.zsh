@@ -53,27 +53,27 @@ function batteryInfo(){
         local discharging="$battery_capacity% $(formatTime $time_to_run_down)"
        local charging="$battery_capacity%"
 
-    #bat lev 0-,1-,2-,3-,4-,5-,6-,7-,8-,9-,10-
-    #bat char 2-,3-,4-,5-,6-,7-,8-,9-
+    #bat level 0-󰂃,1-󰁺,2-󰁻,3-󰁼,4-󰁽,5-󰁾,6-󰁿,7-󰂀,8-󰂁,9-󰂂,10-󰁹
+    #bat charching 2-󰂆,3-󰂇,4-󰂈,5-󰂉,6-󰂊,7-󰂋,8-󰂅,9-󰂄
   if [[ $battery_status == "Discharging" ]];then
        if [[ $battery_capacity -le 10 ]];then
-           echo " $discharging"
+           echo "󰂃 $discharging"
        elif [[ $battery_capacity -le 20 ]];then
-           echo " $discharging"
+           echo "󰁻 $discharging"
        elif [[ $battery_capacity -le 30 ]];then
-           echo " $discharging"
+           echo "󰁼 $discharging"
        elif [[ $battery_capacity -le 40 ]];then
-           echo " $discharging"
+           echo "󰁽 $discharging"
        elif [[ $battery_capacity -le 50 ]];then
-           echo " $discharging"
+           echo "󰁾 $discharging"
        elif [[ $battery_capacity -le 60 ]];then
-           echo " $discharging"
+           echo "󰁿 $discharging"
        elif [[ $battery_capacity -le 70 ]];then
-           echo " $discharging"
+           echo "󰂀 $discharging"
        elif [[ $battery_capacity -le 80 ]];then
-           echo " $discharging"
+           echo "󰂁 $discharging"
        elif [[ $battery_capacity -le 90 ]];then
-           echo " $discharging"
+           echo "󰂂 $discharging"
        else
            echo "🔋 $discharging"
         fi
@@ -190,7 +190,7 @@ function networkInfo {
     local wifi_name=$(iwctl station wlan0 show | grep -E '\s+Connected\s+network' | sed -E 's|\s+\w+\s+\w+\s+([[:alnum:]]+[[:punct:][:space:]]{1}[[:alnum:]]+?).*|\1|g')
     local is_wlan_down=$(rfkill list wlan | sed -En 's|\s+Soft\s+blocked:\s+(\w+).*$|\1|p')
     if [[ $interface =~ "wl*" ]];then
-        echo -n "直 $interface: $wifi_name ($(wifiStrength))% "
+        echo -n "󰖩 $interface: $wifi_name ($(wifiStrength))% "
     elif [[ -z $wifi_name && $is_wlan_down == "no" ]]
     then
         echo -n "wlan : up "

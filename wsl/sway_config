@@ -193,10 +193,10 @@ bindsym $mod+Shift+minus scratchpad show
 # alt-icon 
 set $terminal    "1:  "
 set $coding      "2:  "
- # 龜
+ # 󰐇
 set $browser     "3:  "
 set $documents   "4:  "
-# 
+# 󰈙
 set $filemanager "5:  "
 # 
 set $mpv         "6:  "
