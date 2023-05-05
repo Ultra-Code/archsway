@@ -4,7 +4,7 @@ vim: ft=udevrules
 ACTION!="add",GOTO="DONE"
 #Run rules only when a secondary usb-storage is added
 SUBSYSTEM!="block",GOTO="DONE"
-KERNEL!="sd[b-z]",GOTO="DONE"
+KERNEL!="sd[b-z][0-9]",GOTO="DONE"
 
 #find filesystem type
 #PROGRAM="/bin/lsblk -no FSTYPE $devnode"
