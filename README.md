@@ -124,4 +124,5 @@ ParallelDownloads = 5
 - yt-dlp YouTube downloader
 - zig zls-bin for zig development
 - zoxide for efficient directory movement
-- zsh-autosuggestions zsh-completions zsh-history-substring-search zsh-syntax-highlighting zsh-theme-powerlevel10k complements zsh
+- zsh-autosuggestions zsh-completions zsh-fast-syntax-highlighting zsh-theme-powerlevel10k-bin-git
+zsh-history-substring-search complements zsh
