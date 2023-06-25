@@ -23,3 +23,8 @@ for file in ${power_files}; do
     cat ${~file}
 done
 }
+
+if [[ $ZDOTDIR/fd.zsh ]];
+then
+    source $ZDOTDIR/fd.zsh
+fi
