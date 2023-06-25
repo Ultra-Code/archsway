@@ -1,4 +1,6 @@
 #NOTE: https://unix.stackexchange.com/questions/281309/shell-syntax-how-to-correctly-use-to-break-lines
+#NOTE: https://hackaday.com/2009/09/18/how-to-write-udev-rules/
+#NOTE: udevadm test --action=change /sys/class/power_supply/BAT0 is used to check execution order of rules
 ACTION!="change|add",GOTO="END"
 
 SUBSYSTEM!="power_supply" , GOTO="END"
