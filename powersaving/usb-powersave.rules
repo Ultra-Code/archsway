@@ -1,2 +1,23 @@
+#NOTE: https://www.kernel.org/doc/html/latest/driver-api/usb/power-management.html
+
 #automatically suspend USB devices when they are not in use
 ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"
+
+KERNEL=="ADP[0-9]",  SUBSYSTEMS=="acpi", DRIVERS=="ac", ENV{POWER_SUPPLY_NAME}=="ADP[0-9]" \
+, ENV{POWER_SUPPLY_TYPE}=="Mains", ENV{POWER_SUPPLY_ONLINE}=="1", GOTO="POWER"
+
+#suspend usb after 5 sec
+KERNEL=="ADP[0-9]",  SUBSYSTEMS=="acpi", DRIVERS=="ac", ENV{POWER_SUPPLY_NAME}=="ADP[0-9]" \
+, ENV{POWER_SUPPLY_TYPE}=="Mains", ENV{POWER_SUPPLY_ONLINE}=="0" \
+, RUN+="/bin/zsh -c 'echo 5 >/sys/module/usbcore/parameters/autosuspend'"
+
+GOTO="END"
+
+LABEL="POWER"
+
+KERNEL=="ADP[0-9]",  SUBSYSTEMS=="acpi", DRIVERS=="ac", ENV{POWER_SUPPLY_NAME}=="ADP[0-9]" \
+, ENV{POWER_SUPPLY_TYPE}=="Mains", ENV{POWER_SUPPLY_ONLINE}=="1" \
+, RUN+="/bin/zsh -c 'echo 1 >/sys/module/usbcore/parameters/autosuspend'"
+
+LABEL="END"
+# vim: set filetype=udevrules:
