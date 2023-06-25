@@ -4,7 +4,7 @@ filesystem                                     mountpoint               fstype  
 
 # <file system> <dir> <type> <options> <dump> <pass>
 # /dev/sda3 LABEL=ROOT
-UUID=8a667e9f-fd64-44dd-85c2-1c8f20a200df      /                        btrfs                 defaults,noatime,compress=zstd,autodefrag,commit=300,space_cache=v2,subvolid=5,subvol=/                    0         0
+UUID=8a667e9f-fd64-44dd-85c2-1c8f20a200df      /                        btrfs                 defaults,noatime,compress=zstd,autodefrag,commit=600,space_cache=v2,subvolid=5,subvol=/                    0         0
 
 # /dev/sda1 LABEL=ESP
 UUID=43E3-58A0      	                       /boot                    vfat                  noatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro	         0         1
