@@ -51,6 +51,8 @@ NOTE: make sure to mount btfs with compression zstd on first mount on live iso
 - add resume to HOOKS in /etc/mkinitcpio.conf and rebuild kernel for hibernation and it variant to work
 - enable powersaving options [power management](https://wiki.archlinux.org/title/Power_management) [laptop](https://wiki.archlinux.org/title/Laptop)
 - [cpu frequency scaling](https://wiki.archlinux.org/title/CPU_frequency_scaling) and  [udev rules](https://wiki.archlinux.org/title/Udev)
+- [Active State Power Management](https://wiki.archlinux.org/title/Power_management#Active_State_Power_Management) check
+  if asmp is [supported ](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/power_management_guide/aspm) and add or remove `powersave > /sys/module/pcie_aspm/parameters/policy` from udev powersave rules based on that
 - modify relector configuration in /etc/xdg/reflector/reflector.conf to sort based on download rate with --sort rate
 - modify sudoers with visudo using example in [suders file](https://github.com/Ultra-Code/archsway/blob/master/sudoers)
 - configure what powerbutton and lidclose does with /etc/systemd/logind.conf
