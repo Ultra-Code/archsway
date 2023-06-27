@@ -231,30 +231,28 @@ bindsym $mod+Shift+minus scratchpad show
 #https://gitlab.freedesktop.org/pipewire/pipewire/-/wikis/Migrate-PulseAudio#sinksource-port-volumemuteport-latency
 #https://wiki.archlinux.org/title/WirePlumber#Tips_and_tricks
 #https://unix.stackexchange.com/questions/260981/what-do-the-sink-and-source-keywords-mean-in-pulseaudio
+#Allow media keys to be executed while the lockscreen is active
+#wpctl's -l flag is to prevent the volume from exceeding/surpass 120% == 1.2
 #To raise the volume
-bindsym XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+
+bindsym --locked XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%- -l 1.2
 #To lower the volume
-bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-
+bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+ -l 1.2
 #To mute/unmute the volume
-bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bindsym --locked XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 #To mute/unmute the microphone
-bindsym XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+bindsym --locked XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+
 
 #Media keys
-bindsym XF86AudioPlay  exec "mpc toggle"
-bindsym XF86AudioStop  exec "mpc stop"
-bindsym XF86AudioNext  exec "mpc next"
-bindsym XF86AudioPrev  exec "mpc prev"
-bindsym XF86AudioPause exec "mpc pause"
-
-#To allow a keybinding to be executed while the lockscreen is active
+bindsym --locked XF86AudioStop  exec "mpc stop"
+bindsym --locked XF86AudioPause exec "mpc pause"
 bindsym --locked XF86AudioPlay exec "mpc toggle"
 bindsym --locked XF86AudioNext  exec "mpc next"
 bindsym --locked XF86AudioPrev  exec "mpc prev"
 
 # Brightness
-bindsym XF86MonBrightnessDown exec brightnessctl set 1%-
-bindsym XF86MonBrightnessUp exec brightnessctl set +1%
+bindsym --locked XF86MonBrightnessDown exec brightnessctl set 1%-
+bindsym --locked XF86MonBrightnessUp exec brightnessctl set +1%
 
 #TODO add script to get projector name to focus
 #bindsym XF86Display exec swaymsg focus output "Seiko Epson Corporation EPSON PJ 0x00000101"
@@ -473,4 +471,5 @@ include /etc/sway/config.d/*
 # Autostart
 # start sway target
 exec $term
+exec mako
 exec systemctl --user start sway-session.target
