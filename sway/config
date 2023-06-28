@@ -33,7 +33,7 @@ set $wallpapers_path $HOME/files/Pictures/Code
 set $menu $term --class "desktop-launcher" $DOTFILES/sway/launcher.zsh
 
 # Preferred sound for screenshot
-set $scree_shot_sound pw-play /usr/share/sounds/freedesktop/stereo/screen-capture.oga
+set $screen_shot_sound pw-play /usr/share/sounds/freedesktop/stereo/screen-capture.oga
 
 # Your preferred file manger
 set $file_manager $term --class "fm" --title "file manager" zsh -c 'ranger'
@@ -310,10 +310,12 @@ for_window [app_id=".*"] inhibit_idle fullscreen
 
 # Firefox
 for_window [app_id="firefox"] focus,layout tabbed
-for_window [app_id="firefox" title="About Mozilla Firefox|Picture-in-Picture|Password Required - Mozilla Firefox|Page Info — (.*)"] floating enable,border none
+for_window [app_id="firefox" title="About Mozilla Firefox|Picture-in-Picture\
+|Password Required - Mozilla Firefox|Page Info — (.*)"] floating enable,border none
 assign [app_id="firefox"]  $browser
 
-for_window [app_id="firefox" title="Firefox — Sharing Indicator" ] floating enable,border none,resize set width 45 px height 30 px,move position 3 px 3 px
+for_window [app_id="firefox" title="Firefox — Sharing Indicator" ] \
+floating enable,border none,resize set width 45 px height 30 px,move position 3 px 3 px
 no_focus [title="Firefox — Sharing Indicator"]
 
 for_window [app_id="coding"] focus
@@ -331,23 +333,29 @@ assign [app_id="com.github.johnfactotum.Foliate"] $documents
 for_window [app_id="imv"] focus,fullscreen enable
 assign [app_id="imv"] $utility
 
-for_window [app_id="desktop-launcher"] focus, floating enable , resize set width 45 ppt height 70 ppt, move position 30 ppt 5ppt,border none
+for_window [app_id="desktop-launcher"] focus, floating enable, resize set width 45 ppt height 70 ppt \
+, move position 30 ppt 5ppt, border none
 
 for_window [app_id="fm"] focus
 assign [app_id="fm"] $filemanager
 
-for_window [app_id="todo" title="todo list"] floating enable,sticky enable,resize set width 45 ppt height 75 ppt, move position 27 ppt 7ppt
+for_window [app_id="todo" title="todo list"] floating enable, sticky enable, resize set width 45 ppt height 75 ppt \
+, move position 27 ppt 7ppt
 
 
 #
 # Screenshot
 #
 #Take screenshot of a window
-bindsym --release Print exec grim $HOME/files/Pictures/Screenshot/"Captura de pantalla de $(date +%F_%X).png" && $scree_shot_sound
+bindsym --release Print exec grim $HOME/files/Pictures/Screenshot/"Captura de pantalla de $(date +%F_%X).png" \
+&& $screen_shot_sound
+
 #Take a screenshot of a region of a window
-bindsym --release Shift+Print exec grim -g "$(slurp)" $HOME/files/Pictures/Screenshot/"Captura de pantalla de $(date +%F_%X).png" && $scree_shot_sound
+bindsym --release Shift+Print exec grim -g "$(slurp)" \
+$HOME/files/Pictures/Screenshot/"Captura de pantalla de $(date +%F_%X).png" && $screen_shot_sound
+
 #Take a screenshot and copy to clipboard
-bindsym --release Control+Print exec grim - | wl-copy  && $scree_shot_sound
+bindsym --release Control+Print exec grim - | wl-copy  && $screen_shot_sound
 
 
 #
@@ -380,7 +388,9 @@ mode $power_mangement {
     bindsym h exec systemctl hibernate,mode "default"
     bindsym r exec  systemctl reboot,mode "default"
     # Exit sway (logs you out of your Wayland session)
-    bindsym e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit' -s "No",mode "default"
+    bindsym e exec swaynag -t warning -m \
+    'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' \
+    -b 'Yes, exit sway' 'swaymsg exit' -s "No",mode "default"
     bindsym t exec swaynag -t warning -m 'Sleepy time?!?!' -b 'ZzZz...' 'systemctl suspend-then-hibernate' -s "No",mode "default"
     bindsym l exec swaylock -i ~/files/Pictures/Code/27106459-coding-wallpapers.png,mode "default"
     bindsym Shift+r exec  systemctl reboot --firmware-setup,mode "default"
