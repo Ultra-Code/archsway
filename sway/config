@@ -479,7 +479,8 @@ exec_always {
 include /etc/sway/config.d/*
 
 # Autostart
-# start sway target
 exec $term
 exec mako
+exec gammastep
+# start sway target
 exec systemctl --user start sway-session.target
