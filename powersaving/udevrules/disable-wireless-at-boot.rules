@@ -9,3 +9,4 @@ SUBSYSTEM=="rfkill", ATTR{type}=="bluetooth", ATTR{soft}=="0", ATTR{state}="0"
 SUBSYSTEM=="rfkill", ATTR{type}=="wlan", ATTR{soft}=="0", ATTR{state}="0"
 
 LABEL="END"
+# vim: set ft=udevrules:

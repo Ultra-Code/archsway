@@ -40,4 +40,4 @@ KERNEL=="ADP[0-9]",  SUBSYSTEMS=="acpi", DRIVERS=="ac", ENV{POWER_SUPPLY_NAME}==
 ; echo max_performance > /sys/class/scsi_host/host?/link_power_management_policy'"
 
 LABEL="END"
-# vim: set filetype=udevrules:
+# vim: set ft=udevrules:

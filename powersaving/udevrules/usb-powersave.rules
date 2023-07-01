@@ -20,4 +20,4 @@ KERNEL=="ADP[0-9]",  SUBSYSTEMS=="acpi", DRIVERS=="ac", ENV{POWER_SUPPLY_NAME}==
 , RUN+="/bin/zsh -c 'echo 1 >/sys/module/usbcore/parameters/autosuspend'"
 
 LABEL="END"
-# vim: set filetype=udevrules:
+# vim: set ft=udevrules:

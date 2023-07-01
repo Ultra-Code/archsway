@@ -1,3 +1,4 @@
 #PCI Runtime Power Management
 #The rule above powers all unused devices down
 SUBSYSTEM=="pci", ATTR{power/control}="auto"
+# vim: set ft=udevrules:

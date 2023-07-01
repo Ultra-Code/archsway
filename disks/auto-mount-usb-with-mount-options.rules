@@ -1,4 +1,3 @@
-vim: ft=udevrules
 #https://wiki.archlinux.org/title/Udev#Mounting_drives_in_rules
 #NOTE: the `--owner` option of systemd-mount should refer to your username
 ACTION!="add",GOTO="DONE"
@@ -25,26 +24,28 @@ GOTO="OTHER_FS"
 LABEL="F2FS"
 
 #when f2fs filesystem drive is added
-ENV{ID_USB_DRIVER}=="usb-storage",ATTRS{removable}=="1",\
-ENV{SYSTEMD_MOUNT_OPTIONS}="defaults,gc_merge,checkpoint_merge,compress_algorithm=zstd:19,atgc",ENV{SYSTEMD_MOUNT_WHERE}="/media/$env{ID_FS_LABEL}",\
-RUN+="/bin/systemd-mount -t auto --no-block --discover --fsck=no --collect --owner=firefox $devnode"
+ENV{ID_USB_DRIVER}=="usb-storage",ATTRS{removable}=="1" \
+, ENV{SYSTEMD_MOUNT_OPTIONS}="defaults,gc_merge,checkpoint_merge,compress_algorithm=zstd:19,atgc" \
+, ENV{SYSTEMD_MOUNT_WHERE}="/media/$env{ID_FS_LABEL}" \
+, RUN+="/bin/systemd-mount -t auto --no-block --discover --fsck=no --collect --owner=firefox $devnode"
 
 GOTO="DONE"
 
 LABEL="NTFS"
 
 #when ntfs filesystem drive is added
-ENV{ID_USB_DRIVER}=="usb-storage",ATTRS{removable}=="1",\
-ENV{SYSTEMD_MOUNT_OPTIONS}="defaults,noatime",ENV{SYSTEMD_MOUNT_WHERE}="/media/$env{ID_FS_LABEL}",\
-RUN+="/bin/systemd-mount -t ntfs3 --no-block --discover --fsck=no --collect --owner=firefox $devnode"
+ENV{ID_USB_DRIVER}=="usb-storage",ATTRS{removable}=="1" \
+, ENV{SYSTEMD_MOUNT_OPTIONS}="defaults,noatime",ENV{SYSTEMD_MOUNT_WHERE}="/media/$env{ID_FS_LABEL}" \
+, RUN+="/bin/systemd-mount -t ntfs3 --no-block --discover --fsck=no --collect --owner=firefox $devnode"
 
 GOTO="DONE"
 
 LABEL="OTHER_FS"
 
 #for other filesystems use their defaults
-ENV{ID_USB_DRIVER}=="usb-storage",ATTRS{removable}=="1",\
-ENV{SYSTEMD_MOUNT_OPTIONS}="defaults,noatime",ENV{SYSTEMD_MOUNT_WHERE}="/media/$env{ID_FS_LABEL}",\
-RUN+="/bin/systemd-mount -t auto --no-block --discover --fsck=no --collect --owner=firefox $devnode"
+ENV{ID_USB_DRIVER}=="usb-storage",ATTRS{removable}=="1" \
+, ENV{SYSTEMD_MOUNT_OPTIONS}="defaults,noatime",ENV{SYSTEMD_MOUNT_WHERE}="/media/$env{ID_FS_LABEL}" \
+, RUN+="/bin/systemd-mount -t auto --no-block --discover --fsck=no --collect --owner=firefox $devnode"
 
 LABEL="DONE"
+# vim: ft=udevrules:
