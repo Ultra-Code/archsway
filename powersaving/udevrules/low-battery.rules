@@ -1,7 +1,8 @@
-# NOTE: What to do when battery is 1-9 percent and system is still on
+# INFO: Which action to take when battery is 1-9 percent and system is still battery
 ACTION!="change",GOTO="END"
 SUBSYSTEM!="power_supply",GOTO="END"
 
+# INFO: udev emits battery event only within the 0-9 percent range
 ATTR{capacity}=="[1-9]",GOTO="HYBRID-SLEEP"
 
 # hibernate system at 0%
