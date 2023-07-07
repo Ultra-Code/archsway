@@ -38,10 +38,6 @@ set $screen_shot_sound pw-play /usr/share/sounds/freedesktop/stereo/screen-captu
 # Your preferred file manger
 set $file_manager $term --class "fm" --title "file manager" zsh -c 'ranger'
 
-# Your preferred todo app
-set $todo $term --class "todo" --title "todo list" zsh -c "sleep 0.5;$EDITOR ~/.local/neorg/todos/todo.norg"
-
-
 #
 # Font
 #
@@ -143,8 +139,6 @@ bindsym $mod+b exec firefox
 bindsym $mod+a exec $menu
 # Start file manager
 bindsym $mod+e exec $file_manager
-# Open todo
-bindsym $mod+o exec $todo
 
 # binding to enable and disable gammastep
 bindsym $mod+g exec systemctl --user start gammastep
@@ -338,10 +332,6 @@ for_window [app_id="desktop-launcher"] focus, floating enable, resize set width 
 
 for_window [app_id="fm"] focus
 assign [app_id="fm"] $filemanager
-
-for_window [app_id="todo" title="todo list"] floating enable, sticky enable, resize set width 45 ppt height 75 ppt \
-, move position 27 ppt 7ppt
-
 
 #
 # Screenshot
