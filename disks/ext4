@@ -1,4 +1,4 @@
 enable fast commit on ext4 tune2fs -O fast_commit /dev/sda4
 disable journaling on unmounted ext4 tune2fs -O "^has_journal" /dev/sda4
 no reserved block _ tune2fs -m 0 /dev/sda4
-set commit=600(10 min) with laptop mode on
+set commit=300(5 min) with laptop mode on

@@ -18,7 +18,7 @@
     more resource withut any significantly increase in compression
 :compress=zstd:1
     Set the interval of periodic transaction commit when data are synchronized to permanent storage
-:commit=240
+:commit=300
     The free space cache greatly improves performance when reading block group free
     space into memory
 :space_cache=v2
