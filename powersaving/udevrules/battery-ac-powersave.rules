@@ -1,21 +1,25 @@
 #NOTE: https://unix.stackexchange.com/questions/281309/shell-syntax-how-to-correctly-use-to-break-lines
 #NOTE: https://hackaday.com/2009/09/18/how-to-write-udev-rules/
 #NOTE: udevadm test --action=change /sys/class/power_supply/BAT0 is used to check execution order of rules
-ACTION!="change|add",GOTO="END"
+ACTION!="change|add", GOTO="END"
 
-SUBSYSTEM!="power_supply" , GOTO="END"
+SUBSYSTEM!="power_supply", GOTO="END"
 
 #check if ac adaptor is connected .ie the system is charging
-KERNEL=="ADP[0-9]",  SUBSYSTEMS=="acpi", DRIVERS=="ac", ENV{POWER_SUPPLY_NAME}=="ADP[0-9]" \
-, ENV{POWER_SUPPLY_TYPE}=="Mains", ENV{POWER_SUPPLY_ONLINE}=="1" ,GOTO="POWER"
+KERNEL=="ADP[0-9]", SUBSYSTEMS=="acpi", DRIVERS=="ac", ENV{POWER_SUPPLY_NAME}=="ADP[0-9]" \
+, ENV{POWER_SUPPLY_TYPE}=="Mains", ENV{POWER_SUPPLY_ONLINE}=="1", GOTO="POWER"
 
 #guard executing the powersaving to when ac adaptor is not connected .ie system is not charging
-KERNEL=="ADP[0-9]",  SUBSYSTEMS=="acpi", DRIVERS=="ac", ENV{POWER_SUPPLY_NAME}=="ADP[0-9]" \
+#INFO: https://www.kernel.org/doc/html/latest/admin-guide/pm/intel_pstate.html
+#INFO: https://www.kernel.org/doc/html/latest/admin-guide/pm/intel_epb.html
+#NOTE: energy_efficiency knob:is only present on platforms with CPUs matching the Kaby Lake or Coffee Lake desktop CPU model
+KERNEL=="ADP[0-9]", SUBSYSTEMS=="acpi", DRIVERS=="ac", ENV{POWER_SUPPLY_NAME}=="ADP[0-9]" \
 , ENV{POWER_SUPPLY_TYPE}=="Mains", ENV{POWER_SUPPLY_ONLINE}=="0" \
 , RUN+="/bin/zsh -c 'echo power > /sys/devices/system/cpu/cpufreq/policy?/energy_performance_preference \
 ; echo power > /sys/devices/system/cpu/cpu*/power/energy_perf_bias \
-; echo 1 > /sys/devices/system/cpu/intel_pstate/no_turbo \
-; echo 30 > /sys/devices/system/cpu/intel_pstate/max_perf_pct \
+; echo 0 > /sys/devices/system/cpu/intel_pstate/no_turbo \
+; echo 50 > /sys/devices/system/cpu/intel_pstate/max_perf_pct \
+; echo 11 > /sys/devices/system/cpu/intel_pstate/min_perf_pct \
 ; echo 1 > /sys/devices/system/cpu/intel_pstate/hwp_dynamic_boost \
 ; echo powersave > /sys/devices/system/cpu/cpu?/cpufreq/scaling_governor \
 ; echo Y > /sys/module/snd_hda_intel/parameters/power_save_controller \
@@ -27,12 +31,13 @@ GOTO="END"
 LABEL="POWER"
 
 #guard executing the powersaving to when ac adaptor is connected .ie system is charging
-KERNEL=="ADP[0-9]",  SUBSYSTEMS=="acpi", DRIVERS=="ac", ENV{POWER_SUPPLY_NAME}=="ADP[0-9]" \
+KERNEL=="ADP[0-9]", SUBSYSTEMS=="acpi", DRIVERS=="ac", ENV{POWER_SUPPLY_NAME}=="ADP[0-9]" \
 , ENV{POWER_SUPPLY_TYPE}=="Mains", ENV{POWER_SUPPLY_ONLINE}=="1" \
 , RUN+="/bin/zsh -c 'echo performance > /sys/devices/system/cpu/cpufreq/policy?/energy_performance_preference \
 ; echo performance > /sys/devices/system/cpu/cpu*/power/energy_perf_bias \
 ; echo 0 > /sys/devices/system/cpu/intel_pstate/no_turbo \
 ; echo 100 > /sys/devices/system/cpu/intel_pstate/max_perf_pct \
+; echo 25 > /sys/devices/system/cpu/intel_pstate/min_perf_pct \
 ; echo 1 > /sys/devices/system/cpu/intel_pstate/hwp_dynamic_boost \
 ; echo performance > /sys/devices/system/cpu/cpu?/cpufreq/scaling_governor \
 ; echo N /sys/module/snd_hda_intel/parameters/power_save_controller \

@@ -6,7 +6,7 @@ ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="aut
 KERNEL=="ADP[0-9]",  SUBSYSTEMS=="acpi", DRIVERS=="ac", ENV{POWER_SUPPLY_NAME}=="ADP[0-9]" \
 , ENV{POWER_SUPPLY_TYPE}=="Mains", ENV{POWER_SUPPLY_ONLINE}=="1", GOTO="POWER"
 
-#suspend usb after 5 sec
+#autosuspend idle-delay initialized to 5 sec
 KERNEL=="ADP[0-9]",  SUBSYSTEMS=="acpi", DRIVERS=="ac", ENV{POWER_SUPPLY_NAME}=="ADP[0-9]" \
 , ENV{POWER_SUPPLY_TYPE}=="Mains", ENV{POWER_SUPPLY_ONLINE}=="0" \
 , RUN+="/bin/zsh -c 'echo 5 >/sys/module/usbcore/parameters/autosuspend'"

@@ -8,6 +8,7 @@ power_files=(
 /sys/devices/system/cpu/cpu*/power/energy_perf_bias
 /sys/devices/system/cpu/intel_pstate/no_turbo
 /sys/devices/system/cpu/intel_pstate/max_perf_pct
+/sys/devices/system/cpu/intel_pstate/min_perf_pct
 /sys/devices/system/cpu/intel_pstate/hwp_dynamic_boost
 /sys/devices/system/cpu/cpu?/cpufreq/scaling_governor
 /sys/module/snd_hda_intel/parameters/power_save_controller
