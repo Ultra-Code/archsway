@@ -129,6 +129,14 @@ function zc(){
     zcalc -f -e "$@"
 }
 
+function zr(){
+if (($+commands[zig]));then
+     zig build run -- ${argv[@]}
+else
+    echo 'install zig on your system'
+fi
+}
+
 if [[ $(printenv WSL2_GUI_APPS_ENABLED) -eq 1 ]]; then
     alias sway='LIBGL_ALWAYS_SOFTWARE=true sway &'
 fi
