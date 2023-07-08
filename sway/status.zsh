@@ -31,6 +31,7 @@ function formatTime(){
     echo -n "$minutes m"
 }
 
+#INFO: https://www.kernel.org/doc/html/latest/power/power_supply_class.html
 function batteryInfo(){
     #https://www.kernel.org/doc/html/latest/power/power_supply_class.html
   local battery_status=$(cat /sys/class/power_supply/BAT0/status)
