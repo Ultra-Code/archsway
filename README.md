@@ -95,6 +95,14 @@ ParallelDownloads = 5
         - eslint
     - lau development
         - lua-language-server
+    - python development
+        - python-lsp-server
+        - python-pyflakes
+        - python-pylint
+        - python-rope
+        - python-lsp-black
+        - mypy
+
 - dictd server with dict client and some dictionary sources for yay like dict-wikt-en-all dict-freedict-eng-spa dict-freedict-spa-eng dict-foldoc dict-gcide dict-wn
     - NOTE: to disable online mode comment out `server dict.org` in  /etc/dict/dict.conf
     - Make sure locale is properly configured in `DICTD_ARGS` of /etc/conf.d/dictd else the service unit will fail
