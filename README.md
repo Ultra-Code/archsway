@@ -99,7 +99,6 @@ ParallelDownloads = 5
         - python-lsp-server
         - python-pyflakes
         - python-pylint
-        - python-rope
         - python-lsp-black
         - mypy
 
