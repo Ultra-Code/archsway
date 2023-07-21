@@ -96,10 +96,10 @@ ParallelDownloads = 5
     - lau development
         - lua-language-server
     - python development
-        - python-lsp-server
-        - python-pyflakes
+        - jedi-language-server
         - python-pylint
-        - python-lsp-black
+        - python-black
+        - ruff
         - mypy
 
 - dictd server with dict client and some dictionary sources for yay like dict-wikt-en-all dict-freedict-eng-spa dict-freedict-spa-eng dict-foldoc dict-gcide dict-wn
