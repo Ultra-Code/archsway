@@ -31,10 +31,10 @@ alias lb=" lsblk -oPATH,MOUNTPOINTS,LABEL,FSTYPE,SIZE,FSAVAIL,FSUSED,PARTUUID,MA
 
 alias tarx=' bsdtar -xvf '
 alias tarv=' bsdtar -tvf '
-alias tarzip=' bsdtar -a --option="zip:compression=deflate" -cvf '
-alias targzip=' bsdtar -a --option="gzip:compression-level=9" -cvf '
-alias tarzst=' bsdtar -a --option="zstd:compression-level=22,zstd:threads=0" -cvf '
-alias tarxz=' bsdtar -a --option="xz:compression-level=9,xz:threads=0" -cvf '
+alias tarzip=' bsdtar --auto-compress --option="zip:compression=deflate" -cvf '
+alias targzip=' bsdtar --auto-compress --option="gzip:compression-level=9" -cvf '
+alias tarzst=' bsdtar --auto-compress --option="zstd:compression-level=22,zstd:threads=0" -cvf '
+alias tarxz=' bsdtar --auto-compress --option="xz:compression-level=9,xz:threads=0" -cvf '
 
 alias help=run-help
 
@@ -102,6 +102,7 @@ alias gd=' git diff'
 alias gg=' git grep --recurse-submodules -I'
 alias gm=' git mv'
 alias gr=' git rm -r'
+alias grf=' git rm -rf'
 alias gmu=' git submodule update --init --recursive'
 alias gmpu=' git submodule update --remote --rebase'
 alias gsh=' git show'
