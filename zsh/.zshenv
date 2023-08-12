@@ -21,6 +21,8 @@ fi
 
 #Pager to use for man
 export MANPAGER="$SHELL -c 'col --no-backspaces --spaces | bat -l man --plain'"
+# workaround for issue with man pages display https://github.com/sharkdp/bat/issues/2593#issuecomment-1636468711
+export MANROFFOPT="-c"
 
 #location for sqlite history file
 export SQLITE_HISTORY=$XDG_DATA_HOME/sqlite_history
