@@ -11,9 +11,13 @@
 
 fdn() {
 emulate -LR zsh
-    find * -name $1
+    find $1 -name $2
 }
 
+fd() {
+emulate -LR zsh
+    find $1 -regextype posix-extended -iregex $2
+}
 function fdsoon(){
 emulate -LR zsh
 find *  -name .git -prune -o -type d -print
