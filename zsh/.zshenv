@@ -1,6 +1,12 @@
 #Set up path for interactive envirionment
 export PATH=$HOME/.local/bin:$PATH
 
+if (($+commands[rustc]));then
+    export CARGO_HOME=$HOME/.local/cargo
+    export CARGO_INSTALL_ROOT=$CARGO_HOME
+    export PATH=$PATH:$CARGO_INSTALL_ROOT/bin
+fi
+
 export EDITOR=nvim
 export VISUAL=nvim
 
