@@ -9,8 +9,9 @@ if which kitty &>/dev/null;then
     kitty +complete setup zsh | source /dev/stdin
 fi
 
-# add rg completion function to fpath
-fpath+=(_rg)
+
+# add local zsh completion function to fpath (poetry,rg)
+fpath+=($HOME/.local/zfunc)
 
 eval "$(zoxide init zsh)"
 
