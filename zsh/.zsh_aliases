@@ -36,6 +36,10 @@ alias targzip=' bsdtar --auto-compress --option="gzip:compression-level=9" -cvf 
 alias tarzst=' bsdtar --auto-compress --option="zstd:compression-level=22,zstd:threads=0" -cvf '
 alias tarxz=' bsdtar --auto-compress --option="xz:compression-level=9,xz:threads=0" -cvf '
 
+alias p=' poetry'
+alias pr=' poetry run'
+alias prp=' poetry run python'
+
 alias help=run-help
 
 alias du=' du -h -d 1'
