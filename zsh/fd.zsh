@@ -9,15 +9,12 @@
 # https://quickref.me/mysql
 # https://quickref.me/awk
 
-fdn() {
-emulate -LR zsh
-    find $1 -name $2
-}
-
+#TODO: find a way to add optional options
 fd() {
 emulate -LR zsh
     find $1 -regextype posix-extended -iregex $2
 }
+
 function fdsoon(){
 emulate -LR zsh
 find *  -name .git -prune -o -type d -print
