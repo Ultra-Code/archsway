@@ -41,9 +41,9 @@ set $file_manager $term --class "fm" --title "file manager" zsh -c 'ranger'
 #
 # Font
 #
-#Check https://docs.gtk.org/Pango/type_func.FontDescription.from_string.html#description
-#for description of the pango font format
-font pango:Noto Sans Mono,Noto Sans Mono Medium:style=Medium,Regular 10
+# Check https://docs.gtk.org/Pango/type_func.FontDescription.from_string.html#description
+# for description of the pango font format
+font pango:Iosevka Fixed,Iosevka Fixed Light:style=Light,Regular 10
 
 #
 # Output configuration
@@ -432,7 +432,8 @@ bar {
     # Keep in mind that the current directory of this config file is $HOME
     status_command ~/.config/sway/status.zsh
     mode invisible
-    font pango:Noto Sans Mono,Noto Sans Mono Medium:style=Medium,Regular 10
+    font pango:Iosevka Term,Iosevka Term Medium:style=Medium,Regular 10
+
     colors {
         # Text color of status bar
         statusline #ffffff
