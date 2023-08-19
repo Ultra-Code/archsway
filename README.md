@@ -33,9 +33,9 @@ NOTE: make sure to mount btfs with compression zstd on first mount on live iso
   Or use configuration in [networking/resolve.conf](https://github.com/Ultra-Code/archsway/blob/master/networking/resolve.conf) and  [networking/network](https://github.com/Ultra-Code/archsway/blob/master/networking/network)
 - Enable synchronizing the system clock across the network by enabling [systemd-timesyncd.service](https://wiki.archlinux.org/title/Systemd-timesyncd)
 - On the freshly installed system use the following fonts
-    + use fonts with great unicode support like noto-fonts or ttf-dejavu or gnu-free-fonts as system default font
+    + use fonts with great unicode support like ttf-dejavu or noto-fonts or gnu-free-fonts as system default font
     + ttf-jetbrains-mono or ttc-iosevka for monospace,
-    + ttf-nerd-fonts-symbols-1000-em for nerd font symbols and noto-font-emoji for emoji
+    + ttf-nerd-fonts-symbols-mono for nerd font symbols and noto-font-emoji for emoji
     >_NOTE_: don't forget to `ln -s /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf /etc/fonts/conf.d/`
 - configure dns for 1.1.1.1 but this might not be needed since it's the default on arch linux
 - enable DNSOverTLS for resolved
