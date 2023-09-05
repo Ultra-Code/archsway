@@ -63,7 +63,12 @@ alias eh=" $EDITOR $ZDOTDIR/.zsh_history"
 alias ea=" $EDITOR $ZDOTDIR/.zsh_aliases"
 
 #edit $XDG_CONFIG_HOME/sway/config
-alias es=" $EDITOR $DOTFILES/sway/config"
+if [[ -n $(printenv WSL_DISTRO_NAME) ]]; then
+    #alias sway='LIBGL_ALWAYS_SOFTWARE=true sway &'
+    alias es=" $EDITOR $DOTFILES/wsl/sway_config"
+else
+    alias es=" $EDITOR $DOTFILES/sway/config"
+fi
 
 #Source changes in specified files into zsh
 alias sz=" exec zsh"
@@ -141,7 +146,3 @@ else
     echo 'install zig on your system'
 fi
 }
-
-if [[ $(printenv WSL2_GUI_APPS_ENABLED) -eq 1 ]]; then
-    alias sway='LIBGL_ALWAYS_SOFTWARE=true sway &'
-fi
