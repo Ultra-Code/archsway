@@ -119,7 +119,7 @@ ParallelDownloads = 5
 - lldb for debugging zig c and c++
 - mpd for music daemon and ncmpcpp for ui interface and mpc for controlling playing
 - mpv as multimedia player
-- neofetch for displaying system information
+- fastfetch for displaying system information
 - lf as filemanger
 - openssh and rsync for syncing file with remote over ssh
 - pipewire and pipewire-audio for audio/video routing and processing and WirePlumber as pipewire session manager
