@@ -75,9 +75,10 @@ ParallelDownloads = 5
 - Enable DNS over HTTPS in firefox
 
 ## INSTALLS
+- base-devel for Basic tools to build Arch Linux packages
+- yay for AUR packagem mangement
 - android-file-transfer with libmtp for connecting android phones mtp management
 - aria2c as download manager
-- install tools in the base-devel group ,this can be found out with pacman -Qg base-devel
 - bat is a Cat clone with syntax highlighting and git integration
 - bluez and bluez-utils for bluetooth
 - brightnessctl for controling backlight
@@ -129,7 +130,6 @@ ParallelDownloads = 5
 - wl-clipboard for wayland clipboard
 - qt5-wayland for runing qt5 apps under wayland
 - xdg-desktop-portal-wrl for WebRTC screen sharing
-- yay for AUR packagem mangement
 - yt-dlp YouTube downloader
 - zig zls-bin for zig development
 - zoxide for efficient directory movement
