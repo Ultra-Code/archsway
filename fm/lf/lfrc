@@ -23,8 +23,10 @@ set icons true
 # # leave some space at the top and the bottom of the screen
 # set scrolloff 10
 #
-# # Use the `dim` attribute instead of underline for the cursor in the preview pane
-set cursorpreviewfmt "\033[7;2m"
+# # specify prefered cursor preview
+# # To use the `dim` attribute instead of underline for the cursor in the preview pane -> "\033[7;2m"
+# "\033[7;90m" -> Gray, "\033[7m" -> color of file
+set cursorpreviewfmt "\033[7m"
 #
 # # use enter for shell commands
 # map <enter> shell
@@ -50,11 +52,71 @@ cmd open ${{
 }}
 #
 # # mkdir command. See wiki if you want it to select created dir
-map a :push %mkdir<space>
+cmd mkdir %{{
+    mkdir -p -- "$@"
+    lf -remote "send $id select \"$@\""
+}}
+map a push :mkdir<space>
 #
 # # delete item
 map d :delete
 #
+# # Enhanced rename command
+# # unmap the default rename keybinding
+map r
+
+map i rename
+map I :rename; cmd-home
+map A :rename; cmd-end
+map c :rename; cmd-delete-home
+map C :rename; cmd-end; cmd-delete-home
+#
+# # Create a new folder with selected item(s)
+cmd newfold ${{
+    set -f
+    read newd
+    printf "Directory name: "
+    mkdir -- "$newd"
+    mv -- $fx "$newd"
+}}
+map <a-n> newfold
+#
+# # Yank paths into your clipboard
+cmd yank-dirname &{{dirname -- "$f" | head -c-1 | wl-copy}}
+cmd yank-path &{{printf '%s' "$fx" | wl-copy}}
+cmd yank-basename &{{basename -a -- $fx | head -c-1 | wl-copy}}
+cmd yank-basename-without-extension &{{basename -a -- $fx | cut -d. -f1 | head -c-1 | wl-copy}}
+map Yd yank-dirname
+map Yp yank-path
+map Yb yank-basename
+map Y. yank-basename-without-extension
+#
+# # Select all files or directories in the current directory
+cmd select-files &{{
+    get_files() {
+        if [ "$lf_hidden" = 'false' ]; then
+            find "$PWD" -mindepth 1 -maxdepth 1 -type f -not -name '.*' -print0
+        else
+            find "$PWD" -mindepth 1 -maxdepth 1 -type f -print0
+        fi |
+        xargs -0 printf ' %q'
+    }
+
+    lf -remote "send $id :unselect; toggle $(get_files)"
+}}
+
+cmd select-dirs &{{
+    get_dirs() {
+        if [ "$lf_hidden" = 'false' ]; then
+            find "$PWD" -mindepth 1 -maxdepth 1 -type d -not -name '.*' -print0
+        else
+            find "$PWD" -mindepth 1 -maxdepth 1 -type d -print0
+        fi |
+        xargs -0 printf ' %q'
+    }
+
+    lf -remote "send $id :unselect; toggle $(get_dirs)"
+}}
 # # define a custom 'rename' command without prompt for overwrite
 # # cmd rename %[ -e $1 ] && printf "file exists" || mv $f $1
 # # map r push :rename<space>
@@ -110,14 +172,16 @@ cmd extract ${{
 #     zip -r $1.zip $1
 #     rm -rf $1
 # }}
+#
+# # zoixide intergration with lf
 cmd z %{{
-    result="$(zoxide query --exclude "${PWD}" -- "$1")"
-    lf -remote "send ${id} cd '${result}'"
+    result="$(zoxide query --exclude $PWD $@ | sed 's/\\/\\\\/g;s/"/\\"/g')"
+    lf -remote "send $id cd \"$result\""
 }}
 
 cmd zi ${{
-    result="$(zoxide query -i -- "$1")"
-    lf -remote "send ${id} cd '${result}'"
+    result="$(zoxide query -i | sed 's/\\/\\\\/g;s/"/\\"/g')"
+    lf -remote "send $id cd \"$result\""
 }}
 
 
@@ -150,3 +214,57 @@ map <c-g> :fzf_search
 
 set previewer ~/.config/lf/preview.zsh
 set cleaner ~/.config/lf/clean_preview.zsh
+
+cmd edit-config ${{
+    $EDITOR ~/.config/lf/lfrc
+    lf -remote "send $id source ~/.config/lf/lfrc"
+}}
+
+map E edit-config
+
+cmd reload-config ${{
+    lf -remote "send $id source ~/.config/lf/lfrc"
+}}
+
+map R reload-config
+
+cmd toggle_preview %{{
+    if [ "$lf_preview" = "true" ]; then
+        lf -remote "send $id :set preview false; set ratios 1:5"
+    else
+        lf -remote "send $id :set preview true; set ratios 1:2:3"
+    fi
+}}
+
+map zp toggle_preview
+
+#
+# A command to rename multiple files at the same time using your text editor to change the names.
+# This command either works on selected files or non-hidden files in the current directory if you don't have any selection.
+cmd bulk-rename ${{
+    old="$(mktemp)"
+    new="$(mktemp)"
+    if [ -n "$fs" ]; then
+        fs="$(basename -a $fs)"
+    else
+        fs="$(ls)"
+    fi
+    printf '%s\n' "$fs" >"$old"
+    printf '%s\n' "$fs" >"$new"
+    $EDITOR "$new"
+    [ "$(wc -l < "$new")" -ne "$(wc -l < "$old")" ] && exit
+    paste "$old" "$new" | while IFS= read -r names; do
+        src="$(printf '%s' "$names" | cut -f1)"
+        dst="$(printf '%s' "$names" | cut -f2)"
+        if [ "$src" = "$dst" ] || [ -e "$dst" ]; then
+            continue
+        fi
+        mv -- "$src" "$dst"
+    done
+    rm -- "$old" "$new"
+    lf -remote "send $id unselect"
+}}
+
+#
+# # Warn about nested instances
+&[ $LF_LEVEL -eq 1 ] || lf -remote "send $id echoerr \"Warning: You're in a nested lf instance!\""

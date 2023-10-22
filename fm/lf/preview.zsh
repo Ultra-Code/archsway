@@ -59,7 +59,7 @@ function handle_media() {
             #   convert "$3" -flatten -resize "$NNN_PREVIEWWIDTH"x"$NNN_PREVIEWHEIGHT"\> "$NNN_PREVIEWDIR/$3.jpg"
             # else
             # chafa -f sixel $FILE
-            preview $FILE
+            preview $FILE && exist 0
         ;;
 
         ## Video
@@ -70,9 +70,7 @@ function handle_media() {
                 ffmpegthumbnailer -i "${FILE}" -o $CACHED_FILE -s 0 || exit $?
             fi
 
-            preview $CACHED_FILE
-
-            exit 1
+            preview $CACHED_FILE && exit 0
         ;;
 
         ## SVG
@@ -94,50 +92,46 @@ function handle_documents() {
         ## PDF
         pdf)
             if [[ $(isImageNew) == "true" ]];then
-            pdftoppm -f 1 -l 1 \
-                     -singlefile \
-                     -jpeg -tiffcompression jpeg \
-                     -- "${FILE}" $CACHED_FILE || exit $?
-            mv "${CACHED_FILE}.jpg" ${CACHED_FILE}
+                pdftoppm -f 1 -l 1 -singlefile -jpeg -tiffcompression jpeg -- "${FILE}" $CACHED_FILE || exit $?
+                mv "${CACHED_FILE}.jpg" ${CACHED_FILE}
             fi
 
-                preview $CACHED_FILE
-
-                exit 1;;
+            preview $CACHED_FILE && exit 0
+        ;;
 
         odf|doc|docx)
             if [[ $(isImageNew) == "true" ]];then
-            #image is store in the cache dir with same name as FILE
+                #image is store in the cache dir with same name as FILE
                 libreoffice --convert-to jpg "$FILE" --outdir ${CACHE_PATH:A} &>/dev/null
-            #get the CACHED_FILE's dirname and append the file without its previous extension since its now jpeg so
-            #instead append .jpg and move to the CACHED_FILE
-            local current_img="${CACHE_PATH:A}/${${FILE:t}%.*}.jpg"
+                #get the CACHED_FILE's dirname and append the file without its previous extension since its now jpeg so
+                #instead append .jpg and move to the CACHED_FILE
+                local current_img="${CACHE_PATH:A}/${${FILE:t}%.*}.jpg"
 
                 mv "$current_img" "$CACHED_FILE"
             fi
 
-            preview $CACHED_FILE
+            preview $CACHED_FILE && exit 0
         ;;
 
 
         ## ePub, MOBI, FB2 (using Calibre)
         epub|mobi|fb2)
             if [[ $(isImageNew) == "true" ]];then
-            gnome-epub-thumbnailer "${FILE}" $CACHED_FILE  || \
-            gnome-mobi-thumbnailer "${FILE}" $CACHED_FILE  || \
-            # ePub (using https://github.com/marianosimone/epub-thumbnailer)
-            epub-thumbnailer "${FILE}" $CACHED_FILE "${WIDTH}" || \
-            ebook-meta --get-cover=$CACHED_FILE -- "${FILE}" >/dev/null || exit $?
+                gnome-epub-thumbnailer "${FILE}" $CACHED_FILE  || \
+                gnome-mobi-thumbnailer "${FILE}" $CACHED_FILE  || \
+                # ePub (using https://github.com/marianosimone/epub-thumbnailer)
+                epub-thumbnailer "${FILE}" $CACHED_FILE "${WIDTH}" || \
+                ebook-meta --get-cover=$CACHED_FILE -- "${FILE}" >/dev/null || exit $?
             fi
 
-            preview $CACHED_FILE
-            exit 1
+            preview $CACHED_FILE && exit 0
         ;;
 
         ## Text | md
         txt|md)
             ## Syntax highlight
             bat --color=always --paging=never --plain --terminal-width $WIDTH -- "${FILE}" || exit $?
+            exit 0
         ;;
 
         ## JSON
@@ -145,6 +139,7 @@ function handle_documents() {
             bat --color=always --language=json --paging=never --plain "$FILE" || \
             jq --color-output . "${FILE}" || \
             python -m json.tool -- "${FILE}" || exit $?
+            exit 0
         ;;
 
         ## HTML
@@ -155,6 +150,7 @@ function handle_documents() {
             elinks -dump "${FILE}" || \
             w3m -dump "${FILE}" || \
             pandoc -s -t markdown -- "${FILE}" || exit $?
+            exit 0
         ;;
 
         ## DOCX, ePub, FB2 (using markdown)
@@ -184,21 +180,22 @@ function handle_archive() {
     local ext=$1
     case "${ext}" in
         ## Archive
-        a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|\
-        rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)
+        gz|tar|xz|zip|zst)
             bsdtar --list --file "${FILE}" || \
-            atool --list -- "${FILE}" || \
-            exit $?
+            atool --list -- "${FILE}" || exit $?
+            exit 0
         ;;
 
         rar)
             ## Avoid password prompt by providing empty password
             unrar lt -p- -- "${FILE}" || exit $?
+            exit 0
         ;;
 
         7z)
             ## Avoid password prompt by providing empty password
             7z l -p -- "${FILE}" || exit $?
+            exit 0
         ;;
     esac
 }
@@ -211,10 +208,10 @@ function handle_fallback() {
 function start_preview(){
     [[ ! -d $CACHE_PATH ]] && mkdir -p $CACHE_PATH
 
-handle_media $FILE_EXT
-handle_documents $FILE_EXT
-handle_archive $FILE_EXT
-handle_fallback
+    handle_media $FILE_EXT
+    handle_documents $FILE_EXT
+    handle_archive $FILE_EXT
+    handle_fallback
 }
 
 start_preview
