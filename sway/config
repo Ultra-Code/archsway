@@ -248,18 +248,18 @@ bindsym --locked XF86AudioPrev  exec "mpc prev"
 bindsym --locked XF86MonBrightnessDown exec brightnessctl set 1%-
 bindsym --locked XF86MonBrightnessUp exec brightnessctl set +1%
 
-#TODO add script to get projector name to focus
+#TODO: add script to get projector name to focus
 #bindsym XF86Display exec swaymsg focus output "Seiko Epson Corporation EPSON PJ 0x00000101"
 
 #
 # Workspaces:
 #
 # Switch to workspace
-# alt-icon 
-set $terminal    "1:  "
-set $coding      "2:  "
- # 󰐇
-set $browser     "3:  "
+# alt-icon 󰐇
+set $browser    "1:  "
+#  
+set $terminal    "2:  "
+set $coding      "3:  "
 set $documents   "4:  "
 # 󰈙
 set $filemanager "5:  "
@@ -270,9 +270,9 @@ set $utility     "7:  "
 set $downloads   "8:  "
 # 
 set $chating     "9:  "
-bindsym $mod+1 workspace $terminal
-bindsym $mod+2 workspace $coding
-bindsym $mod+3 workspace $browser
+bindsym $mod+1 workspace $browser
+bindsym $mod+2 workspace $terminal
+bindsym $mod+3 workspace $coding
 bindsym $mod+4 workspace $documents
 bindsym $mod+5 workspace $filemanager
 bindsym $mod+6 workspace $mpv
@@ -286,9 +286,9 @@ bindsym $mod+Tab workspace next
 # Note: workspaces can have any name you want, not just numbers.
 # We just use 1-10 as the default.
 # Move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace $terminal
-bindsym $mod+Shift+2 move container to workspace $coding
-bindsym $mod+Shift+3 move container to workspace $browser
+bindsym $mod+Shift+1 move container to workspace $browser
+bindsym $mod+Shift+2 move container to workspace $terminal
+bindsym $mod+Shift+3 move container to workspace $coding
 bindsym $mod+Shift+4 move container to workspace $documents
 bindsym $mod+Shift+5 move container to workspace $filemanager
 bindsym $mod+Shift+6 move container to workspace $mpv
@@ -470,7 +470,6 @@ exec_always {
 include /etc/sway/config.d/*
 
 # Autostart
-exec $term
 exec mako
 exec gammastep
 # start sway target
