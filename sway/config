@@ -36,7 +36,7 @@ set $menu $term --class "desktop-launcher" $DOTFILES/sway/launcher.zsh
 set $screen_shot_sound pw-play /usr/share/sounds/freedesktop/stereo/screen-capture.oga
 
 # Your preferred file manger
-set $file_manager $term --class "fm" --title "file manager" zsh -c 'ranger'
+set $file_manager $term --class "fm" --title "file manager" zsh -c 'lf'
 
 #
 # Font

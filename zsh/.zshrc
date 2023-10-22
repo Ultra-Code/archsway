@@ -59,3 +59,8 @@ if [[ $ZDOTDIR/utilities.zsh ]];
 then
     source $ZDOTDIR/utilities.zsh
 fi
+
+if (($+commands[lf]));then
+    # enable lfcd
+    source $XDG_CONFIG_HOME/lf/lfcd.zsh
+fi
