@@ -28,6 +28,21 @@ set icons true
 # "\033[7;90m" -> Gray, "\033[7m" -> color of file
 set cursorpreviewfmt "\033[7m"
 #
+# # Enable find to match at arbitrary position
+set anchorfind false
+#
+# # Number of characters prompted for the find command.
+set findlen 2
+#
+# # Jump to the first match after each keystroke during searching
+set incsearch true
+#
+# # Apply filter pattern after each keystroke during filtering
+set incfilter true
+#
+# # Scrolling can wrap around the file list
+set wrapscroll true
+#
 # # use enter for shell commands
 # map <enter> shell
 #
@@ -45,7 +60,7 @@ set cursorpreviewfmt "\033[7m"
 # # text files and a file opener for the rest.
 cmd open &{{
     case $(file --mime-type -Lb $f) in
-        text/*) lf -remote "send $id \$nvim \$fx";;
+        text/*|*/json) lf -remote "send $id \$$EDITOR \$fx";;
         *) for f in $fx; do $OPENER $f > /dev/null 2> /dev/null & done;;
     esac
 }}
@@ -194,7 +209,7 @@ cmd zi ${{
 }}
 
 
-map f $vi $(fzf)
+# map f $vi $(fzf)
 
 cmd fzf_jump ${{
     res="$(find . -maxdepth 1 | fzf --reverse --header='Jump to location' | sed 's/\\/\\\\/g;s/"/\\"/g')"
