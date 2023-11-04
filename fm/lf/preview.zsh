@@ -63,7 +63,7 @@ function handle_media() {
         ;;
 
         ## Video
-        mkv|webm|mp4|avi)
+        mkv|webm|mp4|m4v|avi)
             # Thumbnail
             if [[ $(isImageNew) == "true" ]];then
                 lf -remote "send $id echo 'caching'"
