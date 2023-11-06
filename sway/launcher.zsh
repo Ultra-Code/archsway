@@ -33,7 +33,7 @@ EOF
 # readonly DESKTOP_FILES_LIST=(${DESKTOP_FILES:t})
 # #remove file extension
 # readonly DESKTOP_NAMES=(${DESKTOP_FILES_LIST:r})
-readonly DESKTOP_NAMES=(${${"${(f)$(find /usr/share/applications -name '*.desktop')}":t}:r})
+readonly DESKTOP_NAMES=(${${"${(f)$(find /usr/share/applications -name '*.desktop' 2>/dev/null)}":t}:r})
 
 #split on `:`
 # readonly EXECUTABLE_PATH=("${(s.:.)PATH}")
@@ -41,7 +41,7 @@ readonly DESKTOP_NAMES=(${${"${(f)$(find /usr/share/applications -name '*.deskto
 # readonly EXE_LIST=("${(f)$(find -L ${EXECUTABLE_PATH} -maxdepth 1 -type f -executable)}")
 # #select the base names of only unique executable files
 # readonly UNIQ_EXE_NAMES=(${(u)EXE_LIST:t})
-readonly UNIQ_EXE_NAMES=(${(u)"${(f)$(find -L "${(s.:.)PATH}" -maxdepth 1 -type f -executable)}":t})
+readonly UNIQ_EXE_NAMES=(${(u)"${(f)$(find -L "${(s.:.)PATH}" -maxdepth 1 -type f -executable 2>/dev/null)}":t})
 
 readonly DEFAULT_COMMAND="print -l $DESKTOP_NAMES"
 readonly ALT_COMMAND="print -l $UNIQ_EXE_NAMES"
