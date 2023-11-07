@@ -234,7 +234,16 @@ cmd fzf_search ${{
 }}
 map <c-g> :fzf_search
 
+#
+# # Enable ability to render sixel images in preview
+set sixel true
+
+#
+# # set path to the preview script
 set previewer ~/.config/lf/preview.zsh
+
+#
+# # set path to preview cleanup file
 set cleaner ~/.config/lf/clean_preview.zsh
 
 cmd edit-config ${{
