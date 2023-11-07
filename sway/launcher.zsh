@@ -15,7 +15,7 @@ trap "rm -f $user_input &> /dev/null" EXIT
 
 #https://unix.stackexchange.com/questions/710366/is-there-a-zsh-equivalent-of-bash-builtin-readarray
 #https://www.reddit.com/r/zsh/comments/tt6gm8/why_doesnt_zsh_have_an_equivalent_of_bashs/
-readonly HELP_MSG=("${(@f)$(<< EOF
+readonly HELP_MSG=(${(@f)$(<< EOF
     launcher help
 
     ctrl-d       desktop mode (default)
@@ -26,7 +26,7 @@ readonly HELP_MSG=("${(@f)$(<< EOF
     ?           Help (this page)
     ESC         Quit
 EOF
-)}")
+)})
 
 # readonly DESKTOP_FILES=("${(f)$(find /usr/share/applications -name '*.desktop')}")
 # #remove directory path
@@ -46,29 +46,28 @@ readonly UNIQ_EXE_NAMES=(${(u)"${(f)$(find -L "${(s.:.)PATH}" -maxdepth 1 -type 
 readonly DEFAULT_COMMAND="print -l $DESKTOP_NAMES"
 readonly ALT_COMMAND="print -l $UNIQ_EXE_NAMES"
 #print lines in array with newlines joined to each element
-readonly HELP="print -l '${(F)HELP_MSG}'"
+readonly HELP="print -l ${(F)HELP_MSG}"
 
 echo "desktop" > $user_input &&
-    SHELL="/bin/zsh" \
-    FZF_DEFAULT_COMMAND="$DEFAULT_COMMAND" \
+    FZF_DEFAULT_COMMAND=$DEFAULT_COMMAND \
     fzf \
     --no-multi \
-    --height 100% \
+    --height "100%" \
     --layout reverse-list \
-    --margin 3% \
-    --padding 3% \
+    --margin "3%" \
+    --padding "3%" \
     --info hidden \
     --header "Press ? for help or ESC to quit" \
     --prompt "desktop > " \
-    --bind "enter:execute<
+    --bind "enter:execute@
         state=\$(<$user_input)
-        if [[ '$state' == 'desktop' ]]; then
+        if [[ \$state == 'desktop' ]]; then
             swaymsg -t command exec gtk-launch {}
         else
             swaymsg -t command exec kitty {}
         fi
-    >+abort" \
+    @+abort" \
     --bind "ctrl-d:unbind(ctrl-d)+reload($DEFAULT_COMMAND)+change-prompt(desktop > )+execute-silent(echo 'desktop' > '$user_input')+rebind(ctrl-e)" \
-    --bind "ctrl-e:unbind(ctrl-e)+reload($ALT_COMMAND)+change-prompt(executable >)+execute-silent(echo 'terminal' > '$user_input')+rebind(ctrl-d)" \
+    --bind "ctrl-e:unbind(ctrl-e)+reload($ALT_COMMAND)+change-prompt(executable > )+execute-silent(echo 'terminal' > '$user_input')+rebind(ctrl-d)" \
     --bind "?:preview($HELP)" \
     --preview-window "bottom,40%"
