@@ -85,11 +85,11 @@ map L :clear
 # # unmap the default rename keybinding
 map r
 
-map i rename
-map I :rename; cmd-home
-map A :rename; cmd-end
-map c :rename; cmd-delete-home
-map C :rename; cmd-end; cmd-delete-home
+map Ri rename
+map RI :rename; cmd-home
+map RA :rename; cmd-end
+map Rc :rename; cmd-delete-home
+map RC :rename; cmd-end; cmd-delete-home
 #
 # # Create a new folder with selected item(s)
 cmd newfold ${{
@@ -176,24 +176,41 @@ cmd extract &{{
         *.rar) 7z x $f &;;
     esac
 }}
+map Ex extract
 #
-# # compress current file or selected files with tar and gunzip
-# cmd tar ${{
-#     set -f
-#     mkdir $1
-#     cp -r $fx $1
-#     tar czf $1.tar.gz $1
-#     rm -rf $1
-# }}
-#
-# # compress current file or selected files with zip
-# cmd zip ${{
-#     set -f
-#     mkdir $1
-#     cp -r $fx $1
-#     zip -r $1.zip $1
-#     rm -rf $1
-# }}
+# # compress current file or selected files with bsdtar
+cmd compress &{{
+    set -f
+    [ $#@ -lt 2 ] && lf -remote "send $id echoerr 'two args required .ie compressed file name and type eg. zst|xz|gz'"
+    [ -n $1 ] && name=$1 || lf -remote "send $id echoerr 'compressed file name expected'"
+    [ -n $2 ] && compression_type=$2 || lf -remote "send $id echoerr 'compressed file type expected zst|xz|gzip'"
+    case $compression_type in
+        gz|tgz)
+            name="${1}".tgz
+            bsdtar --gzip --option="gzip:compression-level=9" -cf $name $fx &
+        ;;
+        xz|txz)
+            name="${1}".txz
+            bsdtar --xz --option="xz:compression-level=9,xz:threads=0" -cf $name $fx &
+        ;;
+        zst|tzst)
+            name="${1}".tzst
+            bsdtar --zstd --option="zstd:compression-level=22,zstd:threads=0" -cf $name $fx &
+        ;;
+        *)
+            lf -remote "send $id echoerr 'compressed file type expected zst|xz|gzip'"
+        ;;
+    esac
+
+    lf -remote "send $id :unselect;select $name"
+    lf -remote "send $id echo compression of $name has started. Kindly wait"
+
+    #https://unix.stackexchange.com/questions/76717/launch-a-background-process-and-check-when-it-ends
+    wait
+    lf -remote "send $id reload"
+    lf -remote "send $id echo compression of $name done"
+}}
+map Cp push :compress<space>
 #
 # # zoixide intergration with lf
 cmd z %{{
@@ -251,13 +268,13 @@ cmd edit-config ${{
     lf -remote "send $id source ~/.config/lf/lfrc"
 }}
 
-map E edit-config
+map Ec edit-config
 
 cmd reload-config ${{
     lf -remote "send $id source ~/.config/lf/lfrc"
 }}
 
-map R reload-config
+map Rc reload-config
 
 cmd toggle_preview %{{
     if [ "$lf_preview" = "true" ]; then
