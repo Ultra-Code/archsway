@@ -180,7 +180,7 @@ function handle_archive() {
     local ext=$1
     case "${ext}" in
         ## Archive
-        gz|tar|xz|zip|zst)
+        zip|gz|tgz|xz|txz|zst|tzst)
             bsdtar --list --file "${FILE}" || \
             atool --list -- "${FILE}" || exit $?
             exit 0

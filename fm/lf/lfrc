@@ -168,12 +168,10 @@ cmd extract &{{
     mkdir -p $filename && cd $filename
     set -f
     case $f in
-        *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf $f &;;
-        *.tar.gz|*.tgz) tar xzvf $f &;;
-        *.tar.xz|*.txz) tar xJvf $f &;;
+        *.gz|*.tgz) tar xzvf $f &;;
+        *.xz|*.txz) tar xJvf $f &;;
+        *.zst|*.tzst) bsdtar -xf $f &;;
         *.zip) bsdtar -xf $f &;;
-        *.zst) bsdtar -xf $f &;;
-        *.xz) bsdtar -xf $f &;;
         *.7z) bsdtar -xf $f &;;
         *.rar) 7z x $f &;;
     esac
