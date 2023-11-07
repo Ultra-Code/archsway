@@ -103,7 +103,7 @@ bindsym $mod+Shift+Return exec $term --app-id "coding"
 # Kill focused window
 bindsym $mod+Shift+q kill
 
-bindsym $mod+b exec firefox
+bindsym $mod+b exec "MOZ_ENABLE_WAYLAND=1 firefox"
 
 # Start your launcher
 bindsym $mod+a exec $menu
