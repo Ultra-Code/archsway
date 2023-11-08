@@ -45,7 +45,7 @@ function preview(){
     #The cleaner is only called if previewing is enabled, the previewer is set, and the previously selected file had its preview cache disabled
     if [[ -n $WAYLAND_DISPLAY ]]
     then
-        if [[ $TERM == "kitty" ]]; then
+        if [[ $TERM == "xterm-kitty" ]]; then
             kitten icat --transfer-mode=file --stdin=no --place "${WIDTH}x${HEIGHT}@${XOFFSET}x${YOFFSET}" "$1" < /dev/null > /dev/tty && exit 1;
         elif [[ $TERM == "foot" ]]; then
             chafa  --format=sixel --size "${WIDTH}x${HEIGHT}"  --animate false $1 && exit 1
