@@ -85,11 +85,16 @@ map L :clear
 # # unmap the default rename keybinding
 map r
 
-map Ri rename
-map RI :rename; cmd-home
-map RA :rename; cmd-end
-map Rc :rename; cmd-delete-home
-map RC :rename; cmd-end; cmd-delete-home
+cmd rename-append-begin :rename; cmd-home
+cmd rename-append-end :rename; cmd-end
+cmd rename-file :rename; cmd-delete-home
+cmd rename-complete :rename; cmd-end; cmd-delete-home
+
+map Rn rename
+map RI rename-append-begin
+map RA rename-append-end
+map Rf rename-file
+map RC rename-complete
 #
 # # Create a new folder with selected item(s)
 cmd newfold ${{
@@ -180,37 +185,41 @@ map Ex extract
 #
 # # compress current file or selected files with bsdtar
 cmd compress &{{
-    set -f
     [ $#@ -lt 2 ] && lf -remote "send $id echoerr 'two args required .ie compressed file name and type eg. zst|xz|gz'"
-    [ -n $1 ] && name=$1 || lf -remote "send $id echoerr 'compressed file name expected'"
+    [ -n $1 ] && compressed_file=$1 || lf -remote "send $id echoerr 'compressed file name expected'"
     [ -n $2 ] && compression_type=$2 || lf -remote "send $id echoerr 'compressed file type expected zst|xz|gzip'"
+
+    # separate files by spaces and remove pathnames
+    files=${${(f)fx}:t}
+
     case $compression_type in
         gz|tgz)
-            name="${1}".tgz
-            bsdtar --gzip --option="gzip:compression-level=9" -cf $name $fx &
+            compressed_file="${1}".tgz
+            bsdtar --gzip --option="gzip:compression-level=9" -cf $compressed_file $files &
         ;;
         xz|txz)
-            name="${1}".txz
-            bsdtar --xz --option="xz:compression-level=9,xz:threads=0" -cf $name $fx &
+            compressed_file="${1}".txz
+            bsdtar --xz --option="xz:compression-level=9,xz:threads=0" -cf $compressed_file $files &
         ;;
         zst|tzst)
-            name="${1}".tzst
-            bsdtar --zstd --option="zstd:compression-level=22,zstd:threads=0" -cf $name $fx &
+            compressed_file="${1}".tzst
+            bsdtar --zstd --option="zstd:compression-level=22,zstd:threads=0" -cf $compressed_file $files &
         ;;
         *)
             lf -remote "send $id echoerr 'compressed file type expected zst|xz|gzip'"
         ;;
     esac
 
-    lf -remote "send $id :unselect;select $name"
-    lf -remote "send $id echo compression of $name has started. Kindly wait"
+    lf -remote "send $id :unselect;select $compressed_file"
+    lf -remote "send $id echo compression of $compressed_file has started. Kindly wait"
 
     #https://unix.stackexchange.com/questions/76717/launch-a-background-process-and-check-when-it-ends
     wait
     lf -remote "send $id reload"
-    lf -remote "send $id echo compression of $name done"
+    lf -remote "send $id echo compression of $compressed_file done"
 }}
-map Cp push :compress<space>
+cmd compress-files push :compress<space>
+map Ca compress-files
 #
 # # zoixide intergration with lf
 cmd z %{{
