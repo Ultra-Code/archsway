@@ -75,7 +75,7 @@ ParallelDownloads = 5
 - Enable DNS over HTTPS in firefox
 
 ## INSTALLS
-- base-devel for Basic tools to build Arch Linux packages
+- base-devel for Basic c/c++ build tools to build Arch Linux packages
 - yay for AUR packagem mangement
 - android-file-transfer with libmtp for connecting android phones mtp management
 - aria2c as download manager
@@ -83,7 +83,6 @@ ParallelDownloads = 5
 - bluez and bluez-utils for bluetooth
 - brightnessctl for controling backlight
 - clang/gcc for c++ development
-- c/c++ build tools make,pkgconf,patch,fakeroot
 - language servers for
     - cpp development
         - cppcheck
@@ -96,12 +95,15 @@ ParallelDownloads = 5
         - eslint
     - lau development
         - lua-language-server
+        - stylua
+        - selene
     - python development
         - jedi-language-server
         - python-pylint
         - python-black
         - ruff
         - mypy
+        - python-poetry
 
 - dictd server with dict client and some dictionary sources for yay like dict-wikt-en-all dict-freedict-eng-spa dict-freedict-spa-eng dict-foldoc dict-gcide dict-wn
     - NOTE: to disable online mode comment out `server dict.org` in  /etc/dict/dict.conf
@@ -114,6 +116,7 @@ ParallelDownloads = 5
 - grim and slurp for screenshot
 - imagemagick for use by kitty for terminal image preview
 - imv as image viewer
+- mako as a lightweight notification daemon for wayland
 - install mesa for opengl and as dri userspace driver and intel-media-driver as va-api for intel
 - jq a Command-line JSON processor
 - libreoffice-fresh for working with openoffice documents and hunspell-en_us for spellcheck, [for help setting up spellcheck](https://ask.libreoffice.org/t/how-do-you-get-the-spell-checker-to-work/28998)
@@ -124,8 +127,8 @@ ParallelDownloads = 5
 - lf as filemanger
 - openssh and rsync for syncing file with remote over ssh
 - pipewire and pipewire-audio for audio/video routing and processing and WirePlumber as pipewire session manager
+- remmina as remote desktop client with plugin like freerdp|libvncserver
 - reflector for choosing fastest pacman server list
-- texinfo for info pages
 - usb_modeswitch for enabling modem mode for zero-cd based modems
 - wl-clipboard for wayland clipboard
 - qt5-wayland for runing qt5 apps under wayland
