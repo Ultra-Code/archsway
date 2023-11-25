@@ -126,7 +126,7 @@ ParallelDownloads = 5
 - fastfetch for displaying system information
 - lf as filemanger
 - openssh and rsync for syncing file with remote over ssh
-- pipewire and pipewire-audio for audio/video routing and processing and WirePlumber as pipewire session manager
+- pipewire and pipewire-audio for audio/video routing and processing, pipewire-pulse as pulseaudio replacement and WirePlumber as pipewire session manager
 - remmina as remote desktop client with plugin like freerdp|libvncserver
 - reflector for choosing fastest pacman server list
 - usb_modeswitch for enabling modem mode for zero-cd based modems
