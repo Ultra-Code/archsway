@@ -303,9 +303,9 @@ bindsym $mod+comma   move container to workspace prev
 for_window [app_id=".*"] inhibit_idle fullscreen
 
 # Firefox
-for_window [app_id="firefox"] focus,layout tabbed
+for_window [app_id="firefox"] focus, layout tabbed
 for_window [app_id="firefox" title="About Mozilla Firefox|Picture-in-Picture\
-|Password Required - Mozilla Firefox|Page Info — (.*)"] floating enable,border none
+|Password Required - Mozilla Firefox|Page Info — (.*)"] floating enable, border none
 assign [app_id="firefox"]  $browser
 
 for_window [app_id="firefox" title="Firefox — Sharing Indicator" ] \
@@ -315,7 +315,7 @@ no_focus [title="Firefox — Sharing Indicator"]
 for_window [app_id="coding"] focus
 assign [app_id="coding"] $coding
 
-for_window [app_id="mpv"] focus,fullscreen enable
+for_window [app_id="mpv"] focus, fullscreen enable
 assign [app_id="mpv"] $mpv
 
 for_window [app_id="libreoffice-*"] focus
@@ -329,6 +329,8 @@ assign [app_id="imv"] $utility
 
 for_window [app_id="desktop-launcher"] focus, floating enable, resize set width 45 ppt height 70 ppt \
 , move position 30 ppt 5ppt, border none
+
+for_window [app_id="org.remmina.Remmina"] focus, layout tabbed
 
 for_window [app_id="fm"] focus
 assign [app_id="fm"] $filemanager
