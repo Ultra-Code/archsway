@@ -85,15 +85,16 @@ map L :clear
 # # unmap the default rename keybinding
 map r
 
-cmd rename-append-begin :rename; cmd-home
-cmd rename-append-end :rename; cmd-end
-cmd rename-file :rename; cmd-delete-home
+cmd rename-append :rename
+cmd rename-prepend :rename; cmd-home
+cmd rename-append-full :rename; cmd-end
+cmd rename-change-name :rename; cmd-delete-home
 cmd rename-complete :rename; cmd-end; cmd-delete-home
 
-map Rn rename
-map RI rename-append-begin
-map RA rename-append-end
-map Rf rename-file
+map Rn rename-append
+map RI rename-prepend
+map RA rename-append-full
+map Rf rename-change-name
 map RC rename-complete
 #
 # # Create a new folder with selected item(s)
