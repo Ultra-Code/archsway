@@ -1,12 +1,11 @@
 #!/bin/zsh
 
 function zcc(){
-if (($+commands[zig]));then
-     zig cc -std=c2x $argv[1,#]
-else
-    echo 'install zig language compiler on your system'
-fi
-
+    if (($+commands[zig]));then
+         zig cc -std=c2x $argv[1,#]
+    else
+        echo 'install zig language compiler on your system'
+    fi
 }
 
 zcc $@

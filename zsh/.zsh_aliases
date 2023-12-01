@@ -140,9 +140,9 @@ function zc(){
 }
 
 function zr(){
-if (($+commands[zig]));then
-     zig build run -- ${argv[@]}
-else
-    echo 'install zig on your system'
-fi
+    if (($+commands[zig]));then
+         zig build run -- ${argv[@]}
+    else
+        echo 'install zig on your system'
+    fi
 }
