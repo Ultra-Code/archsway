@@ -34,7 +34,7 @@ NOTE: make sure to mount btfs with compression zstd on first mount on live iso
 - Enable synchronizing the system clock across the network by enabling [systemd-timesyncd.service](https://wiki.archlinux.org/title/Systemd-timesyncd)
 - On the freshly installed system use the following fonts
     + use fonts with great unicode support like ttf-dejavu or noto-fonts or gnu-free-fonts as system default font
-    + ttf-jetbrains-mono or ttc-iosevka for monospace,
+    + ttc-iosevka  or ttf-jetbrains-mono for monospace,
     + ttf-nerd-fonts-symbols-mono for nerd font symbols and noto-font-emoji for emoji
     >_NOTE_: don't forget to `ln -s /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf /etc/fonts/conf.d/`
 - configure dns for 1.1.1.1 but this might not be needed since it's the default on arch linux
@@ -78,11 +78,13 @@ ParallelDownloads = 5
 - base-devel for Basic c/c++ build tools to build Arch Linux packages
 - yay for AUR packagem mangement
 - android-file-transfer with libmtp for connecting android phones mtp management
-- aria2c as download manager
+- aria2 as download manager
 - bat is a Cat clone with syntax highlighting and git integration
 - bluez and bluez-utils for bluetooth
 - brightnessctl for controling backlight
 - clang/gcc for c++ development
+- rustup with default profile and rust-analyzer component for rust development
+- zig with zls for zig development
 - language servers for
     - cpp development
         - cppcheck
@@ -99,10 +101,10 @@ ParallelDownloads = 5
         - selene
     - python development
         - jedi-language-server
-        - python-pylint
-        - python-black
         - ruff
         - mypy
+        - python-pylint
+        - python-black
         - python-poetry
 
 - dictd server with dict client and some dictionary sources for yay like dict-wikt-en-all dict-freedict-eng-spa dict-freedict-spa-eng dict-foldoc dict-gcide dict-wn
