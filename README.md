@@ -111,7 +111,7 @@ ParallelDownloads = 5
     - NOTE: to disable online mode comment out `server dict.org` in  /etc/dict/dict.conf
     - Make sure locale is properly configured in `DICTD_ARGS` of /etc/conf.d/dictd else the service unit will fail
 - ffmpegthumbnailer & gnome-epub-thumbnailer for thumbnails
-- firefox as pdf reader or zathura and firefox-ublock-origin as adblocker and foliate/fbreader as epub reader
+- firefox with speech-dispatcher (for Text-to-Speech) as pdf reader or zathura and firefox-ublock-origin as adblocker and foliate/fbreader as epub reader
 - fzf for fuzzy search
 - gammastep for controlling nightlight
 - git for version control
