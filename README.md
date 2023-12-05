@@ -1,11 +1,15 @@
 # ArchSway
 Archlinux on sway from scratch with the most minimal dependencies. DIY is awesome
 
-# basic setup
-for new setup home should be a subvolume/partition mounted on the /root which is preferably btrfs/f2fs
+# Standard Installation Steps
+[Arch Linux Installation Guide](https://wiki.archlinux.org/title/Installation_guide)
+
+# Filesystem Setup
+For new setup home should be a subvolume/partition mounted on the /root which is preferably btrfs/f2fs/xfs
 and FILES partition mounted to home/{data,/files} FILES should be 120-140GiB and root should have a max of 60GiB
-export ZDOTDIR in /etc/zsh/zshenv to $HOME/.config/dotfiles
-NOTE: make sure to mount btfs with compression zstd on first mount on live iso
+**NOTE: make sure to mount btrfs with compression zstd on first mount on live iso**
+
+>> export ZDOTDIR in /etc/zsh/zshenv to $HOME/.config/dotfiles
 
 ## needed base system modules
 
@@ -23,7 +27,7 @@ NOTE: make sure to mount btfs with compression zstd on first mount on live iso
     - linux-firmware
     - linux-zen
     - man-db [man-pages](https://wiki.archlinux.org/title/Man_page)
-    - neovim
+    - neovim (for config clone [awesome-neovim to $XDG_CONFIG_HOME/nvim](https://github.com/Ultra-Code/awesome-neovim.git))
     - sudo
     - zsh (make zsh the default shell `chsh -s $(which zsh)`)
 
