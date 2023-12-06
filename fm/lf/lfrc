@@ -91,9 +91,9 @@ cmd rename-append-full :rename; cmd-end
 cmd rename-change-name :rename; cmd-delete-home
 cmd rename-complete :rename; cmd-end; cmd-delete-home
 
-map Rn rename-append
-map RI rename-prepend
+map Ra rename-append
 map RA rename-append-full
+map RI rename-prepend
 map Rf rename-change-name
 map RC rename-complete
 #
