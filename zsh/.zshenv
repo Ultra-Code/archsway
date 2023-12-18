@@ -1,8 +1,3 @@
-#set XDG_RUNTIME_DIR since it isn't set by default on wsl
-if [[ -n $(printenv WSL_DISTRO_NAME) ]]; then
-    export XDG_RUNTIME_DIR=/run/WSL
-fi
-
 #Set up path for interactive envirionment
 export PATH=$HOME/.local/bin:$PATH
 
