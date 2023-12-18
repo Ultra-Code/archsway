@@ -12,6 +12,11 @@ if (($+commands[rustc]));then
     export PATH=$PATH:$CARGO_HOME/bin
 fi
 
+if (($+commands[composer]));then
+    export COMPOSER_HOME=$HOME/.local/composer
+    export PATH=$PATH:$COMPOSER_HOME/vendor/bin
+fi
+
 export EDITOR=nvim
 export VISUAL=nvim
 
