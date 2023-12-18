@@ -35,18 +35,6 @@ export MANPAGER="$SHELL -c 'col --no-backspaces --spaces | bat -l man --plain'"
 # workaround for issue with man pages display https://github.com/sharkdp/bat/issues/2593#issuecomment-1636468711
 export MANROFFOPT="-c"
 
-#location for sqlite history file
-export SQLITE_HISTORY=$XDG_DATA_HOME/sqlite_history
-
-#location for gnupg data files
-export GNUPGHOME=$XDG_DATA_HOME/gnupg
-
-#python history file
-export PYTHONHISTFILE=$XDG_DATA_HOME/python_history
-
-#cal history
-export CALCHISTFILE=$XDG_DATA_HOME/calc_history
-
 # Use ~~ as the trigger sequence instead of the default **
 export FZF_COMPLETION_TRIGGER='~~'
 # Options to fzf command
