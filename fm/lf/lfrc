@@ -269,6 +269,10 @@ set sixel true
 # # set path to the preview script
 set previewer ~/.config/lf/preview.zsh
 
+#
+# # set path to preview cleanup file
+set cleaner ~/.config/lf/clean_preview.zsh
+
 cmd edit-config ${{
     $EDITOR ~/.config/lf/lfrc
     lf -remote "send $id source ~/.config/lf/lfrc"
