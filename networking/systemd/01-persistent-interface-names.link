@@ -1,0 +1,8 @@
+# vim: set filetype=systemd :#
+[Match]
+OriginalName=*
+
+[Link]
+NamePolicy=path slot onboard mac
+AlternativeNamesPolicy=database kernel
+MACAddressPolicy=persistent
