@@ -1,0 +1,9 @@
+# vim: set filetype=sudoers :#
+# sudoers drop in file at /etc/sudoers.d/
+Cmnd_Alias  STORAGE     =  /usr/bin/systemd-mount, /usr/bin/systemd-umount
+Cmnd_Alias  SYSTEMD     =   /usr/bin/systemctl
+Cmnd_Alias  PKGMAN      =   /usr/bin/pacman
+
+firefox ALL=(ALL:ALL) ALL
+firefox ALL=(ALL) NOPASSWD: STORAGE, SYSTEMD, PKGMAN
+Defaults:firefox timestamp_timeout=60
