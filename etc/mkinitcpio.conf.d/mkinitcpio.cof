@@ -1,0 +1,5 @@
+# vim: set filetype=conf : #
+# Drop in config file for mkinitcpio /etc/mkinitcpio.conf.d/mkinitcpio.conf
+HOOKS=(base udev autodetect modconf kms keyboard keymap consolefont block filesystems resume fsck)
+COMPRESSION="zstd"
+COMPRESSION_OPTIONS=(-v -T0 -12)
