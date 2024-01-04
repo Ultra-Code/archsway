@@ -26,9 +26,8 @@ function status_bar() {
 function formatTime(){
     float unformated_time=$@
     integer hours=unformated_time;
-    echo -n "$hours h "
     integer minutes=$(( (unformated_time - hours) * 60 ))
-    echo -n "$minutes m"
+    echo -n "$hours h $minutes m"
 }
 
 #INFO: https://www.kernel.org/doc/html/latest/power/power_supply_class.html
@@ -49,10 +48,10 @@ function batteryInfo(){
         float power_now=$(( (current_now*voltage_now) / 10**6 ))
         float energy_now=$(( (charge_now*voltage_now) / 10**6 )) #10**6 convert back to uWh
 
-        float -F 2 time_to_run_down=$(( energy_now / (power_now*0.9) ))
+        float time_to_run_down=$(( energy_now / (power_now*0.9) ))
 
         local discharging="$battery_capacity% $(formatTime $time_to_run_down)"
-       local charging="$battery_capacity%"
+        local charging="$battery_capacity%"
 
     #bat level 0-󰂃,1-󰁺,2-󰁻,3-󰁼,4-󰁽,5-󰁾,6-󰁿,7-󰂀,8-󰂁,9-󰂂,10-󰁹
     #bat charching 2-󰂆,3-󰂇,4-󰂈,5-󰂉,6-󰂊,7-󰂋,8-󰂅,9-󰂄
@@ -85,7 +84,7 @@ function batteryInfo(){
         float full_charge=$(cat /sys/class/power_supply/BAT0/charge_full)
         float full_energy=$(( (full_charge*voltage_now) / (10**6) ))
 
-        float -F 2 time_to_full_charge=$(( (full_energy-energy_now) / power_now))
+        float time_to_full_charge=$(( (full_energy-energy_now) / power_now))
 
         if [[ $battery_status != "Full" ]];then
             echo "🔌 $charging $(formatTime $time_to_full_charge) to full"
