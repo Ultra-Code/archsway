@@ -3,6 +3,6 @@
 OriginalName=*
 
 [Link]
-NamePolicy=path slot onboard mac
-AlternativeNamesPolicy=database kernel
+NamePolicy=path slot onboard
+AlternativeNamesPolicy=database mac
 MACAddressPolicy=persistent
