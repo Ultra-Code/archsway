@@ -143,6 +143,7 @@ ParallelDownloads = 5
 - wl-clipboard for wayland clipboard
 - qt5-wayland for runing qt5 apps under wayland
 - xdg-desktop-portal-wrl for WebRTC screen sharing
+- xdg-utils to assist applications with desktop integration tasks
 - yt-dlp YouTube downloader
 - zig zls-bin for zig development
 - zoxide for efficient directory movement
