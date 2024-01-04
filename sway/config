@@ -401,7 +401,7 @@ set $wifi "(w)ifi (s)can Wifi (o)ff"
 mode $wifi {
     bindsym w exec rfkill toggle wlan,mode "default"
     bindsym o exec rfkill block all,mode "default"
-    bindsym s exec iwctl station wlan0 scan,mode "default"
+    bindsym s exec iwctl station wlp2s0 scan,mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
