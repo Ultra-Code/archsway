@@ -7,7 +7,7 @@ filesystem                                     mountpoint               fstype  
 UUID=8a667e9f-fd64-44dd-85c2-1c8f20a200df      /                        btrfs                 defaults,noatime,compress=zstd,autodefrag,commit=300,space_cache=v2,subvolid=5,subvol=/                    0         0
 
 # /dev/sda1 LABEL=ESP
-UUID=43E3-58A0      	                       /boot                    vfat                  noatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro	         0         1
+UUID=43E3-58A0      	                       /boot                    vfat                  noatime,fmask=0077,dmask=0077,shortname=mixed,utf8,errors=remount-ro	         0         1
 
 # /dev/sda2 LABEL=SWAP
 UUID=7676d06c-03ad-44e1-afbd-a2965d12f43a     none                      swap                  defaults                                                                                                   0          0
