@@ -45,6 +45,7 @@ and FILES partition mounted to home/{data,/files} FILES should be 120-140GiB and
 - enable DNSOverTLS for resolved
 - iwd for wifi and enable it dhcp client
 - symlink /run/systemd/resolve/stub-resolv.con to /etc/resolv.conf for dns resolution
+TODO: review the usefullness of the lines below
 - disable unneeded services that run at boot like man-db.timer and mask ldconfig.service,systemd-rfkill*
 - disable journaling to persistent storage by setting Storage in journal.conf to volatile and masking systemd-journal-flush.service
 - link kitty to xterm
@@ -125,6 +126,9 @@ ParallelDownloads = 5
 - mako as a lightweight notification daemon for wayland
 - install mesa for opengl and as dri userspace driver and intel-media-driver as va-api for intel
 - jq a Command-line JSON processor
+- iptables-nft and nftable(automatically installed as a dependency of iptables-nft) for firewall configuration (enable the nftables service)
+- nmap and tcpdump for network analysis and auditing
+- docker for containerization of apps
 - libreoffice-fresh for working with openoffice documents and hunspell-en_us for spellcheck, [for help setting up spellcheck](https://ask.libreoffice.org/t/how-do-you-get-the-spell-checker-to-work/28998)
 - lldb for debugging zig c and c++
 - mpd for music daemon and ncmpcpp for ui interface and mpc for controlling playing
