@@ -25,8 +25,9 @@ function status_bar() {
 
 function formatTime(){
     float unformated_time=$@
-    integer hours=unformated_time;
-    integer minutes=$(( (unformated_time - hours) * 60 ))
+    zmodload zsh/mathfunc
+    integer hours=int(unformated_time);
+    integer minutes=$(( int(fmod(unformated_time,1.0) * 60) ))
     echo -n "$hours h $minutes m"
 }
 

@@ -43,6 +43,7 @@ fi
 autoload -Uz run-help
 
 #load zcalc for peforming math operations
+#info: MATHEMATICAL FUNCTIONS section of zshcontrib
 autoload -Uz zcalc
 
 #emit OSC-133;A sequence before each prompt to enable jumping
