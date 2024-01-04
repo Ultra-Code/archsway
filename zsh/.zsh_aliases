@@ -10,7 +10,7 @@ alias rd=' rmdir --parents --verbose'
 alias rm=' rm --interactive=once --verbose --recursive'
 alias bat=' bat --style=numbers,changes'
 alias bh=' bat --plain --language=help'
-alias nc=' ncmpcpp'
+alias ncm=' ncmpcpp'
 
 alias _='sudo '
 
@@ -27,6 +27,7 @@ alias mv=' mv --interactive --update --verbose'
 #mounting and unmount drives without user password
 alias mount=' _ systemd-mount --no-block --fsck=no --collect --owner=$USER'
 alias umount=' _ systemd-umount'
+alias lmount=' _ /bin/mount'
 alias lb=" lsblk -oPATH,MOUNTPOINTS,LABEL,FSTYPE,SIZE,FSAVAIL,FSUSED,PARTUUID,MAJ:MIN"
 
 alias tarx=' bsdtar -xvf '
