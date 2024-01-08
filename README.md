@@ -29,7 +29,7 @@ and FILES partition mounted to home/{data,/files} FILES should be 120-140GiB and
     - man-db [man-pages](https://wiki.archlinux.org/title/Man_page)
     - neovim (for config clone [awesome-neovim to $XDG_CONFIG_HOME/nvim](https://github.com/Ultra-Code/awesome-neovim.git))
     - sudo
-    - zsh (make zsh the default shell `chsh -s $(which zsh)`)
+    - zsh or nushell (set default shell with `chsh -s $(which shellname)`)
 
 ### basic configuration
 
@@ -129,6 +129,9 @@ ParallelDownloads = 5
 - iptables-nft and nftable(automatically installed as a dependency of iptables-nft) for firewall configuration (enable the nftables service)
 - nmap and tcpdump for network analysis and auditing
 - docker for containerization of apps
+- ripgrep to recursively searches directories for a regex pattern while respecting your gitignore
+- fd as a simple, fast and user-friendly alternative to find
+- sd as an intuitive find & replace cli alternative to sed
 - libreoffice-fresh for working with openoffice documents and hunspell-en_us for spellcheck, [for help setting up spellcheck](https://ask.libreoffice.org/t/how-do-you-get-the-spell-checker-to-work/28998)
 - lldb for debugging zig c and c++
 - mpd for music daemon and ncmpcpp for ui interface and mpc for controlling playing
