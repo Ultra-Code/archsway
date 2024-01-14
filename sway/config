@@ -57,6 +57,9 @@ font pango:Iosevka Fixed,Iosevka Fixed Light:style=Light,Regular 10
 ### Set random wallpaper
 output * bg $(find $wallpapers_path -type f | shuf -n 1) fill
 
+#TODO: add script to get projector name to focus
+#bindsym XF86Display exec swaymsg focus output "Seiko Epson Corporation EPSON PJ 0x00000101"
+
 #
 # Idle configuration
 #
@@ -247,9 +250,6 @@ bindsym --locked XF86AudioPrev  exec "mpc prev"
 # Brightness
 bindsym --locked XF86MonBrightnessDown exec brightnessctl set 1%-
 bindsym --locked XF86MonBrightnessUp exec brightnessctl set +1%
-
-#TODO: add script to get projector name to focus
-#bindsym XF86Display exec swaymsg focus output "Seiko Epson Corporation EPSON PJ 0x00000101"
 
 #
 # Workspaces:

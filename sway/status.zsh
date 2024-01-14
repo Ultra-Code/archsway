@@ -24,8 +24,8 @@ function status_bar() {
 }
 
 function formatTime(){
-    float unformated_time=$@
     zmodload zsh/mathfunc
+    float unformated_time=fabs($@)
     integer hours=int(unformated_time);
     integer minutes=$(( int(fmod(unformated_time,1.0) * 60) ))
     echo -n "$hours h $minutes m"
@@ -33,6 +33,7 @@ function formatTime(){
 
 #INFO: https://www.kernel.org/doc/html/latest/power/power_supply_class.html
 function batteryInfo(){
+  zmodload zsh/mathfunc
     #https://www.kernel.org/doc/html/latest/power/power_supply_class.html
   local battery_status=$(cat /sys/class/power_supply/BAT0/status)
   local battery_capacity=$(cat /sys/class/power_supply/BAT0/capacity)
