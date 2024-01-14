@@ -29,7 +29,7 @@ and FILES partition mounted to home/{data,/files} FILES should be 120-140GiB and
     - man-db [man-pages](https://wiki.archlinux.org/title/Man_page)
     - neovim (for config clone [awesome-neovim to $XDG_CONFIG_HOME/nvim](https://github.com/Ultra-Code/awesome-neovim.git))
     - sudo
-    - zsh or nushell (set default shell with `chsh -s $(which shellname)`)
+    - nushell or fish or zsh (set default shell with `chsh -s $(which shellname)`)
 
 ### basic configuration
 
@@ -87,6 +87,8 @@ ParallelDownloads = 5
 - bat is a Cat clone with syntax highlighting and git integration
 - bluez and bluez-utils for bluetooth
 - brightnessctl for controling backlight
+- carapace-bin for completions in nushell
+- pueue for process management in nushell
 - clang/gcc for c++ development
 - rustup with default profile and rust-analyzer component for rust development
 - zig with zls for zig development
