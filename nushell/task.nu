@@ -53,7 +53,7 @@ export def spawn [
     | str trim --right --char "}"
   )
 
-  (pueue add --print-task-id $args $"nu --config '($nu.config-path)' --env-config '($nu.env-path)' --commands '($source_code)'")
+  (pueue add --print-task-id ...$args $"nu --config '($nu.config-path)' --env-config '($nu.env-path)' --commands '($source_code)'")
 }
 
 # Remove tasks from the queue.
