@@ -15,7 +15,7 @@ export-env {
 }
 
 if  (ps | where name =~ 'pueued' | is-empty) {
-    pueued --daemonize out> /dev/null
+     ^pueued --daemonize
 }
 
 if (tty) =~ "/dev/tty[1-3]" {
