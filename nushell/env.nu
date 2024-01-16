@@ -85,6 +85,10 @@ $env.ENV_CONVERSIONS = {
         from_string: { |s| $s | split row (char esep) | path expand --no-symlink }
         to_string: { |v| $v | path expand --no-symlink | str join (char esep) }
     }
+    "LS_COLORS": {
+        from_string: { |s| $s | str trim --char "'" }
+        to_string: { |s| $s | str trim --char "'" }
+    }
 }
 
 # Directories to search for scripts when calling source or use
@@ -150,7 +154,7 @@ export-env {
     }
 
     load-env {
-        FZF_DEFAULT_COMMAND: '^find * -name ".*" -prune -or -type f -print'
+        FZF_DEFAULT_COMMAND: 'fd --type f'
         FZF_DEFAULT_OPTS: '--multi --cycle --height=60% --layout=reverse --border=none --info=inline --ansi'
         FZF_CTRL_T_COMMAND: '^find * -regex ".+\.\w+.+$" -prune -or -print'
         FZF_CTRL_T_OPTS: '--border=rounded'
