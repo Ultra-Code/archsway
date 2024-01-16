@@ -42,12 +42,14 @@ alias rn = exec nu
 # nproc alias for nu
 alias nproc = do {sys | get cpu | length}
 
-def la [] {
-    ls --all --long | select name user group type mode num_links inode
+# ls long listing
+def ll [path: path] {
+    ls --all --long $path | select name user group type mode num_links inode
 }
 
-def lt [] {
-    ls --all --long | select name type mode created modified accessed
+# selective ls with some relevant fields
+def lt [path: path] {
+    ls --all --long $path | select name type mode created modified accessed
 }
 
 def ls-old [option:string] {
