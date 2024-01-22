@@ -43,8 +43,12 @@ alias rn = exec nu
 alias nproc = do {sys | get cpu | length}
 
 # ls long listing
-def ll [path: path] {
-    ls --all --long $path | select name user group type mode num_links inode
+def ll [path?: path] {
+    if $path == null {
+        ls --all --long . | select name user group type mode num_links inode
+    } else {
+        ls --all --long $path | select name user group type mode num_links inode
+    }
 }
 
 # selective ls with some relevant fields
@@ -156,7 +160,7 @@ alias all_services = ^systemctl -at service
 
 # Find symbols in an executable
 def a2l [program_name:string, ...args:string] : nothing -> string {
-    addr2line --functions --inlines --pretty-print --demangle --exe $program_name --addresses $args
+    addr2line --functions --inlines --pretty-print --demangle --exe $program_name --addresses ...$args
 }
 
 # Zig
