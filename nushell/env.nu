@@ -167,12 +167,10 @@ export-env {
         MANROFFOPT: '-c'
     }
 
-    if (which rustc | get command.0?) == rustc {
-        $env.CARGO_HOME = ($env.XDG_LOCAL_HOME | path join cargo)
-        load-env {
-            RUSTUP_HOME: ($env.XDG_LOCAL_HOME | path join rustup)
-            PATH: ($env.PATH | prepend ($env.CARGO_HOME | path join bin))
-        }
+    $env.CARGO_HOME = ($env.XDG_LOCAL_HOME | path join cargo)
+    load-env {
+        RUSTUP_HOME: ($env.XDG_LOCAL_HOME | path join rustup)
+        PATH: ($env.PATH | prepend ($env.CARGO_HOME | path join bin))
     }
 
     if (which composer | get command.0?) == composer {
