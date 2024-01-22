@@ -12,13 +12,14 @@ export-env {
         open $SSH_ENV_PATH | load-env
     }
 
-}
-
-if  (ps | where name =~ 'pueued' | is-empty) {
-     ^pueued --daemonize
+    # set XDG_CURRENT_DESKTOP
+    $env.XDG_CURRENT_DESKTOP = river
 }
 
 if (tty) =~ "/dev/tty[1-3]" {
     # for sway's log output to be handled by journald
-    exec systemd-cat --identifier=sway sway
+    # exec systemd-cat --identifier=sway sway
+
+    # for rivers's log output to be handled by journald
+    exec systemd-cat --identifier=river river
 }
