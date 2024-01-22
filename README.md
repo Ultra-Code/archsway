@@ -15,7 +15,7 @@ and FILES partition mounted to home/{data,/files} FILES should be 120-140GiB and
 
 - systemd-boot as boot manager
 - enabling systemd-boot-update service to update systemd-boot on systemd upgrade
-- sway as window manager with swayidle and swaylock for idle and lock management and waybar for swaybar management
+- sway/river as window manager with swayidle and swaylock for idle and lock management and waybar/yambar for bar management
     - base
     - btrfs-progs
     - dosfstools
@@ -146,6 +146,10 @@ ParallelDownloads = 5
 - reflector for choosing fastest pacman server list
 - usb_modeswitch for enabling modem mode for zero-cd based modems
 - wl-clipboard for wayland clipboard
+- sound-theme-freedesktop for standard sounds and tone used in linux
+- fuzzy as the application launcher
+- wlr-randr for wayland output management
+- cliphist as clipboard history manager
 - qt5-wayland for runing qt5 apps under wayland
 - xdg-desktop-portal-wrl for WebRTC screen sharing
 - xdg-utils to assist applications with desktop integration tasks
