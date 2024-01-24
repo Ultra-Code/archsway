@@ -359,7 +359,7 @@ export def log [
       []
     }
 
-    process_raw (pueue log --full --json $args $ids)
+    process_raw (pueue log --full --json ...$args ...$ids)
   }
 }
 
