@@ -41,18 +41,24 @@ local function exec_in_nu(cmd)
 	-- print(getpid() .. ": quitting")
 end
 
----@return string?
+--trim leading and trailling whitespaces
+local function trim(str)
+	return str:gsub("^%s*(.-)%s*$", "%1")
+end
+
+---@return string
 ---@param cmd string
 ---@nodiscard
 local function popen(cmd)
 	local handle = assert(io.popen(cmd))
 	---@type string
 	local output = handle:read("*a")
+	output = trim(output)
 	handle:close()
 	return output
 end
 
----@return string?
+---@return string
 ---@param cmd string
 ---@nodiscard
 local function popen_in_nu(cmd)
@@ -61,6 +67,7 @@ local function popen_in_nu(cmd)
 	local handle = assert(io.popen(shell_cmd))
 	---@type string
 	local output = handle:read("*a")
+	output = trim(output)
 	handle:close()
 	return output
 end
@@ -84,11 +91,6 @@ local function cmd(command, sep, i, j)
 	end
 end
 
---trim leading and trailling whitespaces
-local function trim(str)
-	return str:gsub("^%s*(.-)%s*$", "%1")
-end
-
 --  Helper fuction to only spawn a program when no instance of it is running
 --  already, so init can be re-run without all widgets being duplicated.
 ---@param command string
@@ -98,8 +100,7 @@ local function spawn_once(command)
 	---@return boolean
 	---@param program_name string
 	local function is_not_spawned(program_name)
-		local is_running = assert(popen_in_nu("ps | where name =~ " .. program_name .. " | is-empty"))
-		is_running = trim(is_running)
+		local is_running = popen_in_nu("ps | where name =~ " .. program_name .. " | is-empty")
 		local stringtoboolean = { ["true"] = true, ["false"] = false }
 		return stringtoboolean[is_running]
 	end
@@ -121,12 +122,12 @@ local HOME = getenv("HOME")
 -- Path to a collection of wallpapers
 local wallpapers_path = HOME .. "/files/Pictures/Code/"
 
-local lock_screen_wallpaper = wallpapers_path .. "27106459-coding-wallpapers.png"
-local swaylock = [["swaylock -f -i ]] .. lock_screen_wallpaper .. [["]]
+local lock_screen_wallpaper = wallpapers_path .. "Talk-Is-Cheap-Show-Me-The-Code.png"
+local swaylock = fmt([["swaylock --daemonize --image %s"]], lock_screen_wallpaper)
 
+--TODO: make screenshot_time generation dynamic
 local screenshot_time = os.date("%a-%b-%d-%Y_%H:%M:%S")
-
-local screenshot_path = HOME .. "/files/Pictures/Screenshot/Captura de pantalla de " .. screenshot_time .. ".png"
+local screenshot_path = HOME .. "/files/Pictures/Screenshot/Captura-de-pantalla-de_" .. screenshot_time .. ".png"
 
 -- wpctl's -l flag is to prevent the volume from exceeding/surpass 160% == 1.6
 local max_volume = 1.6
@@ -137,29 +138,30 @@ local screen_shot_sound = "/usr/share/sounds/freedesktop/stereo/screen-capture.o
 -- File manger
 local file_manager = "lf"
 
--- TODO: use fuzzy as menu and application lanucher
 -- Menu Launcher
-local drun_menu = "wofi --show drun"
-local run_menu = "wofi --show run"
+local desktop_launcher = fmt([[fuzzel --terminal "%s" --lines 25 --width 54 --show-actions]], terminal)
+local fuzzel_menu = fmt([[fuzzel --terminal "%s" --lines 25 --width 90 --dmenu --index]], terminal)
 
-local wallpaper =
-	assert(popen_in_nu("ls " .. wallpapers_path .. " | where type == file | shuffle | take 1 | get name.0|str trim"))
+local wallpaper = popen_in_nu("ls " .. wallpapers_path .. " | where type == file | shuffle | take 1 | get name.0")
+
+local status_bar = "levee pulse backlight battery"
 
 local autostarts = {
 	-- Startup programs
-	{ "swaybg", "-m fill", "-i " .. wallpaper },
-	{ "levee", "pulse", "backlight", "battery" },
+	{ "swaybg", "--mode", "fill", "--image", wallpaper },
+	{ status_bar },
 	{ "gammastep" },
     -- stylua: ignore
+    -- TODO: find  a fix or replace for the wlr-randr locking issues
 	{
 		"swayidle", "-w",
             "timeout", "300",swaylock,
-		    "timeout", "600", [["wlr-randr --output eDP-1 --off"]],
-		    "resume", [["wlr-randr --output eDP-1 --on"]],
+		    -- "timeout", "600", [["wlr-randr --output eDP-1 --off"]],
+		    -- "resume", [["wlr-randr --output eDP-1 --on"]],
 		    "before-sleep", swaylock,
 		    "idlehint", "780",
 	},
-	{ "wl-paste", "--watch", "cliphist", "store " },
+	{ "wl-paste", "--watch", "cliphist", "store" },
 	{ "mako" },
 }
 
@@ -181,38 +183,6 @@ local function run_oneshots(oneshot_programs)
 	for _, command in ipairs(oneshot_programs) do
 		spawn_once(cmd(command))
 	end
-end
-
-local outputs = {
-	["eDP-1"] = {
-		mode = "1920x1080",
-		pos = "0,0",
-		transform = "normal",
-		scale = "1.000000",
-		preferred = true,
-	},
-}
-
--- Configure outputs
----@param output_devices table<string,table>
-local function configure_outputs(output_devices)
-	-- wlr-randr --output HDMI-A-1 --mode 1920x1080@60Hz --scale 1
-	local randr_cmd = "wlr-randr"
-	for output, options in pairs(output_devices) do
-		randr_cmd = randr_cmd .. " --output " .. output
-
-		for opt, value in pairs(options) do
-			if opt ~= "preferred" then
-				randr_cmd = fmt(randr_cmd .. " --%s %s", opt, value)
-			end
-		end
-
-		-- Ensure '--preferred' is the last argument for each monitor
-		if options.preferred then
-			randr_cmd = randr_cmd .. " --preferred"
-		end
-	end
-	exec(randr_cmd)
 end
 
 local inputs = {
@@ -316,24 +286,18 @@ local mappings = {
 			{
 				mod = "Super",
 				key = "D",
-				command = { "spawn", fmt([['%s']], drun_menu) },
-			},
-			{
-				mod = { "Super", "Shift" },
-				key = "D",
-				command = { "spawn", fmt([['%s']], run_menu) },
+				command = { "spawn", fmt([['%s']], desktop_launcher) },
 			},
 			-- Clipboard management with cliphist
-            -- TODO: make mapping work and test other mapping to make sure they work
 			{
 				mod = { "Super", "Alt" },
 				key = "C",
-				commands = { "spawn", [['cliphist list | wofi --show dmenu | cliphist decode | wl-copy']] },
+				command = { "spawn", fmt([['cliphist list | %s | cliphist decode | wl-copy']], fuzzel_menu) },
 			},
 			{
 				mod = { "Super", "Alt" },
 				key = "D",
-				commands = { "spawn", [['cliphist list | wofi --show dmenu | cliphist delete']] },
+				command = { "spawn", fmt([['cliphist list | %s | cliphist delete']], fuzzel_menu) },
 			},
 			-- Take screenshot of a window
 			{
@@ -341,7 +305,7 @@ local mappings = {
 				key = "Print",
 				command = {
 					"spawn",
-					fmt([['grim %s && pw-play %s']], screenshot_path, screen_shot_sound),
+					fmt([['grim %s ; pw-play %s']], screenshot_path, screen_shot_sound),
 				},
 			},
 			-- Take a screenshot of a region of a window
@@ -350,14 +314,14 @@ local mappings = {
 				key = "Print",
 				command = {
 					"spawn",
-					fmt([['grim -g "$(slurp)" %s && pw-play %s']], screenshot_path, screen_shot_sound),
+					fmt([['grim -g "$(slurp)" %s ; pw-play %s']], screenshot_path, screen_shot_sound),
 				},
 			},
 			-- Take a screenshot and copy to clipboard
 			{
 				mod = "Alt",
 				key = "Print",
-				command = { "spawn", fmt([['grim - | wl-copy && pw-play %s']], screen_shot_sound) },
+				command = { "spawn", fmt([['grim - | wl-copy ; pw-play %s']], screen_shot_sound) },
 			},
 			-- Super+Q to close the focused view
 			{
@@ -370,6 +334,18 @@ local mappings = {
 				mod = { "Super", "Shift" },
 				key = "Q",
 				command = { "spawn", [['swaynag -t warning -m "Exit river?" -b "Yes" "riverctl exit"']] },
+			},
+			-- toggle showing status bar
+			{
+				mod = { "Super", "Shift" },
+				key = "b",
+				command = {
+					"spawn",
+					fmt(
+						[['nu -c "if (ps | where name =~ "levee" | is-empty) { pueue add %s } else { kill (ps | where name =~ "levee" | last | get pid) }"']],
+						status_bar
+					),
+				},
 			},
 			-- Super+Shift+X to lock the screen
 			{
@@ -595,7 +571,7 @@ local mappings = {
 			{
 				mod = "None",
 				key = "XF86AudioPause ",
-				commands = { "spawn", [['mpc pause']] },
+				command = { "spawn", [['mpc pause']] },
 			},
 			{
 				mod = "None",
@@ -657,12 +633,11 @@ local function setup_mappings(mapping_options)
 
 				-- Options -release and -repeat for 'map' and 'unmap' commands
 				local opt = binding.opt
-				if opt ~= "release" and opt ~= "repeat" then
-					opt = ""
-				else
+				if opt == "release" or opt == "repeat" then
 					opt = "-" .. opt
+				else
+					opt = ""
 				end
-
 				exec(fmt("riverctl %s %s %s %s %s %s", map_type, opt, mode, modifiers, binding.key, map_cmd))
 
 				-- Duplicate mappings of mode 'locked' for mode 'normal'
@@ -778,7 +753,6 @@ end
 
 -- Apply settings ──
 run_autostarts(autostarts)
-configure_outputs(outputs)
 configure_inputs(inputs)
 setup_modes(modes)
 set_river_options(river_options)
