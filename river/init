@@ -147,22 +147,21 @@ local wallpaper = popen_in_nu("ls " .. wallpapers_path .. " | where type == file
 local status_bar = "levee pulse backlight battery"
 
 local autostarts = {
+	{ "systemctl --user set-environment XDG_CURRENT_DESKTOP=river" },
+	{ "systemctl --user import-environment DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP" },
+	{ "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=river" },
 	-- Startup programs
 	{ "swaybg", "--mode", "fill", "--image", wallpaper },
 	{ status_bar },
 	{ "gammastep" },
     -- stylua: ignore
-    -- TODO: find  a fix or replace for the wlr-randr locking issues
 	{
 		"swayidle", "-w",
-            "timeout", "300",swaylock,
-		    -- "timeout", "600", [["wlr-randr --output eDP-1 --off"]],
-		    -- "resume", [["wlr-randr --output eDP-1 --on"]],
+        "timeout", "300", swaylock,
 		    "before-sleep", swaylock,
 		    "idlehint", "780",
 	},
 	{ "wl-paste", "--watch", "cliphist", "store" },
-	{ "mako" },
 }
 
 -- Run startup commands
@@ -174,7 +173,9 @@ local function run_autostarts(autostart_commands)
 end
 
 local oneshot_commands = {
-	{ "pueued", "--daemonize" },
+	{ "pueued --daemonize" },
+	{ "kanshi" },
+	{ "mako" },
 }
 
 -- run programs that need to be executed only once
@@ -521,6 +522,18 @@ local mappings = {
 				key = "F",
 				command = "toggle-fullscreen",
 			},
+			-- Sets tags to their previous value on the currently focused output, allowing jumping back and forth between 2 tag setups.
+			{
+				mod = "Super",
+				key = "Tab",
+				command = "focus-previous-tags",
+			},
+			-- Assign the currently focused view the previous tags of the currently focused output.
+			{
+				mod = { "Super", "Shift" },
+				key = "Tab",
+				command = "send-to-previous-tags",
+			},
 		},
 		locked = {
 			-- Eject optical drives
@@ -555,7 +568,6 @@ local mappings = {
 				key = "XF86AudioMute",
 				command = { "spawn", [['wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle']] },
 			},
-
 			-- #To mute/unmute the microphone
 			{
 				mod = "None",
@@ -778,3 +790,4 @@ execl(
 	"-main-ratio",
 	"0.54"
 )
+-- vim: set filetype=lua:
