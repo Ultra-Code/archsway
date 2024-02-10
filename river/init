@@ -158,20 +158,20 @@ local function configure_inputs(input_options)
 end
 
 local river_options = {
+	["set-repeat"] = { 50, 300 },
+	["focus-follows-cursor"] = "normal",
+	["hide-cursor"] = "when-typing enabled",
+	["set-cursor-warp"] = "on-output-change",
+	["attach-mode"] = "top",
+	["default-layout"] = "rivertile",
+
 	-- Theme options
-	["border-width"] = 2,
+	["border-width"] = 0,
 	["border-color-focused"] = "0xeceff4",
 	["border-color-unfocused"] = "0x81a1c1",
 	["border-color-urgent"] = "0xbf616a",
-	["xcursor-theme"] = { "Bibata-Modern-Ice", 24 },
+	["xcursor-theme"] = { "Adwaita", 24 },
 	["background-color"] = "0x2e3440",
-
-	-- Other options
-	["set-repeat"] = { 50, 300 },
-	["focus-follows-cursor"] = "normal",
-	["set-cursor-warp"] = "on-output-change",
-	["attach-mode"] = "bottom",
-	["default-layout"] = "rivertile",
 }
 
 -- Set river's options
@@ -183,10 +183,11 @@ end
 
 local gsettings = {
 	["org.gnome.desktop.interface"] = {
-		["gtk-theme"] = "Nordic",
-		["icon-theme"] = "Papirus-Dark",
+		["gtk-theme"] = "Adwaita-dark",
+		["icon-theme"] = "Adwaita",
 		["cursor-theme"] = river_options["xcursor-theme"][1],
 		["cursor-size"] = river_options["xcursor-theme"][2],
+		["color-scheme"] = "prefer-dark",
 	},
 }
 
@@ -612,6 +613,14 @@ local function setup_mappings(mapping_options)
 	end
 end
 
+--     # Exit sway (logs you out of your Wayland session)
+--     bindsym e exec swaynag -t warning -m \
+--     'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' \
+--     -b 'Yes, exit sway' 'swaymsg exit' -s "No",mode "default"
+-- TODO: redo these
+--     bindsym t exec swaynag -t warning -m 'Sleepy time?!?!' -b 'ZzZz...' 'systemctl suspend-then-hibernate' -s "No",mode "default"
+--     bindsym l exec swaylock -i ~/files/Pictures/Code/27106459-coding-wallpapers.png,mode "default"
+
 ---@alias  UserModes  {[string]: {enter:{mod:string,key:string},commands:({mod:string,key:string,command:string})[],exit:{mod:string,key:string}}}
 ---@type UserModes
 local user_modes = {
@@ -619,7 +628,7 @@ local user_modes = {
 	power_management = {
 		enter = {
 			mod = "Super",
-			key = "M",
+			key = "P",
 		},
 		commands = {
 			{
@@ -804,9 +813,9 @@ execl(
 	"/bin/rivertile",
 	"rivertile",
 	"-view-padding",
-	"1",
+	"0",
 	"-outer-padding",
-	"1",
+	"0",
 	"-main-location",
 	"left",
 	"-main-count",
@@ -814,4 +823,3 @@ execl(
 	"-main-ratio",
 	"0.6"
 )
--- vim: set filetype=lua:
