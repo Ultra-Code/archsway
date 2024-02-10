@@ -1,7 +1,7 @@
 # Nushell Environment Config File
 #
 # version = "0.88.1"
-$env.EDITOR = nvim
+$env.EDITOR = helix
 $env.VISUAL = $env.EDITOR
 
 def create_left_prompt [] {
@@ -177,6 +177,12 @@ export-env {
         $env.COMPOSER_HOME = ($env.XDG_LOCAL_HOME | path join composer)
         load-env {
             PATH: ($env.PATH | prepend ($env.COMPOSER_HOME | path join vendor bin))
+        }
+    }
+
+    if (which pypy3 | get command.0?) == pypy3 {
+        load-env {
+            PYTHONPATH : ($env.PYTHONPATH | prepend (python -c "import sys; print("\\n".join(sys.path))" | find site-packages | get 0))
         }
     }
 }
