@@ -4,6 +4,11 @@ alias du = du --deref --max-depth 1
 
 # Fs operations
 alias md = mkdir --verbose
+
+def --env mc [path: path] {
+     mkdir $path ; cd $path
+}
+
 alias mv = mv --interactive --verbose
 alias cp = cp --interactive --progress --recursive --verbose
 alias rm = rm --interactive-once --recursive --verbose --trash
@@ -68,17 +73,20 @@ alias lr = ls-old "--recursive"
 alias ncm = ^ncmpcpp
 alias bat = ^bat --style=changes
 
-alias Vi = _ --preserve-env nvim
-alias Fm = _ --preserve-env lf
+alias Hx = ^sudo --preserve-env helix
+alias hx = helix
+alias Vi = ^sudo --preserve-env nvim
+alias vi = nvim
+alias Fm = ^sudo --preserve-env lf
 
 alias ln = ^ln --interactive --symbolic --relative --logical --verbose
 alias lnh = ^ln --interactive --logical --verbose
 
 #
 # Mounting and unmount drives without user password
-alias mount = _ systemd-mount --no-block --fsck=no --collect --owner=$USER
-alias umount = _ systemd-umount
-alias lmount = _ /bin/mount
+alias mount = ^sudo systemd-mount --no-block --fsck=no --collect --owner=$USER
+alias umount = ^sudo systemd-umount
+alias lmount = ^sudo /bin/mount
 alias lb = ^lsblk -oPATH,MOUNTPOINTS,LABEL,FSTYPE,SIZE,FSAVAIL,FSUSED,PARTUUID,MAJ:MIN
 
 #
@@ -92,10 +100,10 @@ alias tarxz = ^bsdtar --auto-compress --option="xz:compression-level=9,xz:thread
 
 #
 # # Pacman aliases
-alias pmu = _ pacman -Syu
-alias pmr = _ pacman -Rsn
-alias pmi = _ pacman -S
-alias pmp = sudo pacman -Rcunsv
+alias pmu = ^sudo pacman -Syu
+alias pmr = ^sudo pacman -Rsn
+alias pmi = ^yay -S
+alias pmp = ^sudo pacman -Rcunsv
 def pmfi [] {
     ^pacman -Slq | fzf --multi --preview "pacman -Si {1}" | xargs -ro sudo pacman -S
 }
@@ -116,8 +124,8 @@ def pms [package:string] {
     }
 }
 
-alias pmsi = ^pacman -Sii
-alias pmss = ^pacman -Ss
+alias pmsi = ^yay -Sii
+alias pmss = ^yay -Ss
 alias pmsf = ^pacman -F
 alias pml = ^pacman -Qe
 alias pmlf = ^pacman -Ql
@@ -125,9 +133,9 @@ alias pmlfr = ^pacman -Fl
 alias pmly = ^pacman -Qmq
 alias pmb = ^pacman -Qo
 def pmc [] {
-    _ pacman -Qdtq| _ pacman -Rsn -
+    ^sudo pacman -Qdtq| ^sudo pacman -Rsn -
 }
-alias pmcc = _ pacman -Sc
+alias pmcc = ^sudo pacman -Sc
 
 #
 # #Git aliases
@@ -160,13 +168,13 @@ alias all_services = ^systemctl -at service
 
 # Find symbols in an executable
 def a2l [program_name:string, ...args:string] : nothing -> string {
-    addr2line --functions --inlines --pretty-print --demangle --exe $program_name --addresses ...$args
+    ^addr2line --functions --inlines --pretty-print --demangle --exe $program_name --addresses ...$args
 }
 
 # Zig
 def zr [...arguments:string]: nothing -> nothing {
     if (not (which zig | is-empty )) {
-        zig build run -- $arguments
+        ^zig build run -- $arguments
     }
     else
         print 'install zig on your system'
@@ -192,9 +200,3 @@ def testvivid [] {
 # alias for -
 # TODO: fix and make it work
 alias '-' = cd -
-#
-# # Changing/making/removing directory
-# alias ... = ../..
-# alias .... = ../../..
-# alias ..... = ../../../..
-# alias ...... = ../../../../..
