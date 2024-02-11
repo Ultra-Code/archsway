@@ -2,7 +2,7 @@
         name = Ultra-Code
         email = mega.alpha100@gmail.com
 [core]
-        editor = nvim
+        editor = helix
 [pull]
         rebase = true
 [status]
@@ -14,7 +14,6 @@
         recurseSubmodules = check
         autoSetupRemote = true
 [merge]
-        tool = nvimdiff3
         conflictStyle = diff3
 [mergetool]
         prompt = false
