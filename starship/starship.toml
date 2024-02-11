@@ -368,8 +368,7 @@ detect_env_vars = []
 
 [git_branch]
 format = "[[$symbol $branch(:$remote_branch)](fg:purple)]($style) "
-# symbol = " "
-symbol = " "
+symbol = " "
 style = "bold purple"
 truncation_length = 9223372036854775807
 truncation_symbol = "…"
@@ -1046,8 +1045,7 @@ detect_files = []
 detect_folders = [".terraform"]
 
 [time]
-# format = "at [$time]($style) "
-format = '[[  $time]()]($style)'
+format = '[[  $time]()]($style)'
 style = "bold yellow"
 use_12hr = false
 disabled = false
