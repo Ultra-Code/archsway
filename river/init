@@ -12,10 +12,8 @@ end
 ---@return string
 ---@param cmd string
 ---@nodiscard
-local function popen_in_nu(cmd)
-	local shell = "/bin/nu -c "
-	local shell_cmd = shell .. "'" .. cmd .. "'"
-	local handle = assert(io.popen(shell_cmd))
+local function popen(cmd)
+	local handle = assert(io.popen(cmd))
 	---@type string
 	local output = handle:read("*a")
 	output = trim(output)
@@ -51,10 +49,13 @@ local function spawn_once(command)
 	---@return boolean
 	---@param program_name string
 	local function is_not_spawned(program_name)
-		local is_running = popen_in_nu("ps | where name =~ " .. program_name .. " | is-empty")
+		local is_running =
+			popen(fmt("if [ pgrep %s >/dev/null 2>&1 ]; then echo 'true' ; else echo 'false' ; fi", program_name))
+
 		local stringtoboolean = { ["true"] = true, ["false"] = false }
-		return stringtoboolean[is_running]
+		return not stringtoboolean[is_running]
 	end
+
 	local is_not_running = is_not_spawned(program)
 	if is_not_running then
 		exec(fmt("riverctl spawn '%s'", command))
@@ -74,6 +75,9 @@ local HOME = getenv("HOME")
 local wallpapers_path = HOME .. "/files/Pictures/Code/"
 
 local lock_screen_wallpaper = wallpapers_path .. "Talk-Is-Cheap-Show-Me-The-Code.png"
+
+local wallpaper = wallpapers_path .. popen("ls " .. wallpapers_path .. " | shuf -n 1")
+
 local swaylock = fmt([["swaylock --daemonize --image %s"]], lock_screen_wallpaper)
 
 local screenshot_path = HOME .. '/files/Pictures/Screenshot/Captura-de-pantalla-de_"$(date +%F_%X)".png'
@@ -89,9 +93,7 @@ local file_manager = "lf"
 
 -- Menu Launcher
 local desktop_launcher = fmt([[fuzzel --terminal "%s" --lines 25 --width 54 --show-actions]], terminal)
-local fuzzel_menu = fmt([[fuzzel --terminal "%s" --lines 25 --width 90 --dmenu --index]], terminal)
-
-local wallpaper = popen_in_nu("ls " .. wallpapers_path .. " | where type == file | shuffle | take 1 | get name.0")
+local fuzzel_menu = fmt([[fuzzel --terminal "%s" --lines 25 --width 90 --dmenu]], terminal)
 
 local status_bar = "levee pulse backlight battery"
 
@@ -102,7 +104,7 @@ local autostarts = {
 	-- Startup programs
 	-- stylua: ignore
 	{ "swaybg", "--mode", "fill", "--image", wallpaper },
-	{ status_bar },
+	-- { status_bar }, # don't run status bar on startup
 	{ "gammastep" },
 	-- stylua: ignore
 	{
@@ -124,7 +126,6 @@ local function run_autostarts(autostart_commands)
 end
 
 local oneshot_commands = {
-	{ "pueued --daemonize" },
 	{ "kanshi" },
 }
 
@@ -295,7 +296,9 @@ local mappings = {
 				command = {
 					"spawn",
 					fmt(
-						[['nu -c "if (ps | where name =~ "levee" | is-empty) { pueue add %s } else { kill (ps | where name =~ "levee" | last | get pid) }"']],
+						[["if pgrep %s ; then pkill %s ; else %s & fi"]],
+						string.match(status_bar, "^%w+"),
+						string.match(status_bar, "^%w+"),
 						status_bar
 					),
 				},
