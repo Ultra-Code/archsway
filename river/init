@@ -107,12 +107,12 @@ local autostarts = {
 	-- stylua: ignore
 	{
 		"swayidle", "-w",
-		"timeout", "300", swaylock,
-		"before-sleep", swaylock,
+		"timeout", "300", "waylock",
+		"before-sleep", "waylock",
 		"idlehint", "780",
 	},
 	{ "wl-paste", "--watch", "cliphist", "store" },
-	{ "batsignal", "-w 25", "-c 18", "-d 12", "-f 85", "-m 180", "-D systemctl suspend", "-b" },
+	{ "batsignal", "-w 35", "-c 18", "-d 12", "-f 85", "-m 180", "-D systemctl suspend", "-b" },
 }
 
 -- Run startup commands
