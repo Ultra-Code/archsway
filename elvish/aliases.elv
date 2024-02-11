@@ -30,7 +30,7 @@ edit:add-var mc~ $mc~
 fn rd {|path| rmdir --parents --verbose $path}
 edit:add-var rd~ $rd~
 
-fn rm {|path| e:rm --interactive=once --verbose --recursive $path}
+fn rm {|@path| e:rm --interactive=once --verbose --recursive $@path}
 edit:add-var rm~ $rm~
 
 set edit:command-abbr['bat'] = 'bat --style=numbers,changes'

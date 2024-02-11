@@ -39,6 +39,8 @@ set-env XDG_STATE_HOME (put $E:XDG_LOCAL_HOME | path:join (all) state)
 set-env DOTFILES (put $E:XDG_CONFIG_HOME | path:join (all) dotfiles)
 set E:ELVRC = $E:DOTFILES/elvish
 
+set E:STARSHIP_CONFIG = $E:DOTFILES/starship/starship.toml
+
 set-env GTK_THEME 'Adwaita:dark'
 set-env QT_STYLE_OVERRIDE 'adwaita-dark'
 
