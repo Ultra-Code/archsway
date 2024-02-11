@@ -3,10 +3,15 @@ fn el {
 }
 edit:add-var el~ $el~
 
-set edit:insert:binding[Ctrl-Shift-L] = { edit:clear }
+set edit:insert:binding[Alt-l] = { edit:clear }
+
+fn ls {|@options path|
+  e:ls --color --classify $@options $path
+}
+edit:add-var ls~ $ls~
 
 fn l {|path| 
-    ls --almost-all --color --classify --format=long --human-readable --inode --ignore-backups --ignore=.git $path 
+    ls --almost-all --format=long --human-readable --inode --ignore-backups --ignore=.git $path 
 }
 edit:add-var l~ $l~
 
@@ -15,10 +20,10 @@ fn ll {
 }
 edit:add-var ll~ $ll~
 
-fn lh { ls --hyperlink }
+fn lh { ls --hyperlink . }
 edit:add-var lh~ $lh~
 
-fn lr { l --recursive }
+fn lr { ls --recursive . }
 edit:add-var lr~ $lr~
 
 fn md {|path| mkdir --parents --verbose $path}

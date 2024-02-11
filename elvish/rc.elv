@@ -16,7 +16,7 @@ if (not ?(pgrep -u $E:USER ssh-agent)) {
      cat $E:XDG_RUNTIME_DIR/ssh-agent.env | slurp | eval (all)
 }
 
-if ?(test -S $E:SSH_AUTH_SOCK) {
+if (not ?(test -S $E:SSH_AUTH_SOCK)) {
      cat $E:XDG_RUNTIME_DIR/ssh-agent.env | slurp | eval (all)
 }
 
@@ -28,7 +28,10 @@ if (re:match "/dev/tty[1-3]" (tty)) {
     # for river's log output to be handled by journald
     exec systemd-cat --identifier=river river
 }
+
 set-env EDITOR helix
+
+set-env LS_COLORS (vivid generate alabaster_dark) # alabaster_dark ayu catppuccin-latte iceberg-dark one-dark
 
 set-env XDG_CACHE_HOME (put $E:HOME | path:join (all) .cache)
 set-env XDG_CONFIG_HOME (put $E:HOME | path:join (all) .config)
