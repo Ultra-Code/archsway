@@ -620,9 +620,9 @@ style = "yellow bold"
 disabled = false
 
 [lua]
-format = "[$symbol($version )]($style)"
+format = "[[$symbol](fg:blue)$version]($style)"
 version_format = "v${raw}"
-symbol = "🌙 "
+symbol = "󰢱  "
 style = "bold blue"
 lua_binary = "lua"
 disabled = false
@@ -763,7 +763,7 @@ Redhat = "󱄛 "
 RedHatEnterprise = "󱄛 "
 
 [package]
-format = "is [$symbol$version]($style) "
+format = "[$symbol$version]($style) "
 symbol = "📦 "
 style = "208 bold"
 display_private = false
