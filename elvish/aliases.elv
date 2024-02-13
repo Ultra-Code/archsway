@@ -173,11 +173,13 @@ edit:add-var gmi~ $gmi~
 fn gmu { git submodule update --remote --rebase }
 edit:add-var gmu~ $gmu~
 
+fn gd {|@path| git diff $@path | bat --style=numbers,changes }
+edit:add-var gd~ $gd~
+
 set edit:command-abbr['gcl'] = 'git clone --recurse-submodules'
 set edit:command-abbr['gc'] = 'git commit'
 set edit:command-abbr['ga'] = 'git add'
 set edit:command-abbr['glf'] = 'git log --follow -p'
-set edit:command-abbr['gd'] = 'git diff'
 set edit:command-abbr['gg'] = 'git grep --recurse-submodules -I'
 set edit:command-abbr['gm'] = 'git mv'
 set edit:command-abbr['gr'] = 'git rm -r'
