@@ -35,13 +35,13 @@ disabled = true
 [azure.subscription_aliases]
 
 [battery]
-full_symbol = "󰁹 "
-charging_symbol = "󰂄 " #🔋
-discharging_symbol = "󰂃 "
-unknown_symbol = "󰁽 "
-empty_symbol = "󰂎 "
+format = "[$symbol $percentage]($style)"
+full_symbol = "󰁹"
+charging_symbol = "󰂄" #🔋
+discharging_symbol = "󰂃"
+unknown_symbol = "󰁽"
+empty_symbol = "󰂎"
 disabled = false
-format = "[$symbol $percentage]($style) "
 
 [[battery.display]]
 threshold = 100
@@ -629,10 +629,10 @@ detect_files = [".lua-version"]
 detect_folders = ["lua"]
 
 [memory_usage]
-threshold = 0
-format = "$symbol [$ram( | $swap)]($style) "
-style = "white bold dimmed"
+format = "$symbol [$ram( | $swap)]($style)"
 symbol = "🐏"
+style = "white bold dimmed"
+threshold = 0
 disabled = false
 
 [meson]
@@ -740,25 +740,25 @@ disabled = false
 # style = "fg:#769ff0 bg:#394260"
 
 [os.symbols]
-Windows = "󰍲 "
-Ubuntu = "󰕈 "
-SUSE = " "
-Raspbian = "󰐿 "
-Mint = "󰣭 "
-Macos = "󰀵 "
-Manjaro = " "
-Linux = "󰌽 "
-Gentoo = "󰣨 "
-Fedora = "󰣛 "
-Alpine = " "
-Amazon = " "
-Android = " "
-Arch = "󰣇 "
-Artix = "󰣇 "
-CentOS = " "
-Debian = "󰣚 "
-Redhat = "󱄛 "
-RedHatEnterprise = "󱄛 "
+Windows = "󰍲"
+Ubuntu = "󰕈"
+SUSE = ""
+Raspbian = "󰐿"
+Mint = "󰣭"
+Macos = "󰀵"
+Manjaro = ""
+Linux = "󰌽"
+Gentoo = "󰣨"
+Fedora = "󰣛"
+Alpine = ""
+Amazon = ""
+Android = ""
+Arch = "󰣇"
+Artix = "󰣇"
+CentOS = ""
+Debian = "󰣚"
+Redhat = "󱄛"
+RedHatEnterprise = "󱄛"
 
 [package]
 format = "[$symbol $version]($style) "
@@ -1043,7 +1043,7 @@ detect_files = []
 detect_folders = [".terraform"]
 
 [time]
-format = '[[  $time]()]($style)'
+format = '[[ $time]()]($style)'
 style = "bold yellow"
 use_12hr = false
 disabled = false
