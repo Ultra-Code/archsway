@@ -185,13 +185,13 @@ fn a2l {|@argv|
  }
 edit:add-var a2l~ $a2l~
 
-
-set edit:command-abbr['zb'] = 'zig build -Doptimize=ReleaseFast'
-fn zr {|@argv|
+fn zr {|@exe_options|
     if (has-external zig) { 
-         zig build run -- $argv
+         zig build run -- $@exe_options
      } else { 
         echo 'install zig on your system'
      }
  }
 edit:add-var zr~ $zr~
+
+set edit:command-abbr['zb'] = 'zig build -Doptimize=ReleaseFast'
