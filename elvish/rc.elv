@@ -4,7 +4,7 @@ use str
 use re
 
 # Add local/bin to path env
-if (has-env WSL_DISTRO_NAME) {
+if (has-env WSLENV) {
      set paths = [/usr/local/sbin /usr/local/bin /usr/bin ~/.local/bin]
 } else {
      set paths =  (conj $paths ~/.local/bin)
