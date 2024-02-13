@@ -78,8 +78,6 @@ set edit:prompt = {
 # elvish limited vi editing mode
 set edit:insert:binding[Ctrl-'['] = $edit:command:start~
 
-set paths = [(put $paths | each {|item| order $item} | compact)]
-
 # enable completions from these shells when completions aren't avilable in current shell
 set-env CARAPACE_BRIDGES 'zsh,fish,bash,inshellisense' 
 set-env CARAPACE_HIDDEN 1 # enable completion for experimental commands
@@ -90,3 +88,6 @@ eval (carapace _carapace | slurp)
 eval (starship init elvish)
 
 use ./aliases
+
+# dedup path list
+set paths = [(put $paths | order (all) | compact)]

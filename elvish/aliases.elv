@@ -1,6 +1,4 @@
-fn el {
-     exec elvish
-}
+fn el { exec elvish }
 edit:add-var el~ $el~
 
 set edit:insert:binding[Alt-l] = { edit:clear }
