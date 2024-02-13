@@ -5,20 +5,15 @@ edit:add-var el~ $el~
 
 set edit:insert:binding[Alt-l] = { edit:clear }
 
-fn ls {|@options path|
-  e:ls --color --classify $@options $path
+fn ls {|@options_and_path|
+  e:ls --color --classify $@options_and_path
 }
 edit:add-var ls~ $ls~
 
-fn l {|path| 
-    ls --almost-all --format=long --human-readable --inode --ignore-backups --ignore=.git $path 
+fn l {|@path| 
+    ls --almost-all --format=long --human-readable --inode --ignore-backups --ignore=.git $@path 
 }
 edit:add-var l~ $l~
-
-fn ll {
-  l .
-}
-edit:add-var ll~ $ll~
 
 fn lh { ls --hyperlink . }
 edit:add-var lh~ $lh~
