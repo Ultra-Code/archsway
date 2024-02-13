@@ -25,7 +25,7 @@
         lineNumber = true
         extendedRegexp = true
 [init]
-        defaultBranch = master
+        defaultBranch = main
 [color]
         ui = auto
 
