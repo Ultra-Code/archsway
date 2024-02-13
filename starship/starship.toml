@@ -630,7 +630,7 @@ detect_folders = ["lua"]
 
 [memory_usage]
 format = "$symbol [$ram( | $swap)]($style)"
-symbol = "󰍛"
+symbol = "󰍛 "
 style = "white bold dimmed"
 threshold = 0
 disabled = false
@@ -734,7 +734,7 @@ style = "bold yellow"
 disabled = false
 
 [os]
-format = "[$symbol]($style)"
+format = "[$symbol]($style) "
 style = "bold white"
 disabled = false
 # style = "fg:#769ff0 bg:#394260"
@@ -1043,7 +1043,7 @@ detect_files = []
 detect_folders = [".terraform"]
 
 [time]
-format = '[[ $time]()]($style)'
+format = '[[  $time]()]($style)'
 style = "bold yellow"
 use_12hr = false
 disabled = false
