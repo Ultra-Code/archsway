@@ -630,7 +630,7 @@ detect_folders = ["lua"]
 
 [memory_usage]
 format = "$symbol [$ram( | $swap)]($style)"
-symbol = "🐏"
+symbol = "󰍛"
 style = "white bold dimmed"
 threshold = 0
 disabled = false
