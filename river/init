@@ -225,10 +225,10 @@ local mappings = {
 			-- clear notifications
 			{
 				mod = { "Super" },
-				key = "e",
+				key = "u",
 				command = {
 					"spawn",
-					[[makoctl dismiss --all]],
+					[['makoctl dismiss --all']],
 				},
 			},
 			{
