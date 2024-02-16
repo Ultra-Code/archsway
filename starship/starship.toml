@@ -6,7 +6,7 @@ format = "$os $all"
 right_format = "$localip $shlvl $battery $memory_usage $time"
 continuation_prompt = "[∙](bright-bla0) "
 scan_timeout = 30
-command_timeout = 500
+command_timeout = 3000
 add_newline = true
 follow_symlinks = true
 
@@ -126,7 +126,7 @@ detect_folders = []
 
 [cmd_duration]
 min_time = 2000
-format = "took [$duration]($style) "
+format = " [$duration]($style)"
 style = "yellow bold"
 show_milliseconds = false
 disabled = false
@@ -366,7 +366,7 @@ detect_env_vars = []
 [gcloud.project_aliases]
 
 [git_branch]
-format = "[[$symbol $branch(:$remote_branch)](fg:purple)]($style) "
+format = "[[$symbol $branch(:$remote_branch)](fg:purple)]($style)"
 symbol = " "
 style = "bold purple"
 truncation_length = 9223372036854775807
@@ -395,6 +395,7 @@ disabled = true
 ignore_submodules = false
 
 [git_state]
+format = '\([$state ($progress_current/$progress_total)]($style)\) '
 rebase = "REBASING"
 merge = "MERGING"
 revert = "REVERTING"
@@ -403,7 +404,6 @@ bisect = "BISECTING"
 am = "AM"
 am_or_rebase = "AM/REBASE"
 style = "bold yellow"
-format = '\([$state ($progress_current/$progress_total)]($style)\) '
 disabled = false
 
 [git_status]
