@@ -1,6 +1,4 @@
 $runtime:elvish-path
-/firefox/home/.config/dotfiles/
-/firefox/home/files/repos/oss/zls/
 BROWSER=firefox man -H
 CC=clang CXX=clang++ cmake -DCMAKE_BUILD_TYPE=Release -GNinja -DZIG_NO_LIB=ON ..
 LIBGL_ALWAYS_SOFTWARE=true kitty
@@ -270,3 +268,6 @@ zig test src/packed_and_extern_struct.zig
 zig translate-c -lc unique.c > unique.zig
 zig-update
 zig3 build -p stage4 -Denable-llvm -Dno-lib
+~/.config/dotfiles
+~/.config/helix
+~/files/repos/oss/zls
