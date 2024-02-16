@@ -3,7 +3,6 @@ BROWSER=firefox man -H
 CC=clang CXX=clang++ cmake -DCMAKE_BUILD_TYPE=Release -GNinja -DZIG_NO_LIB=ON ..
 LIBGL_ALWAYS_SOFTWARE=true kitty
 MESA_LOADER_DRIVER_OVERRIDE=d3d12 __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json kitty
-_ $(whence sshd) -Dddd -p 2222
 _ bootctl list
 _ btrfs filesystem df /
 _ btrfs subvolume create /ultracode
@@ -22,6 +21,8 @@ _ nft list ruleset
 _ nmap -sV -Pn --reason 129.232.157.42
 _ nmap -sV -Pn -p 62226,63333 --reason 129.232.157.42
 _ pacman -D --asdeps duktape
+_ pacman -S --overwrite "*" libx11
+_ pacman -S --overwrite "*man*,*include*,*lib*,*share*,*.so" libx11
 _ pacman -U ~/.local/share/makepkg/packages/zig-dev-bin-20220626-1-x86_64.pkg.tar.zst
 _ ss -tunlp
 _ sshd -T
@@ -34,6 +35,8 @@ _ udevadm control --log-priority=debug
 _ userdel ultracode
 _ usermod -aG docker firefox
 aria2c -x2 -c -i movies.txt
+asciinema play elvish_completion_take_20sec.cast
+asciinema upload elvish_completion_take_20sec.cast
 bg %1
 bsdtar --auto-compress --option="zstd:compression-level=22,zstd:threads=0" --exclude-vcs --exclude-from .gitignore -cvf asm.tar.zst cal/ make/ newasm
 cal 08 2023
@@ -49,8 +52,10 @@ cargo run
 cargo test
 chafa --format=sixels ~/files/Pictures/47.jpg
 chafa --symbols ~/files/Pictures/47.jpg
+chown -R www-data:www-data storage
 clang++ -g -std=c++2b -fsanitize=address,bounds recursion.cxx -o exe
 cmake -DCMAKE_BUILD_TYPE=Release -DZIG_NO_LIB=ON -GNinja -S ..
+composer create-project laravel/laravel laralearn
 composer global info
 composer global list
 composer global require "phpactor/phpactor:2023.12.03.0"
@@ -68,17 +73,39 @@ coredumpctl list
 curl -L -# -o pretty-php.phar https://github.com/lkrms/pretty-php/releases/latest/download/pretty-php.phar
 curl -O https://raw.githubusercontent.com/nothings/stb/master/stb_image.h
 curl icanhazip.com
+docker compose config
 docker compose down
-docker compose up
-docker compose up -d
+docker compose logs app
+docker compose ps
+docker compose restart nginx php-appdocker exec --user postgres -it php-app /bin/sh
+docker exec -it nginx 'curl php-app:9000'
+docker exec -it nginx /bin/sh
+docker exec -it php-app 'ss -tunlp'
+docker exec -u 0 -it pgadmin /bin/sh
+docker exec -v dbdata:/var/lib/postgresql/data postgres:16.1-alpine sh
 docker images
 docker info
+docker inspect pgsql | grep IP
+docker kill mysql
 docker logs
+docker logs postgress-db
+docker network inspect docker_default
+docker network ls
 docker ps
 docker ps -a
+docker restart nginx
+docker rm pgsql
+docker rmi bc861cf238f2
+docker run -i --rm postgres:16.1-alpine cat /usr/local/share/postgresql/postgresql.conf.sample > docker/postgres.conf
 docker run -it --rm alpine
 docker run -it --rm alpine sh -c "echo Im in arch docker"
+docker run -it --rm php:8.3-fpm-alpine cat /etc/group | grep www
+docker run -it -u postgres -v dbdata:/var/lib/postgresql/data postgres:16.1-alpine sh
+docker system prune -a
+docker volume inspect docker_dbdata
 docker volume ls
+docker volume rm docker_dbdata
+docker volume update
 ea
 echo (styled warning: red) bumpy road
 ee
@@ -110,6 +137,7 @@ git switch revive-translateC
 git tag -a v0.3.0
 glxinfo |grep opengl
 gpg --keyserver keys.openpgp.org --recv-keys CA7C2C7A30C8E8E1274A847651C67305FFC2E5C0
+grep 9000 /etc/services
 gsettings list-recursively org.gnome.desktop.interface
 helix --health toml
 ip a
@@ -143,6 +171,10 @@ kitty +kitten themes
 kitty +list-fonts --psnames | grep "Iosevka Term"
 ldd --version
 loginctl session-status
+make
+make install
+make uninstall
+makepkg --syncdeps --rmdeps
 makoctl dismiss all
 mariadb -u ultracode -p < Downloads/access_to_basic_services.sql
 math:pow 10 3
@@ -159,6 +191,7 @@ objcopy -v --add-gnu-debuglink=mode.debug mode
 objcopy -v --only-keep-debug mode mode.debug
 p10k configure
 php -S localhost:8000 -t src/
+php artisan serve &
 ping 127.232.157.42 -c 4
 ping 129.232.157.42 -c 4
 pkg-config --cflags --libs glfw3
@@ -216,11 +249,10 @@ ss --tcp --udp --listening --processes --numeric
 ssh -G localhost
 ssh -vvv kekele@129.232.157.42 -p 2233
 ssh kekele -L 127.0.0.1:8080:129.232.157.42:63333 -N
-ssh kekele@129.232.157.42 -p 8226 -L 127.0.0.1:3333:129.232.157.42:3333 -N
+ssh kekele@129.232.157.42 -p 62226 -L 127.0.0.1:3333:129.232.157.42:3333 -N
 ssh-add -l -E sha256
 ssh-copy-id -i ~/.ssh/id_ed25519 -p 2222 kekele@129.232.157.42
-ssh-copy-id -i ~/.ssh/id_ed25519 -p 2233 kekele@129.232.157.4
-ssh-keygen -ted25519 -C "mega.alpha100@gmail.com"
+ssh-keygen -t ed25519 -C "mega.alpha100@gmail.com"
 str:join ',' ['hello' world]
 strip mode
 su -l $USER #relogin as $USER , loading all groups and changes

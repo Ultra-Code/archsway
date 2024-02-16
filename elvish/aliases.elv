@@ -38,10 +38,14 @@ fn history-export {
 }
 edit:add-var history-export~ $history-export~
 
-fn history-diff {
+fn store-hist {
   history-export stdout> /tmp/history
   # https://stackoverflow.com/questions/29244351/how-to-sort-a-file-in-place#29244408
   order < $E:DOTFILES/elvish/history | compact | to-lines stdout> /tmp/oldhistory ; e:mv /tmp/oldhistory $E:DOTFILES/elvish/history
+}
+
+fn history-diff {
+  store-hist
   # https://www.oreilly.com/library/view/bash-cookbook/0596526784/ch17s16.html
   # Show lines in current history which aren't in elvish/history
   comm -23 /tmp/history  $E:DOTFILES/elvish/history  
@@ -50,6 +54,7 @@ edit:add-var history-diff~ $history-diff~
 
 fn history-import {  
   use store
+  store-hist
   # update current history with elvish/history
   var _ = ?(comm -23 $E:DOTFILES/elvish/history /tmp/history stdout> /tmp/diffhistory)
   cat /tmp/diffhistory | peach {|hist| store:add-cmd $hist}
