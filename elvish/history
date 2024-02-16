@@ -1,4 +1,5 @@
 $runtime:elvish-path
+(which sshd) -Dddd -p 2222
 BROWSER=firefox man -H
 CC=clang CXX=clang++ cmake -DCMAKE_BUILD_TYPE=Release -GNinja -DZIG_NO_LIB=ON ..
 LIBGL_ALWAYS_SOFTWARE=true kitty
