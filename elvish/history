@@ -4,37 +4,6 @@ BROWSER=firefox man -H
 CC=clang CXX=clang++ cmake -DCMAKE_BUILD_TYPE=Release -GNinja -DZIG_NO_LIB=ON ..
 LIBGL_ALWAYS_SOFTWARE=true kitty
 MESA_LOADER_DRIVER_OVERRIDE=d3d12 __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json kitty
-_ bootctl list
-_ btrfs filesystem df /
-_ btrfs subvolume create /ultracode
-_ btrfs subvolume delete /rootfs
-_ btrfs subvolume list /
-_ btrfs subvolume list /rootfs
-_ btrfs subvolume snapshot /mnt/ /rootfs
-_ dmidecode -t bios
-_ dmidecode -t system
-_ dockerd -D -l debug
-_ libinput debug-events --show-keycodes
-_ mkinitcpio -p linux-zen
-_ modinfo -p i915
-_ nft add rule inet filter input tcp dport 2222 accept
-_ nft list ruleset
-_ nmap -sV -Pn --reason 129.232.157.42
-_ nmap -sV -Pn -p 62226,63333 --reason 129.232.157.42
-_ pacman -D --asdeps duktape
-_ pacman -S --overwrite "*" libx11
-_ pacman -S --overwrite "*man*,*include*,*lib*,*share*,*.so" libx11
-_ pacman -U ~/.local/share/makepkg/packages/zig-dev-bin-20220626-1-x86_64.pkg.tar.zst
-_ ss -tunlp
-_ sshd -T
-_ sshd -t
-_ systemctl daemon-reload
-_ systemctl kill -s HUP systemd-logind
-_ systemctl start dictd
-_ systemctl start reflector
-_ udevadm control --log-priority=debug
-_ userdel ultracode
-_ usermod -aG docker firefox
 aria2c -x2 -c -i movies.txt
 asciinema play elvish_completion_take_20sec.cast
 asciinema upload elvish_completion_take_20sec.cast
@@ -257,6 +226,37 @@ ssh-keygen -t ed25519 -C "mega.alpha100@gmail.com"
 str:join ',' ['hello' world]
 strip mode
 su -l $USER #relogin as $USER , loading all groups and changes
+sudo bootctl list
+sudo btrfs filesystem df /
+sudo btrfs subvolume create /ultracode
+sudo btrfs subvolume delete /rootfs
+sudo btrfs subvolume list /
+sudo btrfs subvolume list /rootfs
+sudo btrfs subvolume snapshot /mnt/ /rootfs
+sudo dmidecode -t bios
+sudo dmidecode -t system
+sudo dockerd -D -l debug
+sudo libinput debug-events --show-keycodes
+sudo mkinitcpio -p linux-zen
+sudo modinfo -p i915
+sudo nft add rule inet filter input tcp dport 2222 accept
+sudo nft list ruleset
+sudo nmap -sV -Pn --reason 129.232.157.42
+sudo nmap -sV -Pn -p 62226,63333 --reason 129.232.157.42
+sudo pacman -D --asdeps duktape
+sudo pacman -S --overwrite "*" libx11
+sudo pacman -S --overwrite "*man*,*include*,*lib*,*share*,*.so" libx11
+sudo pacman -U ~/.local/share/makepkg/packages/zig-dev-bin-20220626-1-x86_64.pkg.tar.zst
+sudo ss -tunlp
+sudo sshd -T
+sudo sshd -t
+sudo systemctl daemon-reload
+sudo systemctl kill -s HUP systemd-logind
+sudo systemctl start dictd
+sudo systemctl start reflector
+sudo udevadm control --log-priority=debug
+sudo userdel ultracode
+sudo usermod -aG docker firefox
 swaymsg -rt get_inputs
 swaymsg -rt get_tree | jq '.nodes[1].nodes[2] | {id : .id,type : .type ,orientation : .orientation , focused : .focused , layout : .layout , border : .border , name : .name ,window : .window , nodes : .nodes[0].nodes[0]}'
 swaymsg -t command -- exec "iwctl station wlan0 disconnect 'Ultra Malpha'"
