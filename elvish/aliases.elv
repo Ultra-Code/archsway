@@ -112,13 +112,13 @@ edit:add-var tarxz~ $tarxz~
 fn du { e:du -h -d 1 }
 edit:add-var du~ $du~
 
-fn ee { (external $E:EDITOR) $E:ELVRC/rc.elv }
+fn ee { $E:EDITOR $E:ELVRC/rc.elv }
 edit:add-var ee~ $ee~
 
-fn ea { (external $E:EDITOR) $E:ELVRC/aliases.elv }
+fn ea { $E:EDITOR $E:ELVRC/aliases.elv }
 edit:add-var ea~ $ea~
 
-fn er { (external $E:EDITOR) $E:DOTFILES/river/init }
+fn er { $E:EDITOR $E:DOTFILES/river/init }
 edit:add-var er~ $er~
 
 #Pacman aliases

@@ -29,7 +29,7 @@ if (re:match "/dev/tty[1-3]" (tty)) {
     exec systemd-cat --identifier=river river
 }
 
-set-env EDITOR helix
+set-env EDITOR /bin/helix
 
 set-env LS_COLORS (vivid generate alabaster_dark) # alabaster_dark ayu catppuccin-latte iceberg-dark one-dark
 
