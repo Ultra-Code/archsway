@@ -214,13 +214,30 @@ local mappings = {
 			-- Terminal emulators
 			{
 				mod = "Super",
-				key = "Return",
+				key = "T",
 				command = { "spawn", fmt([['%s']], terminal) },
 			},
 			{
 				mod = { "Super", "Shift" },
 				key = "Return",
 				command = { "spawn", fmt([['%s --class "coding"']], terminal) },
+			},
+			-- clear notifications
+			{
+				mod = { "Super" },
+				key = "e",
+				command = {
+					"spawn",
+					[[makoctl dismiss --all]],
+				},
+			},
+			{
+				mod = { "Super" },
+				key = "r",
+				command = {
+					"spawn",
+					[[~/.config/river/init]],
+				},
 			},
 			{
 				mod = { "Super" },
