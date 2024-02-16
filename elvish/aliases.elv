@@ -33,6 +33,27 @@ edit:add-var rm~ $rm~
 
 set edit:command-abbr['bat'] = 'bat --style=numbers,changes'
 
+fn history-export {
+  edit:command-history | peach {|hist| put $hist[cmd]} | order | compact | to-lines
+}
+edit:add-var history-export~ $history-export~
+
+fn history-diff {
+  history-export stdout> /tmp/history
+  # https://stackoverflow.com/questions/29244351/how-to-sort-a-file-in-place#29244408
+  order < $E:DOTFILES/elvish/history | compact | to-lines stdout> /tmp/oldhistory ; e:mv /tmp/oldhistory $E:DOTFILES/elvish/history
+  # https://www.oreilly.com/library/view/bash-cookbook/0596526784/ch17s16.html
+  # Only show lines in the left file
+  comm -23 /tmp/history  $E:DOTFILES/elvish/history  
+}  
+edit:add-var history-diff~ $history-diff~
+
+fn history-import {  
+  use store
+  history-diff | peach {|hist| store:add-cmd $hist}
+}
+edit:add-var history-import~ $history-import~
+
 fn ncm { ncmpcpp }
 edit:add-var ncm~ $ncm~
 
@@ -175,7 +196,7 @@ set edit:command-abbr['ga'] = 'git add'
 set edit:command-abbr['glf'] = 'git log --follow -p'
 set edit:command-abbr['gg'] = 'git grep --recurse-submodules -I'
 set edit:command-abbr['gm'] = 'git mv'
-set edit:command-abbr['gr'] = 'git rm -r'
+set edit:command-abbr['grm'] = 'git rm -r'
 set edit:command-abbr['gsh'] = 'git show'
 
 fn a2l {|@argv|
