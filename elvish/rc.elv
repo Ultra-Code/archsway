@@ -80,7 +80,6 @@ set edit:insert:binding[Ctrl-'['] = $edit:command:start~
 
 # enable completions from these shells when completions aren't avilable in current shell
 set-env CARAPACE_BRIDGES 'zsh,fish,bash,inshellisense' 
-set-env CARAPACE_HIDDEN 1 # enable completion for experimental commands
 set-env CARAPACE_MATCH 1 # make completion matching case insensitive
 set-env CARAPACE_ENV 1 # enable environment variable completion
 eval (carapace _carapace | slurp)
