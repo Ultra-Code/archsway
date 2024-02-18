@@ -36,7 +36,7 @@ set edit:command-abbr['bat'] = 'bat --style=numbers,changes'
 fn history-export {
   edit:command-history | peach {|hist| put $hist[cmd]} | order | compact | to-lines
 }
-edit:add-var history-export~ $history-export~
+edit:add-var he~ $history-export~
 
 fn store-hist {
   history-export stdout> /tmp/history
@@ -50,7 +50,7 @@ fn history-diff {
   # Show lines in current history which aren't in elvish/history
   comm -23 /tmp/history  $E:DOTFILES/elvish/history  
 }  
-edit:add-var history-diff~ $history-diff~
+edit:add-var hd~ $history-diff~
 
 fn history-import {  
   use store
@@ -59,24 +59,25 @@ fn history-import {
   var _ = ?(comm -23 $E:DOTFILES/elvish/history /tmp/history stdout> /tmp/diffhistory)
   cat /tmp/diffhistory | peach {|hist| store:add-cmd $hist}
 }
-edit:add-var history-import~ $history-import~
+edit:add-var hi~ $history-import~
 
 fn ncm { ncmpcpp }
 edit:add-var ncm~ $ncm~
 
-set edit:command-abbr['hx'] = 'helix'
-set edit:command-abbr['Hx'] = 'sudo --preserve-env helix'
+fn hx {|@files| $E:EDITOR $@files }
+edit:add-var hx~ $hx~
+
+fn Hx {|@files| sudo --preserve-env $E:EDITOR $@files}
+edit:add-var Hx~ $Hx~
 
 fn ln {|source destination| e:ln --interactive --symbolic --relative --logical --verbose $source $destination }
 edit:add-var ln~ $ln~
 
-fn cp {|source destination| e:cp --interactive --dereference --recursive --update --verbose --reflink=auto --sparse=auto --archive $source $destination}
+fn cp {|@source destination| e:cp --interactive --dereference --recursive --update --verbose --reflink=auto --sparse=auto --archive $@source $destination}
 edit:add-var cp~ $cp~
 
 fn mv {|@source destination| e:mv --interactive --update --verbose $@source $destination}
 edit:add-var mv~ $mv~
-# right_format = "$memory_usage$os$localip$shell$shlvl$time"
-
 
 #mounting and unmount drives without user password
 fn mount {|point| sudo systemd-mount --no-block --fsck=no --collect --owner=$E:USER $point}
@@ -194,10 +195,12 @@ edit:add-var gmi~ $gmi~
 fn gmu { git submodule update --remote --rebase }
 edit:add-var gmu~ $gmu~
 
-fn gd {|@path| git diff $@path | bat --style=numbers,changes }
-edit:add-var gd~ $gd~
+fn gcl {|repo| 
+  git clone --filter=tree:0 --recurse-submodules --also-filter-submodules $repo 
+}
+edit:add-var gcl~ $gcl~
 
-set edit:command-abbr['gcl'] = 'git clone --recurse-submodules'
+set edit:command-abbr['gd'] = 'git diff'
 set edit:command-abbr['gc'] = 'git commit'
 set edit:command-abbr['ga'] = 'git add'
 set edit:command-abbr['glf'] = 'git log --follow -p'
