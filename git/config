@@ -29,4 +29,5 @@
 [color]
         ui = auto
 
-; vim: set filetype=gitconfig: --space before vim and ending with : is required
+[clone]
+        filterSubmodules = true
