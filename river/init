@@ -74,11 +74,11 @@ local HOME = getenv("HOME")
 -- Path to a collection of wallpapers
 local wallpapers_path = HOME .. "/files/Pictures/Code/"
 
-local lock_screen_wallpaper = wallpapers_path .. "Talk-Is-Cheap-Show-Me-The-Code.png"
-
 local wallpaper = wallpapers_path .. popen("ls " .. wallpapers_path .. " | shuf -n 1")
 
-local swaylock = fmt([["swaylock --daemonize --image %s"]], lock_screen_wallpaper)
+-- local lock_screen_wallpaper = wallpapers_path .. "Talk-Is-Cheap-Show-Me-The-Code.png"
+-- local swaylock = fmt([["swaylock --daemonize --image %s"]], lock_screen_wallpaper)
+local waylock = "waylock"
 
 local screenshot_path = HOME .. '/files/Pictures/Screenshot/Captura-de-pantalla-de_"$(date +%F_%X)".png'
 
@@ -109,8 +109,8 @@ local autostarts = {
 	-- stylua: ignore
 	{
 		"swayidle", "-w",
-		"timeout", "300", "waylock",
-		"before-sleep", "waylock",
+		"timeout", "300", waylock,
+		"before-sleep", waylock,
 		"idlehint", "780",
 	},
 	{ "wl-paste", "--watch", "cliphist", "store" },
@@ -225,7 +225,7 @@ local mappings = {
 			-- clear notifications
 			{
 				mod = { "Super" },
-				key = "u",
+				key = "U",
 				command = {
 					"spawn",
 					[['makoctl dismiss --all']],
@@ -233,7 +233,7 @@ local mappings = {
 			},
 			{
 				mod = { "Super" },
-				key = "r",
+				key = "R",
 				command = {
 					"spawn",
 					[[~/.config/river/init]],
@@ -241,7 +241,7 @@ local mappings = {
 			},
 			{
 				mod = { "Super" },
-				key = "e",
+				key = "E",
 				command = {
 					"spawn",
 					fmt([['%s --class "fm" --title "file manager" nu -c "%s"']], terminal, file_manager),
@@ -250,7 +250,7 @@ local mappings = {
 			-- Browser
 			{
 				mod = { "Super" },
-				key = "b",
+				key = "B",
 				command = { "spawn", [[firefox]] },
 			},
 			-- Application launcher
@@ -304,12 +304,18 @@ local mappings = {
 			{
 				mod = { "Super", "Shift" },
 				key = "Q",
-				command = { "spawn", [['swaynag -t warning -m "Exit river?" -b "Yes" "riverctl exit"']] },
+				command = { "spawn", [['swaynag -t warning -m "Exit river?" -b "Yes" "riverctl exit" -s "No"']] },
+			},
+			-- Super+Shift+X to lock the screen
+			{
+				mod = { "Super", "Shift" },
+				key = "X",
+				command = { "spawn", fmt("%s", waylock) },
 			},
 			-- toggle showing status bar
 			{
 				mod = { "Super", "Shift" },
-				key = "b",
+				key = "B",
 				command = {
 					"spawn",
 					fmt(
@@ -319,12 +325,6 @@ local mappings = {
 						status_bar
 					),
 				},
-			},
-			-- Super+Shift+X to lock the screen
-			{
-				mod = { "Super", "Shift" },
-				key = "X",
-				command = { "spawn", swaylock },
 			},
 			-- Super+{J,K} to focus next/previous view in the layout stack
 			{
@@ -370,7 +370,7 @@ local mappings = {
 				key = "N",
 				command = { "send-to-output", "next" },
 			},
-			-- Super+E to bump the focused view to the top of the layout stack
+			-- Super+Shift+E to bump the focused view to the top of the layout stack
 			{
 				mod = { "Super", "Shift" },
 				key = "E",
@@ -633,18 +633,10 @@ local function setup_mappings(mapping_options)
 	end
 end
 
---     # Exit sway (logs you out of your Wayland session)
---     bindsym e exec swaynag -t warning -m \
---     'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' \
---     -b 'Yes, exit sway' 'swaymsg exit' -s "No",mode "default"
--- TODO: redo these
---     bindsym t exec swaynag -t warning -m 'Sleepy time?!?!' -b 'ZzZz...' 'systemctl suspend-then-hibernate' -s "No",mode "default"
---     bindsym l exec swaylock -i ~/files/Pictures/Code/27106459-coding-wallpapers.png,mode "default"
-
 ---@alias  UserModes  {[string]: {enter:{mod:string,key:string},commands:({mod:string,key:string,command:string})[],exit:{mod:string,key:string}}}
 ---@type UserModes
 local user_modes = {
-	-- set $power_mangement "(s)uspend,hy(b)rid-sleep,(h)ibernate,(r)eboot,(e)xit,suspend-(t)hen-hibernate,(l)ock,(R)UEFI,(S)hutdown"
+	-- set $power_mangement "(s)uspend,hy(b)rid-sleep,(h)ibernate,(r)eboot,suspend-(t)hen-hibernate,(l)ock,(R)UEFI,(S)hutdown"
 	power_management = {
 		enter = {
 			mod = "Super",
@@ -653,32 +645,37 @@ local user_modes = {
 		commands = {
 			{
 				mod = "None",
-				key = "s",
+				key = "S",
 				command = "systemctl suspend",
 			},
 			{
 				mod = "None",
-				key = "b",
+				key = "T",
+				command = [['swaynag -t warning -m "Sleepy time?!?!" -b "ZzZz..." "systemctl suspend-then-hibernate" -s "No"']],
+			},
+			{
+				mod = "None",
+				key = "B",
 				command = "systemctl hybrid-sleep",
 			},
 			{
 				mod = "None",
-				key = "h",
+				key = "H",
 				command = "systemctl hibernate",
 			},
 			{
 				mod = "None",
-				key = "r",
+				key = "R",
 				command = "systemctl reboot",
 			},
 			{
 				mod = "Shift",
-				key = "r",
+				key = "R",
 				command = "systemctl reboot --firmware-setup",
 			},
 			{
 				mod = "Shift",
-				key = "s",
+				key = "S",
 				command = "systemctl poweroff -i",
 			},
 		},
@@ -766,11 +763,11 @@ local function scratchpad_tag_mappings()
 	-- config, but rivers default uses the first 9 tags.
 	local scratch_tags = bit.lshift(1, 23)
 
-	-- Toggle the scratchpad with Super+P
-	exec(fmt("riverctl map normal Super P toggle-focused-tags %s", scratch_tags))
+	-- Toggle the scratchpad with Super+S
+	exec(fmt("riverctl map normal Super S toggle-focused-tags %s", scratch_tags))
 
-	-- Send windows to the scratchpad with Super+Shift+P
-	exec(fmt("riverctl map normal Super+Shift P set-view-tags %s", scratch_tags))
+	-- Send windows to the scratchpad with Super+Shift+S
+	exec(fmt("riverctl map normal Super+Shift S set-view-tags %s", scratch_tags))
 
 	-- Set spawn tagmask to ensure new windows don't have the scratchpad tag unless explicitly set.
 	local all_but_scratch_tag = bit.bxor((bit.lshift(1, 32) - 1), scratch_tags)
