@@ -9,8 +9,6 @@ For new setup home should be a subvolume/partition mounted on the /root which is
 and FILES partition mounted to home/{data,/files} FILES should be 120-140GiB and root should have a max of 60GiB
 **NOTE: make sure to mount btrfs with compression zstd on first mount on live iso**
 
->> export ZDOTDIR in /etc/zsh/zshenv to $HOME/.config/dotfiles
-
 ## needed base system modules
 
 - systemd-boot as boot manager
@@ -23,13 +21,13 @@ and FILES partition mounted to home/{data,/files} FILES should be 120-140GiB and
     - f2fs-tools
     - intel-ucode
     - iwd
-    - kitty
+    - kitty/foot
     - linux-firmware
     - linux-zen
     - man-db [man-pages](https://wiki.archlinux.org/title/Man_page)
-    - neovim (for config clone [awesome-neovim to $XDG_CONFIG_HOME/nvim](https://github.com/Ultra-Code/awesome-neovim.git))
+    - helix/neovim (for config clone [awesome-helix to $XDG_CONFIG_HOME/helix](https://github.com/Ultra-Code/awesome-helix.git) or [awesome-neovim to $XDG_CONFIG_HOME/nvim](https://github.com/Ultra-Code/awesome-neovim.git))
     - sudo
-    - elvish or nushell or fish or zsh (set default shell with `chsh -s $(which shellname)`)
+    - elvish/fish/nushell/zsh (set default shell with `chsh -s $(which shellname)`)
 
 ### basic configuration
 
