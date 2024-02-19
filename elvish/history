@@ -301,6 +301,3 @@ zig test src/packed_and_extern_struct.zig
 zig translate-c -lc unique.c > unique.zig
 zig-update
 zig3 build -p stage4 -Denable-llvm -Dno-lib
-~/.config/dotfiles
-~/.config/helix
-~/files/repos/oss/zls
