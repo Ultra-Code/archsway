@@ -73,7 +73,7 @@ edit:add-var Hx~ $Hx~
 fn ln {|source destination| e:ln --interactive --symbolic --relative --logical --verbose $source $destination }
 edit:add-var ln~ $ln~
 
-fn cp {|@source destination| e:cp --interactive --dereference --recursive --update --verbose --reflink=auto --sparse=auto --archive $@source $destination}
+fn cp {|@source destination| e:cp --interactive --dereference --recursive --verbose --reflink=auto --sparse=auto --archive $@source $destination}
 edit:add-var cp~ $cp~
 
 fn mv {|@source destination| e:mv --interactive --update --verbose $@source $destination}
