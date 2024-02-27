@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/env bash
 
 ROOT=$HOME/.local/zig
 REPO_URL=https://ziglang.org/download/index.json
