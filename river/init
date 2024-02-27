@@ -50,7 +50,7 @@ local function spawn_once(command)
 	---@param program_name string
 	local function is_not_spawned(program_name)
 		local is_running =
-			popen(fmt("if [ pgrep %s >/dev/null 2>&1 ]; then echo 'true' ; else echo 'false' ; fi", program_name))
+			popen(fmt("if pgrep %s >/dev/null 2>&1 ; then echo 'true' ; else echo 'false' ; fi", program_name))
 
 		local stringtoboolean = { ["true"] = true, ["false"] = false }
 		return not stringtoboolean[is_running]
@@ -103,18 +103,18 @@ local autostarts = {
 	{ "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=river" },
 	-- Startup programs
 	-- stylua: ignore
-	{ "swaybg", "--mode", "fill", "--image", wallpaper },
-	-- { status_bar }, # don't run status bar on startup
-	{ "gammastep" },
-	-- stylua: ignore
 	{
 		"swayidle", "-w",
 		"timeout", "300", waylock,
 		"before-sleep", waylock,
 		"idlehint", "780",
 	},
+	{ "swaybg", "--mode", "fill", "--image", wallpaper },
+	-- { status_bar }, # don't run status bar on startup
+	-- wlsunset -t 2500 -T 6500 -l 5.5502 -L -0.2174 -S 07:00 -s 18:00 -d 1800 -g 1.0
+	{ "wlsunset", "-t 2500", "-l 5.5502", "-L -0.2174" },
 	{ "wl-paste", "--watch", "cliphist", "store" },
-	{ "batsignal", "-w 35", "-c 18", "-d 12", "-f 85", "-m 180", "-D systemctl suspend", "-b" },
+	{ "batsignal", "-b", "-e", "-w 35", "-c 18", "-d 12", "-f 85", "-m 180", "-D systemctl suspend" },
 }
 
 -- Run startup commands
@@ -785,7 +785,8 @@ local window_rules = {
 		},
 		["title"] = {
 			"Picture-in-Picture",
-			-- 'About *',
+			"About Mozilla Firefox",
+			"Extension: (Bitwarden - Free Password Manager) - Bitwarden — Mozilla Firefox",
 		},
 	},
 	["csd-filter-add"] = {
@@ -799,7 +800,7 @@ local function setup_winow_rules(window_ui_rules)
 	for key, value in pairs(window_ui_rules) do
 		for type, patterns in pairs(value) do
 			for _, pattern in ipairs(patterns) do
-				exec(fmt("riverctl %s %s %s", key, type, pattern))
+				exec(fmt("riverctl %s %s '%s'", key, type, pattern))
 			end
 		end
 	end
