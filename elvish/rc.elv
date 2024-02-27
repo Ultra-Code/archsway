@@ -1,3 +1,4 @@
+use os
 use path 
 use runtime
 use str
@@ -50,14 +51,20 @@ set-env QT_STYLE_OVERRIDE 'adwaita-dark'
 set-env MANROFFOPT '-c'
 set-env MANPAGER $runtime:elvish-path" -c 'col --no-backspaces --spaces | bat -l man --plain'"
 
-if ?(test -d ~/.local/cargo) {
+if (os:is-dir ~/.local/cargo) {
      set E:CARGO_HOME = (put $E:XDG_LOCAL_HOME | path:join (all) cargo)
      set-env RUSTUP_HOME (put $E:XDG_LOCAL_HOME | path:join (all) rustup)
      set-env PATH  (put $E:CARGO_HOME | path:join (all) bin | conj $paths (all) | str:join ':' (all))
 
 }
 
-if ?(test -d ~/.local/bun) {
+if (os:is-dir ~/.local/go) {
+     set E:GOPATH = (put $E:XDG_LOCAL_HOME | path:join (all) go)
+     set-env GOBIN (put $E:GOPATH | path:join (all) bin)
+     set-env PATH  (put $E:GOBIN | conj $paths (all) | str:join ':' (all))
+}
+
+if (os:is-dir ~/.local/bun) {
      set E:BUN_INSTALL = $E:XDG_LOCAL_HOME/bun
      set paths =  (put $E:BUN_INSTALL | path:join (all) bin | conj $paths (all))
 }
@@ -66,14 +73,6 @@ if (has-external composer) {
    set E:COMPOSER_HOME = (put $E:XDG_LOCAL_HOME | path:join (all) composer)
    set paths =  (put $E:COMPOSER_HOME | path:join (all) vendor bin | conj $paths (all))
 }
-
-set edit:rprompt = (constantly ^
-     (styled (whoami)✸(hostnamectl hostname) inverse))
-
-set edit:prompt = {
-     tilde-abbr $pwd
-     styled '❱ ' bright-red
-  }
 
 # elvish limited vi editing mode
 set edit:insert:binding[Ctrl-'['] = $edit:command:start~
