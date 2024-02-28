@@ -2,16 +2,13 @@
 use os
 use path
 use str
+use flag
 
 var ZIG_ROOT = $E:HOME/.local/zig
+var BIN_DIR = $E:XDG_LOCAL_HOME/bin
 var TMPDIR = /tmp/zig-update
 var ZIG_JSON_URL = https://ziglang.org/download/index.json
 var ARCH = x86_64-linux
-var BRANCH = master
-var NEW_ZIG_DIR = $ZIG_ROOT/zig-$BRANCH
-var BIN_DIR = $E:XDG_LOCAL_HOME/bin
-var FILENAME = (if (==s $BRANCH "master") { put zig-dev } else { put zig-$BRANCH })
-var NEW_ZIG_EXE = $BIN_DIR/$FILENAME
 
 fn start {
     if (not (os:is-dir $ZIG_ROOT)) {
@@ -24,13 +21,16 @@ fn start {
     }
 }
 
-fn extract-info {
+fn extract-info {|branch|
     try {
-        var output = (curl -s $ZIG_JSON_URL | from-json | put (all)[$BRANCH][$ARCH])
+        var output = (curl -s $ZIG_JSON_URL | from-json | put (all)[$branch][$ARCH])
         var tarball = $output[tarball]
         var basename = (path:base $tarball)
         var zig_version = (str:replace '.tar.xz' '' $basename)
-        put $tarball $basename $zig_version
+        var new_zig_exe_name = (if (==s $branch "master") { put zig-dev } else { put zig-$branch })
+        var new_zig_exe =  $BIN_DIR/$new_zig_exe_name
+        var install_dir_link = $ZIG_ROOT/$new_zig_exe_name
+        put $tarball $basename $zig_version $new_zig_exe $install_dir_link
 
     } catch err {
         put $err
@@ -38,28 +38,55 @@ fn extract-info {
     }
 }
 
-fn check-and-update-zig-version {|tarball basename zig_version|
-    if (and (os:exists &follow-symlink=$true $NEW_ZIG_DIR) (==s (os:eval-symlinks $NEW_ZIG_DIR) $ZIG_ROOT/$zig_version)) {
-
-        echo $zig_version" is already the current version!"
+fn check-zig-version {|branch install_dir_link zig_version|
+    if (and (os:exists &follow-symlink=$true $install_dir_link) ^
+         (==s (os:eval-symlinks $install_dir_link) $ZIG_ROOT/$zig_version)) {
+            echo $zig_version" is already the current version!"
+            exit 0
     } else {
-        echo "Updating to "$zig_version
-
-        update-zig $tarball $basename $zig_version
+        if (==s $branch "master") {
+            echo "Updating to "$zig_version
+        } else {
+            echo "Installing "$zig_version
+        }
     }
 }
 
-fn update-zig {|tarball basename zig_version|
+fn update-symlink {|new_zig_exe install_dir_link zig_version|
+    # update directory symlink
+    if (and ?(os:stat $install_dir_link) (==s (os:stat $install_dir_link)[type] symlink)) {
+        os:remove $install_dir_link
+        os:symlink $ZIG_ROOT/$zig_version $install_dir_link
+    } else {
+        os:symlink $ZIG_ROOT/$zig_version $install_dir_link
+    }
+
+    # update zig file symlink
+    if (and ?(os:stat $new_zig_exe) (==s (os:stat $new_zig_exe)[type] symlink)) {
+        os:remove $new_zig_exe
+        os:symlink $install_dir_link/zig $new_zig_exe
+    } else {
+        os:symlink $install_dir_link/zig $new_zig_exe
+    }
+}
+
+fn update-zig {|tarball basename new_zig_exe install_dir_link zig_version|
+    try { 
+        find -O3 $ZIG_ROOT -maxdepth 1 -ctime +3 -type d ^
+             -execdir rm -rf {} + stdout>/dev/null stderr>&stdout
+    } catch err { 
+        echo "No old zig installations to clean" 
+    }
+
     try {
         echo "Downloading repository..."
-
         curl --output-dir $TMPDIR --remote-name  --continue-at - $tarball 
 
-        tar --directory $ZIG_ROOT --extract --xz --file $TMPDIR/$basename
-
-        update-symlink $zig_version
-
-        finish $zig_version
+        echo "Extracting "$TMPDIR/$basename" to "$ZIG_ROOT
+        bsdtar --directory $ZIG_ROOT --extract --xz --option="xz:threads=0" ^
+            --file $TMPDIR/$basename
+      
+        update-symlink $new_zig_exe $install_dir_link $zig_version
 
     } catch err {
         put $err
@@ -68,32 +95,25 @@ fn update-zig {|tarball basename zig_version|
     }
 }
 
-fn update-symlink {|zig_version|
-    fd . $ZIG_ROOT --max-depth 1 --type directory --older 3d  --exec-batch rm -rf {}
+fn check-and-update-zig-version {|branch tarball basename new_zig_exe install_dir_link zig_version|
+    check-zig-version $branch $install_dir_link $zig_version
 
-    # update directory symlink
-    if (and ?(os:stat $NEW_ZIG_DIR) (==s (os:stat $NEW_ZIG_DIR)[type] symlink)) {
-        os:remove $NEW_ZIG_DIR
-        os:symlink $ZIG_ROOT/$zig_version $NEW_ZIG_DIR
-    } else {
-        os:symlink $ZIG_ROOT/$zig_version $NEW_ZIG_DIR
-    }
-
-    # update zig file symlink
-    if (and ?(os:stat $NEW_ZIG_EXE) (==s (os:stat $NEW_ZIG_EXE)[type] symlink)) {
-        os:remove $NEW_ZIG_EXE
-        os:symlink $NEW_ZIG_DIR/zig $NEW_ZIG_EXE
-    } else {
-        os:symlink $NEW_ZIG_DIR/zig $NEW_ZIG_EXE
-    }
+    update-zig $tarball $basename $new_zig_exe $install_dir_link $zig_version
 }
 
-fn finish {|zig_version|
+fn finish {|new_zig_exe zig_version|
     echo "finished updating to "$zig_version
-    echo "Current version is now: "($NEW_ZIG_EXE version)
+    echo "Current version is now: "($new_zig_exe version)
     os:remove-all $TMPDIR
 }
 
-start
-var tarball basename zig_version = (extract-info)
-check-and-update-zig-version $tarball $basename $zig_version
+var usage = ^
+'zig-update [-branch master|0.11.0]
+'
+fn main {|&branch=master|
+    start
+    var tarball basename zig_version new_zig_exe install_dir_link = (extract-info $branch)
+    check-and-update-zig-version $branch $tarball $basename $new_zig_exe $install_dir_link $zig_version 
+    finish $new_zig_exe $zig_version
+}
+flag:call $main~ $args &on-parse-error={|_| print $usage; exit 1}
