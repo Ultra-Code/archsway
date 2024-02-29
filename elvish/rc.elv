@@ -30,8 +30,6 @@ if (re:match "/dev/tty[1-3]" (tty)) {
     exec systemd-cat --identifier=river river
 }
 
-set-env EDITOR /bin/helix
-
 set-env LS_COLORS (vivid generate alabaster_dark) # alabaster_dark ayu catppuccin-latte iceberg-dark one-dark
 
 set-env XDG_CACHE_HOME (put $E:HOME | path:join (all) .cache)
@@ -85,7 +83,9 @@ eval (carapace _carapace | slurp)
 
 eval (starship init elvish)
 
-use ./aliases
-
 # dedup path list
 set paths = [(put $paths | order (all) | compact)]
+
+set-env EDITOR (if (has-external hx) { which hx } else { which helix })
+
+use ./aliases
