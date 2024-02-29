@@ -2,7 +2,7 @@
         name = Ultra-Code
         email = mega.alpha100@gmail.com
 [core]
-        editor = helix
+        editor = hx
 [pull]
         rebase = true
 [status]
