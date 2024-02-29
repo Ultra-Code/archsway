@@ -6,7 +6,7 @@ format = "$os $all"
 right_format = "$localip $shlvl $battery $memory_usage $time"
 continuation_prompt = "[∙](bright-bla0) "
 scan_timeout = 30
-command_timeout = 3000
+command_timeout = 7000
 add_newline = true
 follow_symlinks = true
 
