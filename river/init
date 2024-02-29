@@ -9,6 +9,16 @@ local function trim(str)
 	return str:gsub("^%s*(.-)%s*$", "%1")
 end
 
+-- Function to check if a value exists in the table
+local function exists(value, tbl)
+	for _, v in pairs(tbl) do
+		if v == value then
+			return true
+		end
+	end
+	return false
+end
+
 ---@return string
 ---@param cmd string
 ---@nodiscard
@@ -66,7 +76,7 @@ end
 -- variable to store virtual terminal number
 local vtnr = getenv("XDG_VTNR")
 
--- Your preferred terminal emulator
+-- Your preferred terminal
 local terminal = "kitty --single-instance  --instance-group " .. vtnr
 
 local HOME = getenv("HOME")
@@ -140,11 +150,15 @@ end
 local inputs = {
 	["pointer-2-14-ETPS/2_Elantech_Touchpad"] = {
 		["events"] = "disabled-on-external-mouse",
+		["accel-profile"] = "adaptive",
+		["pointer-accel"] = "0.6",
+		["click-method"] = "clickfinger",
 		["drag"] = "enabled",
+		["disable-while-typing"] = "enabled",
+		["middle-emulation"] = "enabled",
+		["natural-scroll"] = "enabled",
 		["tap"] = "enabled",
 		["tap-button-map"] = "left-right-middle",
-		["disable-while-typing"] = "enabled",
-		["natural-scroll"] = "enabled",
 		["scroll-method"] = "two-finger",
 	},
 }
@@ -159,20 +173,14 @@ local function configure_inputs(input_options)
 end
 
 local river_options = {
-	["set-repeat"] = { 50, 300 },
-	["focus-follows-cursor"] = "normal",
-	["hide-cursor"] = "when-typing enabled",
-	["set-cursor-warp"] = "on-output-change",
-	["attach-mode"] = "top",
-	["default-layout"] = "rivertile",
-
-	-- Theme options
+	["default-attach-mode"] = "top",
 	["border-width"] = 0,
-	["border-color-focused"] = "0xeceff4",
-	["border-color-unfocused"] = "0x81a1c1",
-	["border-color-urgent"] = "0xbf616a",
+	["focus-follows-cursor"] = "normal",
+	["hide-cursor"] = { "when-typing", "enabled" },
+	["set-cursor-warp"] = "on-output-change",
+	["set-repeat"] = { 50, 300 },
 	["xcursor-theme"] = { "Adwaita", 24 },
-	["background-color"] = "0x2e3440",
+	["default-layout"] = "rivertile",
 }
 
 -- Set river's options
@@ -211,7 +219,7 @@ local mappings = {
 	-- Key bindings
 	map = {
 		normal = {
-			-- Terminal emulators
+			-- Terminal
 			{
 				mod = "Super",
 				key = "T",
@@ -721,7 +729,7 @@ local modes = {
 local function setup_modes(modes_option)
 	for _, mode in ipairs(modes_option) do
 		local mode_name = mode.name
-		local modifiers = cmd(mode.mod, "+")
+		local modifiers = mode.mod
 
 		-- Declare the mode
 		exec("riverctl declare-mode " .. mode_name)
@@ -775,32 +783,49 @@ local function scratchpad_tag_mappings()
 end
 
 local window_rules = {
-	["float-filter-add"] = {
-		["app-id"] = {
+	["-app-id"] = {
+		["float"] = {
 			"float",
 			"popup",
 			"swappy",
-			"pinentry-qt",
-			"pavucontrol-qt",
 		},
-		["title"] = {
-			"Picture-in-Picture",
-			"About Mozilla Firefox",
-			"Extension: (Bitwarden - Free Password Manager) - Bitwarden — Mozilla Firefox",
+		["csd"] = {
+			"swappy",
+		},
+		["tags"] = {
+			{ "firefox", "2" },
 		},
 	},
-	["csd-filter-add"] = {
-		["app-id"] = { "swappy" },
+	["-title"] = {
+		["float"] = {
+			"Picture-in-Picture",
+			"About Mozilla Firefox",
+			"*Extension:*",
+		},
 	},
 }
 
 -- Window rules (float/csd filters)
----@param window_ui_rules table<string,table<string,table>>
-local function setup_winow_rules(window_ui_rules)
-	for key, value in pairs(window_ui_rules) do
-		for type, patterns in pairs(value) do
-			for _, pattern in ipairs(patterns) do
-				exec(fmt("riverctl %s %s '%s'", key, type, pattern))
+local function setup_window_rules(window_ui_rules)
+	local no_args = { "float", "no-float", "csd", "ssd", "fullscreen", "no-fullscreen" }
+	for rule_add_type, value in pairs(window_ui_rules) do
+		for action, items in pairs(value) do
+			if exists(action, no_args) then
+				for _, pattern in ipairs(items) do
+					exec(fmt("riverctl rule-add %s '%s' %s", rule_add_type, pattern, action))
+				end
+			else
+				for _, pattern_with_args in ipairs(items) do
+					exec(
+						fmt(
+							"riverctl rule-add %s '%s' %s %s",
+							rule_add_type,
+							pattern_with_args[1],
+							action,
+							cmd(pattern_with_args, nil, 2)
+						)
+					)
+				end
 			end
 		end
 	end
@@ -810,7 +835,7 @@ end
 run_autostarts(autostarts)
 configure_inputs(inputs)
 set_river_options(river_options)
-setup_winow_rules(window_rules)
+setup_window_rules(window_rules)
 setup_modes(modes)
 setup_user_modes(user_modes)
 set_gnome_settings(gsettings)
