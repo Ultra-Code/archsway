@@ -124,7 +124,7 @@ local autostarts = {
 	-- wlsunset -t 2500 -T 6500 -l 5.5502 -L -0.2174 -S 07:00 -s 18:00 -d 1800 -g 1.0
 	{ "wlsunset", "-t 2500", "-l 5.5502", "-L -0.2174" },
 	{ "wl-paste", "--watch", "cliphist", "store" },
-	{ "batsignal", "-b", "-e", "-w 35", "-c 18", "-d 12", "-f 85", "-m 180", "-D systemctl suspend" },
+	{ "batsignal", "-b", "-e", "-p", "-w 35", "-c 18", "-d 12", "-f 85", "-m 180", "-D systemctl suspend" },
 }
 
 -- Run startup commands
@@ -175,7 +175,8 @@ end
 local river_options = {
 	["default-attach-mode"] = "top",
 	["border-width"] = 0,
-	["focus-follows-cursor"] = "normal",
+	-- disable till https://github.com/riverwm/river/issues/982 is fixed
+	["focus-follows-cursor"] = "disable",
 	["hide-cursor"] = { "when-typing", "enabled" },
 	["set-cursor-warp"] = "on-output-change",
 	["set-repeat"] = { 50, 300 },
@@ -785,12 +786,11 @@ end
 local window_rules = {
 	["-app-id"] = {
 		["float"] = {
-			"float",
 			"popup",
-			"swappy",
+			"float",
 		},
-		["csd"] = {
-			"swappy",
+		["ssd"] = {
+			"firefox",
 		},
 		["tags"] = {
 			{ "firefox", "2" },
@@ -802,10 +802,13 @@ local window_rules = {
 			"About Mozilla Firefox",
 			"*Extension:*",
 		},
+		["position"] = {
+			{ "Picture-in-Picture", "0", "0" },
+		},
 	},
 }
 
--- Window rules (float/csd filters)
+-- Window rules
 local function setup_window_rules(window_ui_rules)
 	local no_args = { "float", "no-float", "csd", "ssd", "fullscreen", "no-fullscreen" }
 	for rule_add_type, value in pairs(window_ui_rules) do
