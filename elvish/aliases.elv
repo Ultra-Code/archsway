@@ -158,7 +158,7 @@ fn pms {|package|
   }
 edit:add-var pms~ $pms~
 
-fn pmc { sudo pacman -Qdtq | sudo pacman -Rsn - }
+fn pmc { pacman -Qdtq | sudo pacman -Rsn --noconfirm - }
 edit:add-var pmc~ $pmc~
 
 fn pmcc { sudo pacman -Sc }
