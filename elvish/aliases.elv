@@ -195,8 +195,8 @@ edit:add-var gmi~ $gmi~
 fn gmu { git submodule update --remote --rebase }
 edit:add-var gmu~ $gmu~
 
-fn gcl {|repo| 
-  git clone --filter=tree:0 --recurse-submodules --also-filter-submodules $repo 
+fn gcl {|@repo| 
+  git clone --filter=tree:0 --recurse-submodules --also-filter-submodules $@repo 
 }
 edit:add-var gcl~ $gcl~
 
