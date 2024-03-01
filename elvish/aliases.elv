@@ -70,7 +70,7 @@ edit:add-var hx~ $hx~
 fn Hx {|@files| sudo --preserve-env $E:EDITOR $@files}
 edit:add-var Hx~ $Hx~
 
-fn ln {|source destination| e:ln --interactive --symbolic --logical --verbose $source $destination }
+fn ln {|source destination| e:ln --interactive --symbolic --relative --verbose $source $destination }
 edit:add-var ln~ $ln~
 
 fn cp {|@source destination| e:cp --interactive --dereference --recursive --verbose --reflink=auto --sparse=auto --archive $@source $destination}
