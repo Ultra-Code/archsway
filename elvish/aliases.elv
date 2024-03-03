@@ -123,32 +123,32 @@ fn er { $E:EDITOR $E:DOTFILES/river/init }
 edit:add-var er~ $er~
 
 #Pacman aliases
-fn pmu { sudo pacman -Syu }
+fn pmu { yay -Syu }
 edit:add-var pmu~ $pmu~
 
-set edit:command-abbr['pmr'] = 'sudo pacman -Rsn'
-set edit:command-abbr['pmi'] = 'sudo pacman -S'
-set edit:command-abbr['pmp'] = 'sudo pacman -Rcunsv'
-set edit:command-abbr['pmii'] = 'sudo pacman -Qii'
-set edit:command-abbr['pmis'] = 'sudo pacman -Qs'
-set edit:command-abbr['pmsi'] = 'pacman -Sii'
-set edit:command-abbr['pmss'] = 'pacman -Ss'
-set edit:command-abbr['pmsf'] = 'pacman -F'
-set edit:command-abbr['pml'] = 'pacman -Qe'
-set edit:command-abbr['pmlf'] = 'pacman -Ql'
-set edit:command-abbr['pmlfr'] = 'pacman -Fl'
-set edit:command-abbr['pmly'] = 'pacman -Qmq'
-set edit:command-abbr['pmb'] = 'pacman -Qo'
+set edit:command-abbr['pmr'] = 'yay -Rsn'
+set edit:command-abbr['pmi'] = 'yay -S'
+set edit:command-abbr['pmp'] = 'yay -Rcunsv'
+set edit:command-abbr['pmii'] = 'yay -Qii'
+set edit:command-abbr['pmis'] = 'yay -Qs'
+set edit:command-abbr['pmsi'] = 'yay -Sii'
+set edit:command-abbr['pmss'] = 'yay -Ss'
+set edit:command-abbr['pmsf'] = 'yay -F'
+set edit:command-abbr['pml'] = 'yay -Qe'
+set edit:command-abbr['pmlf'] = 'yay -Ql'
+set edit:command-abbr['pmlfr'] = 'yay -Fl'
+set edit:command-abbr['pmly'] = 'yay -Qmq'
+set edit:command-abbr['pmb'] = 'yay -Qo'
 
 fn pms {|package|
     try {
-     pacman -Qs '^'$package 
+     yay -Qs '^'$package 
     } catch err {
       try {
-        pacman -F $package
+        yay -F $package
       } catch err {
         try {
-          pacman -Ss '^'$package
+          yay -Ss '^'$package
         } catch err {
           var err = $err[reason]
           echo $err[cmd-name]" exited with "$err[exit-status]": package "$package" not found in default repo"
@@ -158,10 +158,10 @@ fn pms {|package|
   }
 edit:add-var pms~ $pms~
 
-fn pmc { pacman -Qdtq | sudo pacman -Rsn --noconfirm - }
+fn pmc { yay -Qdtq | yay -Rsn --noconfirm - }
 edit:add-var pmc~ $pmc~
 
-fn pmcc { sudo pacman -Sc }
+fn pmcc { yay -Sc }
 edit:add-var pmcc~ $pmcc~
 
 #Git aliases
