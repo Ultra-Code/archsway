@@ -850,13 +850,13 @@ run_oneshots(oneshot_commands)
 -- Launch the layout generator as the final initial process.
 local ffi = require("ffi")
 ffi.cdef([[
-    int execl(const char *pathname, const char *arg, ... /*, (char *) NULL */);
+    int execlp(const char *filename, const char *arg, ... /*, (char *) NULL */);
 ]])
 
-local execl = ffi.C.execl
+local execlp = ffi.C.execlp
 
-execl(
-	"/bin/rivertile",
+execlp(
+	"rivertile",
 	"rivertile",
 	"-view-padding",
 	"0",
