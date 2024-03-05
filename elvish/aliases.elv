@@ -98,16 +98,16 @@ edit:add-var tarx~ $tarx~
 fn tarv {|archive| bsdtar -tvf $archive }
 edit:add-var tarv~ $tarv~
 
-fn tarzip {|archive source| bsdtar --auto-compress --option --option="zip:compression=deflate" -cvf  $archive $source }
+fn tarzip {|archive @source| bsdtar --auto-compress --option --option="zip:compression=deflate" -cvf  $archive $@source }
 edit:add-var tarzip~ $tarzip~
 
-fn targzip {|archive source| bsdtar --auto-compress --option="gzip:compression-level=9" -cvf  $archive $source}
+fn targzip {|archive @source| bsdtar --auto-compress --option="gzip:compression-level=9" -cvf  $archive $@source}
 edit:add-var targzip~ $targzip~
 
-fn tarzst {|archive source| bsdtar --auto-compress --option="zstd:compression-level=22,zstd:threads=0" -cvf  $archive $source}
+fn tarzst {|archive @source| bsdtar --auto-compress --option="zstd:compression-level=22,zstd:threads=0" -cvf  $archive $@source}
 edit:add-var tarzst~ $tarzst~
 
-fn tarxz {|archive source| bsdtar --auto-compress --option="xz:compression-level=9,xz:threads=0" -cvf $archive $source }
+fn tarxz {|archive @source| bsdtar --auto-compress --option="xz:compression-level=9,xz:threads=0" -cvf $archive $@source }
 edit:add-var tarxz~ $tarxz~
 
 fn du { e:du -h -d 1 }
@@ -122,33 +122,33 @@ edit:add-var ea~ $ea~
 fn er { $E:EDITOR $E:DOTFILES/river/init }
 edit:add-var er~ $er~
 
-#Pacman aliases
-fn pmu { yay -Syu }
+#paru aliases
+fn pmu { paru -Syu }
 edit:add-var pmu~ $pmu~
 
-set edit:command-abbr['pmr'] = 'yay -Rsn'
-set edit:command-abbr['pmi'] = 'yay -S'
-set edit:command-abbr['pmp'] = 'yay -Rcunsv'
-set edit:command-abbr['pmii'] = 'yay -Qii'
-set edit:command-abbr['pmis'] = 'yay -Qs'
-set edit:command-abbr['pmsi'] = 'yay -Sii'
-set edit:command-abbr['pmss'] = 'yay -Ss'
-set edit:command-abbr['pmsf'] = 'yay -F'
-set edit:command-abbr['pml'] = 'yay -Qe'
-set edit:command-abbr['pmlf'] = 'yay -Ql'
-set edit:command-abbr['pmlfr'] = 'yay -Fl'
-set edit:command-abbr['pmly'] = 'yay -Qmq'
-set edit:command-abbr['pmb'] = 'yay -Qo'
+set edit:command-abbr['pmr'] = 'paru -Rsn'
+set edit:command-abbr['pmi'] = 'paru -S'
+set edit:command-abbr['pmp'] = 'paru -Rcunsv'
+set edit:command-abbr['pmii'] = 'paru -Qii'
+set edit:command-abbr['pmis'] = 'paru -Qs'
+set edit:command-abbr['pmsi'] = 'paru -Sii'
+set edit:command-abbr['pmss'] = 'paru -Ss'
+set edit:command-abbr['pmsf'] = 'paru -F'
+set edit:command-abbr['pml'] = 'paru -Qe'
+set edit:command-abbr['pmlf'] = 'paru -Ql'
+set edit:command-abbr['pmlfr'] = 'paru -Fl'
+set edit:command-abbr['pmly'] = 'paru -Qmq'
+set edit:command-abbr['pmb'] = 'paru -Qo'
 
 fn pms {|package|
     try {
-     yay -Qs '^'$package 
+     paru -Qs '^'$package 
     } catch err {
       try {
-        yay -F $package
+        paru -F $package
       } catch err {
         try {
-          yay -Ss '^'$package
+          paru -Ss '^'$package
         } catch err {
           var err = $err[reason]
           echo $err[cmd-name]" exited with "$err[exit-status]": package "$package" not found in default repo"
@@ -158,10 +158,10 @@ fn pms {|package|
   }
 edit:add-var pms~ $pms~
 
-fn pmc { yay -Qdtq | yay -Rsn --noconfirm - }
+fn pmc { paru -Qdtq | paru -Rsn --noconfirm - }
 edit:add-var pmc~ $pmc~
 
-fn pmcc { yay -Sc }
+fn pmcc { paru -Sc }
 edit:add-var pmcc~ $pmcc~
 
 #Git aliases
