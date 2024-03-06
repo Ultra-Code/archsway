@@ -32,6 +32,9 @@ if (re:match "/dev/tty[1-3]" (tty)) {
 
 set-env LS_COLORS (vivid generate alabaster_dark) # alabaster_dark ayu catppuccin-latte iceberg-dark one-dark
 
+# Setup debuginfo daemon for packages in the official repositories
+cat /etc/debuginfod/archlinux.urls | set-env DEBUGINFOD_URLS (all)
+
 set-env XDG_CACHE_HOME (put $E:HOME | path:join (all) .cache)
 set-env XDG_CONFIG_HOME (put $E:HOME | path:join (all) .config)
 set-env XDG_LOCAL_HOME (put $E:HOME | path:join (all) .local)
