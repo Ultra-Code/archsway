@@ -1,3 +1,5 @@
+use store
+
 fn el { exec elvish }
 edit:add-var el~ $el~
 
@@ -33,6 +35,12 @@ edit:add-var rm~ $rm~
 
 set edit:command-abbr['bat'] = 'bat --style=numbers,changes'
 
+fn sort-inplace {|file|
+  order < $file | compact | to-lines stdout> /tmp/sort
+  e:mv /tmp/sort (path:abs $file)
+}
+edit:add-var sort-inplace~ $sort-inplace~
+
 fn history-export {
   edit:command-history | peach {|hist| put $hist[cmd]} | order | compact | to-lines
 }
@@ -41,8 +49,7 @@ edit:add-var he~ $history-export~
 fn store-hist {
   history-export stdout> /tmp/history
   # https://stackoverflow.com/questions/29244351/how-to-sort-a-file-in-place#29244408
-  order < $E:DOTFILES/elvish/history | compact | to-lines stdout> /tmp/oldhistory
-  e:mv /tmp/oldhistory $E:DOTFILES/elvish/history
+  sort-inplace $E:DOTFILES/elvish/history
 }
 
 fn history-diff {
@@ -56,7 +63,6 @@ fn history-diff {
 edit:add-var hd~ $history-diff~
 
 fn history-import {  
-  use store
   store-hist
   # update current history with updated elvish/history
   if ?(grep -Fxvf /tmp/history $E:DOTFILES/elvish/history stdout> /tmp/diffhistory) {
