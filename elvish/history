@@ -9,17 +9,20 @@ asciinema play elvish_completion_take_20sec.cast
 asciinema upload elvish_completion_take_20sec.cast
 bg %1
 bsdtar --auto-compress --option="zstd:compression-level=22,zstd:threads=0" --exclude-vcs --exclude-from .gitignore -cvf asm.tar.zst cal/ make/ newasm
+bun install --global bash-language-server
 cal 08 2023
 cal 11 2022
 cal 9 2022
 cargo --list
 cargo add ferris-says@0.2
-cargo build
+cargo build --release
 cargo clean
+cargo install --path helix-term --locked
 cargo new --help
 cargo new ferrous --vcs none
 cargo run
 cargo test
+cargo xtask docgen
 chafa --format=sixels ~/files/Pictures/47.jpg
 chafa --symbols ~/files/Pictures/47.jpg
 chown -R www-data:www-data storage
@@ -107,6 +110,7 @@ git switch revive-translateC
 git tag -a v0.3.0
 glxinfo |grep opengl
 gpg --keyserver keys.openpgp.org --recv-keys CA7C2C7A30C8E8E1274A847651C67305FFC2E5C0
+gpg --list-keys --fingerprint 06BC317B515ACE7C
 grep 9000 /etc/services
 gsettings list-recursively org.gnome.desktop.interface
 helix --health toml
@@ -144,6 +148,9 @@ loginctl session-status
 make
 make install
 make uninstall
+makepkg --clean -f
+makepkg --install
+makepkg --printsrcinfo > .SRCINFO
 makepkg --syncdeps --rmdeps
 makoctl dismiss all
 mariadb -u ultracode -p < Downloads/access_to_basic_services.sql
@@ -245,7 +252,6 @@ sudo nmap -sV -Pn --reason 129.232.157.42
 sudo nmap -sV -Pn -p 62226,63333 --reason 129.232.157.42
 sudo pacman -D --asdeps duktape
 sudo pacman -S --overwrite "*" libx11
-sudo pacman -S --overwrite "*man*,*include*,*lib*,*share*,*.so" libx11
 sudo pacman -U ~/.local/share/makepkg/packages/zig-dev-bin-20220626-1-x86_64.pkg.tar.zst
 sudo ss -tunlp
 sudo sshd -T

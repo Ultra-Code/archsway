@@ -41,23 +41,29 @@ edit:add-var he~ $history-export~
 fn store-hist {
   history-export stdout> /tmp/history
   # https://stackoverflow.com/questions/29244351/how-to-sort-a-file-in-place#29244408
-  order < $E:DOTFILES/elvish/history | compact | to-lines stdout> /tmp/oldhistory ; e:mv /tmp/oldhistory $E:DOTFILES/elvish/history
+  order < $E:DOTFILES/elvish/history | compact | to-lines stdout> /tmp/oldhistory
+  e:mv /tmp/oldhistory $E:DOTFILES/elvish/history
 }
 
 fn history-diff {
   store-hist
   # https://www.oreilly.com/library/view/bash-cookbook/0596526784/ch17s16.html
-  # Show lines in current history which aren't in elvish/history
-  comm -23 /tmp/history  $E:DOTFILES/elvish/history  
+  # comm -23 /tmp/history  $E:DOTFILES/elvish/history
+  # NOTE: comm works only with the external sort command
+  # Show lines in /tmp/history(current history) which aren't in elvish/history(old history)
+  grep -Fxvf $E:DOTFILES/elvish/history /tmp/history
 }  
 edit:add-var hd~ $history-diff~
 
 fn history-import {  
   use store
   store-hist
-  # update current history with elvish/history
-  var _ = ?(comm -23 $E:DOTFILES/elvish/history /tmp/history stdout> /tmp/diffhistory)
-  cat /tmp/diffhistory | peach {|hist| store:add-cmd $hist}
+  # update current history with updated elvish/history
+  if ?(grep -Fxvf /tmp/history $E:DOTFILES/elvish/history stdout> /tmp/diffhistory) {
+     cat /tmp/diffhistory | peach {|hist| store:add-cmd $hist}
+  } else {
+    echo "Current history is up to date"
+  }
 }
 edit:add-var hi~ $history-import~
 
@@ -126,19 +132,20 @@ edit:add-var er~ $er~
 fn pmu { paru -Syu }
 edit:add-var pmu~ $pmu~
 
-set edit:command-abbr['pmr'] = 'paru -Rsn'
-set edit:command-abbr['pmi'] = 'paru -S'
-set edit:command-abbr['pmp'] = 'paru -Rcunsv'
-set edit:command-abbr['pmii'] = 'paru -Qii'
-set edit:command-abbr['pmis'] = 'paru -Qs'
-set edit:command-abbr['pmsi'] = 'paru -Sii'
-set edit:command-abbr['pmss'] = 'paru -Ss'
-set edit:command-abbr['pmsf'] = 'paru -F'
-set edit:command-abbr['pml'] = 'paru -Qe'
-set edit:command-abbr['pmlf'] = 'paru -Ql'
-set edit:command-abbr['pmlfr'] = 'paru -Fl'
-set edit:command-abbr['pmly'] = 'paru -Qmq'
-set edit:command-abbr['pmb'] = 'paru -Qo'
+set edit:command-abbr['pmr'] = 'yay -Rsn'
+set edit:command-abbr['pmi'] = 'yay -S'
+set edit:command-abbr['pmp'] = 'yay -Rcunsv'
+set edit:command-abbr['pmii'] = 'yay -Qii'
+set edit:command-abbr['pmis'] = 'yay -Qs'
+set edit:command-abbr['pmsi'] = 'yay -Sii'
+set edit:command-abbr['pmss'] = 'yay -Ss'
+set edit:command-abbr['pmsf'] = 'yay -F'
+set edit:command-abbr['pml'] = 'yay -Qe'
+set edit:command-abbr['pmlf'] = 'yay -Ql'
+set edit:command-abbr['pmlfr'] = 'yay -Fl'
+set edit:command-abbr['pmly'] = 'yay -Qmq'
+# requires the full path to the file you want to find the package it belongs to
+set edit:command-abbr['pmb'] = 'yay -Qo'
 
 fn pms {|package|
     try {
