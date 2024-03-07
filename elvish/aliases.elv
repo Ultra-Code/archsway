@@ -1,4 +1,5 @@
 use store
+use path
 
 fn el { exec elvish }
 edit:add-var el~ $el~
