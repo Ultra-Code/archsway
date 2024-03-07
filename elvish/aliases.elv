@@ -134,8 +134,8 @@ edit:add-var ea~ $ea~
 fn er { $E:EDITOR $E:DOTFILES/river/init }
 edit:add-var er~ $er~
 
-#paru aliases
-fn pmu { paru -Syu }
+#Pacman aliases
+fn pmu { yay -Syu }
 edit:add-var pmu~ $pmu~
 
 set edit:command-abbr['pmr'] = 'yay -Rsn'
@@ -155,13 +155,13 @@ set edit:command-abbr['pmb'] = 'yay -Qo'
 
 fn pms {|package|
     try {
-     paru -Qs '^'$package 
+     yay -Qs '^'$package 
     } catch err {
       try {
-        paru -F $package
+        yay -F $package
       } catch err {
         try {
-          paru -Ss '^'$package
+          yay -Ss '^'$package
         } catch err {
           var err = $err[reason]
           echo $err[cmd-name]" exited with "$err[exit-status]": package "$package" not found in default repo"
@@ -171,10 +171,10 @@ fn pms {|package|
   }
 edit:add-var pms~ $pms~
 
-fn pmc { paru -Qdtq | paru -Rsn --noconfirm - }
+fn pmc { yay -Qdtq | yay -Rsn --noconfirm - }
 edit:add-var pmc~ $pmc~
 
-fn pmcc { paru -Sc }
+fn pmcc { yay -Sc }
 edit:add-var pmcc~ $pmcc~
 
 #Git aliases
