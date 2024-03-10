@@ -1,33 +1,32 @@
 [user]
-        name = Ultra-Code
-        email = mega.alpha100@gmail.com
+	name = Ultra-Code
+    email = mega.alpha100@gmail.com
 [core]
-        editor = hx
+    editor = hx
 [pull]
-        rebase = true
+    rebase = true
 [status]
-        submodulesummary = true
+	submodulesummary = true
 [submodule]
-        recurse = true
-        update = rebase
+	recurse = true
+    update = rebase
 [push]
-        recurseSubmodules = check
-        autoSetupRemote = true
+    recurseSubmodules = check
+    autoSetupRemote = true
 [merge]
-        conflictStyle = diff3
+    conflictStyle = diff3
 [mergetool]
-        prompt = false
+    prompt = false
 [diff]
-        submodule = log
-        colorMoved = zebra
+	submodule = log
+    colorMoved = zebra
 [grep]
-        column = true
-        lineNumber = true
-        extendedRegexp = true
+    column = true
+    lineNumber = true
+    extendedRegexp = true
 [init]
-        defaultBranch = main
+    defaultBranch = main
 [color]
-        ui = auto
-
+    ui = auto
 [clone]
-        filterSubmodules = true
+	filterSubmodules = true
