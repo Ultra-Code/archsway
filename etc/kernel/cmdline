@@ -1,1 +1,1 @@
-root=PARTUUID=8a42f96c-6814-9d44-bddc-f529f40c3191 rw rootflags=subvol=/ mitigations=off i915.mitigations=off i915.enable_guc=2 i915.enable_dc=4 i915.enable_fbc=1 i915.fastboot=1 i915.nuclear_pageflip=Y i915.mitigations=off resume=PARTUUID=16ba379d-5412-eb4b-a3c5-7f01c3da908e
+root=PARTUUID=8a42f96c-6814-9d44-bddc-f529f40c3191 rw rootflags=subvol=/ mitigations=off i915.mitigations=off i915.enable_guc=2 i915.enable_dc=4 i915.nuclear_pageflip=Y resume=PARTUUID=16ba379d-5412-eb4b-a3c5-7f01c3da908e
