@@ -799,8 +799,8 @@ local window_rules = {
 	["-title"] = {
 		["float"] = {
 			"Picture-in-Picture",
-			"About Mozilla Firefox",
-			"*Extension:*",
+			"*Mozilla Firefox*",
+			"Library*",
 		},
 		["position"] = {
 			{ "Picture-in-Picture", "0", "0" },
