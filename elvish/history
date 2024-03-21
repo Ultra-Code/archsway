@@ -70,6 +70,7 @@ docker restart nginx
 docker rm pgsql
 docker rmi bc861cf238f2
 docker run -i --rm postgres:16.1-alpine cat /usr/local/share/postgresql/postgresql.conf.sample > docker/postgres.conf
+docker run -it --rm -v /:/host archlinux:latest /bin/bash
 docker run -it --rm alpine
 docker run -it --rm alpine sh -c "echo Im in arch docker"
 docker run -it --rm php:8.3-fpm-alpine cat /etc/group | grep www
@@ -167,6 +168,7 @@ num 0xfffff
 objcopy -v --add-gnu-debuglink=mode.debug mode
 objcopy -v --only-keep-debug mode mode.debug
 p10k configure
+pacman --noconfirm --root /host -Syu pacman
 php -S localhost:8000 -t src/
 php artisan serve &
 ping 127.232.157.42 -c 4
@@ -298,6 +300,7 @@ zig build -Dtarget=x86_64-linux-gnu.2.34
 zig build -Dtarget=x86_64-linux-musl -Doptimize=ReleaseSafe
 zig build run
 zig build test --summary all
+zig build-exe --show-builtin
 zig build-exe -lc unique.zig
 zig targets | jq .libc
 zig test -femit-bin=zigtest src/main.zig

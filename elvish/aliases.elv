@@ -4,6 +4,9 @@ use path
 fn el { exec elvish }
 edit:add-var el~ $el~
 
+set edit:command-abbr['df'] = 'doc:find'
+set edit:command-abbr['ds'] = 'doc:show'
+
 set edit:insert:binding[Alt-l] = { edit:clear }
 
 fn ls {|@options_and_path|
@@ -16,16 +19,13 @@ fn l {|@path|
 }
 edit:add-var l~ $l~
 
-fn lh { ls --hyperlink . }
-edit:add-var lh~ $lh~
-
-fn lr { ls --recursive . }
-edit:add-var lr~ $lr~
+set edit:abbr["lh"] = "ls --hyperlink"
+set edit:abbr["lr"] = "ls --recursive"
 
 fn md {|path| mkdir --parents --verbose $path}
 edit:add-var md~ $md~
 
-fn mc {|path| mkdir --parents --verbose $path ; cd $path }
+fn mc {|path| md $path ; cd $path }
 edit:add-var mc~ $mc~
 
 fn rd {|path| rmdir --parents --verbose $path}
@@ -34,7 +34,7 @@ edit:add-var rd~ $rd~
 fn rm {|@path| e:rm --interactive=once --verbose --recursive $@path}
 edit:add-var rm~ $rm~
 
-set edit:command-abbr['bat'] = 'bat --style=numbers,changes'
+set edit:abbr['bat'] = 'bat --style=numbers,changes'
 
 fn sort-inplace {|file|
   order < $file | compact | to-lines stdout> /tmp/sort
@@ -105,7 +105,7 @@ edit:add-var lmount~ $lmount~
 fn lb { lsblk -oPATH,MOUNTPOINTS,LABEL,FSTYPE,SIZE,FSAVAIL,FSUSED,PARTUUID,MAJ:MIN }
 edit:add-var lb~ $lb~
 
-fn tarx {|archive| bsdtar -xvf $archive }
+fn tarx {|archive @files| bsdtar -xvf $archive $@files }
 edit:add-var tarx~ $tarx~
 
 fn tarv {|archive| bsdtar -tvf $archive }
@@ -123,7 +123,7 @@ edit:add-var tarzst~ $tarzst~
 fn tarxz {|archive @source| bsdtar --auto-compress --option="xz:compression-level=9,xz:threads=0" -cvf $archive $@source }
 edit:add-var tarxz~ $tarxz~
 
-fn du { e:du -h -d 1 }
+fn du {|@file| e:du -h -d 1 $@file}
 edit:add-var du~ $du~
 
 fn ee { $E:EDITOR $E:ELVRC/rc.elv }
@@ -136,9 +136,7 @@ fn er { $E:EDITOR $E:DOTFILES/river/init }
 edit:add-var er~ $er~
 
 #Pacman aliases
-fn pmu { yay -Syu }
-edit:add-var pmu~ $pmu~
-
+set edit:abbr['pmu'] = "yay -Syu"
 set edit:command-abbr['pmr'] = 'yay -Rsn'
 set edit:command-abbr['pmi'] = 'yay -S'
 set edit:command-abbr['pmp'] = 'yay -Rcunsv'
@@ -147,12 +145,14 @@ set edit:command-abbr['pmis'] = 'yay -Qs'
 set edit:command-abbr['pmsi'] = 'yay -Sii'
 set edit:command-abbr['pmss'] = 'yay -Ss'
 set edit:command-abbr['pmsf'] = 'yay -F'
-set edit:command-abbr['pml'] = 'yay -Qe'
 set edit:command-abbr['pmlf'] = 'yay -Ql'
 set edit:command-abbr['pmlfr'] = 'yay -Fl'
 set edit:command-abbr['pmly'] = 'yay -Qmq'
 # requires the full path to the file you want to find the package it belongs to
 set edit:command-abbr['pmb'] = 'yay -Qo'
+set edit:abbr['pml'] = 'yay -Qe'
+set edit:abbr['pmc'] = "yay -Qdtq | yay -Rsn --noconfirm -"
+set edit:abbr['pmcc'] = "yay -Sc"
 
 fn pms {|package|
     try {
@@ -172,48 +172,7 @@ fn pms {|package|
   }
 edit:add-var pms~ $pms~
 
-fn pmc { yay -Qdtq | yay -Rsn --noconfirm - }
-edit:add-var pmc~ $pmc~
-
-fn pmcc { yay -Sc }
-edit:add-var pmcc~ $pmcc~
-
 #Git aliases
-fn gp { git push }
-edit:add-var gp~ $gp~
-
-fn gs { git status -s }
-edit:add-var gs~ $gs~
-
-fn gst { git status }
-edit:add-var gst~ $gst~
-
-fn gpu { git pull }
-edit:add-var gpu~ $gpu~
-
-fn gl { git log --graph --oneline --decorate }
-edit:add-var gl~ $gl~
-
-fn glp { git log -p }
-edit:add-var glp~ $glp~
-
-fn glt { git log --stat -1 }
-edit:add-var glt~ $glt~
-
-fn gmlp { git log --submodule -p }
-edit:add-var gmlp~ $gmlp~
-
-fn gmi { git submodule update --init --recursive }
-edit:add-var gmi~ $gmi~
-
-fn gmu { git submodule update --remote --rebase }
-edit:add-var gmu~ $gmu~
-
-fn gcl {|@repo| 
-  git clone --filter=tree:0 --recurse-submodules --also-filter-submodules $@repo 
-}
-edit:add-var gcl~ $gcl~
-
 set edit:command-abbr['gd'] = 'git diff'
 set edit:command-abbr['gc'] = 'git commit'
 set edit:command-abbr['ga'] = 'git add'
@@ -222,11 +181,28 @@ set edit:command-abbr['gg'] = 'git grep --recurse-submodules -I'
 set edit:command-abbr['gm'] = 'git mv'
 set edit:command-abbr['grm'] = 'git rm -r'
 set edit:command-abbr['gsh'] = 'git show'
+set edit:command-abbr['gp'] = "git push"
+set edit:command-abbr['gl'] = "git log --graph --oneline --decorate"
+set edit:command-abbr['glp'] = "git log -p"
+set edit:abbr['gpu'] = "git pull"
+set edit:abbr['gst'] = "git status"
+set edit:abbr['glt'] = "git log --stat -1"
+set edit:abbr['gml'] = "git log --submodule -p "
+set edit:abbr['gmi'] = "git submodule update --init --recursive"
+set edit:abbr['gmi'] = "git submodule update --remote --rebase"
 
-fn a2l {|@argv|
-  addr2line --functions --inlines --pretty-print --demangle --exe $argv[0] --addresses $argv[1..]
- }
-edit:add-var a2l~ $a2l~
+fn gs {
+  git status -s
+}
+edit:add-var gs~ $gs~
+
+fn gcl {|@repo|
+  git clone --filter=tree:0 --recurse-submodules --also-filter-submodules $@repo 
+}
+edit:add-var gcl~ $gcl~
+
+set edit:command-abbr['zbr'] = 'zig build -Doptimize=ReleaseFast'
+set edit:command-abbr['zb'] = 'zig build'
 
 fn zr {|@exe_options|
     if (has-external zig) { 
@@ -255,4 +231,7 @@ fn zcc {|@args|
 }
 edit:add-var zcc~ $zcc~
 
-set edit:command-abbr['zb'] = 'zig build -Doptimize=ReleaseFast'
+fn a2l {|@argv|
+  addr2line --functions --inlines --pretty-print --demangle --exe $argv[0] --addresses $argv[1..]
+ }
+edit:add-var a2l~ $a2l~
