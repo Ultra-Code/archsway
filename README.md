@@ -28,6 +28,7 @@ and FILES partition mounted to home/{data,/files} FILES should be 120-140GiB and
     - helix/neovim (for config clone [awesome-helix to $XDG_CONFIG_HOME/helix](https://github.com/Ultra-Code/awesome-helix.git) or [awesome-neovim to $XDG_CONFIG_HOME/nvim](https://github.com/Ultra-Code/awesome-neovim.git))
     - sudo
     - elvish/fish/nushell (set default shell with `chsh -s $(which shellname)`)
+    - setup [zram](https://wiki.archlinux.org/title/Zram)/[zswap](https://wiki.archlinux.org/title/Zswap) for efficient ram usage
 
 ### basic configuration
 
