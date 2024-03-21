@@ -6,9 +6,10 @@ edit:add-var el~ $el~
 
 set edit:command-abbr['df'] = 'doc:find'
 set edit:command-abbr['ds'] = 'doc:show'
-set edit:command-abbr['hu'] = 'edit:history:fast-forward'
 
 set edit:insert:binding[Alt-l] = { edit:clear }
+
+set edit:abbr['ncm'] = 'ncmpcpp'
 
 fn ls {|@options_and_path|
   e:ls --color --classify $@options_and_path
@@ -75,8 +76,7 @@ fn history-import {
 }
 edit:add-var hi~ $history-import~
 
-fn ncm { ncmpcpp }
-edit:add-var ncm~ $ncm~
+set edit:command-abbr['hu'] = 'edit:history:fast-forward'
 
 fn hx {|@files| $E:EDITOR $@files }
 edit:add-var hx~ $hx~
@@ -182,20 +182,32 @@ set edit:command-abbr['gg'] = 'git grep --recurse-submodules -I'
 set edit:command-abbr['gm'] = 'git mv'
 set edit:command-abbr['grm'] = 'git rm -r'
 set edit:command-abbr['gsh'] = 'git show'
-set edit:command-abbr['gp'] = "git push"
-set edit:command-abbr['gl'] = "git log --graph --oneline --decorate"
 set edit:command-abbr['glp'] = "git log -p"
-set edit:abbr['gpu'] = "git pull"
 set edit:abbr['gst'] = "git status"
 set edit:abbr['glt'] = "git log --stat -1"
 set edit:abbr['gml'] = "git log --submodule -p "
 set edit:abbr['gmi'] = "git submodule update --init --recursive"
 set edit:abbr['gmi'] = "git submodule update --remote --rebase"
 
+fn gl {
+  git log --graph --oneline --decorate
+}
+edit:add-var gl~ $gl~
+
 fn gs {
   git status -s
 }
 edit:add-var gs~ $gs~
+
+fn gp {
+  git push
+}
+edit:add-var gp~ $gp~
+
+fn gpu {
+  git pull
+}
+edit:add-var gpu~ $gpu~
 
 fn gcl {|@repo|
   git clone --filter=tree:0 --recurse-submodules --also-filter-submodules $@repo 
