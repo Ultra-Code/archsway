@@ -110,6 +110,7 @@ git submodule add git@github.com:LMDB/lmdb.git deps/lmdb
 git switch revive-translateC
 git tag -a v0.3.0
 glxinfo |grep opengl
+go install src.elv.sh/cmd/elvish@master
 gpg --keyserver keys.openpgp.org --recv-keys CA7C2C7A30C8E8E1274A847651C67305FFC2E5C0
 gpg --list-keys --fingerprint 06BC317B515ACE7C
 grep 9000 /etc/services
@@ -183,7 +184,9 @@ poetry env use /bin/pypy3
 poetry init
 poetry install
 poetry new --src Learning
-poetry run jupyter lab&
+poetry run jupyter lab &
+poetry run jupyter lab list
+poetry run jupyter lab stop
 poetry run python src/mysql_connector.py
 poetry shell
 poetry show --outdated
@@ -253,6 +256,7 @@ sudo nft list ruleset
 sudo nmap -sV -Pn --reason 129.232.157.42
 sudo nmap -sV -Pn -p 62226,63333 --reason 129.232.157.42
 sudo pacman -D --asdeps duktape
+sudo pacman -S --debug pacman
 sudo pacman -S --overwrite "*" libx11
 sudo pacman -U ~/.local/share/makepkg/packages/zig-dev-bin-20220626-1-x86_64.pkg.tar.zst
 sudo ss -tunlp

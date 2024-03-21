@@ -6,6 +6,7 @@ edit:add-var el~ $el~
 
 set edit:command-abbr['df'] = 'doc:find'
 set edit:command-abbr['ds'] = 'doc:show'
+set edit:command-abbr['hu'] = 'edit:history:fast-forward'
 
 set edit:insert:binding[Alt-l] = { edit:clear }
 
