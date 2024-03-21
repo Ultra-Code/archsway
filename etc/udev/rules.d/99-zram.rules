@@ -1,1 +1,1 @@
-ACTION=="add", KERNEL=="zram0", ATTR{comp_algorithm}="zstd", ATTR{disksize}="24GiB", RUN="/usr/bin/mkswap -U clear /dev/%k", TAG+="systemd"
+ACTION=="add", KERNEL=="zram0", ATTR{comp_algorithm}="zstd", ATTR{disksize}="12GiB", RUN="/usr/bin/mkswap -U clear /dev/%k", TAG+="systemd"
