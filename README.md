@@ -5,7 +5,7 @@ Archlinux on sway from scratch with the most minimal dependencies. DIY is awesom
 [Arch Linux Installation Guide](https://wiki.archlinux.org/title/Installation_guide)
 
 # Filesystem Setup
-For new setup home should be a subvolume/partition mounted on the /root which is preferably btrfs/f2fs/xfs
+For new setup home should be a subvolume/partition mounted on the /root which is preferably f2fs/btrfs/Bcachefs/xfs
 and FILES partition mounted to home/{data,/files} FILES should be 120-140GiB and root should have a max of 60GiB
 **NOTE: make sure to mount btrfs with compression zstd on first mount on live iso**
 
@@ -13,7 +13,7 @@ and FILES partition mounted to home/{data,/files} FILES should be 120-140GiB and
 
 - systemd-boot as boot manager
 - enabling systemd-boot-update service to update systemd-boot on systemd upgrade
-- sway/river as window manager with swayidle and swaylock for idle and lock management and waybar/yambar for bar management
+- river/sway as window manager with swayidle and swaylock for idle and lock management and levee/yambar for bar management
     - base
     - btrfs-progs
     - dosfstools
@@ -27,7 +27,7 @@ and FILES partition mounted to home/{data,/files} FILES should be 120-140GiB and
     - man-db [man-pages](https://wiki.archlinux.org/title/Man_page)
     - helix/neovim (for config clone [awesome-helix to $XDG_CONFIG_HOME/helix](https://github.com/Ultra-Code/awesome-helix.git) or [awesome-neovim to $XDG_CONFIG_HOME/nvim](https://github.com/Ultra-Code/awesome-neovim.git))
     - sudo
-    - elvish/fish/nushell/zsh (set default shell with `chsh -s $(which shellname)`)
+    - elvish/fish/nushell (set default shell with `chsh -s $(which shellname)`)
 
 ### basic configuration
 
@@ -60,7 +60,8 @@ TODO: review the usefullness of the lines below
 - modify sudoers with visudo using example in [suders file](https://github.com/Ultra-Code/archsway/blob/master/sudoers)
 - configure what powerbutton and lidclose does with /etc/systemd/logind.conf
 - For [pacman](https://wiki.archlinux.org/title/Pacman) enable the following options under option section in /etc/pacman.conf
-```zsh
+- For [Performance Improvements](https://wiki.archlinux.org/title/Improving_performance)
+```bash
 [options]
 Color
 CheckSpace
@@ -72,6 +73,7 @@ ParallelDownloads = 5
 
 ## Configuring Firefox
 - Enable firefox [Hardware video acceleration](https://wiki.archlinux.org/title/Firefox#Hardware_video_acceleration) by setting media.ffmpeg.vaapi.enabled to true and Hardware WebRender by setting gfx.webrender.all to true
+- Consider [Firefox Profile on Ram](https://wiki.archlinux.org/title/Firefox/Profile_on_RAM) when using ssd/nvme
 - [move disk cache to ram](https://wiki.archlinux.org/title/Firefox/Tweaks#Move_disk_cache_to_RAM) by setting browser.cache.disk.parent_directory to /run/user/UID/firefox
 - where UID is your user's ID which can be obtained by running id -u
 - increase session save interval to 6 minutes (360000 milliseconds) by setting browser.sessionstore.interval to 360000
@@ -79,6 +81,10 @@ ParallelDownloads = 5
 
 ## INSTALLS
 - base-devel for Basic c/c++ build tools to build Arch Linux packages
+- lldb/gdb for debugging zig c and c++
+- clang/gcc for c++ development
+- rustup with default profile and rust-analyzer component for rust development
+- zig with zls for zig development
 - yay for AUR packagem mangement
 - android-file-transfer with libmtp for connecting android phones mtp management
 - aria2 as download manager
@@ -87,9 +93,6 @@ ParallelDownloads = 5
 - brightnessctl for controling backlight
 - carapace-bin for completions in elvish or nushell
 - pueue for process management nushell
-- clang/gcc for c++ development
-- rustup with default profile and rust-analyzer component for rust development
-- zig with zls for zig development
 - language servers for
     - cpp development
         - cppcheck
@@ -120,22 +123,17 @@ ParallelDownloads = 5
 - firefox with speech-dispatcher (for Text-to-Speech) as pdf reader or zathura and firefox-ublock-origin as adblocker and foliate/fbreader as epub reader
 - fzf for fuzzy search
 - vivid for LS_COLORS
-- gammastep for controlling nightlight
+- wlsunset for controlling screen blue light
 - git for version control
 - grim and slurp for screenshot
-- imagemagick for use by kitty for terminal image preview
-- imv as image viewer
 - mako as a lightweight notification daemon for wayland
 - install mesa for opengl and as dri userspace driver and intel-media-driver as va-api for intel
-- jq a Command-line JSON processor
 - iptables-nft and nftable(automatically installed as a dependency of iptables-nft) for firewall configuration (enable the nftables service)
 - nmap and tcpdump for network analysis and auditing
 - docker for containerization of apps
 - ripgrep to recursively searches directories for a regex pattern while respecting your gitignore
 - fd as a simple, fast and user-friendly alternative to find
-- sd as an intuitive find & replace cli alternative to sed
 - libreoffice-fresh for working with openoffice documents and hunspell-en_us for spellcheck, [for help setting up spellcheck](https://ask.libreoffice.org/t/how-do-you-get-the-spell-checker-to-work/28998)
-- lldb for debugging zig c and c++
 - mpd for music daemon and ncmpcpp for ui interface and mpc for controlling playing
 - mpv as multimedia player
 - fastfetch for displaying system information
@@ -148,7 +146,7 @@ ParallelDownloads = 5
 - wl-clipboard for wayland clipboard
 - sound-theme-freedesktop for standard sounds and tone used in linux
 - fuzzy as the application launcher
-- wlr-randr for wayland output management
+- kanshi for wayland output management
 - cliphist as clipboard history manager
 - qt5-wayland for runing qt5 apps under wayland
 - xdg-desktop-portal-wrl for WebRTC screen sharing
@@ -156,5 +154,3 @@ ParallelDownloads = 5
 - yt-dlp YouTube downloader
 - zig zls-bin for zig development
 - zoxide for efficient directory movement
-- if using zsh then zsh-autosuggestions zsh-completions zsh-fast-syntax-highlighting zsh-theme-powerlevel10k-bin-git
-zsh-history-substring-search complements zsh
