@@ -11,8 +11,9 @@ PARTUUID=16ba379d-5412-eb4b-a3c5-7f01c3da908e none swap,pri=10 defaults 0 0
 # /dev/sda3 LABEL=ROOT
 PARTUUID=8a42f96c-6814-9d44-bddc-f529f40c3191 / btrfs defaults,noatime,compress=zstd:9,autodefrag,commit=300,space_cache=v2,subvolid=5,subvol=/ 0 2
 
-#/dev/sda4 LABEL=HOME
+#https://wiki.archlinux.org/title/Ext4#Improving_performance
 #commit=sec isn't enabled because journally is turned off
+#/dev/sda4 LABEL=HOME
 PARTUUID=8bbde5e5-93c1-4d88-83a2-a3005ef45235 /firefox/home/files ext4 defaults,noatime,nobarrier,errors=remount-ro 0 0
 
 # /dev/zram0
