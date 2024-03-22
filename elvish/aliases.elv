@@ -21,8 +21,8 @@ fn l {|@path|
 }
 edit:add-var l~ $l~
 
-set edit:abbr["lh"] = "ls --hyperlink"
-set edit:abbr["lr"] = "ls --recursive"
+set edit:command-abbr["lh"] = "ls --hyperlink"
+set edit:command-abbr["lr"] = "ls --recursive"
 
 fn md {|path| mkdir --parents --verbose $path}
 edit:add-var md~ $md~
