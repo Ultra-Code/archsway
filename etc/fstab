@@ -5,8 +5,11 @@
 # /dev/sda1 LABEL=ESP
 PARTUUID=ab604b46-935f-b24b-9dca-c83148f2f52e /boot vfat defaults,noatime,fmask=0077,dmask=0077,utf8,errors=remount-ro 0 1
 
-# /dev/sda2 LABEL=SWAP
-PARTUUID=16ba379d-5412-eb4b-a3c5-7f01c3da908e none swap,pri=10 defaults 0 0
+# /dev/zram0
+/dev/zram0 none swap defaults,pri=100 0 0
+
+# /dev/sda2 LABEL=SWAP use swap as backing device for zram
+# PARTUUID=16ba379d-5412-eb4b-a3c5-7f01c3da908e none swap defaults,pri=10 0 0
 
 # /dev/sda3 LABEL=ROOT
 PARTUUID=8a42f96c-6814-9d44-bddc-f529f40c3191 / btrfs defaults,noatime,compress=zstd:9,autodefrag,commit=300,space_cache=v2,subvolid=5,subvol=/ 0 2
@@ -15,9 +18,6 @@ PARTUUID=8a42f96c-6814-9d44-bddc-f529f40c3191 / btrfs defaults,noatime,compress=
 #commit=sec isn't enabled because journally is turned off
 #/dev/sda4 LABEL=HOME
 PARTUUID=8bbde5e5-93c1-4d88-83a2-a3005ef45235 /firefox/home/files ext4 defaults,noatime,nobarrier,errors=remount-ro 0 0
-
-# /dev/zram0
-/dev/zram0 none swap defaults,pri=100 0 0
 
 #NOTE:simple-mtpfs bin must be linked to /bin/mount.simple-mtpfs
 #/dev/libmtp-1-2 /home/ultracode/phone fuse.simple-mtpfs defaults,noauto,nofail,x-systemd.automount,x-systemd.idle-timeout=1s,noatime 0 0
