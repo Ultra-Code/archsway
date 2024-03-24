@@ -1,1 +1,6 @@
-ACTION=="add", KERNEL=="zram0", ATTR{comp_algorithm}="zstd", ATTR{disksize}="12GiB", RUN="/usr/bin/mkswap -U clear /dev/%k", TAG+="systemd"
+# https://www.kernel.org/doc/html/latest/admin-guide/blockdev/zram.html#writeback
+# https://www.reddit.com/r/linuxquestions/comments/qto7u3/comment/hkpcbx1/
+# NOTE: recompress and writeback attributes need to come after disksize
+# ATTR{recompress}="type=huge_idle|type=huge algo=zstd|threshold=3072"
+
+ACTION=="add", KERNEL=="zram0", ATTR{comp_algorithm}="zstd", ATTR{backing_dev}="/dev/sda2", ATTR{recomp_algorithm}="algo=842 priority=1", ATTR{recomp_algorithm}="algo=deflate priority=2", ATTR{disksize}="24GiB", ATTR{recompress}="type=huge", ATTR{writeback}="incompressible", RUN="/usr/bin/mkswap -U clear /dev/%k", TAG+="systemd"
