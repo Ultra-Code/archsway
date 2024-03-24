@@ -1,7 +1,7 @@
 #!/bin/env bash
 # Switch between Ripgrep launcher mode (CTRL-R) and fzf filtering mode (CTRL-F)
 rm -f /tmp/rg-fzf-{r,f}
-RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
+RG_PREFIX="grep --extended-regexp --color=always --recursive --line-number --binary-files=without-match --exclude='.*' --exclude-dir='.git' --exclude-dir='*cache*' --ignore-case"
 INITIAL_QUERY="${*:-}"
 : | fzf --ansi --disabled --query "$INITIAL_QUERY" \
     --bind "start:reload($RG_PREFIX {q})+unbind(ctrl-r)" \
