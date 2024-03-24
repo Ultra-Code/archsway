@@ -41,7 +41,7 @@ KERNEL=="ADP[0-9]", SUBSYSTEMS=="platform", DRIVERS=="ac", ENV{POWER_SUPPLY_NAME
 ; echo 100 | tee /sys/devices/system/cpu/intel_pstate/max_perf_pct 2>&1>/dev/null \
 ; echo 25 | tee /sys/devices/system/cpu/intel_pstate/min_perf_pct 2>&1>/dev/null \
 ; echo 1 | tee /sys/devices/system/cpu/intel_pstate/hwp_dynamic_boost 2>&1>/dev/null \
-; echo N /sys/module/snd_hda_intel/parameters/power_save_controller 2>&1>/dev/null \
+; echo N | tee /sys/module/snd_hda_intel/parameters/power_save_controller 2>&1>/dev/null \
 ; echo 0 | tee /sys/module/snd_hda_intel/parameters/power_save 2>&1>/dev/null \
 ; echo max_performance | tee /sys/class/scsi_host/host?/link_power_management_policy 2>&1>/dev/null'"
 
