@@ -6,43 +6,43 @@ ACTION!="change|add", GOTO="END"
 SUBSYSTEM!="power_supply", GOTO="END"
 
 #check if ac adaptor is connected .ie the system is charging
-KERNEL=="ADP[0-9]", SUBSYSTEMS=="acpi", DRIVERS=="ac", ENV{POWER_SUPPLY_NAME}=="ADP[0-9]" \
+KERNEL=="ADP[0-9]", SUBSYSTEMS=="platform", DRIVERS=="ac", ENV{POWER_SUPPLY_NAME}=="ADP[0-9]" \
 , ENV{POWER_SUPPLY_TYPE}=="Mains", ENV{POWER_SUPPLY_ONLINE}=="1", GOTO="POWER"
 
-#guard executing the powersaving to when ac adaptor is not connected .ie system is not charging
-#INFO: https://www.kernel.org/doc/html/latest/admin-guide/pm/intel_pstate.html
-#INFO: https://www.kernel.org/doc/html/latest/admin-guide/pm/intel_epb.html
+#INFO: https://docs.kernel.org/admin-guide/pm/intel_epb.html
+#INFO: https://docs.kernel.org/admin-guide/pm/intel_pstate.html#hwp-performance
+#INFO: https://docs.kernel.org/admin-guide/pm/intel_pstate.html#energy-vs-performance-hints
 #NOTE: energy_efficiency knob:is only present on platforms with CPUs matching the Kaby Lake or Coffee Lake desktop CPU model
-KERNEL=="ADP[0-9]", SUBSYSTEMS=="acpi", DRIVERS=="ac", ENV{POWER_SUPPLY_NAME}=="ADP[0-9]" \
+#guard executing the powersaving to when ac adaptor is not connected .ie system is not charging
+KERNEL=="ADP[0-9]", SUBSYSTEMS=="platform", DRIVERS=="ac", ENV{POWER_SUPPLY_NAME}=="ADP[0-9]" \
 , ENV{POWER_SUPPLY_TYPE}=="Mains", ENV{POWER_SUPPLY_ONLINE}=="0" \
-, RUN+="/bin/zsh -c 'echo power > /sys/devices/system/cpu/cpufreq/policy?/energy_performance_preference \
-; echo power > /sys/devices/system/cpu/cpu*/power/energy_perf_bias \
-; echo 0 > /sys/devices/system/cpu/intel_pstate/no_turbo \
-; echo 50 > /sys/devices/system/cpu/intel_pstate/max_perf_pct \
-; echo 11 > /sys/devices/system/cpu/intel_pstate/min_perf_pct \
-; echo 1 > /sys/devices/system/cpu/intel_pstate/hwp_dynamic_boost \
-; echo powersave > /sys/devices/system/cpu/cpu?/cpufreq/scaling_governor \
-; echo Y > /sys/module/snd_hda_intel/parameters/power_save_controller \
-; echo 1 > /sys/module/snd_hda_intel/parameters/power_save \
-; echo med_power_with_dipm > /sys/class/scsi_host/host?/link_power_management_policy'"
+, RUN+="/bin/bash -c 'echo power | tee /sys/devices/system/cpu/cpu*/cpufreq/energy_performance_preference 2>&1>/dev/null \
+; echo powersave | tee /sys/devices/system/cpu/cpu?/cpufreq/scaling_governor 2>&1>/dev/null \
+; echo power | tee /sys/devices/system/cpu/cpu*/power/energy_perf_bias 2>&1>/dev/null \
+; echo 0 | tee /sys/devices/system/cpu/intel_pstate/no_turbo 2>&1>/dev/null \
+; echo 50 | tee /sys/devices/system/cpu/intel_pstate/max_perf_pct 2>&1>/dev/null \
+; echo 11 | tee /sys/devices/system/cpu/intel_pstate/min_perf_pct 2>&1>/dev/null \
+; echo 1 | tee /sys/devices/system/cpu/intel_pstate/hwp_dynamic_boost 2>&1>/dev/null \
+; echo Y | tee /sys/module/snd_hda_intel/parameters/power_save_controller 2>&1>/dev/null \
+; echo 1 | tee /sys/module/snd_hda_intel/parameters/power_save 2>&1>/dev/null \
+; echo med_power_with_dipm | tee /sys/class/scsi_host/host?/link_power_management_policy 2>&1>/dev/null'"
 
 GOTO="END"
 
 LABEL="POWER"
 
 #guard executing the powersaving to when ac adaptor is connected .ie system is charging
-KERNEL=="ADP[0-9]", SUBSYSTEMS=="acpi", DRIVERS=="ac", ENV{POWER_SUPPLY_NAME}=="ADP[0-9]" \
+KERNEL=="ADP[0-9]", SUBSYSTEMS=="platform", DRIVERS=="ac", ENV{POWER_SUPPLY_NAME}=="ADP[0-9]" \
 , ENV{POWER_SUPPLY_TYPE}=="Mains", ENV{POWER_SUPPLY_ONLINE}=="1" \
-, RUN+="/bin/zsh -c 'echo performance > /sys/devices/system/cpu/cpufreq/policy?/energy_performance_preference \
-; echo performance > /sys/devices/system/cpu/cpu*/power/energy_perf_bias \
-; echo 0 > /sys/devices/system/cpu/intel_pstate/no_turbo \
-; echo 100 > /sys/devices/system/cpu/intel_pstate/max_perf_pct \
-; echo 25 > /sys/devices/system/cpu/intel_pstate/min_perf_pct \
-; echo 1 > /sys/devices/system/cpu/intel_pstate/hwp_dynamic_boost \
-; echo performance > /sys/devices/system/cpu/cpu?/cpufreq/scaling_governor \
-; echo N /sys/module/snd_hda_intel/parameters/power_save_controller \
-; echo 0 > /sys/module/snd_hda_intel/parameters/power_save \
-; echo max_performance > /sys/class/scsi_host/host?/link_power_management_policy'"
+, RUN+="/bin/bash -c 'echo performance | tee /sys/devices/system/cpu/cpu*/cpufreq/energy_performance_preference 2>&1>/dev/null \
+; echo performance | tee /sys/devices/system/cpu/cpu*/power/energy_perf_bias 2>&1>/dev/null \
+; echo performance | tee /sys/devices/system/cpu/cpu?/cpufreq/scaling_governor 2>&1>/dev/null \
+; echo 0 | tee /sys/devices/system/cpu/intel_pstate/no_turbo 2>&1>/dev/null \
+; echo 100 | tee /sys/devices/system/cpu/intel_pstate/max_perf_pct 2>&1>/dev/null \
+; echo 25 | tee /sys/devices/system/cpu/intel_pstate/min_perf_pct 2>&1>/dev/null \
+; echo 1 | tee /sys/devices/system/cpu/intel_pstate/hwp_dynamic_boost 2>&1>/dev/null \
+; echo N /sys/module/snd_hda_intel/parameters/power_save_controller 2>&1>/dev/null \
+; echo 0 | tee /sys/module/snd_hda_intel/parameters/power_save 2>&1>/dev/null \
+; echo max_performance | tee /sys/class/scsi_host/host?/link_power_management_policy 2>&1>/dev/null'"
 
 LABEL="END"
-# vim: set ft=udevrules:

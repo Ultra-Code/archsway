@@ -10,7 +10,7 @@ KERNEL!="sd[b-z][0-9]",GOTO="DONE"
 #"/sbin/blkid -o value -s TYPE $devnode"
 
 #Shadow action
-#ACTION=="add",SUBSYSTEM=="block",KERNEL=="sd[b-z][0-9]",RUN+="/bin/sh -c 'echo $(date) $(env) >> /home/ultracode/udev-env.txt'"
+#ACTION=="add",SUBSYSTEM=="block",KERNEL=="sd[b-z][0-9]",RUN+="/bin/bash -c 'echo $(date) $(env) >> /home/ultracode/udev-env.txt'"
 
 #use ntfs3 as the default driver for ntfs partitions
 ENV{ID_FS_TYPE}=="ntfs", ENV{ID_FS_TYPE}="ntfs3"
