@@ -133,6 +133,7 @@ journalctl --vacuum-size=3M
 journalctl -a _TRANSPORT=syslog -g sshd
 journalctl -af _TRANSPORT=audit
 journalctl -b 0 -n 30 -r -u "docker*"
+journalctl -b 0 -o short | grep 'swap|zram'
 journalctl -b 0 -u systemd-journald -o cat
 journalctl -k -p4
 journalctl -p emerg..warning -b 0
@@ -158,6 +159,7 @@ makoctl dismiss all
 mariadb -u ultracode -p < Downloads/access_to_basic_services.sql
 math:pow 10 3
 mkinitcpio -H resume
+modinfo zram
 nft -cf ~/serverdotfiles/nftables.new.conf
 nft describe icmp code
 nft describe icmp type
@@ -267,6 +269,8 @@ sudo systemctl kill -s HUP systemd-logind
 sudo systemctl start dictd
 sudo systemctl start reflector
 sudo udevadm control --log-priority=debug
+sudo udevadm control --reload
+sudo udevadm trigger
 sudo userdel ultracode
 sudo usermod -aG docker firefox
 swaymsg -rt get_inputs
@@ -289,6 +293,7 @@ udevadm info --attribute-walk --path=/sys/class/power_supply/ADP1
 udevadm info --query=all --path=/sys/class/net/wlan0
 udevadm info --query=path --name=/dev/sda4
 udevadm monitor --udev --environment --property
+udevadm test --action=add /sys/devices/virtual/block/zram0
 udevadm test --action=change /sys/class/power_supply/ADP1
 udevadm test-builtin net_id /sys/class/net/enp3s0
 udevadm trigger --action=add --verbose --type=subsystems --subsystem-match=usb --attr-match=attribute="removable==1"
@@ -299,6 +304,7 @@ xdg-mime query filetype ~/.local/neorg/index.norg
 xkbcli interactive-wayland
 yt-dlp -S "res:720"
 yt-dlp -f 'ba' -S '+size,+br'
+zgrep CONFIG_ZRAM_MULTI_COMP /proc/config.gz
 zig build -Doptimize=ReleaseFast
 zig build -Dtarget=x86_64-linux-gnu.2.34
 zig build -Dtarget=x86_64-linux-musl -Doptimize=ReleaseSafe

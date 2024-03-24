@@ -36,6 +36,15 @@ edit:add-var rd~ $rd~
 fn rm {|@path| e:rm --interactive=once --verbose --recursive $@path}
 edit:add-var rm~ $rm~
 
+fn grep {|@regex| e:grep --extended-regexp --color --ignore-case $@regex }
+edit:add-var grep~ $grep~
+
+fn rg {|regex| grep --line-number -I --exclude=".*" --exclude-dir=".git" --exclude-dir="*cache*" $regex }
+edit:add-var rg~ $rg~
+
+fn sed {|file| sed --regexp-extended --silent --in-place=.bak $file }
+edit:add-var sed~ $sed~
+
 set edit:abbr['bat'] = 'bat --style=numbers,changes'
 
 fn sort-inplace {|file|
@@ -76,7 +85,8 @@ fn history-import {
 }
 edit:add-var hi~ $history-import~
 
-set edit:command-abbr['hu'] = 'edit:history:fast-forward'
+fn hu { edit:history:fast-forward }
+edit:add-var hu~ $hu~
 
 fn hx {|@files| $E:EDITOR $@files }
 edit:add-var hx~ $hx~
@@ -182,7 +192,6 @@ set edit:command-abbr['gg'] = 'git grep --recurse-submodules -I'
 set edit:command-abbr['gm'] = 'git mv'
 set edit:command-abbr['grm'] = 'git rm -r'
 set edit:command-abbr['gsh'] = 'git show'
-set edit:command-abbr['glp'] = "git log -p"
 set edit:abbr['gst'] = "git status"
 set edit:abbr['glt'] = "git log --stat -1"
 set edit:abbr['gml'] = "git log --submodule -p "
@@ -193,6 +202,11 @@ fn gl {
   git log --graph --oneline --decorate
 }
 edit:add-var gl~ $gl~
+
+fn glp {
+  git log -p
+}
+edit:add-var glp~ $glp~
 
 fn gs {
   git status -s
