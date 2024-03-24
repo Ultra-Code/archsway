@@ -1,1 +1,0 @@
-# For history, use elvish/history

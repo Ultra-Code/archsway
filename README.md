@@ -27,7 +27,7 @@ and FILES partition mounted to home/{data,/files} FILES should be 120-140GiB and
     - man-db [man-pages](https://wiki.archlinux.org/title/Man_page)
     - helix/neovim (for config clone [awesome-helix to $XDG_CONFIG_HOME/helix](https://github.com/Ultra-Code/awesome-helix.git) or [awesome-neovim to $XDG_CONFIG_HOME/nvim](https://github.com/Ultra-Code/awesome-neovim.git))
     - sudo
-    - elvish/fish/nushell (set default shell with `chsh -s $(which shellname)`)
+    - elvish/fish (set default shell with `chsh -s $(which shellname)`)
     - setup [zram](https://wiki.archlinux.org/title/Zram)/[zswap](https://wiki.archlinux.org/title/Zswap) for efficient ram usage
 
 ### basic configuration
@@ -92,8 +92,7 @@ ParallelDownloads = 5
 - bat is a Cat clone with syntax highlighting and git integration
 - bluez and bluez-utils for bluetooth
 - brightnessctl for controling backlight
-- carapace-bin for completions in elvish or nushell
-- pueue for process management nushell
+- carapace-bin for completions in elvish
 - language servers for
     - cpp development
         - cppcheck
