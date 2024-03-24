@@ -30,13 +30,13 @@ set $term kitty --single-instance  --instance-group "$vtnr"
 set $wallpapers_path $HOME/files/Pictures/Code
 
 # Your preferred application launcher
-set $menu $term --class "desktop-launcher" $DOTFILES/sway/launcher.zsh
+set $menu $term --class "desktop-launcher" $DOTFILES/sway/launcher.sh
 
 # Preferred sound for screenshot
 set $screen_shot_sound pw-play /usr/share/sounds/freedesktop/stereo/screen-capture.oga
 
 # Your preferred file manger
-set $file_manager $term --class "fm" --title "file manager" zsh -c 'lf'
+set $file_manager $term --class "fm" --title "file manager" bash -c 'lf'
 
 #
 # Font
@@ -432,7 +432,7 @@ bar {
     workspace_buttons yes
     separator_symbol "|"
     # Keep in mind that the current directory of this config file is $HOME
-    status_command ~/.config/sway/status.zsh
+    status_command ~/.config/sway/status.sh
     mode invisible
     font pango:Iosevka Term,Iosevka Term Medium:style=Medium,Regular 10
 

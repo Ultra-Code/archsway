@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 #inspirations from
 #https://github.com/mumin16/arch-sway
 #https://gitlab.com/bullbytes/dotfiles/-/blob/master/sway/status.sh

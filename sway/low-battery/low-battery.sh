@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 #INFO: The main idea was from https://unix.stackexchange.com/questions/84437/how-do-i-make-my-laptop-sleep-when-it-reaches-some-low-battery-threshold/289129#289129
 #INFO: https://www.kernel.org/doc/html/latest/power/power_supply_class.html
 POWERSUPPLY_PATH='/sys/class/power_supply/BAT0/status'

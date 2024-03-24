@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 readonly FILE=$1
 readonly WIDTH=$2
 readonly HEIGHT=$3

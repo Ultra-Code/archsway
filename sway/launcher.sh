@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 readonly name=${ZSH_ARGZERO:t} # or ${(%):-%1N};
 
 if ! which fzf &> /dev/null; then

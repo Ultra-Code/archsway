@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 #from https://github.com/mumin16/arch-sway
 # sway config in ~/.config/sway/config :
 # bar {

@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 output=$(timeout 60.1 pidstat 60 -p ALL)
 IFS='
 '

@@ -25,13 +25,13 @@ set $right l
 set $term footclient
 
 # Your preferred application launcher
-set $menu $term --app-id "desktop-launcher" $DOTFILES/sway/launcher.zsh
+set $menu $term --app-id "desktop-launcher" $DOTFILES/sway/launcher.sh
 
 # Your preferred file manger
-set $file_manager $term --app-id "fm" --title "file manager" zsh -c 'lf'
+set $file_manager $term --app-id "fm" --title "file manager" bash -c 'lf'
 
 # Your preferred todo app
-set $todo $term --app-id "todo" --title "todo list" zsh -c "sleep 0.5;$EDITOR ~/.local/neorg/todos/todo.norg"
+set $todo $term --app-id "todo" --title "todo list" bash -c "sleep 0.5;$EDITOR ~/.local/neorg/todos/todo.norg"
 # Font
 #
 #Check https://docs.gtk.org/Pango/type_func.FontDescription.from_string.html#description

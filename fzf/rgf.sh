@@ -14,4 +14,4 @@ INITIAL_QUERY="${*:-}"
     --header '╱ CTRL-R (ripgrep mode) ╱ CTRL-F (fzf mode) ╱' \
     --preview 'bat --color=always {1} --highlight-line {2}' \
     --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' \
-    --bind 'enter:become(helix {1} +{2})'
+    --bind 'enter:execute(hx {1} +{2})'
