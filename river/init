@@ -529,7 +529,7 @@ local mappings = {
 				key = "XF86AudioRaiseVolume",
 				command = {
 					"spawn",
-					fmt([['wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%%+ -l  %i']], max_volume),
+					fmt([['wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%%+ -l %.2f']], max_volume),
 				},
 				opt = "repeat",
 			},
@@ -539,7 +539,7 @@ local mappings = {
 				key = "XF86AudioLowerVolume",
 				command = {
 					"spawn",
-					fmt([['wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%%- -l  %i']], max_volume),
+					fmt([['wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%%- -l %.2f']], max_volume),
 				},
 				opt = "repeat",
 			},
