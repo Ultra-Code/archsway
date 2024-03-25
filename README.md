@@ -131,8 +131,6 @@ ParallelDownloads = 5
 - iptables-nft and nftable(automatically installed as a dependency of iptables-nft) for firewall configuration (enable the nftables service)
 - nmap and tcpdump for network analysis and auditing
 - docker for containerization of apps
-- ripgrep to recursively searches directories for a regex pattern while respecting your gitignore
-- fd as a simple, fast and user-friendly alternative to find
 - libreoffice-fresh for working with openoffice documents and hunspell-en_us for spellcheck, [for help setting up spellcheck](https://ask.libreoffice.org/t/how-do-you-get-the-spell-checker-to-work/28998)
 - mpd for music daemon and ncmpcpp for ui interface and mpc for controlling playing
 - mpv as multimedia player

@@ -104,7 +104,7 @@ fn mv {|@source destination| e:mv --interactive --update --verbose $@source $des
 edit:add-var mv~ $mv~
 
 #mounting and unmount drives without user password
-fn mount {|point| sudo systemd-mount --no-block --fsck=no --collect --owner=$E:USER $point}
+fn mount {|@point| sudo systemd-mount --no-block --fsck=no --collect --owner=$E:USER $@point}
 edit:add-var mount~ $mount~
 
 fn umount {|point| sudo systemd-umount $point}
@@ -148,22 +148,28 @@ edit:add-var er~ $er~
 
 #Pacman aliases
 set edit:abbr['pmu'] = "yay -Syu"
-set edit:command-abbr['pmr'] = 'yay -Rsn'
 set edit:command-abbr['pmi'] = 'yay -S'
-set edit:command-abbr['pmp'] = 'yay -Rcunsv'
-set edit:command-abbr['pmii'] = 'yay -Qii'
-set edit:command-abbr['pmis'] = 'yay -Qs'
+set edit:command-abbr['pmp'] = 'sudo pacman -Rcunsv'
+set edit:command-abbr['pmii'] = 'pacman -Qii'
+set edit:command-abbr['pmis'] = 'pacman -Qs'
 set edit:command-abbr['pmsi'] = 'yay -Sii'
 set edit:command-abbr['pmss'] = 'yay -Ss'
 set edit:command-abbr['pmsf'] = 'yay -F'
-set edit:command-abbr['pmlf'] = 'yay -Ql'
+set edit:command-abbr['pmlf'] = 'pacman -Ql'
 set edit:command-abbr['pmlfr'] = 'yay -Fl'
-set edit:command-abbr['pmly'] = 'yay -Qmq'
+set edit:command-abbr['pmly'] = 'pacman -Qmq'
 # requires the full path to the file you want to find the package it belongs to
-set edit:command-abbr['pmb'] = 'yay -Qo'
-set edit:abbr['pml'] = 'yay -Qe'
-set edit:abbr['pmc'] = "yay -Qdtq | yay -Rsn --noconfirm -"
-set edit:abbr['pmcc'] = "yay -Sc"
+set edit:command-abbr['pmb'] = 'pacman -Qo'
+
+fn pml { pacman -Qe }
+edit:add-var pml~ $pml~
+
+# https://github.com/elves/elvish/issues/1775
+fn pmc { sudo pacman -Rsn (pacman -Qdtq) }
+edit:add-var pmc~ $pmc~
+
+fn pmcc { yay -Sc }
+edit:add-var pmcc~ $pmcc~
 
 fn pms {|package|
     try {
