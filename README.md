@@ -82,10 +82,13 @@ ParallelDownloads = 5
 
 ## INSTALLS
 - base-devel for Basic c/c++ build tools to build Arch Linux packages
-- lldb/gdb for debugging zig c and c++
-- clang/gcc for c++ development
-- rustup with default profile and rust-analyzer component for rust development
+- lldb/gdb for debugging zig, c and c++
+- clang/gcc for c++ development with clangd
 - zig with zls for zig development
+- rustup with default profile and rust-analyzer component for rust development
+- install mesa for opengl and as dri userspace driver and intel-media-driver as va-api for intel
+- iptables-nft and nftable(automatically installed as a dependency of iptables-nft) for firewall configuration (enable the nftables service)
+- nmap and tcpdump for network analysis and auditing
 - yay for AUR packagem mangement
 - android-file-transfer with libmtp for connecting android phones mtp management
 - aria2 as download manager
@@ -93,28 +96,7 @@ ParallelDownloads = 5
 - bluez and bluez-utils for bluetooth
 - brightnessctl for controling backlight
 - carapace-bin for completions in elvish
-- language servers for
-    - cpp development
-        - cppcheck
-    - web development
-        - vscode-langservers-extracted
-        - @tailwindcss/language-server
-        - typescript
-        - typescript-language-server
-        - @volar/server
-        - eslint
-    - lau development
-        - lua-language-server
-        - stylua
-        - selene
-    - python development
-        - jedi-language-server
-        - ruff
-        - mypy
-        - python-pylint
-        - python-black
-        - python-poetry
-
+- [Helix](https://github.com/Ultra-Code/awesome-helix) and [Neovim](https://github.com/Ultra-Code/awesome-neovim) awesomely setup with the relevant lsps and static analyzers for zig, c, rust, c++, lua, python, shell, and web-development
 - dictd server with dict client and some dictionary sources for yay like dict-wikt-en-all dict-freedict-eng-spa dict-freedict-spa-eng dict-foldoc dict-gcide dict-wn
     - NOTE: to disable online mode comment out `server dict.org` in  /etc/dict/dict.conf
     - Make sure locale is properly configured in `DICTD_ARGS` of /etc/conf.d/dictd else the service unit will fail
@@ -127,28 +109,24 @@ ParallelDownloads = 5
 - git for version control
 - grim and slurp for screenshot
 - mako as a lightweight notification daemon for wayland
-- install mesa for opengl and as dri userspace driver and intel-media-driver as va-api for intel
-- iptables-nft and nftable(automatically installed as a dependency of iptables-nft) for firewall configuration (enable the nftables service)
-- nmap and tcpdump for network analysis and auditing
 - docker for containerization of apps
 - libreoffice-fresh for working with openoffice documents and hunspell-en_us for spellcheck, [for help setting up spellcheck](https://ask.libreoffice.org/t/how-do-you-get-the-spell-checker-to-work/28998)
 - mpd for music daemon and ncmpcpp for ui interface and mpc for controlling playing
 - mpv as multimedia player
-- fastfetch for displaying system information
-- lf as filemanger
-- openssh and rsync for syncing file with remote over ssh
+- sound-theme-freedesktop for standard sounds and tone used in linux
 - pipewire and pipewire-audio for audio/video routing and processing, pipewire-pulse as pulseaudio replacement and WirePlumber as pipewire session manager
+- lf as filemanger
+- fastfetch for displaying system information
+- openssh and rsync for syncing file with remote over ssh
 - remmina as remote desktop client with plugin like freerdp|libvncserver
 - reflector for choosing fastest pacman server list
 - usb_modeswitch for enabling modem mode for zero-cd based modems
 - wl-clipboard for wayland clipboard
-- sound-theme-freedesktop for standard sounds and tone used in linux
-- fuzzy as the application launcher
 - kanshi for wayland output management
+- fuzzy as the application launcher
 - cliphist as clipboard history manager
 - qt5-wayland for runing qt5 apps under wayland
 - xdg-desktop-portal-wrl for WebRTC screen sharing
 - xdg-utils to assist applications with desktop integration tasks
 - yt-dlp YouTube downloader
-- zig zls-bin for zig development
 - zoxide for efficient directory movement
