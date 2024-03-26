@@ -103,8 +103,8 @@ edit:add-var cp~ $cp~
 fn mv {|@source destination| e:mv --interactive --update --verbose $@source $destination}
 edit:add-var mv~ $mv~
 
-#mounting and unmount drives without user password
-fn mount {|@point| sudo systemd-mount --no-block --fsck=no --collect --owner=$E:USER $@point}
+#To mounting and unmount drives without user password use --owner=$E:USER
+fn mount {|@point| sudo systemd-mount --no-block --fsck=no --collect  $@point}
 edit:add-var mount~ $mount~
 
 fn umount {|point| sudo systemd-umount $point}
