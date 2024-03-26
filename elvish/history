@@ -112,6 +112,7 @@ git tag -a v0.3.0
 glxinfo |grep opengl
 go install src.elv.sh/cmd/elvish@master
 gpg --keyserver keys.openpgp.org --recv-keys CA7C2C7A30C8E8E1274A847651C67305FFC2E5C0
+gpg --keyserver-options auto-key-retrieve --verify archlinux-2024.03.01-x86_64.iso.sig archlinux-2024.03.01-x86_64.iso
 gpg --list-keys --fingerprint 06BC317B515ACE7C
 grep 9000 /etc/services
 gsettings list-recursively org.gnome.desktop.interface
