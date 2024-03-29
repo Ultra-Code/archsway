@@ -5,9 +5,13 @@ Archlinux on sway from scratch with the most minimal dependencies. DIY is awesom
 [Arch Linux Installation Guide](https://wiki.archlinux.org/title/Installation_guide)
 
 # Filesystem Setup
-For new setup home should be a subvolume/partition mounted on the /root which is preferably f2fs/btrfs/Bcachefs/xfs
-and FILES partition mounted to home/{data,/files} FILES should be 120-140GiB and root should have a max of 60GiB
-**NOTE: make sure to mount btrfs with compression zstd on first mount on live iso**
+For a new setup, **ROOT** & **HOME** should be a _f2fs_ | _Bcachefs_ | _btrfs_ | _xfs_ partition. **ROOT** is mounted on / with the dedicated **HOME** |& **FILES**
+_subvolume_ | _partition_ mounted to `/home/${username}` and `/home/${username}/files` repectively. **ROOT** should have a max size of **60-120GiB**
+with **HOME** between **120-240GiB** and **FILES** of __arbitrary size__ for multimedia content.
+
+**NOTE:**
+- **make sure to create and mount bcachefs/btrfs with zstd compression on first mount during installation**
+- **mount all drive with a [logical sector](https://wiki.archlinux.org/title/Advanced_Format) of 4096**
 
 ## needed base system modules
 
