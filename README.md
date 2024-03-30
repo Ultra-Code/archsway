@@ -20,7 +20,7 @@ efficient ram usage with a backing device of min size **16GiB**
 - Enable systemd-boot as boot manager (`bootctl install`)
 - Start iwd, systemd-networkd, systemd-resolved system services
 - enabling systemd-boot-update service to update systemd-boot on systemd upgrade
-- river/sway as window manager with swayidle and swaylock for idle and lock management and levee/yambar for bar management
+- river/sway as window manager with swayidle and waylock for idle and lock management and levee/yambar for bar management
     - base
     - btrfs-progs
     - bcachefs-tools
@@ -34,6 +34,7 @@ efficient ram usage with a backing device of min size **16GiB**
     - linux-zen
     - mesa for opengl
     - intel-media-driver for hardware video acceleration
+    - polkit for seat and privileged access management
     - man-db [man-pages](https://wiki.archlinux.org/title/Man_page)
     - helix/neovim for config clone [awesome-helix](https://github.com/Ultra-Code/awesome-helix.git) to $XDG_CONFIG_HOME/helix or [awesome-neovim](https://github.com/Ultra-Code/awesome-neovim.git) to $XDG_CONFIG_HOME/nvim
     - sudo
@@ -85,6 +86,7 @@ ParallelDownloads = 5
 - clang/gcc for c++ development with clangd
 - zig with zls for zig development
 - rustup with default profile and rust-analyzer component for rust development
+- luajit for lua development
 - iptables-nft and nftable(automatically installed as a dependency of iptables-nft) for firewall configuration (enable the nftables service)
 - nmap and tcpdump for network analysis and auditing
 - yay for AUR packagem mangement
@@ -94,15 +96,16 @@ ParallelDownloads = 5
 - bluez and bluez-utils for bluetooth
 - brightnessctl for controling backlight
 - carapace-bin for completions in elvish
-- [Helix](https://github.com/Ultra-Code/awesome-helix) and [Neovim](https://github.com/Ultra-Code/awesome-neovim) awesomely setup with the relevant lsps and static analyzers for zig, c, rust, c++, lua, python, shell, and web-development
+- fzf for fuzzy search
+- vivid for LS_COLORS
+- starship for prompt
+- [Helix](https://github.com/Ultra-Code/awesome-helix) and [Neovim](https://github.com/Ultra-Code/awesome-neovim) awesomely setup with the relevant lsps and static analyzers for zig, c, rust, c++, luajit, python, shell, and web-development
 - dictd server with dict client and some dictionary sources for yay like dict-wikt-en-all dict-freedict-eng-spa dict-freedict-spa-eng dict-foldoc dict-gcide dict-wn
     - NOTE: to disable online mode comment out `server dict.org` in  /etc/dict/dict.conf
     - Make sure locale is properly configured in `DICTD_ARGS` of /etc/conf.d/dictd else the service unit will fail
     - Since dict uses en_US.UTF-8 by default, make sure to comment it out in /etc/locale.gen and compile it along side your locale of choice es_MX.UTF-8
 - ffmpegthumbnailer & gnome-epub-thumbnailer for thumbnails
 - firefox with speech-dispatcher (for Text-to-Speech) as pdf reader or zathura and firefox-ublock-origin as adblocker and foliate/fbreader as epub reader
-- fzf for fuzzy search
-- vivid for LS_COLORS
 - wlsunset for controlling screen blue light
 - git for version control
 - grim and slurp for screenshot
@@ -120,8 +123,9 @@ ParallelDownloads = 5
 - reflector for choosing fastest pacman server list
 - usb_modeswitch for enabling modem mode for zero-cd based modems
 - wl-clipboard for wayland clipboard
+- batsignal for battery status notifications
 - kanshi for wayland output management
-- fuzzy as the application launcher
+- fuzzel as the application launcher
 - cliphist as clipboard history manager
 - qt5-wayland for runing qt5 apps under wayland
 - xdg-desktop-portal-wrl for WebRTC screen sharing
