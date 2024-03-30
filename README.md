@@ -16,11 +16,14 @@ efficient ram usage with a backing device of min size **16GiB**
 
 ## needed base system modules
 
-- systemd-boot as boot manager
+- configure mkinitcpio
+- Enable systemd-boot as boot manager (`bootctl install`)
+- Start iwd, systemd-networkd, systemd-resolved system services
 - enabling systemd-boot-update service to update systemd-boot on systemd upgrade
 - river/sway as window manager with swayidle and swaylock for idle and lock management and levee/yambar for bar management
     - base
     - btrfs-progs
+    - bcachefs-tools
     - dosfstools
     - exfatprogs
     - f2fs-tools
@@ -29,6 +32,8 @@ efficient ram usage with a backing device of min size **16GiB**
     - kitty/foot
     - linux-firmware
     - linux-zen
+    - mesa for opengl
+    - intel-media-driver for hardware video acceleration
     - man-db [man-pages](https://wiki.archlinux.org/title/Man_page)
     - helix/neovim for config clone [awesome-helix](https://github.com/Ultra-Code/awesome-helix.git) to $XDG_CONFIG_HOME/helix or [awesome-neovim](https://github.com/Ultra-Code/awesome-neovim.git) to $XDG_CONFIG_HOME/nvim
     - sudo
@@ -36,18 +41,18 @@ efficient ram usage with a backing device of min size **16GiB**
 
 ### basic configuration
 
-- since networking bits are already setup in the iso , You can just copy them .ie /etc/systemd/network/* to the mounted partition and start the necessary services iwd,systemd-networkd,systemd-resolvd
-  Or use configuration in [networking/resolve.conf](https://github.com/Ultra-Code/archsway/blob/master/networking/resolve.conf) and  [networking/network](https://github.com/Ultra-Code/archsway/blob/master/networking/network)
+- Copy networking bits already setup in the installation iso image .ie /etc/systemd/network{.conf.d|}/* to the mounted root partition.
+  Find sample configuration in [networking/resolve.conf](https://github.com/Ultra-Code/archsway/blob/master/networking/resolve.conf) and  [networking/network](https://github.com/Ultra-Code/archsway/blob/master/networking/network)
 - Enable synchronizing the system clock across the network by enabling [systemd-timesyncd.service](https://wiki.archlinux.org/title/Systemd-timesyncd)
+- enable DNSOverTLS for resolved
+- iwd for wifi and enable it dhcp client
+- symlink /run/systemd/resolve/stub-resolv.con to /etc/resolv.conf for dns resolution
 - On the freshly installed system use the following fonts
     + use fonts with great unicode support like ttf-dejavu or noto-fonts or gnu-free-fonts as system default font
     + ttc-iosevka  or ttf-jetbrains-mono for monospace,
     + ttf-nerd-fonts-symbols-mono for nerd font symbols and noto-font-emoji for emoji
     >_NOTE_: don't forget to `ln -s /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf /etc/fonts/conf.d/`
 - configure dns for 1.1.1.1 but this might not be needed since it's the default on arch linux
-- enable DNSOverTLS for resolved
-- iwd for wifi and enable it dhcp client
-- symlink /run/systemd/resolve/stub-resolv.con to /etc/resolv.conf for dns resolution
 TODO: review the usefullness of the lines below
 - disable unneeded services that run at boot like man-db.timer and mask ldconfig.service,systemd-rfkill*
 - disable journaling to persistent storage by setting Storage in journal.conf to volatile and masking systemd-journal-flush.service
@@ -90,7 +95,6 @@ ParallelDownloads = 5
 - clang/gcc for c++ development with clangd
 - zig with zls for zig development
 - rustup with default profile and rust-analyzer component for rust development
-- install mesa for opengl and as dri userspace driver and intel-media-driver as va-api for intel
 - iptables-nft and nftable(automatically installed as a dependency of iptables-nft) for firewall configuration (enable the nftables service)
 - nmap and tcpdump for network analysis and auditing
 - yay for AUR packagem mangement
