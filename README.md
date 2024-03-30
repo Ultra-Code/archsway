@@ -27,9 +27,9 @@ efficient ram usage with a backing device of min size **16GiB**
     - dosfstools
     - exfatprogs
     - f2fs-tools
-    - intel-ucode
-    - iwd
-    - kitty/foot
+    - intel-ucode microcode
+    - iwd for wifi
+    - kitty/foot terminal
     - linux-firmware
     - linux-zen
     - mesa for opengl
@@ -44,19 +44,11 @@ efficient ram usage with a backing device of min size **16GiB**
 - Copy networking bits already setup in the installation iso image .ie /etc/systemd/network{.conf.d|}/* to the mounted root partition.
   Find sample configuration in [networking/resolve.conf](https://github.com/Ultra-Code/archsway/blob/master/networking/resolve.conf) and  [networking/network](https://github.com/Ultra-Code/archsway/blob/master/networking/network)
 - Enable synchronizing the system clock across the network by enabling [systemd-timesyncd.service](https://wiki.archlinux.org/title/Systemd-timesyncd)
-- enable DNSOverTLS for resolved
-- iwd for wifi and enable it dhcp client
-- symlink /run/systemd/resolve/stub-resolv.con to /etc/resolv.conf for dns resolution
 - On the freshly installed system use the following fonts
     + use fonts with great unicode support like ttf-dejavu or noto-fonts or gnu-free-fonts as system default font
     + ttc-iosevka  or ttf-jetbrains-mono for monospace,
     + ttf-nerd-fonts-symbols-mono for nerd font symbols and noto-font-emoji for emoji
     >_NOTE_: don't forget to `ln -s /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf /etc/fonts/conf.d/`
-- configure dns for 1.1.1.1 but this might not be needed since it's the default on arch linux
-TODO: review the usefullness of the lines below
-- disable unneeded services that run at boot like man-db.timer and mask ldconfig.service,systemd-rfkill*
-- disable journaling to persistent storage by setting Storage in journal.conf to volatile and masking systemd-journal-flush.service
-- link kitty to xterm
 - configure hardware acceleration and [Intel_graphics and Intel_GVT-g](https://wiki.archlinux.org/title/Intel_graphics)
 - manual powermangement with udev rules and modprobe config files in [powersaving](https://github.com/Ultra-Code/archsway/blob/master/powersaving) .udev rules go to /etc/udev/rules.d
 - and modprobe [configs](https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate) in /etc/modprobe.d
@@ -66,7 +58,6 @@ TODO: review the usefullness of the lines below
 - [cpu frequency scaling](https://wiki.archlinux.org/title/CPU_frequency_scaling) and  [udev rules](https://wiki.archlinux.org/title/Udev)
 - [Active State Power Management](https://wiki.archlinux.org/title/Power_management#Active_State_Power_Management) check
   if asmp is [supported ](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/power_management_guide/aspm) and add or remove `powersave > /sys/module/pcie_aspm/parameters/policy` from udev powersave rules based on that
-- modify relector configuration in /etc/xdg/reflector/reflector.conf to sort based on download rate with --sort rate
 - modify sudoers with visudo using example in [suders file](https://github.com/Ultra-Code/archsway/blob/master/sudoers)
 - configure what powerbutton and lidclose does with /etc/systemd/logind.conf
 - For [pacman](https://wiki.archlinux.org/title/Pacman) enable the following options under option section in /etc/pacman.conf
@@ -87,7 +78,6 @@ ParallelDownloads = 5
 - [move disk cache to ram](https://wiki.archlinux.org/title/Firefox/Tweaks#Move_disk_cache_to_RAM) by setting browser.cache.disk.parent_directory to /run/user/UID/firefox
 - where UID is your user's ID which can be obtained by running id -u
 - increase session save interval to 6 minutes (360000 milliseconds) by setting browser.sessionstore.interval to 360000
-- Enable DNS over HTTPS in firefox
 
 ## INSTALLS
 - base-devel for Basic c/c++ build tools to build Arch Linux packages
@@ -138,3 +128,14 @@ ParallelDownloads = 5
 - xdg-utils to assist applications with desktop integration tasks
 - yt-dlp YouTube downloader
 - zoxide for efficient directory movement
+
+## OPTIONAL
+- iwd for wifi and enable it dhcp client
+- symlink /run/systemd/resolve/stub-resolv.con to /etc/resolv.conf for dns resolution
+- enable DNSOverTLS for resolved
+- configure dns for 1.1.1.1 but this might not be needed since it's the default on arch linux. TODO: review the usefullness of the lines below
+- disable unneeded services that run at boot like man-db.timer and mask ldconfig.service,systemd-rfkill*
+- disable journaling to persistent storage by setting Storage in journal.conf to volatile and masking systemd-journal-flush.service
+- link kitty to xterm
+- Enable DNS over HTTPS in firefox
+- modify relector configuration in /etc/xdg/reflector/reflector.conf to sort based on download rate with --sort rate
