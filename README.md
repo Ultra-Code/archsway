@@ -6,12 +6,13 @@ Archlinux on sway from scratch with the most minimal dependencies. DIY is awesom
 
 # Filesystem Setup
 For a new setup, **ROOT** & **HOME** should be a _f2fs_ | _Bcachefs_ | _btrfs_ | _xfs_ partition. **ROOT** is mounted on / with the dedicated **HOME** |& **FILES**
-_subvolume_ | _partition_ mounted to `/home/${username}` and `/home/${username}/files` repectively. **ROOT** should have a max size of **60-120GiB**
-with **HOME** between **120-240GiB** and **FILES** of __arbitrary size__ for multimedia content.
+_subvolume_ | _partition_ mounted to `/home` and `/home/${username}/files` repectively. **ROOT** should have a max size of **60-120GiB**
+with **HOME** between **120-240GiB** and **FILES** of __arbitrary size__ for multimedia content. Setup [**zram**](https://wiki.archlinux.org/title/Zram) for 
+efficient ram usage with a backing device of min size **16GiB**
 
 **NOTE:**
 - **make sure to create and mount bcachefs/btrfs with zstd compression on first mount during installation**
-- **mount all drive with a [logical sector](https://wiki.archlinux.org/title/Advanced_Format) of 4096**
+- **format & mount all drive with a [logical sector or block size](https://wiki.archlinux.org/title/Advanced_Format) of 4096**
 
 ## needed base system modules
 
@@ -29,10 +30,9 @@ with **HOME** between **120-240GiB** and **FILES** of __arbitrary size__ for mul
     - linux-firmware
     - linux-zen
     - man-db [man-pages](https://wiki.archlinux.org/title/Man_page)
-    - helix/neovim (for config clone [awesome-helix to $XDG_CONFIG_HOME/helix](https://github.com/Ultra-Code/awesome-helix.git) or [awesome-neovim to $XDG_CONFIG_HOME/nvim](https://github.com/Ultra-Code/awesome-neovim.git))
+    - helix/neovim for config clone [awesome-helix](https://github.com/Ultra-Code/awesome-helix.git) to $XDG_CONFIG_HOME/helix or [awesome-neovim](https://github.com/Ultra-Code/awesome-neovim.git) to $XDG_CONFIG_HOME/nvim
     - sudo
     - elvish/fish (set default shell with `chsh -s $(which shellname)`)
-    - setup [zram](https://wiki.archlinux.org/title/Zram)/[zswap](https://wiki.archlinux.org/title/Zswap) for efficient ram usage
 
 ### basic configuration
 
