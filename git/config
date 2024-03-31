@@ -1,6 +1,7 @@
 [user]
 	name = Ultra-Code
-    email = mega.alpha100@gmail.com
+	email = mega.alpha100@gmail.com
+	signingkey = /home/ultracode/.ssh/id_ed25519.pub
 [core]
     editor = hx
 [pull]
@@ -30,3 +31,7 @@
     ui = auto
 [clone]
 	filterSubmodules = true
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
