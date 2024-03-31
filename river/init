@@ -119,7 +119,8 @@ local autostarts = {
 		"before-sleep", waylock,
 		"idlehint", "780",
 	},
-	{ "swaybg", "--mode", "fill", "--image", wallpaper },
+	-- { "swaybg", "--mode", "fill", "--image", wallpaper },
+	{ "wbg", wallpaper },
 	-- { status_bar }, # don't run status bar on startup
 	-- wlsunset -t 2500 -T 6500 -l 5.5502 -L -0.2174 -S 07:00 -s 18:00 -d 1800 -g 1.0
 	{ "wlsunset", "-t 2500", "-l 5.5502", "-L -0.2174" },
@@ -176,7 +177,7 @@ local river_options = {
 	["default-attach-mode"] = "top",
 	["border-width"] = 0,
 	-- disable till https://github.com/riverwm/river/issues/982 is fixed
-	["focus-follows-cursor"] = "disable",
+	["focus-follows-cursor"] = "disabled",
 	["hide-cursor"] = { "when-typing", "enabled" },
 	["set-cursor-warp"] = "on-output-change",
 	["set-repeat"] = { 50, 300 },
@@ -789,7 +790,7 @@ local window_rules = {
 			"popup",
 			"float",
 		},
-		["ssd"] = {
+		["csd"] = {
 			"firefox",
 		},
 		["tags"] = {
