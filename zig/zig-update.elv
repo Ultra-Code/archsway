@@ -112,7 +112,7 @@ fn finish {|new_zig_exe zig_version basename|
 fn set-default {|new_zig_exe zig_version|
     # set/update which binary is the default zig installation
     if (and ?(os:stat $new_zig_exe) (==s (os:stat $new_zig_exe)[type] symlink)) {
-        os:remove $BIN_DIR/zig
+        var _ = ?(os:remove $BIN_DIR/zig)
         os:symlink $new_zig_exe $BIN_DIR/zig
         echo "default zig set to "$zig_version
     } else {
