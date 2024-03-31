@@ -194,7 +194,8 @@ edit:add-var pms~ $pms~
 
 #Git aliases
 set edit:command-abbr['gd'] = 'git diff'
-set edit:command-abbr['gc'] = 'git commit'
+set edit:command-abbr['gc'] = 'git commit -S'
+set edit:command-abbr['gt'] = 'git tag -s'
 set edit:command-abbr['ga'] = 'git add'
 set edit:command-abbr['glf'] = 'git log --follow -p'
 set edit:command-abbr['gg'] = 'git grep --recurse-submodules -I'
