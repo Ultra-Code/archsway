@@ -1,17 +1,56 @@
 use os
-use path 
-use runtime
-use str
 use re
+use str
 
-# Add local/bin to path env
-if (has-env WSLENV) {
-     set paths = [/usr/local/sbin /usr/local/bin /usr/bin ~/.local/bin]
-} else {
-     set paths =  (conj $paths ~/.local/bin)
+use ./env
+
+# Automatically run river window manager on virtual terminal tty 1-3
+# On other ttys you must run manually with the tty option
+fn start-river {|&tty=$false|
+     if (or (re:match "/dev/tty[1-3]" (tty)) $tty) {
+        # for river's log output to be handled by journald
+          if (and (has-external river) (os:eval-symlinks $E:XDG_CONFIG_HOME/river/init | os:is-regular (all))) {
+             # set XDG_CURRENT_DESKTOP
+               set E:XDG_CURRENT_DESKTOP = river
+     
+               var deps = [&vivid="for ls colors" &starship="for prompt customization" &carapace="for shell completions" 
+               &kitty="as a terminal" &waylock="for screen lock" &fuzzel="as menu launcher" &swayidle="for wm idle state management"
+               &wbg="for background image" &wlsunset="for night light/blue light management" &cliphist="for clipboard history" 
+               &wl-paste="for copy/pasting" &grim="for screenshots" &slurp="for region slection during screenshots"
+               &mpc="for music player keys control" &brightnessctl="for screen brightness control"]
+
+               var optional_deps = [&batsignal="for battery status notification" &kanshi="for automatic output management" 
+               &lf="as a file explore" &swaynag="for interactive section" &lswt="for listing wayland windows with their attributes"]
+
+               for package [(keys $deps)] {
+                    if (not (has-external $package)) {
+                         fail $package" is required "$deps[$package]
+                    }
+               }
+               for package [(keys $optional_deps)] {
+                    if (not (has-external $package)) {
+                         echo $package" is optionally required "$optional_deps[$package]
+                    }
+               }
+               if (not (os:is-regular /usr/share/sounds/freedesktop/stereo/screen-capture.oga)) {
+                    echo "sound-them-freedesktop package is optionally required"
+               }
+
+               exec systemd-cat --identifier=river river -no-xwayland
+        } else {
+               echo "Either river is not installed or found in $E:PATH"
+               echo "Also make sure that your river config is located at $E:XDG_CONFIG_HOME/river/init"
+        }
+     }
 }
+edit:add-var start-river~ $start-river~
+
+start-river
+
+# elvish limited vi editing mode
+set edit:insert:binding[Ctrl-'['] = $edit:command:start~
+
 # https://elv.sh/ref/language.html#exception
-# var output = (var error = ?(pgrep -u $E:USER ssh-agent))
 if (not ?(pgrep -u $E:USER ssh-agent)) {
      ssh-agent -t 1d -c  | slurp | str:replace setenv set-env (all) | to-lines | take 2 | to-lines | slurp | print (all) > $E:XDG_RUNTIME_DIR/ssh-agent.env 
      cat $E:XDG_RUNTIME_DIR/ssh-agent.env | slurp | eval (all)
@@ -20,75 +59,5 @@ if (not ?(pgrep -u $E:USER ssh-agent)) {
 if (not ?(test -S $E:SSH_AUTH_SOCK)) {
      cat $E:XDG_RUNTIME_DIR/ssh-agent.env | slurp | eval (all)
 }
-
-
-if (re:match "/dev/tty[1-3]" (tty)) {
-    # set XDG_CURRENT_DESKTOP
-    set E:XDG_CURRENT_DESKTOP = river
-
-    # for river's log output to be handled by journald
-    exec systemd-cat --identifier=river river
-}
-
-set-env LS_COLORS (vivid generate alabaster_dark) # alabaster_dark ayu catppuccin-latte iceberg-dark one-dark
-
-# Setup debuginfo daemon for packages in the official repositories
-cat /etc/debuginfod/archlinux.urls | set-env DEBUGINFOD_URLS (all)
-
-set-env XDG_CACHE_HOME (put $E:HOME | path:join (all) .cache)
-set-env XDG_CONFIG_HOME (put $E:HOME | path:join (all) .config)
-set-env XDG_LOCAL_HOME (put $E:HOME | path:join (all) .local)
-set-env XDG_DATA_HOME (put $E:XDG_LOCAL_HOME | path:join (all) share)
-set-env XDG_STATE_HOME (put $E:XDG_LOCAL_HOME | path:join (all) state)
-
-set-env DOTFILES (put $E:XDG_CONFIG_HOME | path:join (all) dotfiles)
-set E:ELVRC = $E:DOTFILES/elvish
-
-set E:STARSHIP_CONFIG = $E:DOTFILES/starship/starship.toml
-
-set-env GTK_THEME 'Adwaita:dark'
-set-env QT_STYLE_OVERRIDE 'adwaita-dark'
-
-set-env MANROFFOPT '-c'
-set-env MANPAGER $runtime:elvish-path" -c 'col --no-backspaces --spaces | bat -l man --plain'"
-
-if (os:is-dir ~/.local/cargo) {
-     set E:CARGO_HOME = (put $E:XDG_LOCAL_HOME | path:join (all) cargo)
-     set-env RUSTUP_HOME (put $E:XDG_LOCAL_HOME | path:join (all) rustup)
-     set-env PATH  (put $E:CARGO_HOME | path:join (all) bin | conj $paths (all) | str:join ':' (all))
-
-}
-
-if (os:is-dir ~/.local/go) {
-     set E:GOPATH = (put $E:XDG_LOCAL_HOME | path:join (all) go)
-     set-env GOBIN (put $E:GOPATH | path:join (all) bin)
-     set-env PATH  (put $E:GOBIN | conj $paths (all) | str:join ':' (all))
-}
-
-if (os:is-dir ~/.local/bun) {
-     set E:BUN_INSTALL = $E:XDG_LOCAL_HOME/bun
-     set paths =  (put $E:BUN_INSTALL | path:join (all) bin | conj $paths (all))
-}
-
-if (has-external composer) {
-   set E:COMPOSER_HOME = (put $E:XDG_LOCAL_HOME | path:join (all) composer)
-   set paths =  (put $E:COMPOSER_HOME | path:join (all) vendor bin | conj $paths (all))
-}
-
-# elvish limited vi editing mode
-set edit:insert:binding[Ctrl-'['] = $edit:command:start~
-
-# enable completions from these shells when completions aren't avilable in current shell
-set-env CARAPACE_BRIDGES 'zsh,fish,bash,inshellisense' 
-set-env CARAPACE_MATCH 1 # make completion matching case insensitive
-set-env CARAPACE_ENV 1 # enable environment variable completion
-eval (carapace _carapace | slurp)
-
-eval (starship init elvish)
-
-# dedup path list
-set paths = [(put $paths | order (all) | compact)]
-
-set-env EDITOR (if (has-external hx) { which hx } else { which helix })
 
 use ./aliases

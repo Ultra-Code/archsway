@@ -137,11 +137,14 @@ edit:add-var tarxz~ $tarxz~
 fn du {|@file| e:du -h -d 1 $@file}
 edit:add-var du~ $du~
 
-fn ee { $E:EDITOR $E:ELVRC/rc.elv }
+fn ee { $E:EDITOR $E:ELVRC/env.elv }
 edit:add-var ee~ $ee~
 
 fn ea { $E:EDITOR $E:ELVRC/aliases.elv }
 edit:add-var ea~ $ea~
+
+fn erc { $E:EDITOR $E:ELVRC/rc.elv }
+edit:add-var erc~ $erc~
 
 fn er { $E:EDITOR $E:DOTFILES/river/init }
 edit:add-var er~ $er~
