@@ -111,9 +111,21 @@ git switch revive-translateC
 git tag -a v0.3.0
 glxinfo |grep opengl
 go install src.elv.sh/cmd/elvish@master
+gpg --expert --edit-key Ultra
+gpg --expert --full-generate-key Ultra
+gpg --export --armor --output public-key.asc Ultra Code
+gpg --export-secret-keys --armor --output private-key.asc Ultra Code
+gpg --export-ssh-key Ultra
+gpg --gen-revoke --armor --output revoke-cert.asc Ultra Code
 gpg --keyserver keys.openpgp.org --recv-keys CA7C2C7A30C8E8E1274A847651C67305FFC2E5C0
 gpg --keyserver-options auto-key-retrieve --verify archlinux-2024.03.01-x86_64.iso.sig archlinux-2024.03.01-x86_64.iso
 gpg --list-keys --fingerprint 06BC317B515ACE7C
+gpg --list-keys --with-keygrip
+gpg --list-secret-keys --keyid-format=long
+gpg --symmetric --s2k-cipher-algo AES256 --s2k-digest-algo SHA512 --s2k-count 65536 altgpgkeys.gz
+gpg-connect-agent reloadagent /bye
+gpg-connect-agent updatestartuptty /bye >/dev/null
+gpgconf --list-options gpg-agent
 grep 9000 /etc/services
 gsettings list-recursively org.gnome.desktop.interface
 helix --health toml
