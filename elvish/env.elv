@@ -25,6 +25,9 @@ set-env QT_STYLE_OVERRIDE 'adwaita-dark'
 set-env MANROFFOPT '-c'
 set-env MANPAGER $runtime:elvish-path" -c 'col --no-backspaces --spaces | bat -l man --plain'"
 
+# Configure pinentry to use the correct TTY
+set-env GPG_TTY (tty)
+
 # Setup debuginfo daemon for packages in the official repositories
 cat /etc/debuginfod/archlinux.urls | set-env DEBUGINFOD_URLS (all)
 

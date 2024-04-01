@@ -50,14 +50,24 @@ start-river
 # elvish limited vi editing mode
 set edit:insert:binding[Ctrl-'['] = $edit:command:start~
 
-# https://elv.sh/ref/language.html#exception
-if (not ?(pgrep -u $E:USER ssh-agent)) {
-     ssh-agent -t 1d -c  | slurp | str:replace setenv set-env (all) | to-lines | take 2 | to-lines | slurp | print (all) > $E:XDG_RUNTIME_DIR/ssh-agent.env 
-     cat $E:XDG_RUNTIME_DIR/ssh-agent.env | slurp | eval (all)
-}
+fn setup-key-mgmt {|&gpg=$true|
+     # https://elv.sh/ref/language.html#exception
+     if (and $gpg (not ?(pgrep -u $E:USER gpg-agent stdout>/dev/null))) {
+          # gpg-agent --daemon --enable-ssh-support --default-cache-ttl 86400 stdout>/dev/null
+          gpg-connect-agent /bye
+          unset-env SSH_AGENT_PID
+          set-env SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+     } else {
+          if (not ?(pgrep -u $E:USER ssh-agent)) {
+               ssh-agent -t 1d -c  | slurp | str:replace setenv set-env (all) | to-lines | take 2 | to-lines | slurp | print (all) > $E:XDG_RUNTIME_DIR/ssh-agent.env 
+               cat $E:XDG_RUNTIME_DIR/ssh-agent.env | slurp | eval (all)
+         }
 
-if (not ?(test -S $E:SSH_AUTH_SOCK)) {
-     cat $E:XDG_RUNTIME_DIR/ssh-agent.env | slurp | eval (all)
+          if (and (not ?(test -S $E:SSH_AUTH_SOCK)) ?(pgrep -u $E:USER ssh-agent)) {
+               cat $E:XDG_RUNTIME_DIR/ssh-agent.env | slurp | eval (all)
+          }
+     }
 }
+setup-key-mgmt
 
 use ./aliases

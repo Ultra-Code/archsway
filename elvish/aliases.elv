@@ -143,8 +143,8 @@ edit:add-var ee~ $ee~
 fn ea { $E:EDITOR $E:ELVRC/aliases.elv }
 edit:add-var ea~ $ea~
 
-fn erc { $E:EDITOR $E:ELVRC/rc.elv }
-edit:add-var erc~ $erc~
+fn rc { $E:EDITOR $E:ELVRC/rc.elv }
+edit:add-var rc~ $rc~
 
 fn er { $E:EDITOR $E:DOTFILES/river/init }
 edit:add-var er~ $er~
@@ -237,6 +237,16 @@ fn gcl {|@repo|
   git clone --filter=tree:0 --recurse-submodules --also-filter-submodules $@repo 
 }
 edit:add-var gcl~ $gcl~
+
+fn encrypt {|in out|
+  openssl enc -aes-256-cbc -pbkdf2 -iter 310000 -md sha256 -salt -in $in -out $out
+}
+edit:add-var encrypt~ $encrypt~
+
+fn decrypt {|in out|
+  openssl enc -aes-256-cbc -pbkdf2 -iter 310000 -md sha256 -salt -d -in $in -out $out
+}
+edit:add-var decrypt~ $decrypt~
 
 set edit:command-abbr['zbr'] = 'zig build -Doptimize=ReleaseFast'
 set edit:command-abbr['zb'] = 'zig build'
