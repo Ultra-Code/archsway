@@ -1,2 +1,11 @@
-AddKeysToAgent yes
-IdentityFile ~/.ssh/id_ed25519
+# github
+Host github.com
+  Hostname github.com
+  User Ultra-Code
+  IdentityFile ~/.ssh/id_ed25519
+
+# general
+Host *
+  AddKeysToAgent yes
+  PreferredAuthentications publickey
+  Compression yes
