@@ -123,7 +123,7 @@ gpg --list-keys --fingerprint 06BC317B515ACE7C
 gpg --list-keys --with-keygrip
 gpg --list-secret-keys --keyid-format=long
 gpg --symmetric --s2k-cipher-algo AES256 --s2k-digest-algo SHA512 --s2k-count 65536 altgpgkeys.gz
-gpg-connect-agent reloadagent /bye
+gpg-connect-agent reloadagent /bye >/dev/null
 gpg-connect-agent updatestartuptty /bye >/dev/null
 gpgconf --list-options gpg-agent
 grep 9000 /etc/services
