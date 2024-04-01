@@ -36,13 +36,14 @@ efficient ram usage with a backing device of min size **16GiB**
     - intel-media-driver for hardware video acceleration
     - polkit for seat and privileged access management
     - man-db [man-pages](https://wiki.archlinux.org/title/Man_page)
-    - Setup GPG and SSH if needed
+    - Setup GPG whith SSH authentication enabled
     - helix/neovim for config clone [awesome-helix](https://github.com/Ultra-Code/awesome-helix.git) to $XDG_CONFIG_HOME/helix or [awesome-neovim](https://github.com/Ultra-Code/awesome-neovim.git) to $XDG_CONFIG_HOME/nvim
     - sudo
     - elvish/fish (set default shell with `chsh -s $(which shellname)`)
 
 ### basic configuration
 
+- symlink /run/systemd/resolve/stub-resolv.con to /etc/resolv.conf for dns resolution
 - Copy networking bits already setup in the installation iso image .ie /etc/systemd/network{.conf.d|}/* to the mounted root partition.
   Find sample configuration in [networking/resolve.conf](https://github.com/Ultra-Code/archsway/blob/master/networking/resolve.conf) and  [networking/network](https://github.com/Ultra-Code/archsway/blob/master/networking/network)
 - Enable synchronizing the system clock across the network by enabling [systemd-timesyncd.service](https://wiki.archlinux.org/title/Systemd-timesyncd)
@@ -136,7 +137,6 @@ ParallelDownloads = 5
 
 ## OPTIONAL
 - iwd for wifi and enable it dhcp client
-- symlink /run/systemd/resolve/stub-resolv.con to /etc/resolv.conf for dns resolution
 - enable DNSOverTLS for resolved
 - configure dns for 1.1.1.1 but this might not be needed since it's the default on arch linux. TODO: review the usefullness of the lines below
 - disable unneeded services that run at boot like man-db.timer and mask ldconfig.service,systemd-rfkill*
