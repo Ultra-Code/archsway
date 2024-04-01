@@ -36,6 +36,7 @@ efficient ram usage with a backing device of min size **16GiB**
     - intel-media-driver for hardware video acceleration
     - polkit for seat and privileged access management
     - man-db [man-pages](https://wiki.archlinux.org/title/Man_page)
+    - Setup GPG and SSH if needed
     - helix/neovim for config clone [awesome-helix](https://github.com/Ultra-Code/awesome-helix.git) to $XDG_CONFIG_HOME/helix or [awesome-neovim](https://github.com/Ultra-Code/awesome-neovim.git) to $XDG_CONFIG_HOME/nvim
     - sudo
     - elvish/fish (set default shell with `chsh -s $(which shellname)`)
