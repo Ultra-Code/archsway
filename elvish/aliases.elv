@@ -70,14 +70,14 @@ fn history-diff {
   # comm -23 /tmp/history  $E:DOTFILES/elvish/history
   # NOTE: comm works only with the external sort command
   # Show lines in /tmp/history(current history) which aren't in elvish/history(old history)
-  grep -Fxvf $E:DOTFILES/elvish/history /tmp/history
+  e:grep -Fxvf $E:DOTFILES/elvish/history /tmp/history
 }  
 edit:add-var hd~ $history-diff~
 
 fn history-import {  
   store-hist
   # update current history with updated elvish/history
-  if ?(grep -Fxvf /tmp/history $E:DOTFILES/elvish/history stdout> /tmp/diffhistory) {
+  if ?(e:grep -Fxvf /tmp/history $E:DOTFILES/elvish/history stdout> /tmp/diffhistory) {
      cat /tmp/diffhistory | peach {|hist| store:add-cmd $hist}
   } else {
     echo "Current history is up to date"
