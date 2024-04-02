@@ -116,6 +116,7 @@ gpg --expert --edit-key Ultra
 gpg --expert --full-generate-key Ultra
 gpg --export --armor --output public-key.asc Ultra Code
 gpg --export-secret-keys --armor --output private-key.asc Ultra Code
+gpg --export-secret-keys Ultra Code | gpg --list packets
 gpg --export-ssh-key Ultra
 gpg --gen-revoke --armor --output revoke-cert.asc Ultra Code
 gpg --import privake-key.asc
@@ -124,6 +125,7 @@ gpg --keyserver-options auto-key-retrieve --verify archlinux-2024.03.01-x86_64.i
 gpg --list-keys --fingerprint 06BC317B515ACE7C
 gpg --list-keys --with-keygrip
 gpg --list-secret-keys --keyid-format=long
+gpg --list-secret-keys --with-subkey-fingerprint
 gpg --symmetric --s2k-cipher-algo AES256 --s2k-digest-algo SHA512 --s2k-count 65536 altgpgkeys.gz
 gpg-connect-agent reloadagent /bye >/dev/null
 gpg-connect-agent updatestartuptty /bye >/dev/null
