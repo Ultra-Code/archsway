@@ -1,34 +1,34 @@
 [user]
 	name = Ultra-Code
 	email = mega.alpha100@gmail.com
-	signingkey = 19D751EDA224BA6F
+	signingkey = C2A2C53574321095!
 [core]
-    editor = hx
+	editor = hx
 [pull]
-    rebase = true
+	rebase = true
 [status]
 	submodulesummary = true
 [submodule]
 	recurse = true
-    update = rebase
+	update = rebase
 [push]
-    recurseSubmodules = check
-    autoSetupRemote = true
+	recurseSubmodules = check
+	autoSetupRemote = true
 [merge]
-    conflictStyle = diff3
+	conflictStyle = diff3
 [mergetool]
-    prompt = false
+	prompt = false
 [diff]
 	submodule = log
-    colorMoved = zebra
+	colorMoved = zebra
 [grep]
-    column = true
-    lineNumber = true
-    extendedRegexp = true
+	column = true
+	lineNumber = true
+	extendedRegexp = true
 [init]
-    defaultBranch = main
+	defaultBranch = main
 [color]
-    ui = auto
+	ui = auto
 [clone]
 	filterSubmodules = true
 [commit]
