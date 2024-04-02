@@ -44,6 +44,7 @@ efficient ram usage with a backing device of min size **16GiB**
 ### basic configuration
 
 - symlink /run/systemd/resolve/stub-resolv.con to /etc/resolv.conf for dns resolution
+- setup reflector for choosing the fastest pacman mirror list
 - Copy networking bits already setup in the installation iso image .ie /etc/systemd/network{.conf.d|}/* to the mounted root partition.
   Find sample configuration in [networking/resolve.conf](https://github.com/Ultra-Code/archsway/blob/master/networking/resolve.conf) and  [networking/network](https://github.com/Ultra-Code/archsway/blob/master/networking/network)
 - Enable synchronizing the system clock across the network by enabling [systemd-timesyncd.service](https://wiki.archlinux.org/title/Systemd-timesyncd)
@@ -122,7 +123,6 @@ ParallelDownloads = 5
 - fastfetch for displaying system information
 - openssh and rsync for syncing file with remote over ssh
 - remmina as remote desktop client with plugin like freerdp|libvncserver
-- reflector for choosing fastest pacman server list
 - usb_modeswitch for enabling modem mode for zero-cd based modems
 - wl-clipboard for wayland clipboard
 - batsignal for battery status notifications

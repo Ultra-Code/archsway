@@ -140,6 +140,9 @@ edit:add-var du~ $du~
 fn ee { $E:EDITOR $E:ELVRC/env.elv }
 edit:add-var ee~ $ee~
 
+fn eh { $E:EDITOR $E:ELVRC/history }
+edit:add-var eh~ $eh~
+
 fn ea { $E:EDITOR $E:ELVRC/aliases.elv }
 edit:add-var ea~ $ea~
 
@@ -282,3 +285,8 @@ fn a2l {|@argv|
   addr2line --functions --inlines --pretty-print --demangle --exe $argv[0] --addresses $argv[1..]
  }
 edit:add-var a2l~ $a2l~
+
+fn update-mirrors {
+  sudo reflector "@"$E:DOTFILES/etc/xdg/reflector/reflector.conf stdout>/dev/null stderr>/dev/null
+ }
+edit:add-var update-mirrors~ $update-mirrors~

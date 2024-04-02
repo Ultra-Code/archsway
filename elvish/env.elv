@@ -63,6 +63,8 @@ if (has-external carapace) {
   set-env CARAPACE_BRIDGES 'zsh,fish,bash,inshellisense' 
   set-env CARAPACE_MATCH 1 # make completion matching case insensitive
   set-env CARAPACE_ENV 1 # enable environment variable completion
+  set-env CARAPACE_HIDDEN 1 # show hidden commands/flags
+  set-env CARAPACE_LENIENT 1 # allow unknown flags
   eval (carapace _carapace | slurp)
 }
 
