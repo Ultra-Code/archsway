@@ -800,7 +800,7 @@ local window_rules = {
 	["-title"] = {
 		["float"] = {
 			"Picture-in-Picture",
-			"*Mozilla Firefox*",
+			"About Mozilla*",
 			"Library*",
 		},
 		["position"] = {
