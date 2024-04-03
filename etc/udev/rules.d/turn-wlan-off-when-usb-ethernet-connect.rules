@@ -1,3 +1,2 @@
 ACTION=="add", SUBSYSTEM=="net", SUBSYSTEMS=="usb", ATTR{dev_id}=="0x0",ATTRS{removable}=="removable" \
-, ENV{ID_TYPE}="generic", RUN+="/sbin/rfkill block wlanh"
-# vim: set filetype=udevrules:
+, ENV{ID_TYPE}="generic", RUN+="/sbin/rfkill block wlan && /sbin/rfkill block bluetooth"
