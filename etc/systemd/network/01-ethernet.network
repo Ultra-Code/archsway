@@ -19,6 +19,7 @@ MulticastDNS=yes
 # https://gitlab.freedesktop.org/NetworkManager/NetworkManager/-/blob/main/src/core/devices/nm-device.c
 [DHCPv4]
 RouteMetric=2
+UseDNS=false
 
 [IPv6AcceptRA]
 RouteMetric=2
