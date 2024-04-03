@@ -1,0 +1,16 @@
+[Match]
+#ethernet (en) on pci bus 00 (p0) slot 20 (s0) which has multiple 
+#functions and we are using function 0 (f0) on port * (u*)
+Name=enp0s20f0u*
+Type=ether
+
+[Link]
+RequiredForOnline=routable
+
+[Network]
+Description="The mobile ethernet interface"
+DHCP=yes
+
+#The Lower the value for metric the more preferred the network
+[DHCPv4]
+RouteMetric=7
