@@ -2,10 +2,9 @@
 # Add new administrator to wheel and Allow members of group wheel to execute any command
 %wheel ALL=(ALL:ALL) ALL
 
-Cmnd_Alias  STORAGE     =  /usr/bin/systemd-mount, /usr/bin/systemd-umount
+Cmnd_Alias  STORAGE     =  /usr/bin/systemd-mount, /usr/bin/systemd-umount, /usr/bin/mount, /usr/bin/umount, /usr/bin/fdisk, /usr/bin/sfdisk
 Cmnd_Alias  SYSTEMD     =  /usr/bin/systemctl
 Cmnd_Alias  PKGMAN      =  /usr/bin/pacman
 
-firefox ALL=(ALL) NOPASSWD:SETENV: STORAGE, SYSTEMD, PKGMAN
-Defaults:firefox timestamp_timeout=60
-# vim: set filetype=sudoers :#
+ultracode ALL=(ALL) NOPASSWD:SETENV: STORAGE, SYSTEMD, PKGMAN
+Defaults:ultracode timestamp_timeout=60
