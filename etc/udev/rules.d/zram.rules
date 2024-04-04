@@ -3,4 +3,4 @@
 # NOTE: recompress and writeback attributes need to come after disksize
 # ATTR{recompress}="type=huge_idle|type=huge algo=zstd|threshold=3072"
 
-ACTION=="add", KERNEL=="zram0", ATTR{comp_algorithm}="842", ATTR{backing_dev}="/dev/sda2", ATTR{recomp_algorithm}="algo=zstd priority=1", ATTR{recomp_algorithm}="algo=deflate priority=2", ATTR{disksize}="24GiB", ATTR{recompress}="type=huge", ATTR{writeback}="incompressible", RUN="/usr/bin/mkswap -U clear /dev/%k", TAG+="systemd"
+ACTION=="add", KERNEL=="zram0", ATTR{comp_algorithm}="842", ATTR{backing_dev}="/dev/sda4", ATTR{recomp_algorithm}="algo=zstd priority=1", ATTR{recomp_algorithm}="algo=deflate priority=2", ATTR{disksize}="24GiB", ATTR{recompress}="type=huge", ATTR{writeback}="incompressible", RUN="/usr/bin/mkswap -U clear /dev/%k", TAG+="systemd"
