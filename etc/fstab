@@ -2,22 +2,30 @@
 # See fstab(5) for details.
 
 # <file system> <dir> <type> <options> <dump> <pass>
-# /dev/sda1 LABEL=ESP
-PARTUUID=ab604b46-935f-b24b-9dca-c83148f2f52e /boot vfat defaults,noatime,fmask=0077,dmask=0077,utf8,errors=remount-ro 0 1
+# /dev/sda1 UUID=40B6-91E8
+LABEL=BOOT /boot vfat defaults,noatime,fmask=0077,dmask=0077 0 1
+
+# /dev/sda2 UUID=bdb04416-e6f2-4388-8757-8c6455b89d4a
+LABEL=ROOT / bcachefs defaults,noatime,fsck,fix_errors,ratelimit_errors,compression=zstd:6,journal_flush_delay=180000	0 1
+
+# /dev/sda3 UUID=26caab6b-923e-4276-a36d-248e5619bda1
+LABEL=HOME /home btrfs defaults,noatime,compress=zstd:12,space_cache=v2,autodefrag,commit=300,subvolid=5,subvol=/ 0 0
+
+# Btrfs swap file
+/dev/sda3 /swap btrfs defaults,subvol=/@swap 0
+/swap/swapfile none swap defaults,pri=1 0 0
 
 # /dev/zram0
 /dev/zram0 none swap defaults,pri=100 0 0
 
-# /dev/sda2 LABEL=SWAP use swap as backing device for zram
-# PARTUUID=16ba379d-5412-eb4b-a3c5-7f01c3da908e none swap defaults,pri=10 0 0
-
-# /dev/sda3 LABEL=ROOT
-PARTUUID=8a42f96c-6814-9d44-bddc-f529f40c3191 / btrfs defaults,noatime,compress=zstd:9,autodefrag,commit=300,space_cache=v2,subvolid=5,subvol=/ 0 2
+# ZRAM BACKING DEVICE doesn't need to be enabled in fstab
+# /dev/sda4 UUID=fb0d9609-4a42-4236-8760-c2701e4f3a19
+# LABEL=ZRAM_DEV none swap defaults,pri=10 0 0
 
 #https://wiki.archlinux.org/title/Ext4#Improving_performance
 #commit=sec isn't enabled because journally is turned off
-#/dev/sda4 LABEL=HOME
-PARTUUID=8bbde5e5-93c1-4d88-83a2-a3005ef45235 /firefox/home/files ext4 defaults,noatime,nobarrier,errors=remount-ro 0 0
+# /dev/sda5 UUID=be0eb394-aaa3-4324-a024-2b07568a9659
+LABEL=FILES /home/ultracode/files ext4 defaults,noatime,nobarrier,errors=remount-ro	0 0
 
 #NOTE:simple-mtpfs bin must be linked to /bin/mount.simple-mtpfs
 #/dev/libmtp-1-2 /home/ultracode/phone fuse.simple-mtpfs defaults,noauto,nofail,x-systemd.automount,x-systemd.idle-timeout=1s,noatime 0 0
