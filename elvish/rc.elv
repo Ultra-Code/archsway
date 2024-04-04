@@ -51,7 +51,6 @@ start-river
 set edit:insert:binding[Ctrl-'['] = $edit:command:start~
 
 fn setup-key-mgmt {
-     gpg-connect-agent updatestartuptty /bye >/dev/null
      unset-env SSH_AGENT_PID
      set-env SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
 }
