@@ -43,7 +43,7 @@ efficient ram usage with a backing device of min size **16GiB**
 
 ### basic configuration
 
-- symlink /run/systemd/resolve/stub-resolv.con to /etc/resolv.conf for dns resolution
+- symlink /run/systemd/resolve/stub-resolv.conf to /etc/resolv.conf for dns resolution
 - setup reflector for choosing the fastest pacman mirror list
 - Copy networking bits already setup in the installation iso image .ie /etc/systemd/network{.conf.d|}/* to the mounted root partition.
   Find sample configuration in [networking/resolve.conf](https://github.com/Ultra-Code/archsway/blob/master/networking/resolve.conf) and  [networking/network](https://github.com/Ultra-Code/archsway/blob/master/networking/network)
