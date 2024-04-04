@@ -188,7 +188,6 @@ notify-send -u critical -t 2000 -e 'Screenshot taken'
 num 0xfffff
 objcopy -v --add-gnu-debuglink=mode.debug mode
 objcopy -v --only-keep-debug mode mode.debug
-ode=reuse,checkpoint_merge,compress_chksum,compress_cache,inlinecrypt,age_extent_cache,errors=remount-ro /dev/sdb2 /media/GNUPG
 p10k configure
 pacman --noconfirm --root /host -Syu pacman
 php -S localhost:8000 -t src/
@@ -273,7 +272,7 @@ sudo libinput debug-events --show-keycodes
 sudo mkfs.f2fs -l GNUPG -e "mp3,gif,mov,png,jpg,jpeg,mpeg,svg,mkv,webm,mp4,m4v,avi" -E "*" -O encrypt,extra_attr,inode_checksum,flexibl
 sudo mkinitcpio -p linux-zen
 sudo modinfo -p i915
-sudo mount --mkdir -t f2fs -o compress_algorithm=zstd:9,compress_chksum,atgc,gc_merge,lazytime,discard,inline_xattr,flush_merge,alloc_m
+sudo mount --mkdir -t f2fs -o compress_algorithm=zstd:9,compress_chksum,atgc,gc_merge,lazytime,discard,inline_xattr,f lush_merge,alloc_mode=reuse,checkpoint_merge,compress_chksum,compress_cache,inlinecrypt,atgc,age_extent_cache,errors=re mount-ro /dev/sdb2 /mnt/GNUPG
 sudo nft add rule inet filter input tcp dport 2222 accept
 sudo nft list ruleset
 sudo nmap -sV -Pn --reason 129.232.157.42

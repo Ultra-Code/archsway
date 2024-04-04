@@ -103,16 +103,6 @@ edit:add-var cp~ $cp~
 fn mv {|@source destination| e:mv --interactive --update --verbose $@source $destination}
 edit:add-var mv~ $mv~
 
-#To mounting and unmount drives without user password use --owner=$E:USER
-fn mount {|@point| sudo systemd-mount --no-block --fsck=no --collect  $@point}
-edit:add-var mount~ $mount~
-
-fn umount {|point| sudo systemd-umount $point}
-edit:add-var umount~ $umount~
-
-fn lmount { sudo /bin/mount }
-edit:add-var lmount~ $lmount~
-
 fn lb { lsblk -oPATH,MOUNTPOINTS,LABEL,FSTYPE,SIZE,FSAVAIL,FSUSED,PARTUUID,MAJ:MIN }
 edit:add-var lb~ $lb~
 
