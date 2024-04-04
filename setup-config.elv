@@ -19,3 +19,10 @@ sudo mkdir -p /etc/systemd/sleep.conf.d ; sudo cp etc/systemd/sleep.conf.d/sleep
 sudo cp etc/systemd/resolved.conf.d/resolved.conf /etc/systemd/resolved.conf.d/
 sudo cp etc/systemd/network/13-usb-ethernet.network /etc/systemd/network/20-usb-ethernet.network
 sudo cp etc/iwd/main.conf /etc/iwd/
+ln zig/zig-update.elv /home/ultracode/.local/bin/zig-update
+ln mako/ ../
+sudo cp etc/modules-load.d/* /etc/modules-load.d/
+sudo cp etc/modprobe.d/* /etc/modprobe.d/
+sudo cp etc/udev/rules.d/* /etc/udev/rules.d/
+sudo cp etc/sysctl.d/* /etc/sysctl.d/
+sudo cp etc/fstab /etc/fstab

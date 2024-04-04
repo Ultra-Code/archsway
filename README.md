@@ -16,7 +16,7 @@ efficient ram usage with a backing device of min size **16GiB**
 
 ## needed base system modules
 
-- configure mkinitcpio
+- configure [mkinitcpio](https://github.com/Ultra-Code/archsway/blob/master/etc/mkinitcpio.conf.d/compression.conf) and kernel [cmdline](https://github.com/Ultra-Code/archsway/blob/master/etc/kernel/cmdline) parameters
 - Enable systemd-boot as boot manager (`bootctl install`)
 - Start iwd, systemd-networkd, systemd-resolved system services
 - enabling systemd-boot-update service to update systemd-boot on systemd upgrade
@@ -36,36 +36,32 @@ efficient ram usage with a backing device of min size **16GiB**
     - intel-media-driver for hardware video acceleration
     - polkit for seat and privileged access management
     - man-db [man-pages](https://wiki.archlinux.org/title/Man_page)
-    - Setup GPG whith SSH authentication enabled
+    - Setup GPG with SSH authentication enabled
     - helix/neovim for config clone [awesome-helix](https://github.com/Ultra-Code/awesome-helix.git) to $XDG_CONFIG_HOME/helix or [awesome-neovim](https://github.com/Ultra-Code/awesome-neovim.git) to $XDG_CONFIG_HOME/nvim
     - sudo
     - elvish/fish (set default shell with `chsh -s $(which shellname)`)
 
 ### basic configuration
 
+- iwd for wifi and enable its builtin dhcp client
 - symlink /run/systemd/resolve/stub-resolv.conf to /etc/resolv.conf for dns resolution
 - setup reflector for choosing the fastest pacman mirror list
-- Copy networking bits already setup in the installation iso image .ie /etc/systemd/network{.conf.d|}/* to the mounted root partition.
-  Find sample configuration in [networking/resolve.conf](https://github.com/Ultra-Code/archsway/blob/master/networking/resolve.conf) and  [networking/network](https://github.com/Ultra-Code/archsway/blob/master/networking/network)
-- Enable synchronizing the system clock across the network by enabling [systemd-timesyncd.service](https://wiki.archlinux.org/title/Systemd-timesyncd)
+- Configure network using [systemd-networkd](https://github.com/Ultra-Code/archsway/tree/master/etc/systemd/network) and [systemd-resolved](https://github.com/Ultra-Code/archsway/tree/master/etc/systemd/resolved.conf.d) 
+- Setup [vconsole ](https://github.com/Ultra-Code/archsway/blob/master/etc/vconsole.conf) terminal fonts
 - On the freshly installed system use the following fonts
     + use fonts with great unicode support like ttf-dejavu or noto-fonts or gnu-free-fonts as system default font
     + ttc-iosevka  or ttf-jetbrains-mono for monospace,
     + ttf-nerd-fonts-symbols-mono for nerd font symbols and noto-font-emoji for emoji
     >_NOTE_: don't forget to `ln -s /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf /etc/fonts/conf.d/`
-- configure hardware acceleration and [Intel_graphics and Intel_GVT-g](https://wiki.archlinux.org/title/Intel_graphics)
-- manual powermangement with udev rules and modprobe config files in [powersaving](https://github.com/Ultra-Code/archsway/blob/master/powersaving) .udev rules go to /etc/udev/rules.d
-- and modprobe [configs](https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate) in /etc/modprobe.d
-- add resume kernel parameter to the boot loader and resume hook to mkinitcpio
-- add resume to HOOKS in /etc/mkinitcpio.conf and rebuild kernel for hibernation and it variant to work
-- enable powersaving options [power management](https://wiki.archlinux.org/title/Power_management) [laptop](https://wiki.archlinux.org/title/Laptop)
-- [cpu frequency scaling](https://wiki.archlinux.org/title/CPU_frequency_scaling) and  [udev rules](https://wiki.archlinux.org/title/Udev)
-- [Active State Power Management](https://wiki.archlinux.org/title/Power_management#Active_State_Power_Management) check
-  if asmp is [supported ](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/power_management_guide/aspm) and add or remove `powersave > /sys/module/pcie_aspm/parameters/policy` from udev powersave rules based on that
-- modify sudoers with visudo using example in [suders file](https://github.com/Ultra-Code/archsway/blob/master/sudoers)
-- configure what powerbutton and lidclose does with /etc/systemd/logind.conf
+- configure [Intel_graphics](https://wiki.archlinux.org/title/Intel_graphics) hardware acceleration
+- setup [laptop](https://wiki.archlinux.org/title/Laptop), zram, disk, network and [power management](https://wiki.archlinux.org/title/Power_management) options using [udev](https://github.com/Ultra-Code/archsway/tree/master/etc/udev/rules.d) rules, [sysctl](https://github.com/Ultra-Code/archsway/tree/master/etc/sysctl.d) and [modprobe](https://github.com/Ultra-Code/archsway/tree/master/etc/modprobe.d) config
+- Configure [hibernation](https://github.com/Ultra-Code/archsway/tree/master/etc/modprobe.d) by adding resume kernel parameter, resume hook to mkinitcpio and rebuilding kernel
+- Enable [Active State Power Management](https://wiki.archlinux.org/title/Power_management#Active_State_Power_Management)
+  if [supported ](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/power_management_guide/aspm) and add or remove `powersave > /sys/module/pcie_aspm/parameters/policy` from udev powersave rules based on the results
+- Configure sudo for current user using `sudo -E visudo -sf /etc/sudoers.d/${username}`. Example [sudoers file](https://github.com/Ultra-Code/archsway/tree/master/etc/sudoers.d)
+- Configure [logind](https://github.com/Ultra-Code/archsway/tree/master/etc/systemd/logind.conf.d), [journald](https://github.com/Ultra-Code/archsway/tree/master/etc/systemd/logind.conf.d) and [sleep](https://github.com/Ultra-Code/archsway/tree/master/etc/systemd/sleep.conf.d)
+- For extra [Performance Improvements](https://wiki.archlinux.org/title/Improving_performance)
 - For [pacman](https://wiki.archlinux.org/title/Pacman) enable the following options under option section in /etc/pacman.conf
-- For [Performance Improvements](https://wiki.archlinux.org/title/Improving_performance)
 ```bash
 [options]
 Color
@@ -81,7 +77,7 @@ ParallelDownloads = 5
 - Consider [Firefox Profile on Ram](https://wiki.archlinux.org/title/Firefox/Profile_on_RAM) when using ssd/nvme
 - [move disk cache to ram](https://wiki.archlinux.org/title/Firefox/Tweaks#Move_disk_cache_to_RAM) by setting browser.cache.disk.parent_directory to /run/user/UID/firefox
 - where UID is your user's ID which can be obtained by running id -u
-- increase session save interval to 6 minutes (360000 milliseconds) by setting browser.sessionstore.interval to 360000
+- increase session save interval to 10 minutes (600000 milliseconds) by setting browser.sessionstore.interval to 600000
 
 ## INSTALLS
 - base-devel for Basic c/c++ build tools to build Arch Linux packages
@@ -136,9 +132,8 @@ ParallelDownloads = 5
 - zoxide for efficient directory movement
 
 ## OPTIONAL
-- iwd for wifi and enable it dhcp client
 - enable DNSOverTLS for resolved
-- configure dns for 1.1.1.1 but this might not be needed since it's the default on arch linux. TODO: review the usefullness of the lines below
+- Enable synchronizing the system clock across the network by enabling [systemd-timesyncd.service](https://wiki.archlinux.org/title/Systemd-timesyncd)
 - disable unneeded services that run at boot like man-db.timer and mask ldconfig.service,systemd-rfkill*
 - disable journaling to persistent storage by setting Storage in journal.conf to volatile and masking systemd-journal-flush.service
 - link kitty to xterm
