@@ -1,2 +1,3 @@
 # https://www.reddit.com/r/archlinux/comments/1124b9a/unable_to_disable_watchdog
-root=PARTUUID=8a42f96c-6814-9d44-bddc-f529f40c3191 rw rootflags=subvol=/ zswap.enabled=0 module_blacklist=iTCO_wdt nowatchdog mitigations=off i915.mitigations=off i915.enable_guc=2 i915.enable_dc=4 i915.nuclear_pageflip=Y resume=PARTUUID=16ba379d-5412-eb4b-a3c5-7f01c3da908e
+# Btrfs needs rootflags=subvol=/ when used as the root filesystem
+root=LABEL=ROOT rw resume=LABEL=HOME resume_offset=1226806 zswap.enabled=0 module_blacklist=iTCO_wdt nowatchdog mitigations=off i915.mitigations=off i915.enable_guc=2 i915.enable_dc=4 i915.nuclear_pageflip=Y
