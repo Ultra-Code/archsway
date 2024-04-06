@@ -25,6 +25,7 @@ set-env QT_STYLE_OVERRIDE 'adwaita-dark'
 set-env MANROFFOPT '-c'
 set-env MANPAGER $runtime:elvish-path" -c 'col --no-backspaces --spaces | bat -l man --plain'"
 
+set-env GNUPGHOME $E:XDG_CONFIG_HOME/gnupg
 # Configure pinentry to use the correct TTY
 set-env GPG_TTY (tty) ; gpg-connect-agent updatestartuptty /bye >/dev/null
 
