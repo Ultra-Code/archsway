@@ -61,23 +61,23 @@ edit:add-var he~ $history-export~
 fn store-hist {
   history-export stdout> /tmp/history
   # https://stackoverflow.com/questions/29244351/how-to-sort-a-file-in-place#29244408
-  sort-inplace $E:DOTFILES/elvish/history
+  sort-inplace $E:ELVRC/history
 }
 
 fn history-diff {
   store-hist
   # https://www.oreilly.com/library/view/bash-cookbook/0596526784/ch17s16.html
-  # comm -23 /tmp/history  $E:DOTFILES/elvish/history
+  # comm -23 /tmp/history  $E:ELVRC/history
   # NOTE: comm works only with the external sort command
   # Show lines in /tmp/history(current history) which aren't in elvish/history(old history)
-  e:grep -Fxvf $E:DOTFILES/elvish/history /tmp/history
+  e:grep -Fxvf $E:ELVRC/history /tmp/history
 }  
 edit:add-var hd~ $history-diff~
 
 fn history-import {  
   store-hist
   # update current history with updated elvish/history
-  if ?(e:grep -Fxvf /tmp/history $E:DOTFILES/elvish/history stdout> /tmp/diffhistory) {
+  if ?(e:grep -Fxvf /tmp/history $E:ELVRC/history stdout> /tmp/diffhistory) {
      cat /tmp/diffhistory | peach {|hist| store:add-cmd $hist}
   } else {
     echo "Current history is up to date"
@@ -139,7 +139,7 @@ edit:add-var ea~ $ea~
 fn rc { $E:EDITOR $E:ELVRC/rc.elv }
 edit:add-var rc~ $rc~
 
-fn er { $E:EDITOR $E:DOTFILES/river/init }
+fn er { $E:EDITOR $E:DOTFILES/config/river/init }
 edit:add-var er~ $er~
 
 #Pacman aliases

@@ -799,6 +799,7 @@ local window_rules = {
 	},
 	["-title"] = {
 		["float"] = {
+			"Extension*", -- fix extension page not floating
 			"Picture-in-Picture",
 			"About Mozilla*",
 			"Library*",
