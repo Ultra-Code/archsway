@@ -81,6 +81,7 @@ ParallelDownloads = 5
 
 ## INSTALLS
 - base-devel for Basic c/c++ build tools to build Arch Linux packages
+- mold as linker for c, rust and c++
 - lldb/gdb for debugging zig, c and c++
 - clang/gcc for c++ development with clangd
 - zig with zls for zig development

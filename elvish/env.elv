@@ -35,20 +35,23 @@ if (has-external vivid) {
     set-env LS_COLORS (vivid generate alabaster_dark) # alabaster_dark ayu catppuccin-latte iceberg-dark one-dark
 }
 
-if (os:is-dir ~/.local/cargo) {
+if (os:is-dir $E:XDG_LOCAL_HOME/cargo) {
      set E:CARGO_HOME = (put $E:XDG_LOCAL_HOME | path:join (all) cargo)
      set-env RUSTUP_HOME (put $E:XDG_LOCAL_HOME | path:join (all) rustup)
      set-env PATH  (put $E:CARGO_HOME | path:join (all) bin | conj $paths (all) | str:join ':' (all))
 
 }
 
-if (os:is-dir ~/.local/go) {
+if (os:is-dir $E:XDG_LOCAL_HOME/go) {
      set E:GOPATH = (put $E:XDG_LOCAL_HOME | path:join (all) go)
      set-env GOBIN (put $E:GOPATH | path:join (all) bin)
      set-env PATH  (put $E:GOBIN | conj $paths (all) | str:join ':' (all))
 }
 
-if (os:is-dir ~/.local/bun) {
+if (os:is-dir $E:XDG_CACHE_HOME/.bun) {
+     var BUN_BINS = $E:XDG_CACHE_HOME/.bun/bin
+     set paths =  (put $BUN_BINS | conj $paths (all))
+} else {
      set E:BUN_INSTALL = $E:XDG_LOCAL_HOME/bun
      set paths =  (put $E:BUN_INSTALL | path:join (all) bin | conj $paths (all))
 }
