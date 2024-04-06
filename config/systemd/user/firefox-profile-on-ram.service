@@ -1,0 +1,11 @@
+[Unit]
+Description=Firefox profile in memory
+
+[Install]
+WantedBy=default.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=%E/systemd/user/firefox-sync.sh
+ExecStop=%E/systemd/user/firefox-sync.sh
