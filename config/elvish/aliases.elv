@@ -1,6 +1,7 @@
 use store
 use path
 use os
+use zig
 
 fn el { exec elvish }
 edit:add-var el~ $el~
@@ -193,7 +194,7 @@ set edit:command-abbr['gt'] = 'git tag -s'
 set edit:command-abbr['ga'] = 'git add'
 set edit:command-abbr['glf'] = 'git log --follow -p'
 set edit:command-abbr['gg'] = 'git grep --recurse-submodules -I'
-set edit:command-abbr['gm'] = 'git mv'
+set edit:command-abbr['gmv'] = 'git mv'
 set edit:command-abbr['grm'] = 'git rm -r'
 set edit:command-abbr['gsh'] = 'git show'
 set edit:abbr['gst'] = "git status"

@@ -139,4 +139,6 @@ fn main {|&branch=master &default=$false|
     set-default $info[new_zig_exe] $info[zig_version]
 }
 
-flag:call $main~ $args &on-parse-error={|_| print $usage; exit 1}
+fn zig-update {|@args|
+    flag:call $main~ $@args &on-parse-error={|_| print $usage; exit 1}
+}
