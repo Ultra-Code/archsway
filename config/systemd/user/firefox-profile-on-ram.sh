@@ -27,13 +27,13 @@ cd ~/.mozilla/firefox || exit
 
 profile=7ffqcodd.default-release
 
-if ! test -d $profile ; then
+if ! test -L $profile || ! test -d $profile ; then
 	echo "Firefox profile  $(pwd)${profile} doesn't exist"
-	echo "exec 'find . -maxdepth 1 -type d -iregex ".+release" | cut --characters 3-' and replace '$profile' with the result"
-	profile=$(find . -maxdepth 1 -type d -iregex ".+release" | cut --characters 3-)
+	echo "exec 'find -O3 . -maxdepth 1 -iregex ".+release$" -type l -or -type d | cut --characters 3-' and replace '$profile' with the result"
+	profile=$(find -O3 . -maxdepth 1 -iregex ".+release$" -type l -or -type d | cut --characters 3-)
 fi
 
-static=static-$profile
+static=$profile-static
 volatile=/dev/shm/firefox-$profile-$USER
 
 if ! test -r "$volatile" ; then
