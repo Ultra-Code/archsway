@@ -1,6 +1,7 @@
 use os
 use re
 use str
+use path
 
 use ./env
 
@@ -55,5 +56,25 @@ fn setup-key-mgmt {
      set-env SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
 }
 setup-key-mgmt
+
+fn kitty-shell-integration {
+     if (has-external kitty) {
+          # https://iterm2.com/documentation-escape-codes.html
+          # https://sw.kovidgoyal.net/kitty/shell-integration
+          # https://codeberg.org/dnkl/foot/#supported-oscs
+          # https://codeberg.org/dnkl/foot/wiki#shell-integration
+          var OSC = (print (str:from-utf8-bytes 0x1b)(str:from-utf8-bytes 0x5d))
+          var ST = (print (str:from-utf8-bytes 0x1b)(str:from-utf8-bytes 0x5c))
+
+          fn osc {|code| print $OSC$code$ST }
+          edit:add-var osc~ $osc~ 
+          fn send-title {|title| osc '0;'$title }
+          fn send-pwd { send-title (tilde-abbr $pwd | path:base (one)); osc '7;'(put $pwd)}
+          set edit:before-readline = [ { send-pwd } { osc '133;A' } ]
+          set edit:after-readline = [ {|c| send-title (str:split ' ' $c | take 1) } {|c| osc '133;C' } ]
+          set after-chdir = [ {|_| send-pwd } ]
+     }
+}
+kitty-shell-integration
 
 use ./aliases
