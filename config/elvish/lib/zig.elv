@@ -140,5 +140,5 @@ fn main {|&branch=master &default=$false|
 }
 
 fn zig-update {|@args|
-    flag:call $main~ $@args &on-parse-error={|_| print $usage; exit 1}
+    flag:call $main~ [$@args] &on-parse-error={|_| print $usage; exit 1}
 }

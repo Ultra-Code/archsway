@@ -3,6 +3,8 @@ use path
 use os
 use zig
 
+edit:add-var zig-update~ $zig:zig-update~
+
 fn el { exec elvish }
 edit:add-var el~ $el~
 
