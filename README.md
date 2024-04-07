@@ -69,15 +69,6 @@ CheckSpace
 VerbosePkgLists
 ParallelDownloads = 5
 ```
-- configure /etc/motd with the Message Of The Day Eg.`WELCOME MASTER MALPHA! WE ARE READY TO SERVE YOU!!!`
-- after installation make sure to go through [Archlinux General Recommendation](https://wiki.archlinux.org/title/General_recommendations)
-
-## Configuring Firefox
-- Enable firefox [Hardware video acceleration](https://wiki.archlinux.org/title/Firefox#Hardware_video_acceleration) by setting media.ffmpeg.vaapi.enabled to true and Hardware WebRender by setting gfx.webrender.all to true
-- Consider [Firefox Profile on Ram](https://wiki.archlinux.org/title/Firefox/Profile_on_RAM) when using ssd/nvme
-- [move disk cache to ram](https://wiki.archlinux.org/title/Firefox/Tweaks#Move_disk_cache_to_RAM) by setting browser.cache.disk.parent_directory to /run/user/UID/firefox
-- where UID is your user's ID which can be obtained by running id -u
-- increase session save interval to 10 minutes (600000 milliseconds) by setting browser.sessionstore.interval to 600000
 
 ## INSTALLS
 - base-devel for Basic c/c++ build tools to build Arch Linux packages
@@ -132,7 +123,17 @@ ParallelDownloads = 5
 - yt-dlp YouTube downloader
 - zoxide for efficient directory movement
 
+## Configuring Firefox
+- Enable firefox [Hardware video acceleration](https://wiki.archlinux.org/title/Firefox#Hardware_video_acceleration) by setting media.ffmpeg.vaapi.enabled to true and Hardware WebRender by setting gfx.webrender.all to true
+- Enable [Firefox Profile on Ram](https://wiki.archlinux.org/title/Firefox/Profile_on_RAM) when using zram/nvme/ssd
+- Move firefox [disk cache to ram](https://wiki.archlinux.org/title/Firefox/Tweaks#Move_disk_cache_to_RAM) by setting browser.cache.disk.parent_directory to /run/user/UID/firefox
+- where UID is your user's ID which can be obtained by running id -u
+- increase session save interval to 10 minutes (600000 milliseconds) by setting browser.sessionstore.interval to 600000
+
+
 ## OPTIONAL
+- configure /etc/motd with the Message Of The Day Eg.`WELCOME MASTER MALPHA! WE ARE READY TO SERVE YOU!!!`
+- Checkout [Archlinux General Recommendation](https://wiki.archlinux.org/title/Firefox/Profile_on_RAM#Place_profile_in_RAM_manually)
 - enable DNSOverTLS for resolved
 - Enable synchronizing the system clock across the network by enabling [systemd-timesyncd.service](https://wiki.archlinux.org/title/Systemd-timesyncd)
 - disable unneeded services that run at boot like man-db.timer and mask ldconfig.service,systemd-rfkill*

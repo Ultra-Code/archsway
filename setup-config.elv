@@ -26,3 +26,6 @@ sudo cp etc/modprobe.d/* /etc/modprobe.d/
 sudo cp etc/udev/rules.d/* /etc/udev/rules.d/
 sudo cp etc/sysctl.d/* /etc/sysctl.d/
 sudo cp etc/fstab /etc/fstab
+ln config/* ../
+ln mako/ ../
+ln config/gnupg/* ../gnupg/
