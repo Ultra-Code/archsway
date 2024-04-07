@@ -27,10 +27,10 @@ cd ~/.mozilla/firefox || exit
 
 profile=7ffqcodd.default-release
 
-if ! test -L $profile || ! test -d $profile ; then
+if ! { test -L $profile || test -d $profile; } ; then
 	echo "Firefox profile  $(pwd)${profile} doesn't exist"
-	echo "exec 'find -O3 . -maxdepth 1 -iregex ".+release$" -type l -or -type d | cut --characters 3-' and replace '$profile' with the result"
-	profile=$(find -O3 . -maxdepth 1 -iregex ".+release$" -type l -or -type d | cut --characters 3-)
+	echo "exec 'find -O3 . -maxdepth 1 \( -type l -or -type d \) -regex ".+release$" | cut --characters 3-' and replace '\$profile' with the result"
+	profile=$(find -O3 . -maxdepth 1 \( -type l -or -type d \) -regex ".+release$" | cut --characters 3-)
 fi
 
 static=$profile-static
@@ -40,7 +40,7 @@ if ! test -r "$volatile" ; then
 	mkdir -m0700 "$volatile"
 fi
 
-if [ "$(readlink "$profile")" != "$volatile" ]; then
+if [[ "$(readlink "$profile")" != "$volatile" ]]; then
 	mv "$profile" "$static"
 	ln -s "$volatile" "$profile"
 fi
