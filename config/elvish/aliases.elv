@@ -1,5 +1,6 @@
 use store
 use path
+use os
 
 fn el { exec elvish }
 edit:add-var el~ $el~
@@ -277,6 +278,6 @@ fn a2l {|@argv|
 edit:add-var a2l~ $a2l~
 
 fn update-mirrors {
-  sudo reflector "@"$E:DOTFILES/etc/xdg/reflector/reflector.conf stdout>/dev/null stderr>/dev/null
+  sudo reflector "@"$E:DOTFILES/etc/xdg/reflector/reflector.conf stdout>$os:dev-null stderr>$os:dev-null
  }
 edit:add-var update-mirrors~ $update-mirrors~
