@@ -1,4 +1,10 @@
 font=monospace 12
+background-color=#FFFFFFFF
+text-color=#000000FF
+border-size=2
+border-color=#000000FF
+layer=overlay
 anchor=top-center
+padding=20
 text-alignment=center
 on-notify=exec pw-play /usr/share/sounds/freedesktop/stereo/message.oga
