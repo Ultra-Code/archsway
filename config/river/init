@@ -708,7 +708,15 @@ local function setup_user_modes(user_declared_modes)
 		exec(fmt("riverctl map %s %s %s enter-mode normal", declared_mode, exit.mod, exit.key))
 
 		for _, mode in ipairs(modes.commands) do
-			exec(fmt('riverctl map %s %s %s spawn "%s"', declared_mode, mode.mod, mode.key, mode.command))
+			exec(
+				fmt(
+					'riverctl map %s %s %s spawn "%s"',
+					declared_mode,
+					mode.mod,
+					mode.key,
+					mode.command .. " && riverctl enter-mode normal"
+				)
+			)
 		end
 	end
 end
