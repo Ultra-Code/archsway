@@ -1,0 +1,6 @@
+{
+  "enable_build_on_save": true,
+  "enable_autofix": true,
+  "warn_style": true,
+  "highlight_global_var_declarations": true
+}
