@@ -8,8 +8,8 @@ function finish() {
 trap finish EXIT ERR
 
 if ! command -v rsync &>/dev/null; then
-	echo "rsync is needed for firefox profile on ram"
-	exit 255
+  echo "rsync is needed for firefox profile on ram"
+  exit 255
 fi
 
 #Clears the Internal Field Separator (IFS) variable for the current shell environment
@@ -27,29 +27,29 @@ cd ~/.mozilla/firefox || exit
 
 profile=7ffqcodd.default-release
 
-if ! { test -L $profile || test -d $profile; } ; then
-	echo "Firefox profile  $(pwd)${profile} doesn't exist"
-	echo "exec 'find -O3 . -maxdepth 1 \( -type l -or -type d \) -regex ".+release$" | cut --characters 3-' and replace '\$profile' with the result"
-	profile=$(find -O3 . -maxdepth 1 \( -type l -or -type d \) -regex ".+release$" | cut --characters 3-)
+if ! { test -L $profile || test -d $profile; }; then
+  echo "Firefox profile  $(pwd)${profile} doesn't exist"
+  echo "exec 'find -O3 . -maxdepth 1 \( -type l -or -type d \) -regex ".+release$" | cut --characters 3-' and replace '\$profile' with the result"
+  profile=$(find -O3 . -maxdepth 1 \( -type l -or -type d \) -regex ".+release$" | cut --characters 3-)
 fi
 
 static=$profile-static
 volatile=/dev/shm/firefox-$profile-$USER
 
-if ! test -r "$volatile" ; then
-	mkdir -m0700 "$volatile"
+if ! test -r "$volatile"; then
+  mkdir -m0700 "$volatile"
 fi
 
 if [[ "$(readlink "$profile")" != "$volatile" ]]; then
-	mv "$profile" "$static"
-	ln -s "$volatile" "$profile"
+  mv "$profile" "$static"
+  ln -s "$volatile" "$profile"
 fi
 
-if test -e "$profile"/.unpacked ; then
-	rsync --archive --verbose --delete --exclude .unpacked ./"$profile"/ ./"$static"/
+if test -e "$profile"/.unpacked; then
+  rsync --archive --verbose --delete --exclude .unpacked ./"$profile"/ ./"$static"/
 else
-	rsync --archive --verbose ./"$static"/ ./"$profile"/
-	touch "$profile"/.unpacked
+  rsync --archive --verbose ./"$static"/ ./"$profile"/
+  touch "$profile"/.unpacked
 fi
 
 # catch signals and exit

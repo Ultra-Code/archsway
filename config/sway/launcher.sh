@@ -1,14 +1,14 @@
 #!/bin/bash
-readonly name=${ZSH_ARGZERO:t} # or ${(%):-%1N};
+readonly name=$0
 
 if ! which fzf &> /dev/null; then
-    printf "error: fzf is required to use %s.\n" ${name} >&2
+    printf "error: fzf is required to use %s.\n" "${name}" >&2
     exit 3
 fi
 
 declare user_input
 if ! user_input="$(mktemp --tmpdir "${name}.input.XXXXXXXXX")";then
-    print 'error: Failed to create tmp file. $TMPDIR (or /tmp if $TMPDIR is unset) may not be writable.\n' >&2
+    print "error: Failed to create tmp file. $TMPDIR (or /tmp if $TMPDIR is unset) may not be writable.\n" >&2
     exit 4
 fi
 trap "rm -f $user_input &> /dev/null" EXIT

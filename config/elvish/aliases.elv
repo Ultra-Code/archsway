@@ -40,10 +40,10 @@ edit:add-var rd~ $rd~
 fn rm {|@path| e:rm --interactive=once --verbose --recursive $@path}
 edit:add-var rm~ $rm~
 
-fn grep {|@regex| e:grep --extended-regexp --color --ignore-case $@regex }
+fn grep {|@options regex| e:grep --extended-regexp --color --ignore-case --regexp $regex $@options }
 edit:add-var grep~ $grep~
 
-fn rg {|regex| grep --line-number -I --exclude=".*" --exclude-dir=".git" --exclude-dir="*cache*" $regex }
+fn rg {|@options regex| e:grep --perl-regexp --color --ignore-case --line-number --recursive --binary-files=without-match --exclude=".*" --exclude-dir=".git" --exclude-dir="*cache*" --regexp $regex $@options }
 edit:add-var rg~ $rg~
 
 fn sed {|file| sed --regexp-extended --silent --in-place=.bak $file }
