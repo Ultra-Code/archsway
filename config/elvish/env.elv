@@ -11,7 +11,7 @@ set-env XDG_STATE_HOME (put $E:XDG_LOCAL_HOME | path:join (all) state)
 
 set-env GNUPGHOME $E:XDG_CONFIG_HOME/gnupg
 # Configure pinentry to use the correct TTY
-set-env GPG_TTY (tty) ; gpg-connect-agent updatestartuptty /bye >/dev/null
+set-env GPG_TTY (tty) ; gpg-connect-agent updatestartuptty /bye stdout>$os:dev-null stderr>$os:dev-null
 
 set-env DOTFILES (put $E:XDG_CONFIG_HOME | path:join (all) dotfiles)
 set E:ELVRC = $E:DOTFILES/config/elvish
@@ -21,10 +21,6 @@ set-env QT_STYLE_OVERRIDE 'adwaita-dark'
 
 set-env MANROFFOPT '-c'
 set-env MANPAGER $runtime:elvish-path" -c 'col --no-backspaces --spaces | bat -l man --plain'"
-
-set-env GNUPGHOME $E:XDG_CONFIG_HOME/gnupg
-# Configure pinentry to use the correct TTY
-set-env GPG_TTY (tty) ; gpg-connect-agent updatestartuptty /bye stdout>$os:dev-null stderr>$os:dev-null
 
 # Setup debuginfo daemon for packages in the official repositories
 cat /etc/debuginfod/archlinux.urls | set-env DEBUGINFOD_URLS (all)

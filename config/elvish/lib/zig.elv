@@ -83,7 +83,7 @@ fn update-symlink {|new_zig_exe install_dir_link zig_version|
 fn update-zig {|tarball basename new_zig_exe install_dir_link zig_version|
     try { 
         find $ZIG_ROOT -maxdepth 1 -ctime +3 -type d ^
-             -execdir rm -rf {} + stdout>/dev/null stderr>&stdout
+             -execdir rm -rf {} + stdout>$os:dev-null stderr>&stdout
     } catch err {  }
     try {
         echo "Downloading repository..."
