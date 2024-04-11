@@ -13,8 +13,6 @@ set edit:command-abbr['ds'] = 'doc:show'
 
 set edit:insert:binding[Alt-l] = { edit:clear }
 
-set edit:abbr['ncm'] = 'ncmpcpp'
-
 fn ls {|@options_and_path|
   e:ls --color --classify $@options_and_path
 }
@@ -28,7 +26,7 @@ edit:add-var l~ $l~
 set edit:command-abbr["lh"] = "ls --hyperlink"
 set edit:command-abbr["lr"] = "ls --recursive"
 
-fn md {|path| mkdir --parents --verbose $path}
+fn md {|@path| mkdir --parents --verbose $@path}
 edit:add-var md~ $md~
 
 fn mc {|path| md $path ; cd $path }
@@ -49,7 +47,7 @@ edit:add-var rg~ $rg~
 fn sed {|file| sed --regexp-extended --silent --in-place=.bak $file }
 edit:add-var sed~ $sed~
 
-set edit:abbr['bat'] = 'bat --style=numbers,changes'
+set edit:command-abbr['bat'] = 'bat --style=numbers,changes'
 
 fn sort-inplace {|file|
   order < $file | compact | to-lines stdout> /tmp/sort
@@ -147,7 +145,7 @@ fn er { $E:EDITOR $E:DOTFILES/config/river/init }
 edit:add-var er~ $er~
 
 #Pacman aliases
-set edit:abbr['pmu'] = "yay -Syu"
+set edit:command-abbr['pmu'] = "yay -Syu"
 set edit:command-abbr['pmi'] = 'yay -S'
 set edit:command-abbr['pmp'] = 'sudo pacman -Rcunsv'
 set edit:command-abbr['pmii'] = 'pacman -Qii'
@@ -199,11 +197,11 @@ set edit:command-abbr['gg'] = 'git grep --recurse-submodules -I'
 set edit:command-abbr['gmv'] = 'git mv'
 set edit:command-abbr['grm'] = 'git rm -r'
 set edit:command-abbr['gsh'] = 'git show'
-set edit:abbr['gst'] = "git status"
-set edit:abbr['glt'] = "git log --stat -1"
-set edit:abbr['gml'] = "git log --submodule -p "
-set edit:abbr['gmi'] = "git submodule update --init --recursive"
-set edit:abbr['gmi'] = "git submodule update --remote --rebase"
+set edit:command-abbr['gst'] = "git status"
+set edit:command-abbr['glt'] = "git log --stat -1"
+set edit:command-abbr['gml'] = "git log --submodule -p "
+set edit:command-abbr['gmi'] = "git submodule update --init --recursive"
+set edit:command-abbr['gmi'] = "git submodule update --remote --rebase"
 
 fn gl {
   git log --graph --oneline --decorate
