@@ -4,6 +4,7 @@ use str
 use path
 
 use ./env
+use ./aliases
 
 # Automatically run river window manager on virtual terminal tty 1-3
 # On other ttys you must run manually with the tty option
@@ -77,4 +78,15 @@ fn kitty-shell-integration {
 }
 kitty-shell-integration
 
-use ./aliases
+fn cmdline-history-filter {|command|
+     var ignorelist = [git cp mv ln hx fzt rgf cat man printenv pacman yay]
+     for ignore $ignorelist {
+          if (str:has-prefix $command $ignore) {
+               put $false
+               return
+          }
+     }
+     put $true
+}
+
+set edit:add-cmd-filters = (conj $edit:add-cmd-filters $cmdline-history-filter~)

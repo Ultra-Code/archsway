@@ -35,3 +35,5 @@ ln config/zls.json ../
 md ../{mpd ncmpcpp}
 ln config/mpd/* ../mpd/
 ln config/ncmpcpp/* ../ncmpcpp/
+# link efm-language-server config
+ln efm-langserver/ ../
