@@ -85,6 +85,11 @@ fn cmdline-history-filter {|command|
                put $false
                return
           }
+          # filter sudo command with commands in the $ignorelist
+          if (and (str:has-prefix $command sudo) (str:contains $command ' '$ignore' ')) {
+               put $false
+               return
+          }
      }
      put $true
 }

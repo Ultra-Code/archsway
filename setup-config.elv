@@ -32,7 +32,7 @@ ln config/gnupg/* ../gnupg/
 ln config/zls.json ../
 # mpd and ncmcpp create folder and link the config into these folders
 # just like for gnupg
-md ../{mpd ncmpcpp}
+md ../{mpd{/playlist} ncmpcpp}
 ln config/mpd/* ../mpd/
 ln config/ncmpcpp/* ../ncmpcpp/
 # link efm-language-server config
