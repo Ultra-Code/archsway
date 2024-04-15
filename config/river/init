@@ -123,7 +123,7 @@ local autostarts = {
 	{ "wbg", wallpaper },
 	-- { status_bar }, # don't run status bar on startup
 	-- wlsunset -t 2500 -T 6500 -l 5.5502 -L -0.2174 -S 07:00 -s 18:00 -d 1800 -g 1.0
-	{ "wlsunset", "-t 2500", "-l 5.5502", "-L -0.2174" },
+	{ "wlsunset", "-t 700", "-l 5.5502", "-L -0.2174", "-g 0.9" },
 	{ "wl-paste", "--watch", "cliphist", "store" },
 	{ "batsignal", "-b", "-e", "-p", "-w 35", "-c 18", "-d 12", "-f 85", "-m 180", "-D systemctl suspend" },
 }
