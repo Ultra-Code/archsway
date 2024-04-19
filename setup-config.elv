@@ -37,3 +37,4 @@ ln config/mpd/* ../mpd/
 ln config/ncmpcpp/* ../ncmpcpp/
 # link efm-language-server config
 ln efm-langserver/ ../
+Ln /bin/helix /bin/hx

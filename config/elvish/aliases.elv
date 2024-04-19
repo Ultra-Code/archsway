@@ -8,44 +8,16 @@ edit:add-var zig-update~ $zig:zig-update~
 fn el { exec elvish }
 edit:add-var el~ $el~
 
+fn hx {|@files| $E:EDITOR $@files }
+edit:add-var hx~ $hx~
+
+fn Hx {|@files| sudo --preserve-env $E:EDITOR $@files}
+edit:add-var Hx~ $Hx~
+
 set edit:command-abbr['df'] = 'doc:find'
 set edit:command-abbr['ds'] = 'doc:show'
 
 set edit:insert:binding[Alt-l] = { edit:clear }
-
-fn ls {|@options_and_path|
-  e:ls --color --classify $@options_and_path
-}
-edit:add-var ls~ $ls~
-
-fn l {|@path| 
-    ls --almost-all --format=long --human-readable --inode --ignore-backups --ignore=.git $@path 
-}
-edit:add-var l~ $l~
-
-set edit:command-abbr["lh"] = "ls --hyperlink"
-set edit:command-abbr["lr"] = "ls --recursive"
-
-fn md {|@path| mkdir --parents --verbose $@path}
-edit:add-var md~ $md~
-
-fn mc {|path| md $path ; cd $path }
-edit:add-var mc~ $mc~
-
-fn rd {|path| rmdir --parents --verbose $path}
-edit:add-var rd~ $rd~
-
-fn rm {|@path| e:rm --interactive=once --verbose --recursive $@path}
-edit:add-var rm~ $rm~
-
-fn grep {|@options regex| e:grep --extended-regexp --color --ignore-case --regexp $regex $@options }
-edit:add-var grep~ $grep~
-
-fn rg {|@options regex| e:grep --perl-regexp --color --ignore-case --line-number --recursive --binary-files=without-match --exclude=".*" --exclude-dir=".git" --exclude-dir="*cache*" --regexp $regex $@options }
-edit:add-var rg~ $rg~
-
-fn sed {|file| sed --regexp-extended --silent --in-place=.bak $file }
-edit:add-var sed~ $sed~
 
 set edit:command-abbr['bat'] = 'bat --style=numbers,changes'
 
@@ -90,23 +62,60 @@ edit:add-var hi~ $history-import~
 fn hu { edit:history:fast-forward }
 edit:add-var hu~ $hu~
 
-fn hx {|@files| $E:EDITOR $@files }
-edit:add-var hx~ $hx~
+fn ls {|@options_and_path|
+  e:ls --color --classify $@options_and_path
+}
+edit:add-var ls~ $ls~
 
-fn Hx {|@files| sudo --preserve-env $E:EDITOR $@files}
-edit:add-var Hx~ $Hx~
+fn l {|@path|
+    ls --almost-all --format=long --human-readable --inode --ignore-backups --ignore=.git $@path 
+}
+edit:add-var l~ $l~
+
+set edit:command-abbr["lh"] = "ls --hyperlink"
+set edit:command-abbr["lr"] = "ls --recursive"
+
+fn md {|@path| mkdir --parents --verbose $@path}
+edit:add-var md~ $md~
+
+fn mc {|path| md $path ; cd $path }
+edit:add-var mc~ $mc~
+
+fn rd {|path| rmdir --parents --verbose $path}
+edit:add-var rd~ $rd~
+
+fn rm {|@path| e:rm --interactive=once --verbose --recursive $@path}
+edit:add-var rm~ $rm~
 
 fn ln {|@source destination| e:ln --interactive --symbolic --relative --verbose $@source $destination }
 edit:add-var ln~ $ln~
 
+fn Ln {|@source destination| sudo ln $@source $destination }
+edit:add-var Ln~ $Ln~
+
 fn cp {|@source destination| e:cp --interactive --dereference --recursive --verbose --reflink=auto --sparse=auto --archive $@source $destination}
 edit:add-var cp~ $cp~
+
+fn Cp {|@source destination| sudo cp $@source $destination}
+edit:add-var Cp~ $Cp~
 
 fn mv {|@source destination| e:mv --interactive --update --verbose $@source $destination}
 edit:add-var mv~ $mv~
 
+fn Mv {|@source destination| sudo mv $@source $destination}
+edit:add-var Mv~ $Mv~
+
 fn lb { lsblk -oPATH,MOUNTPOINTS,LABEL,FSTYPE,SIZE,FSAVAIL,FSUSED,PARTUUID,MAJ:MIN }
 edit:add-var lb~ $lb~
+
+fn grep {|@options regex| e:grep --extended-regexp --color --ignore-case --regexp $regex $@options }
+edit:add-var grep~ $grep~
+
+fn rg {|@options regex| e:grep --perl-regexp --color --ignore-case --line-number --recursive --binary-files=without-match --exclude=".*" --exclude-dir=".git" --exclude-dir="*cache*" --regexp $regex $@options }
+edit:add-var rg~ $rg~
+
+fn sed {|file| sed --regexp-extended --silent --in-place=.bak $file }
+edit:add-var sed~ $sed~
 
 fn tarx {|archive @files| bsdtar -xvf $archive $@files }
 edit:add-var tarx~ $tarx~
