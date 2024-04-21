@@ -11,16 +11,16 @@ LABEL=ROOT / bcachefs defaults,noatime,fsck,fix_errors,ratelimit_errors,compress
 # /dev/sda3 UUID=26caab6b-923e-4276-a36d-248e5619bda1
 LABEL=HOME /home btrfs defaults,noatime,compress=zstd:12,space_cache=v2,autodefrag,commit=300,subvolid=5,subvol=/ 0 0
 
-# Btrfs swap file
-/dev/sda3 /swap btrfs defaults,subvol=/@swap 0
-/swap/swapfile none swap defaults,pri=1 0 0
-
 # /dev/zram0
 /dev/zram0 none swap defaults,pri=100 0 0
 
+# Swap Partition
+#/dev/sda4 swap partition c974f896-87c7-4f55-8503-c72c313c119c
+LABEL=SWAP none swap defaults,pri=1 0 0
+
 # ZRAM BACKING DEVICE doesn't need to be enabled in fstab
-# /dev/sda4 UUID=fb0d9609-4a42-4236-8760-c2701e4f3a19
-# LABEL=ZRAM_DEV none swap defaults,pri=10 0 0
+# /dev/sda5 UUID=0b1be0ee-fee7-4c84-b405-3316109092a2
+# LABEL=ZRAMDEV none swap defaults,pri=10 0 0
 
 #https://wiki.archlinux.org/title/Ext4#Improving_performance
 #commit=sec isn't enabled because journally is turned off
