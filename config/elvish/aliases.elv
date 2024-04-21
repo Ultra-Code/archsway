@@ -14,9 +14,6 @@ edit:add-var hx~ $hx~
 fn Hx {|@files| sudo --preserve-env $E:EDITOR $@files}
 edit:add-var Hx~ $Hx~
 
-set edit:command-abbr['df'] = 'doc:find'
-set edit:command-abbr['ds'] = 'doc:show'
-
 set edit:insert:binding[Alt-l] = { edit:clear }
 
 set edit:command-abbr['bat'] = 'bat --style=numbers,changes'
