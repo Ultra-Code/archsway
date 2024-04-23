@@ -75,6 +75,8 @@ ParallelDownloads = 5
 Options=
 Options=mode=1777,strictatime,nosuid,nodev,size=93%%,nr_inodes=1m
 ```
+>_NOTE_: This is to be used in conjunction with `zram`
+>_TODO|FIX_: User specified makepkg.conf sometimes doesn't append to/override system makepkg.conf env variables (so in the mean time you have to copy the changes into /etc/makepkg.conf)
 
 ## INSTALLS
 - base-devel for Basic c/c++ build tools to build Arch Linux packages
