@@ -65,7 +65,7 @@ fn ls {|@options_and_path|
 edit:add-var ls~ $ls~
 
 fn l {|@path|
-    ls --almost-all --format=long --human-readable --inode --ignore-backups --ignore=.git $@path 
+    ls --almost-all --format=long --human-readable --inode --ignore-backups --ignore=.git --ignore=(cat .gitignore) $@path
 }
 edit:add-var l~ $l~
 

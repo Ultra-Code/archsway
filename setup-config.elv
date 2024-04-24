@@ -8,7 +8,6 @@ ln terminal/kitty/ ../
 ln fzf/fzt.sh /home/ultracode/.local/bin/fzt
 ln git/ ~/.config/
 ln -s /home/ultracode/.config/dotfiles/elvish/ /home/ultracode/.config/elvish
-sudo ln /usr/lib/helix/hx /bin/hx
 sudo cp etc/xdg/reflector/reflector.conf /etc/xdg/reflector/reflector.conf
 ln fontconfig/fonts.conf ../
 cp etc/pacman.d/pacman.conf /etc/pacman.d/pacman.conf
