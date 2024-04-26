@@ -65,7 +65,8 @@ fn ls {|@options_and_path|
 edit:add-var ls~ $ls~
 
 fn l {|@path|
-    ls --almost-all --format=long --human-readable --inode --ignore-backups --ignore=.git --ignore=(cat .gitignore) $@path
+  var gitignore = (if (os:exists .gitignore) { cat .gitignore } else { echo })
+  ls --almost-all --format=long --human-readable --inode --ignore-backups --ignore=.git --ignore=$gitignore $@path
 }
 edit:add-var l~ $l~
 
