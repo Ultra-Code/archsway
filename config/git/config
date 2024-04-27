@@ -4,6 +4,7 @@
 	signingkey = C2A2C53574321095!
 [core]
 	editor = hx
+	compression = 9
 [pull]
 	rebase = true
 [status]
@@ -33,3 +34,5 @@
 	filterSubmodules = true
 [commit]
 	gpgsign = true
+[pack]
+	deltaCacheSize = 0
