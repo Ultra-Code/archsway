@@ -79,7 +79,7 @@ fn kitty-shell-integration {
 kitty-shell-integration
 
 fn cmdline-history-filter {|command|
-     var ignorelist = [git cp mv ln fzt rgf man printenv pacman yay]
+     var ignorelist = [git cp mv ln fzt rgf printenv]
      for ignore $ignorelist {
           if (str:has-prefix $command $ignore) {
                put $false

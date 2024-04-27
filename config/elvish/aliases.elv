@@ -152,22 +152,35 @@ fn er { $E:EDITOR $E:DOTFILES/config/river/init }
 edit:add-var er~ $er~
 
 #Pacman aliases
-set edit:command-abbr['pmu'] = "yay -Syu"
 set edit:command-abbr['pmi'] = 'yay -S'
 set edit:command-abbr['pmp'] = 'sudo pacman -Rcunsv'
 set edit:command-abbr['pmii'] = 'pacman -Qii'
-set edit:command-abbr['pmis'] = 'pacman -Qs'
 set edit:command-abbr['pmsi'] = 'yay -Sii'
-set edit:command-abbr['pmss'] = 'yay -Ss'
-set edit:command-abbr['pmsf'] = 'yay -F'
 set edit:command-abbr['pmlf'] = 'pacman -Ql'
 set edit:command-abbr['pmlfr'] = 'yay -Fl'
-set edit:command-abbr['pmly'] = 'pacman -Qmq'
-# requires the full path to the file you want to find the package it belongs to
-set edit:command-abbr['pmb'] = 'pacman -Qo'
 
 fn pml { pacman -Qe }
 edit:add-var pml~ $pml~
+
+fn pmu { yay -Syu }
+edit:add-var pmu~ $pmu~
+
+fn pmlr { pacman -Qmq }
+edit:add-var pmlr~ $pmlr~
+
+fn pmb {|file|
+  if (and (path:is-abs $file) (os:exists &follow-symlink=$true $file)) {
+    try {
+      pacman -Qo $file
+    } catch err {
+      var err = $err[reason]
+      echo $err[cmd-name]" exited with "$err[exit-status]": could not find the package which owns "$file
+    }
+  } else {
+    fail "requires the full path to the file you want to find the package it belongs to"
+  }
+}
+edit:add-var pmb~ $pmb~
 
 # https://github.com/elves/elvish/issues/1775
 fn pmc { sudo pacman -Rsn (pacman -Qdtq) }
@@ -181,10 +194,10 @@ fn pms {|package|
      yay -Qs '^'$package 
     } catch err {
       try {
-        yay -F $package
+        yay -Ss '^'$package
       } catch err {
         try {
-          yay -Ss '^'$package
+          yay -Fx '^'$package
         } catch err {
           var err = $err[reason]
           echo $err[cmd-name]" exited with "$err[exit-status]": package "$package" not found in default repo"
