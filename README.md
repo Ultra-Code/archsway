@@ -7,8 +7,8 @@ Archlinux on sway from scratch with the most minimal dependencies. DIY is awesom
 # Filesystem Setup
 For a new setup, **ROOT** & **HOME** should be a _f2fs_ | _Bcachefs_ | _btrfs_ | _xfs_ partition. **ROOT** is mounted on / with the dedicated **HOME** |& **FILES**
 _subvolume_ | _partition_ mounted to `/home` and `/home/${username}/files` repectively. **ROOT** should have a max size of **60-120GiB**
-with **HOME** between **120-240GiB** and **FILES** of __arbitrary size__ for multimedia content. Setup [**zram**](https://github.com/Ultra-Code/archsway/blob/master/etc/udev/rules.d/zram.rules) for
-efficient ram usage with a backing device equal to RAM size **12GiB** and a [swap](https://github.com/Ultra-Code/archsway/blob/master/etc/fstab) partition for [**hibernation**](https://github.com/Ultra-Code/archsway/blob/master/etc/kernel/cmdline) also of size equal to RAM **12Gib**
+with **HOME** between **120-240GiB** and **FILES** of __arbitrary size__ for multimedia content. Setup [**zram**](https://github.com/Ultra-Code/archsway/blob/master/etc/udev/rules.d/zram.rules) `3X` RAM size to allow running
+more memory hungry tasks `.eg compiling llvm,clang,clang-tools,lldb`. Use a ZRAM backing device equal to RAM size **12GiB** and a [swap](https://github.com/Ultra-Code/archsway/blob/master/etc/fstab) partition for [**hibernation**](https://github.com/Ultra-Code/archsway/blob/master/etc/kernel/cmdline) also of size equal to RAM **12Gib**
 
 **NOTE:**
 - **make sure to create and mount bcachefs/btrfs with zstd compression on first mount during installation**
@@ -69,11 +69,11 @@ CheckSpace
 VerbosePkgLists
 ParallelDownloads = 5
 ```
-- Setup [makepkg.conf](https://github.com/Ultra-Code/archsway/blob/master/config/pacman/makepkg.conf) and Increase /tmp tmpfs size to 93% of RAM by Copying and changing the Options field of `Mount` from the default size of 50% to 93% in the drop-in config file, This helps to prevent OOM when compiling clang on /tmp `sudo -E systemctl edit tmp.mount --drop-in=hugetmp.mount`
+- Setup [makepkg.conf](https://github.com/Ultra-Code/archsway/blob/master/config/pacman/makepkg.conf) and Increase /tmp tmpfs size to 90% of RAM by Copying and changing the Options field of `Mount` from the default size of 50% to 90% in the drop-in config file, This helps to prevent OOM when compiling clang on /tmp `sudo -E systemctl edit tmp.mount --drop-in=hugetmp.mount`
 ```bash
 [Mount]
 Options=
-Options=mode=1777,strictatime,nosuid,nodev,size=93%%,nr_inodes=1m
+Options=mode=1777,strictatime,nosuid,nodev,size=90%%,nr_inodes=1m
 ```
 >_NOTE_: This is to be used in conjunction with `zram`
 >_TODO|FIX_: User specified makepkg.conf sometimes doesn't append to/override system makepkg.conf env variables (so in the mean time you have to copy the changes into /etc/makepkg.conf)
