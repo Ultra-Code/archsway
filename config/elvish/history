@@ -47,6 +47,8 @@ coredumpctl list
 curl -L -# -o pretty-php.phar https://github.com/lkrms/pretty-php/releases/latest/download/pretty-php.phar
 curl -O https://raw.githubusercontent.com/nothings/stb/master/stb_image.h
 curl icanhazip.com
+date -d '+2 Month Saturday'
+date -d 'next Wed'
 docker compose config
 docker compose down
 docker compose logs app
