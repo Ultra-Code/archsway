@@ -69,14 +69,13 @@ CheckSpace
 VerbosePkgLists
 ParallelDownloads = 5
 ```
-- Setup [makepkg.conf](https://github.com/Ultra-Code/archsway/blob/master/config/pacman/makepkg.conf) and Increase /tmp tmpfs size to 90% of RAM by Copying and changing the Options field of `Mount` from the default size of 50% to 90% in the drop-in config file, This helps to prevent OOM when compiling clang on /tmp `sudo -E systemctl edit tmp.mount --drop-in=hugetmp.mount`
+- Setup [makepkg.conf](https://github.com/Ultra-Code/archsway/blob/master/etc/makepkg.conf.d/makepkg.conf) and Increase /tmp tmpfs size to 90% of RAM by Copying and changing the Options field of `Mount` from the default size of 50% to 90% in the drop-in config file, This helps to prevent OOM when compiling clang on /tmp `sudo -E systemctl edit tmp.mount --drop-in=hugetmp.mount`
 ```bash
 [Mount]
 Options=
 Options=mode=1777,strictatime,nosuid,nodev,size=90%%,nr_inodes=1m
 ```
 >_NOTE_: This is to be used in conjunction with `zram`
->_TODO|FIX_: User specified makepkg.conf sometimes doesn't append to/override system makepkg.conf env variables (so in the mean time you have to copy the changes into /etc/makepkg.conf)
 
 ## INSTALLS
 - base-devel for Basic c/c++ build tools to build Arch Linux packages
