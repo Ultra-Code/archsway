@@ -1,11 +1,7 @@
 [Unit]
 Description=Firefox profile in memory
 
-[Install]
-WantedBy=default.target
-
 [Service]
-Type=oneshot
-RemainAfterExit=yes
+Type=exec
 ExecStart=%E/systemd/user/firefox-profile-on-ram.sh
 ExecStop=%E/systemd/user/firefox-profile-on-ram.sh

@@ -1,10 +1,12 @@
+#Move Firefox profile to RAM 1.5 min after boot
+#Sync every 1hr 30min while the system is running
 [Unit]
 Description=Sync Firefox profile in memory
 
 [Timer]
 # man 7 systemd.time for syntax to specify time
-OnStartupSec=3hr 30min
-OnUnitActiveSec=3hr 30min
+OnStartupSec=1min 30sec
+OnUnitActiveSec=1hr 30min
 
 [Install]
-WantedBy=default.target
+WantedBy=timers.target

@@ -10,3 +10,6 @@ zsh/.p10k.zsh
 
 #zinit dir
 zsh/.zinit/
+
+# systemd units
+config/systemd/user/*.target.wants/*
