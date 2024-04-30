@@ -1,0 +1,10 @@
+[Unit]
+Description=Sync Firefox profile in memory
+
+[Timer]
+# man 7 systemd.time for syntax to specify time
+OnStartupSec=3hr 30min
+OnUnitActiveSec=3hr 30min
+
+[Install]
+WantedBy=default.target
