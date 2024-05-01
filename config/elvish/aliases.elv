@@ -87,6 +87,9 @@ edit:add-var rd~ $rd~
 fn rm {|@path| e:rm --interactive=once --verbose --recursive $@path}
 edit:add-var rm~ $rm~
 
+fn Rm {|@path| sudo rm $@path}
+edit:add-var Rm~ $Rm~
+
 fn ln {|@source destination| e:ln --interactive --symbolic --relative --verbose $@source $destination }
 edit:add-var ln~ $ln~
 
@@ -158,8 +161,6 @@ set edit:command-abbr['pmi'] = 'yay -S'
 set edit:command-abbr['pmp'] = 'sudo pacman -Rcunsv'
 set edit:command-abbr['pmii'] = 'pacman -Qii'
 set edit:command-abbr['pmsi'] = 'yay -Sii'
-set edit:command-abbr['pmlf'] = 'pacman -Ql'
-set edit:command-abbr['pmlfr'] = 'yay -Fl'
 
 fn pml { pacman -Qe }
 edit:add-var pml~ $pml~
@@ -169,6 +170,20 @@ edit:add-var pmu~ $pmu~
 
 fn pmlr { pacman -Qmq }
 edit:add-var pmlr~ $pmlr~
+
+fn pmlf {|package|
+  try {
+    pacman -Ql $package stderr>$os:dev-null
+  } catch err {
+    try {
+      pacman -Fl $package
+    } catch err {
+      var err = $err[reason]
+      echo $err[cmd-name]" exited with "$err[exit-status]": could not list files for the package "$package
+    }
+  }
+}
+edit:add-var pmlf~ $pmlf~
 
 fn pmb {|file|
   if (and (path:is-abs $file) (os:exists &follow-symlink=$true $file)) {

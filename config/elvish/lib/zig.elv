@@ -29,7 +29,7 @@ fn extract-info {|branch|
             curl -s $ZIG_JSON_URL stdout> $index
         } catch err {
             put $err
-            echo "Failed to download the zig index.json"
+            echo (styled "Error: failed to download the zig index.json" red)
         }
     }
     set index = (cat $index | from-json | put (all)[$branch][$ARCH])
@@ -45,21 +45,7 @@ fn extract-info {|branch|
              &new_zig_exe=$new_zig_exe &install_dir_link=$install_dir_link]
     } catch err {
         put $err
-        echo "failed to query repo"
-    }
-}
-
-fn check-zig-version {|branch install_dir_link zig_version|
-    if (and (os:exists &follow-symlink=$true $install_dir_link) ^
-         (==s (os:eval-symlinks $install_dir_link) $ZIG_ROOT/$zig_version)) {
-            echo $zig_version" is already the current version!"
-            exit 0
-    } else {
-        if (==s $branch "master") {
-            echo "Updating to "$zig_version
-        } else {
-            echo "Installing "$zig_version
-        }
+        echo (styled "Error: failed to query repo" red)
     }
 }
 
@@ -91,19 +77,38 @@ fn update-zig {|tarball basename new_zig_exe install_dir_link zig_version|
         update-symlink $new_zig_exe $install_dir_link $zig_version
     } catch err {
         put $err
-        echo "Update failed!"
+        echo (styled "Error: update failed!" red)
         os:remove-all $ZIG_ROOT/$zig_version 
     }
 }
 
-fn check-and-update-zig-version {|branch tarball basename new_zig_exe install_dir_link zig_version|
-    check-zig-version $branch $install_dir_link $zig_version
-    update-zig $tarball $basename $new_zig_exe $install_dir_link $zig_version
+fn is-latest {|install_dir_link zig_version|
+    if (and (os:exists &follow-symlink=$true $install_dir_link) ^
+         (==s (os:eval-symlinks $install_dir_link) $ZIG_ROOT/$zig_version)) {
+        put $true
+    } else {
+        put $false
+    }
+}
+
+fn update-zig-version {|branch tarball basename new_zig_exe install_dir_link zig_version|
+    if (is-latest $install_dir_link $zig_version) {
+        echo (styled "The current " bold green)(styled $zig_version white)(styled " is the latest version!" bold green)
+    } else {
+        if (==s $branch "master") {
+            echo "Updating to "$zig_version
+        } else {
+            echo "Installing "$zig_version
+        }
+        update-zig $tarball $basename $new_zig_exe $install_dir_link $zig_version
+        set-default $new_zig_exe $zig_version
+        finish $new_zig_exe $zig_version $basename
+    }
 }
 
 fn finish {|new_zig_exe zig_version basename|
     echo "finished updating to "$zig_version
-    echo "Current version is now: "($new_zig_exe version)
+    echo (styled "Current version is now: " green)($new_zig_exe version)
     os:remove-all $TMPDIR/$basename
 }
 
@@ -127,16 +132,14 @@ fn main {|&branch=master &default=$false|
     if $default {
         var info = (extract-info $branch)
         set-default $info[new_zig_exe] $info[zig_version]
-        exit 0
+    } else {
+        start
+        var info = (extract-info $branch)
+        update-zig-version $branch $info[tarball] $info[basename] ^
+            $info[new_zig_exe] $info[install_dir_link] $info[zig_version]
     }
-    start
-    var info = (extract-info $branch)
-    check-and-update-zig-version $branch $info[tarball] $info[basename] ^
-        $info[new_zig_exe] $info[install_dir_link] $info[zig_version] 
-    finish $info[new_zig_exe] $info[zig_version] $info[basename]
-    set-default $info[new_zig_exe] $info[zig_version]
 }
 
 fn zig-update {|@args|
-    flag:call $main~ [$@args] &on-parse-error={|_| print $usage; exit 1}
+    flag:call $main~ [$@args] &on-parse-error={|_| print $usage; fail "zig-update called with incorrect arguments"}
 }
