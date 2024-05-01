@@ -114,7 +114,7 @@ edit:add-var lb~ $lb~
 fn grep {|@options regex| e:grep --extended-regexp --color --ignore-case --regexp $regex $@options }
 edit:add-var grep~ $grep~
 
-fn rg {|@options regex| e:grep --perl-regexp --color --ignore-case --line-number --recursive --binary-files=without-match --exclude=".*" --exclude-dir=".git" --exclude-dir="*cache*" --regexp $regex $@options }
+fn rg {|regex @options| e:grep --perl-regexp --only-matching --color --ignore-case --line-number --recursive --binary-files=without-match --exclude=".*" --exclude-dir=".git" --exclude-dir="*cache*" --regexp $regex $@options }
 edit:add-var rg~ $rg~
 
 fn sed {|file| sed --regexp-extended --silent --in-place=.bak $file }
