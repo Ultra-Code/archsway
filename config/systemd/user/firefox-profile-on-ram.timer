@@ -5,7 +5,7 @@ Description=Sync Firefox profile in memory
 
 [Timer]
 # man 7 systemd.time for syntax to specify time
-OnStartupSec=1min 30sec
+OnStartupSec=3seconds
 OnUnitActiveSec=1hr 30min
 
 [Install]
