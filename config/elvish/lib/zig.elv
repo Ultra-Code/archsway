@@ -68,7 +68,7 @@ fn update-symlink {|new_zig_exe install_dir_link zig_version|
 
 fn update-zig {|tarball basename new_zig_exe install_dir_link zig_version|
     find $ZIG_ROOT -maxdepth 1 -ctime +3 -type d -name "*-dev.*" ^
-         -exec rm -rf '{}' + stdout>$os:dev-null stderr>&stdout
+         -exec rm -rf '{}' + stdout>$os:dev-null
     try {
         echo "Downloading repository..."
         curl --output-dir $TMPDIR --remote-name  --continue-at - $tarball 
