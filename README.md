@@ -135,7 +135,7 @@ Options=mode=1777,strictatime,nosuid,nodev,size=90%%,nr_inodes=1m
 - Enable [Firefox Profile on Ram](https://wiki.archlinux.org/title/Firefox/Profile_on_RAM) when using zram/nvme/ssd
 - Move firefox [disk cache to ram](https://wiki.archlinux.org/title/Firefox/Tweaks#Move_disk_cache_to_RAM) by setting browser.cache.disk.parent_directory to /run/user/UID/firefox
 - where UID is your user's ID which can be obtained by running id -u
-- increase session save interval to 10 minutes (600000 milliseconds) by setting browser.sessionstore.interval to 600000
+- if not using [Firefox Profile on Ram](https://wiki.archlinux.org/title/Firefox/Profile_on_RAM) then increase session save interval from the default of 15 seconds (15000 milliseconds) to 10 minutes (600000 milliseconds) by setting browser.sessionstore.interval to 600000
 
 
 ## OPTIONAL
