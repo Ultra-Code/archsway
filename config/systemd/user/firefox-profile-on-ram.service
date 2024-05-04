@@ -1,7 +1,23 @@
+# NOTE: Don't enable this service as it would be started automatically by firefox-profile-on-ram.timer
 [Unit]
 Description=Firefox profile in memory
+# To ensure profile is synced before shutdown
+# Conflicts=shutdown.target
+# Before=shutdown.target
+# This will cause a target unit to be stopped immediately after its
+# activation, if it is not a dependency of another running unit
+# While making it activatable by the timer
+# StopWhenUnneeded=yes
 
 [Service]
-Type=exec
+Type=oneshot
+RemainAfterExit=yes
 ExecStart=%E/systemd/user/firefox-profile-on-ram.sh
 ExecStop=%E/systemd/user/firefox-profile-on-ram.sh
+
+# [Install]
+# # Ensures service isn't static and can be stopped when confilict=shutdown.target is active
+# WantedBy=timers.target
+
+[Install]
+WantedBy=default.target
