@@ -22,7 +22,7 @@ fn start-river {|&tty=$false|
                &mpc="for music player keys control" &brightnessctl="for screen brightness control"]
 
                var optional_deps = [&batsignal="for battery status notification" &kanshi="for automatic output management" 
-               &lf="as a file explore" &swaynag="for interactive section" &lswt="for listing wayland windows with their attributes"]
+               &swaynag="for interactive section" &lswt="for listing wayland windows with their attributes"]
 
                for package [(keys $deps)] {
                     if (not (has-external $package)) {
@@ -34,8 +34,8 @@ fn start-river {|&tty=$false|
                          echo $package" is optionally required "$optional_deps[$package]
                     }
                }
-               if (not (os:is-regular /usr/share/sounds/freedesktop/stereo/screen-capture.oga)) {
-                    echo "sound-them-freedesktop package is optionally required"
+               if (not (os:is-regular /usr/share/sounds/freedesktop/stereo/camera-shutter.oga)) {
+                    echo "sound-theme-freedesktop package is optionally required"
                }
 
                exec systemd-cat --identifier=river river -no-xwayland
