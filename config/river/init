@@ -254,7 +254,7 @@ local mappings = {
 				key = "E",
 				command = {
 					"spawn",
-					fmt([['%s --class "fm" --title "file manager" nu -c "%s"']], terminal, file_manager),
+					fmt([['%s --class "fm" --title "file manager" bash -c "%s"']], terminal, file_manager),
 				},
 			},
 			-- Browser
