@@ -62,9 +62,14 @@ fn hu { edit:history:fast-forward }
 edit:add-var hu~ $hu~
 
 fn ls {|@options_and_path|
-  e:ls --color --classify $@options_and_path
+  e:ls --color=always --classify $@options_and_path
 }
 edit:add-var ls~ $ls~
+
+fn diff {|file reference|
+  e:diff --report-identical-files --side-by-side --suppress-common-lines --expand-tabs --suppress-blank-empty --minimal --speed-large-files --color=always $file $reference
+}
+edit:add-var diff~ $diff~
 
 fn l {|@path|
   var @gitignore = (if (os:exists .gitignore) { cat .gitignore } else { echo })
@@ -74,6 +79,7 @@ edit:add-var l~ $l~
 
 set edit:command-abbr["lh"] = "ls --hyperlink"
 set edit:command-abbr["lr"] = "ls --recursive"
+set edit:abbr["less"] = "less -R"
 
 fn md {|@path| mkdir --parents --verbose $@path}
 edit:add-var md~ $md~
@@ -111,10 +117,10 @@ edit:add-var Mv~ $Mv~
 fn lb { lsblk -oPATH,MOUNTPOINTS,LABEL,FSTYPE,SIZE,FSAVAIL,FSUSED,PARTUUID,MAJ:MIN }
 edit:add-var lb~ $lb~
 
-fn grep {|@options regex| e:grep --extended-regexp --color --ignore-case --regexp $regex $@options }
+fn grep {|@options regex| e:grep --extended-regexp --color=always --ignore-case --regexp $regex $@options }
 edit:add-var grep~ $grep~
 
-fn rg {|regex @options| e:grep --perl-regexp --only-matching --color --ignore-case --line-number --recursive --binary-files=without-match --exclude=".*" --exclude-dir=".git" --exclude-dir="*cache*" --regexp $regex $@options }
+fn rg {|regex @options| e:grep --perl-regexp --only-matching --color=always --ignore-case --line-number --recursive --binary-files=without-match --exclude=".*" --exclude-dir=".git" --exclude-dir="*cache*" --regexp $regex $@options }
 edit:add-var rg~ $rg~
 
 fn sed {|file| sed --regexp-extended --silent --in-place=.bak $file }

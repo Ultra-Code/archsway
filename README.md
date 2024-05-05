@@ -49,8 +49,8 @@ more memory hungry tasks `.eg compiling llvm,clang,clang-tools,lldb`. Use a ZRAM
 - Configure network using [systemd-networkd](https://github.com/Ultra-Code/archsway/tree/master/etc/systemd/network) and [systemd-resolved](https://github.com/Ultra-Code/archsway/tree/master/etc/systemd/resolved.conf.d) 
 - Setup [vconsole ](https://github.com/Ultra-Code/archsway/blob/master/etc/vconsole.conf) terminal fonts
 - On the freshly installed system use the following fonts
-    + use fonts with great unicode support like ttf-dejavu or noto-fonts or gnu-free-fonts as system default font
-    + ttc-iosevka  or ttf-jetbrains-mono for monospace,
+    + use fonts with great unicode support like ttf-dejavu or noto-fonts as system default font
+    + ttf-jetbrains-mono or ttc-iosevka for monospace,
     + ttf-nerd-fonts-symbols-mono for nerd font symbols and noto-font-emoji for emoji
     >_NOTE_: don't forget to `ln -s /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf /etc/fonts/conf.d/`
 - configure [Intel_graphics](https://wiki.archlinux.org/title/Intel_graphics) hardware acceleration

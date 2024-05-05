@@ -5,6 +5,7 @@
 [core]
 	editor = hx
 	compression = 9
+	pager = less -R
 [pull]
 	rebase = true
 [status]
@@ -29,7 +30,7 @@
 [init]
 	defaultBranch = main
 [color]
-	ui = auto
+	ui = always
 [clone]
 	filterSubmodules = true
 [commit]
