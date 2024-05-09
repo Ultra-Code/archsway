@@ -91,6 +91,17 @@ fn is-latest {|install_dir_link zig_version|
     }
 }
 
+fn set-default {|new_zig_exe zig_version|
+    # set/update which binary is the default zig installation
+    if (and ?(os:stat $new_zig_exe) (==s (os:stat $new_zig_exe)[type] symlink)) {
+        var _ = ?(os:remove $BIN_DIR/zig)
+        os:symlink $new_zig_exe $BIN_DIR/zig
+        echo "default zig set to "$zig_version
+    } else {
+        fail "install zig before trying to set the default"
+    }
+}
+
 fn update-zig-version {|branch tarball basename new_zig_exe install_dir_link zig_version|
     if (is-latest $install_dir_link $zig_version) {
         echo (styled "The current " bold green)(styled $zig_version white)(styled " is the latest version!" bold green)
@@ -110,17 +121,6 @@ fn finish {|new_zig_exe zig_version basename|
     echo "finished updating to "$zig_version
     echo (styled "Current version is now: " green)($new_zig_exe version)
     os:remove-all $TMPDIR/$basename
-}
-
-fn set-default {|new_zig_exe zig_version|
-    # set/update which binary is the default zig installation
-    if (and ?(os:stat $new_zig_exe) (==s (os:stat $new_zig_exe)[type] symlink)) {
-        var _ = ?(os:remove $BIN_DIR/zig)
-        os:symlink $new_zig_exe $BIN_DIR/zig
-        echo "default zig set to "$zig_version
-    } else {
-        fail "install zig before trying to set the default"
-    }
 }
 
 var usage = ^
