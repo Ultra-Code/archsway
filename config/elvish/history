@@ -181,6 +181,7 @@ mariadb -u ultracode -p < Downloads/access_to_basic_services.sql
 math:pow 10 3
 mkinitcpio -H resume
 modinfo zram
+modular update nightly/mojo
 mpv --show-profile=gpu-hq
 mpv --vo=help
 nft -cf ~/serverdotfiles/nftables.new.conf
@@ -225,6 +226,7 @@ pylint --help-msg=docstring-first-line-empty
 pylint --list-group
 pylint --list-msgs-enabled
 readlink /bin/rustc 
+rename --verbose --interactive build build2 hashing/**
 resolvectl
 resolvectl query 1.1.1.1
 riverctl spawn 'batsignal -w 25 -c 18 -d 12 -f 85 -m 180 -D "systemctl suspend" -b'

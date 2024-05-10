@@ -34,8 +34,8 @@ if (has-env WSLENV) {
 
 if (os:is-dir $E:XDG_DATA_HOME/modular) {
      set-env MODULAR_HOME (put $E:XDG_DATA_HOME | path:join (all) modular)
-     set-env PATH  (put $E:MODULAR_HOME | path:join (all) pkg packages.modular.com_mojo bin | conj $paths (all) | str:join ':' (all))
-     set-env PATH  (put $E:HOME | path:join (all) .modular pkg packages.modular.com_mojo bin | conj $paths (all) | str:join ':' (all))
+     var MOJO_PATH = (modular config mojo.path)
+     set-env PATH  (put $MOJO_PATH | path:join (all) bin | conj $paths (all) | str:join ':' (all))
 
      if (or (not (has-env LD_LIBRARY_PATH)) (not (get-env LD_LIBRARY_PATH | str:contains (all) lib/mojo))) {
           set E:LD_LIBRARY_PATH = $E:XDG_LOCAL_HOME/lib/mojo:$E:LD_LIBRARY_PATH
