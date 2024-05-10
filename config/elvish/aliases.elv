@@ -321,6 +321,9 @@ fn a2l {|@argv|
  }
 edit:add-var a2l~ $a2l~
 
+fn objdump {|exe| e:objdump -drwC -Mintel $exe }
+edit:add-var objdump~ $objdump~
+
 fn update-mirrors {
   sudo reflector "@"$E:DOTFILES/etc/xdg/reflector/reflector.conf stdout>$os:dev-null stderr>$os:dev-null
  }
