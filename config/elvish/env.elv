@@ -10,8 +10,14 @@ set-env XDG_DATA_HOME (put $E:XDG_LOCAL_HOME | path:join (all) share)
 set-env XDG_STATE_HOME (put $E:XDG_LOCAL_HOME | path:join (all) state)
 
 set-env GNUPGHOME $E:XDG_CONFIG_HOME/gnupg
+
 # Configure gpg pinentry to use the correct TTY
 set-env GPG_TTY (tty)
+# To use the included Secure Shell Agent you need to start the gpg agent
+if (not (has-env SSH_AUTH_SOCK)) {
+     gpg-connect-agent updatestartuptty /bye stderr>$os:dev-null stdout>&stderr
+     set-env SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+}
 
 set-env DOTFILES (put $E:XDG_CONFIG_HOME | path:join (all) dotfiles)
 set E:ELVRC = $E:DOTFILES/config/elvish

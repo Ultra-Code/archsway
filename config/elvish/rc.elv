@@ -52,12 +52,6 @@ start-river
 # elvish limited vi editing mode
 set edit:insert:binding[Ctrl-'['] = $edit:command:start~
 
-fn setup-key-mgmt {
-     unset-env SSH_AGENT_PID
-     set-env SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
-}
-setup-key-mgmt
-
 fn kitty-shell-integration {
      if (has-external kitty) {
           # https://iterm2.com/documentation-escape-codes.html
