@@ -37,3 +37,4 @@ ln config/ncmpcpp/* ../ncmpcpp/
 # link efm-language-server config
 ln efm-langserver/ ../
 Ln /bin/helix /bin/hx
+Cp etc/makepkg.conf.d/makepkg.conf /etc/makepkg.conf.d/makepkg.conf
