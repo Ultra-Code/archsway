@@ -13,7 +13,7 @@ edit:add-var el~ $el~
 fn hx {|@files| $E:EDITOR $@files }
 edit:add-var hx~ $hx~
 
-fn Hx {|@files| sudo --preserve-env $E:EDITOR $@files}
+fn Hx {|@files| sudo --preserve-env $E:EDITOR $@files }
 edit:add-var Hx~ $Hx~
 
 set edit:insert:binding[Alt-l] = { edit:clear }
@@ -67,13 +67,16 @@ fn ls {|@options_and_path|
 edit:add-var ls~ $ls~
 
 fn diff {|file reference|
-  e:diff --report-identical-files --side-by-side --suppress-common-lines --expand-tabs --suppress-blank-empty --minimal --speed-large-files --color=always $file $reference
+  e:diff --report-identical-files --side-by-side --suppress-common-lines ^
+  --expand-tabs --suppress-blank-empty --minimal --speed-large-files ^
+  --color=always $file $reference
 }
 edit:add-var diff~ $diff~
 
 fn l {|@path|
   var @gitignore = (if (os:exists .gitignore) { cat .gitignore } else { echo })
-  ls --almost-all --format=long --human-readable --inode --ignore-backups --ignore=.git --ignore=$@gitignore $@path
+  ls --almost-all --format=long --human-readable --inode --ignore-backups ^
+  --ignore=.git --ignore=$@gitignore $@path
 }
 edit:add-var l~ $l~
 
@@ -81,7 +84,7 @@ set edit:command-abbr["lh"] = "ls --hyperlink"
 set edit:command-abbr["lr"] = "ls --recursive"
 set edit:abbr["less"] = "less -R"
 
-fn md {|@path| mkdir --parents --verbose $@path}
+fn md {|@path| mkdir --parents --verbose $@path }
 edit:add-var md~ $md~
 
 fn mc {|path| md $path ; cd $path }
@@ -90,37 +93,56 @@ edit:add-var mc~ $mc~
 fn rd {|path| rmdir --parents --verbose $path}
 edit:add-var rd~ $rd~
 
-fn rm {|@path| e:rm --interactive=once --verbose --recursive $@path}
+fn rm {|@path| e:rm --interactive=once --verbose --recursive $@path }
 edit:add-var rm~ $rm~
 
-fn Rm {|@path| sudo rm $@path}
+fn Rm {|@path| sudo rm $@path }
 edit:add-var Rm~ $Rm~
 
-fn ln {|@source destination| e:ln --interactive --symbolic --relative --verbose $@source $destination }
+fn ln {|@source destination|
+  e:ln --interactive --symbolic --relative --verbose $@source $destination
+}
 edit:add-var ln~ $ln~
 
 fn Ln {|@source destination| sudo ln $@source $destination }
 edit:add-var Ln~ $Ln~
 
-fn cp {|@source destination| e:cp --interactive --dereference --recursive --verbose --reflink=auto --sparse=auto --archive $@source $destination}
+fn cp {|@source destination|
+  e:cp --interactive --dereference --recursive --verbose --reflink=auto ^
+  --sparse=auto --archive $@source $destination
+}
 edit:add-var cp~ $cp~
 
-fn Cp {|@source destination| sudo cp $@source $destination}
+fn Cp {|@source destination| sudo cp $@source $destination }
 edit:add-var Cp~ $Cp~
 
-fn mv {|@source destination| e:mv --interactive --update --debug $@source $destination}
+fn mv {|@source destination|
+  e:mv --interactive --update --debug $@source $destination
+}
 edit:add-var mv~ $mv~
 
-fn Mv {|@source destination| sudo mv $@source $destination}
+fn Mv {|@source destination| sudo mv $@source $destination }
 edit:add-var Mv~ $Mv~
 
-fn lb { lsblk -oPATH,MOUNTPOINTS,LABEL,FSTYPE,SIZE,FSAVAIL,FSUSED,PARTUUID,MAJ:MIN }
+fn lb {
+  lsblk -oPATH,MOUNTPOINTS,LABEL,FSTYPE,SIZE,FSAVAIL,FSUSED,PARTUUID,MAJ:MIN
+}
 edit:add-var lb~ $lb~
 
-fn grep {|@options regex| e:grep --extended-regexp --color=always --ignore-case --regexp $regex $@options }
+fn grep {|@options regex|
+  e:grep --extended-regexp --color=always --ignore-case --regexp $regex ^
+  $@options
+}
 edit:add-var grep~ $grep~
 
-fn rg {|regex @options| e:grep --perl-regexp --only-matching --color=always --ignore-case --line-number --recursive --binary-files=without-match --exclude=".*" --exclude-dir=".git" --exclude-dir="*cache*" --regexp $regex $@options }
+# respects gitignore and skip hidden files and cache directories
+fn rg {|regex @options|
+  var @gitignore = (if (os:exists .gitignore) { cat .gitignore } else { echo })
+  e:grep --perl-regexp --only-matching --color=always --ignore-case ^
+  --line-number --recursive --binary-files=without-match --exclude=".*" ^
+  --exclude=$@gitignore --exclude-dir=$@gitignore --exclude-dir=".git" ^
+  --exclude-dir="*cache*" --regexp $regex $@options
+}
 edit:add-var rg~ $rg~
 
 fn sed {|file| sed --regexp-extended --silent --in-place=.bak $file }
@@ -132,19 +154,31 @@ edit:add-var tarx~ $tarx~
 fn tarv {|archive| bsdtar -tvf $archive }
 edit:add-var tarv~ $tarv~
 
-fn tarzip {|archive @source| bsdtar --auto-compress --option --option="zip:compression=deflate" -cvf  $archive $@source }
+fn tarzip {|archive @source|
+  bsdtar --auto-compress --option --option="zip:compression=deflate" ^
+  -cvf  $archive $@source
+}
 edit:add-var tarzip~ $tarzip~
 
-fn targzip {|archive @source| bsdtar --auto-compress --option="gzip:compression-level=9" -cvf  $archive $@source}
+fn targzip {|archive @source|
+  bsdtar --auto-compress --option="gzip:compression-level=9" -cvf  $archive ^
+  $@source
+}
 edit:add-var targzip~ $targzip~
 
-fn tarzst {|archive @source| bsdtar --auto-compress --option="zstd:compression-level=22,zstd:threads=0" -cvf  $archive $@source}
+fn tarzst {|archive @source|
+  bsdtar --auto-compress --option="zstd:compression-level=22,zstd:threads=0" ^
+  -cvf  $archive $@source
+}
 edit:add-var tarzst~ $tarzst~
 
-fn tarxz {|archive @source| bsdtar --auto-compress --option="xz:compression-level=9,xz:threads=0" -cvf $archive $@source }
+fn tarxz {|archive @source|
+  bsdtar --auto-compress --option="xz:compression-level=9,xz:threads=0" ^
+  -cvf $archive $@source
+}
 edit:add-var tarxz~ $tarxz~
 
-fn du {|@file| e:du -h -d 1 $@file}
+fn du {|@file| e:du -h -d 1 $@file }
 edit:add-var du~ $du~
 
 fn ee { $E:EDITOR $E:ELVRC/env.elv }
@@ -214,7 +248,7 @@ edit:add-var pmcc~ $pmcc~
 
 fn pms {|package|
     try {
-     yay -Qs '^'$package 
+     yay -Qs '^'$package
     } catch err {
       try {
         yay -Ss '^'$package
@@ -325,6 +359,7 @@ fn objdump {|exe| e:objdump -drwC -Mintel $exe }
 edit:add-var objdump~ $objdump~
 
 fn update-mirrors {
-  sudo reflector "@"$E:DOTFILES/etc/xdg/reflector/reflector.conf stdout>$os:dev-null stderr>$os:dev-null
+  sudo reflector "@"$E:DOTFILES/etc/xdg/reflector/reflector.conf ^
+  stdout>$os:dev-null stderr>$os:dev-null
  }
 edit:add-var update-mirrors~ $update-mirrors~
