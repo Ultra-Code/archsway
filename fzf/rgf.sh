@@ -1,6 +1,6 @@
 #!/bin/env bash
 # Switch between Ripgrep launcher mode (CTRL-R) and fzf filtering mode (CTRL-F)
-path=.
+path="."
 if test -n "$1"; then
   user_path=$1
   if test -d "$user_path"; then
@@ -33,4 +33,4 @@ INITIAL_QUERY="${*:2}"
   --header '╱ CTRL-R (ripgrep mode) ╱ CTRL-F (fzf mode) ╱' \
   --preview 'bat --color=always {1} --highlight-line {2}' \
   --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' \
-  --bind 'enter:execute(hx {1} +{2})'
+  --bind 'enter:execute(nvim +{2} {1})'
