@@ -1,12 +1,13 @@
 #!/bin/env bash
 # Switch between Ripgrep launcher mode (CTRL-R) and fzf filtering mode (CTRL-F)
-path=.
+path="."
 if test -n "$1"; then
   user_path=$1
   if test -d "$user_path"; then
     path=$user_path
   else
-    echo "path $path does not exit"
+    echo "Expected the first argument to rgf to be a path"
+    echo "Path '${user_path}' does not exist or isn't a directory"
     exit 1
   fi
 fi
