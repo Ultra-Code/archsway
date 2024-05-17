@@ -226,6 +226,9 @@ fn pmlf {|package|
 edit:add-var pmlf~ $pmlf~
 
 fn pmb {|file|
+  if (has-external $file) {
+    set file = (which $file)
+  }
   if (and (path:is-abs $file) (os:exists &follow-symlink=$true $file)) {
     try {
       pacman -Qo $file
