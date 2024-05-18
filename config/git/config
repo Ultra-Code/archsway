@@ -6,20 +6,31 @@
 	editor = hx
 	compression = 9
 	pager = less -R
+	autocrlf = input
+[init]
+	defaultBranch = main
+[fetch]
+	recurseSubmodules = on-demand
+	parallel = 0
 [pull]
 	rebase = true
-[status]
-	submodulesummary = true
-[submodule]
-	recurse = true
-	update = rebase
 [push]
-	recurseSubmodules = check
+	recurseSubmodules = on-demand
 	autoSetupRemote = true
+[clone]
+	filterSubmodules = true
+[commit]
+	gpgsign = true
 [merge]
 	conflictStyle = diff3
+[rerere]
+	enabled = true
 [mergetool]
 	prompt = false
+[submodule]
+	update = rebase
+[status]
+	submodulesummary = true
 [diff]
 	submodule = log
 	colorMoved = zebra
@@ -27,13 +38,7 @@
 	column = true
 	lineNumber = true
 	extendedRegexp = true
-[init]
-	defaultBranch = main
 [color]
 	ui = always
-[clone]
-	filterSubmodules = true
-[commit]
-	gpgsign = true
 [pack]
 	deltaCacheSize = 0
