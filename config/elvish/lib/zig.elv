@@ -102,6 +102,12 @@ fn set-default {|new_zig_exe zig_version|
     }
 }
 
+fn finish {|new_zig_exe zig_version basename|
+    echo "finished updating to "$zig_version
+    echo (styled "Current version is now: " green)($new_zig_exe version)
+    os:remove-all $TMPDIR/$basename
+}
+
 fn update-zig-version {|branch tarball basename new_zig_exe install_dir_link zig_version|
     if (is-latest $install_dir_link $zig_version) {
         echo (styled "The current " bold green)(styled $zig_version white)(styled " is the latest version!" bold green)
@@ -115,12 +121,6 @@ fn update-zig-version {|branch tarball basename new_zig_exe install_dir_link zig
         set-default $new_zig_exe $zig_version
         finish $new_zig_exe $zig_version $basename
     }
-}
-
-fn finish {|new_zig_exe zig_version basename|
-    echo "finished updating to "$zig_version
-    echo (styled "Current version is now: " green)($new_zig_exe version)
-    os:remove-all $TMPDIR/$basename
 }
 
 var usage = ^
