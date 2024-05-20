@@ -38,35 +38,36 @@ if (has-env WSLENV) {
      set paths =  (conj $paths ~/.local/bin)
 }
 
-if (os:is-dir $E:XDG_DATA_HOME/modular) {
-     set-env MODULAR_HOME (put $E:XDG_DATA_HOME | path:join (all) modular)
+if (has-external modular) {
      var MOJO_PATH = (modular config mojo.path)
      set-env PATH  (put $MOJO_PATH | path:join (all) bin | conj $paths (all) | str:join ':' (all))
-
+} else {
+     set-env MODULAR_HOME (put $E:XDG_LOCAL_HOME | path:join (all) modular)
+     # TODO: test and see if this directory is created my mojo/modular or only by the mojo-git
      if (or (not (has-env LD_LIBRARY_PATH)) (not (get-env LD_LIBRARY_PATH | str:contains (all) lib/mojo))) {
           set E:LD_LIBRARY_PATH = $E:XDG_LOCAL_HOME/lib/mojo:$E:LD_LIBRARY_PATH
      }
 }
 
-if (os:is-dir $E:XDG_LOCAL_HOME/cargo) {
+if (or (has-external rustup) (has-external rust)) {
      set E:CARGO_HOME = (put $E:XDG_LOCAL_HOME | path:join (all) cargo)
      set-env RUSTUP_HOME (put $E:XDG_LOCAL_HOME | path:join (all) rustup)
      set-env PATH  (put $E:CARGO_HOME | path:join (all) bin | conj $paths (all) | str:join ':' (all))
-
 }
 
-if (os:is-dir $E:XDG_LOCAL_HOME/go) {
-     set E:GOPATH = (put $E:XDG_LOCAL_HOME | path:join (all) go)
-     set-env GOBIN (put $E:GOPATH | path:join (all) bin)
-     set-env PATH  (put $E:GOBIN | conj $paths (all) | str:join ':' (all))
-}
-
-if (os:is-dir $E:XDG_CACHE_HOME/.bun) {
-     var BUN_BINS = $E:XDG_CACHE_HOME/.bun/bin
-     set paths =  (put $BUN_BINS | conj $paths (all))
+if (has-external bun) {
+     # prevent error on fresh install due to No package.json in bun/install/global
+     var BUN_BINS~ = { if ?(bun pm bin -g) { echo (bun pm bin -g) } }
+     set paths =  (put (BUN_BINS) | conj $paths (all))
 } else {
      set E:BUN_INSTALL = $E:XDG_LOCAL_HOME/bun
      set paths =  (put $E:BUN_INSTALL | path:join (all) bin | conj $paths (all))
+}
+
+if (has-external go) {
+     set E:GOPATH = (put $E:XDG_LOCAL_HOME | path:join (all) go)
+     set-env GOBIN (put $E:GOPATH | path:join (all) bin)
+     set-env PATH  (put $E:GOBIN | conj $paths (all) | str:join ':' (all))
 }
 
 if (has-external composer) {

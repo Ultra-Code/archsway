@@ -16,6 +16,12 @@ edit:add-var hx~ $hx~
 fn Hx {|@files| sudo --preserve-env $E:EDITOR $@files }
 edit:add-var Hx~ $Hx~
 
+fn bunx {|@options| e:bunx --bun $@options }
+edit:add-var bunx~ $bunx~
+
+fn bun {|@options| e:bun --bun $@options }
+edit:add-var bun~ $bun~
+
 set edit:insert:binding[Alt-l] = { edit:clear }
 
 set edit:command-abbr['bat'] = 'bat --style=numbers,changes'
