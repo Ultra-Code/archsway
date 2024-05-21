@@ -3,8 +3,8 @@ use re
 use str
 use path
 
-use ./env
 use ./aliases
+use ./env
 
 # Automatically run river window manager on virtual terminal tty 1-3
 # On other ttys you must run manually with the tty option
