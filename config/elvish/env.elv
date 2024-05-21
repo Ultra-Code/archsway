@@ -11,10 +11,6 @@ set-env XDG_STATE_HOME (put $E:XDG_LOCAL_HOME | path:join (all) state)
 
 set-env GNUPGHOME $E:XDG_CONFIG_HOME/gnupg
 
-# Configure gpg pinentry to use the correct TTY
-# To use the included Secure Shell Agent you need to start the gpg agent
-set-env GPG_TTY (tty) ; gpg-connect-agent updatestartuptty /bye stderr>$os:dev-null stdout>&stderr
-
 if (not (has-env SSH_AUTH_SOCK)) {
      set-env SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
 }
@@ -39,11 +35,12 @@ if (has-env WSLENV) {
 }
 
 if (has-external modular) {
-     var MOJO_PATH = (modular config mojo.path)
-     set-env PATH  (put $MOJO_PATH | path:join (all) bin | conj $paths (all) | str:join ':' (all))
-} else {
      set-env MODULAR_HOME (put $E:XDG_LOCAL_HOME | path:join (all) modular)
-     # TODO: test and see if this directory is created my mojo/modular or only by the mojo-git
+     var MOJO_PATH = (modular config mojo.path)
+     set-env PATH  (put $MOJO_PATH | path:join (all) bin | conj $paths (all) |str:join ':' (all))
+     # INFO: since the only currently supported linux distro is ubuntu/debian
+     # you need to get ncurses and libedit library from debian
+     # https://github.com/Sharktheone/arch-mojo/blob/main/src/install.py#L156
      if (or (not (has-env LD_LIBRARY_PATH)) (not (get-env LD_LIBRARY_PATH | str:contains (all) lib/mojo))) {
           set E:LD_LIBRARY_PATH = $E:XDG_LOCAL_HOME/lib/mojo:$E:LD_LIBRARY_PATH
      }
@@ -93,7 +90,11 @@ if (has-external carapace) {
   eval (carapace _carapace | slurp)
 }
 
+set-env EDITOR (if (has-external hx) { which hx } else { which helix })
+
+# Configure gpg pinentry to use the correct TTY
+# To use the included Secure Shell Agent you need to start the gpg agent
+set-env GPG_TTY (tty) ; gpg-connect-agent updatestartuptty /bye stderr>$os:dev-null stdout>&stderr
+
 # dedup path list
 set paths = [(put $paths | order (all) | compact)]
-
-set-env EDITOR (if (has-external hx) { which hx } else { which helix })
