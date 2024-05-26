@@ -176,8 +176,7 @@ end
 local river_options = {
 	["default-attach-mode"] = "top",
 	["border-width"] = 0,
-	-- disable till https://github.com/riverwm/river/issues/982 is fixed
-	["focus-follows-cursor"] = "disabled",
+	["focus-follows-cursor"] = "normal",
 	["hide-cursor"] = { "when-typing", "enabled" },
 	["set-cursor-warp"] = "on-output-change",
 	["set-repeat"] = { 50, 300 },
@@ -804,7 +803,8 @@ local window_rules = {
 			"firefox",
 		},
 		["tags"] = {
-			{ "firefox", "2" },
+			{ "firefox", bit.lshift(1, 1) }, -- "workspace 2"
+			{ "mpv", bit.lshift(1, 2) }, -- "workspace 3"
 		},
 	},
 	["-title"] = {
