@@ -340,12 +340,12 @@ local mappings = {
 			{
 				mod = "Super",
 				key = "J",
-				command = { "focus-view", "previous" },
+				command = { "focus-view", "next" },
 			},
 			{
 				mod = "Super",
 				key = "K",
-				command = { "focus-view", "next" },
+				command = { "focus-view", "previous" },
 			},
 			-- Super+Shift+{J,K} to swap focused view with the next/previous view in the layout stack
 			{
@@ -358,7 +358,7 @@ local mappings = {
 				key = "K",
 				command = { "swap", "next" },
 			},
-			-- Super+{P,N} to focus next/previous output
+			-- Alt+{P,N} to focus next/previous available display output
 			{
 				mod = "Alt",
 				key = "P",
@@ -369,7 +369,7 @@ local mappings = {
 				key = "N",
 				command = { "focus-output", "next" },
 			},
-			-- Super+Shift+{P,N} to send the focused view to next/previous output
+			-- Alt+Shift+{P,N} to send the focused view to next/previous available display output
 			{
 				mod = { "Alt", "Shift" },
 				key = "P",
@@ -401,12 +401,12 @@ local mappings = {
 			{
 				mod = { "Super", "Shift" },
 				key = "H",
-				command = { "send-layout-cmd", "rivertile", [['main-count +1']] },
+				command = { "send-layout-cmd", "rivertile", [['main-count -1']] },
 			},
 			{
 				mod = { "Super", "Shift" },
 				key = "L",
-				command = { "send-layout-cmd", "rivertile", [['main-count -1']] },
+				command = { "send-layout-cmd", "rivertile", [['main-count +1']] },
 			},
 			-- Control+Alt+{H,J,K,L} ie control in which direction the main area is positioned
 			{
@@ -459,12 +459,12 @@ local mappings = {
 			{
 				mod = { "Super", "Control" },
 				key = "J",
-				command = { "resize", "vertical", 100 },
+				command = { "resize", "vertical", -100 },
 			},
 			{
 				mod = { "Super", "Control" },
 				key = "K",
-				command = { "resize", "vertical", -100 },
+				command = { "resize", "vertical", 100 },
 			},
 			{
 				mod = { "Super", "Control" },
@@ -754,37 +754,39 @@ end
 -- These mappings are repeated, so they are separated from the mappings table
 local function tag_mappings()
 	for i = 1, 9 do
-		local tag_num = bit.lshift(1, i - 1) -- 1 << (i - 1)
+		local tag_mask = bit.lshift(1, i - 1) -- 1 << (i - 1)
 
-		-- Super+[1-9] to focus tag [0-8]
-		exec(fmt("riverctl map normal Super %s set-focused-tags %s", i, tag_num))
+		-- Super+[1-9] to set specified tag output (tag-mask) as current focused tag output
+		exec(fmt("riverctl map normal Super %s set-focused-tags %s", i, tag_mask))
 
-		-- Super+Shift+[1-9] to tag focused view with tag [0-8]
-		exec(fmt("riverctl map normal Super+Shift %s set-view-tags %s", i, tag_num))
+		-- Super+Shift+[1-9] to set/move focused view/window onto specified tag output [0-8]
+		exec(fmt("riverctl map normal Super+Shift %s set-view-tags %s", i, tag_mask))
 
-		-- Super+Control+[1-9] to toggle focus of tag [0-8]
-		exec(fmt("riverctl map normal Super+Control %s toggle-focused-tags %s", i, tag_num))
+		-- Super+Control+[1-9] to toggle (copying of specified) tag output [0-8] onto current focused tag output
+		exec(fmt("riverctl map normal Super+Control %s toggle-focused-tags %s", i, tag_mask))
 
-		-- Super+Alt+[1-9] to toggle tag [0-8] of focused view
-		exec(fmt("riverctl map normal Super+Alt %s toggle-view-tags %s", i, tag_num))
+		-- Super+Alt+[1-9] to toggle (sending a copy of) current focused view/window onto specified tag output [0-8]
+		exec(fmt("riverctl map normal Super+Control+Shift %s toggle-view-tags %s", i, tag_mask))
 	end
 
+	-- Super+0 to focus all tags
+	-- Super+Shift+0 to tag focused view/window with all tags
 	-- river has a total of 32 tags
-	local all_tags = bit.lshift(1, 32) - 1 -- (1 << 32) - 1
-	exec(fmt("riverctl map normal Super 0 set-focused-tags %s", all_tags))
-	exec(fmt("riverctl map normal Super+Shift 0 set-view-tags %s", all_tags))
+	local all_tags_mask = bit.lshift(1, 32) - 1 -- (1 << 32) - 1
+	exec(fmt("riverctl map normal Super 0 set-focused-tags %s", all_tags_mask))
+	exec(fmt("riverctl map normal Super+Shift 0 set-view-tags %s", all_tags_mask))
 end
 
 -- Mappings for scratchpad tag management
 local function scratchpad_tag_mappings()
 	-- The scratchpad will live on an unused tag. Which tags are used depends on your
 	-- config, but rivers default uses the first 9 tags.
-	local scratch_tags = bit.lshift(1, 23)
+	local scratch_tags = bit.lshift(1, 21)
 
-	-- Toggle the scratchpad with Super+S
+	-- Toggle viewing the scratchpad on the current tag output with Super+S
 	exec(fmt("riverctl map normal Super S toggle-focused-tags %s", scratch_tags))
 
-	-- Send windows to the scratchpad with Super+Shift+S
+	-- Send view/window to the scratchpad with Super+Shift+S
 	exec(fmt("riverctl map normal Super+Shift S set-view-tags %s", scratch_tags))
 
 	-- Set spawn tagmask to ensure new windows don't have the scratchpad tag unless explicitly set.
