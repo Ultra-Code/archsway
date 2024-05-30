@@ -29,7 +29,6 @@ cat /etc/debuginfod/archlinux.urls | set-env DEBUGINFOD_URLS (all)
 
 fn append-to-path {|env|
      if (not (str:contains $E:PATH $env)) {
-          # set-env PATH  (put $env | conj $paths (all) | str:join ':' (all))
           set paths =  (put $env | conj $paths (all))
      }
 }
@@ -100,11 +99,12 @@ if (has-external carapace) {
   eval (carapace _carapace | slurp)
 }
 
-set-env EDITOR (if (has-external hx) { which hx } else { which helix })
+set-env EDITOR (
+     if (has-external hx) { which hx } ^
+     elif (os:is-regular /usr/lib/helix/hx) { print /usr/lib/helix/hx } ^
+     else { which helix }
+)
 
 # Configure gpg pinentry to use the correct TTY
 # To use the included Secure Shell Agent you need to start the gpg agent
 set-env GPG_TTY (tty) ; gpg-connect-agent updatestartuptty /bye stderr>$os:dev-null stdout>&stderr
-
-# dedup path list
-# set paths = [(put $paths | order (all) | compact)]
