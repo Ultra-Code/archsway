@@ -27,17 +27,24 @@ set-env MANPAGER $runtime:elvish-path" -c 'col --no-backspaces --spaces | bat -l
 # Setup debuginfo daemon for packages in the official repositories
 cat /etc/debuginfod/archlinux.urls | set-env DEBUGINFOD_URLS (all)
 
+fn append-to-path {|env|
+     if (not (str:contains $E:PATH $env)) {
+          # set-env PATH  (put $env | conj $paths (all) | str:join ':' (all))
+          set paths =  (put $env | conj $paths (all))
+     }
+}
+
 # Add local/bin to path env
 if (has-env WSLENV) {
      set paths = [/usr/local/sbin /usr/local/bin /usr/bin ~/.local/bin]
 } else {
-     set paths =  (conj $paths ~/.local/bin)
+     append-to-path ~/.local/bin
 }
 
 if (has-external modular) {
      set-env MODULAR_HOME (put $E:XDG_LOCAL_HOME | path:join (all) modular)
      var MOJO_PATH = (modular config mojo.path)
-     set-env PATH  (put $MOJO_PATH | path:join (all) bin | conj $paths (all) |str:join ':' (all))
+     append-to-path $MOJO_PATH/bin
      # INFO: since the only currently supported linux distro is ubuntu/debian
      # you need to get ncurses and libedit library from debian
      # https://github.com/Sharktheone/arch-mojo/blob/main/src/install.py#L156
@@ -47,33 +54,36 @@ if (has-external modular) {
 }
 
 if (or (has-external rustup) (has-external rustc)) {
+     set-env RUSTUj_HOME (put $E:XDG_LOCAL_HOME | path:join (all) rustup)
      set E:CARGO_HOME = (put $E:XDG_LOCAL_HOME | path:join (all) cargo)
-     set-env RUSTUP_HOME (put $E:XDG_LOCAL_HOME | path:join (all) rustup)
-     set-env PATH  (put $E:CARGO_HOME | path:join (all) bin | conj $paths (all) | str:join ':' (all))
+     append-to-path $E:CARGO_HOME/bin
+     var rustup_rust_analyzer = /usr/lib/rustup/bin
+     if (os:is-dir $rustup_rust_analyzer) { append-to-path $rustup_rust_analyzer }
 }
 
 if (has-external bun) {
      # prevent error on fresh install due to No package.json in bun/install/global
-     var BUN_BINS~ = { if ?(bun pm bin -g) { echo (bun pm bin -g) } }
-     set paths =  (put (BUN_BINS) | conj $paths (all))
+     var bun_path = (var success = ?(bun pm bin -g))
+     if ?($success) { append-to-path $bun_path }
 } else {
      set E:BUN_INSTALL = $E:XDG_LOCAL_HOME/bun
-     set paths =  (put $E:BUN_INSTALL | path:join (all) bin | conj $paths (all))
+     append-to-path $E:BUN_INSTALL/bin
 }
 
 if (has-external go) {
-     set E:GOPATH = (put $E:XDG_LOCAL_HOME | path:join (all) go)
+     set E:GOjATH = (put $E:XDG_LOCAL_HOME | path:join (all) go)
      set-env GOBIN (put $E:GOPATH | path:join (all) bin)
-     set-env PATH  (put $E:GOBIN | conj $paths (all) | str:join ':' (all))
+     append-to-path $E:GOBIN
 }
 
 if (has-external composer) {
-   set E:COMPOSER_HOME = (put $E:XDG_LOCAL_HOME | path:join (all) composer)
-   set paths =  (put $E:COMPOSER_HOME | path:join (all) vendor bin | conj $paths (all))
+     set E:COMPOSER_HOME = (put $E:XDG_LOCAL_HOME | path:join (all) composer)
+     append-to-path $E:COMPOSER_HOME/vendor/bin
 }
 
 if (has-external vivid) {
-    set-env LS_COLORS (vivid generate alabaster_dark) # alabaster_dark ayu catppuccin-latte iceberg-dark one-dark
+     # alabaster_dark ayu catppuccin-latte iceberg-dark one-dark
+     set-env LS_COLORS (vivid generate alabaster_dark)
 }
 
 if (has-external starship) {
@@ -97,4 +107,4 @@ set-env EDITOR (if (has-external hx) { which hx } else { which helix })
 set-env GPG_TTY (tty) ; gpg-connect-agent updatestartuptty /bye stderr>$os:dev-null stdout>&stderr
 
 # dedup path list
-set paths = [(put $paths | order (all) | compact)]
+# set paths = [(put $paths | order (all) | compact)]
