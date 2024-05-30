@@ -46,7 +46,7 @@ if (has-external modular) {
      }
 }
 
-if (or (has-external rustup) (has-external rust)) {
+if (or (has-external rustup) (has-external rustc)) {
      set E:CARGO_HOME = (put $E:XDG_LOCAL_HOME | path:join (all) cargo)
      set-env RUSTUP_HOME (put $E:XDG_LOCAL_HOME | path:join (all) rustup)
      set-env PATH  (put $E:CARGO_HOME | path:join (all) bin | conj $paths (all) | str:join ':' (all))
