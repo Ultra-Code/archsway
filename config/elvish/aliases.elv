@@ -67,17 +67,17 @@ edit:add-var hi~ $history-import~
 fn hu { edit:history:fast-forward }
 edit:add-var hu~ $hu~
 
-fn ls {|@options_and_path|
-  e:ls --color=always --classify $@options_and_path
-}
-edit:add-var ls~ $ls~
-
 fn diff {|file reference|
   e:diff --report-identical-files --side-by-side --suppress-common-lines ^
   --expand-tabs --suppress-blank-empty --minimal --speed-large-files ^
   --color=always $file $reference
 }
 edit:add-var diff~ $diff~
+
+fn ls {|@options_and_path|
+  e:ls --color=always --classify $@options_and_path
+}
+edit:add-var ls~ $ls~
 
 fn l {|@path|
   var @gitignore = (if (os:exists .gitignore) { cat .gitignore } else { echo })
