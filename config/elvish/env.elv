@@ -53,7 +53,7 @@ if (has-external modular) {
 }
 
 if (or (has-external rustup) (has-external rustc)) {
-     set-env RUSTUj_HOME (put $E:XDG_LOCAL_HOME | path:join (all) rustup)
+     set-env RUSTUP_HOME (put $E:XDG_LOCAL_HOME | path:join (all) rustup)
      set E:CARGO_HOME = (put $E:XDG_LOCAL_HOME | path:join (all) cargo)
      append-to-path $E:CARGO_HOME/bin
      var rustup_rust_analyzer = /usr/lib/rustup/bin
