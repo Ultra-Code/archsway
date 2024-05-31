@@ -70,7 +70,7 @@ if (has-external bun) {
 }
 
 if (has-external go) {
-     set E:GOjATH = (put $E:XDG_LOCAL_HOME | path:join (all) go)
+     set E:GOPATH = (put $E:XDG_LOCAL_HOME | path:join (all) go)
      set-env GOBIN (put $E:GOPATH | path:join (all) bin)
      append-to-path $E:GOBIN
 }
