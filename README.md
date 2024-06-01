@@ -7,8 +7,8 @@ Archlinux on sway from scratch with the most minimal dependencies. DIY is awesom
 # Filesystem Setup
 For a new setup, **ROOT** & **HOME** should be a _f2fs_ | _Bcachefs_ | _btrfs_ | _xfs_ partition. **ROOT** is mounted on / with the dedicated **HOME** |& **FILES**
 _subvolume_ | _partition_ mounted to `/home` and `/home/${username}/files` repectively. **ROOT** should have a max size of **60-120GiB**
-with **HOME** between **120-240GiB** and **FILES** of __arbitrary size__ for multimedia content. Setup [**zram**](https://github.com/Ultra-Code/archsway/blob/master/etc/udev/rules.d/zram.rules) `3X` RAM size to allow running
-more memory hungry tasks `.eg compiling llvm,clang,clang-tools,lldb`. Use a ZRAM backing device equal to RAM size **12GiB** and a [swap](https://github.com/Ultra-Code/archsway/blob/master/etc/fstab) partition for [**hibernation**](https://github.com/Ultra-Code/archsway/blob/master/etc/kernel/cmdline) also of size equal to RAM **12Gib**
+with **HOME** between **120-240GiB** and **FILES** of __arbitrary size__ for multimedia content. Setup [**zram**](https://github.com/Ultra-Code/archsway/blob/master/etc/udev/rules.d/zram.rules) `3x` RAM size to allow running
+more memory hungry tasks `.eg compiling llvm, clang, clang-tools, lldb`. Use a ZRAM backing device equal to RAM size **12GiB** and a [swap](https://github.com/Ultra-Code/archsway/blob/master/etc/fstab) partition for [**hibernation**](https://github.com/Ultra-Code/archsway/blob/master/etc/kernel/cmdline) also of size equal to RAM **12Gib**
 
 **NOTE:**
 - **make sure to create and mount bcachefs/btrfs with zstd compression on first mount during installation**
