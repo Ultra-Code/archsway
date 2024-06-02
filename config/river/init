@@ -793,6 +793,11 @@ local function scratchpad_tag_mappings()
 	exec(fmt("riverctl spawn-tagmask %s", all_but_scratch_tag))
 end
 
+---@param tag number
+local function workspace(tag)
+	return bit.lshift(1, tag - 1)
+end
+
 local window_rules = {
 	["-app-id"] = {
 		["float"] = {
@@ -803,8 +808,8 @@ local window_rules = {
 			"firefox",
 		},
 		["tags"] = {
-			{ "firefox", bit.lshift(1, 1) }, -- "workspace 2"
-			{ "mpv", bit.lshift(1, 2) }, -- "workspace 3"
+			{ "firefox", workspace(2) },
+			{ "mpv", workspace(3) },
 		},
 	},
 	["-title"] = {
