@@ -62,7 +62,7 @@ if (or (has-external rustup) (has-external rustc)) {
 
 if (has-external bun) {
      # prevent error on fresh install due to No package.json in bun/install/global
-     var bun_path = (var success = ?(bun pm bin -g))
+     var bun_path = (var success = ?(bun pm bin -g stderr>$os:dev-null))
      if ?($success) { append-to-path $bun_path }
 } else {
      set E:BUN_INSTALL = $E:XDG_LOCAL_HOME/bun
