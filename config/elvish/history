@@ -139,17 +139,16 @@ gsettings list-recursively org.gnome.desktop.interface
 helix --health toml
 ip a
 ip route
-iwctl station wlp2s0 connect "Ultra Malpha"
-iwctl station wlp2s0 get-hidden-networks
-iwctl station wlp2s0 scan
-iwctl station wlp2s0 scan ; iwctl station wlp2s0 get-networks
-jourjournalctl --no-pager -g failed /usr/bin/dockerd
+iwctl station wlan0 connect "Ultra Malpha"
+iwctl station wlan0 get-hidden-networks
+iwctl station wlan0 scan ; iwctl station wlan0 get-networks
 journalctl
 journalctl --disk-usage
 journalctl --field _TRANSPORTnalctl -p err..alert
 journalctl --list-boots
 journalctl --list-catalog
 journalctl --no-pager --help |grep pid
+journalctl --no-pager -g failed /usr/bin/dockerd
 journalctl --vacuum-size=3M
 journalctl -a _TRANSPORT=syslog -g sshd
 journalctl -af _TRANSPORT=audit
@@ -229,6 +228,7 @@ readlink /bin/rustc
 rename --verbose --interactive build build2 hashing/**
 resolvectl
 resolvectl query 1.1.1.1
+rfkill unblock bluetooth ; bluetoothctl power on ; bluetoothctl connect 78:15:2D:27:4B:9F
 riverctl spawn 'batsignal -w 25 -c 18 -d 12 -f 85 -m 180 -D "systemctl suspend" -b'
 rsync --info=ALL -zr Videos/Holywood Videos/looney_tunes/ Videos/Panda/ Videos/Series/ isaac@192.168.8.102:~/Windows/
 rustlings run iterators
