@@ -3,8 +3,8 @@ use re
 use str
 use path
 
-use ./aliases
 use ./env
+use ./aliases
 
 # Automatically run river window manager on virtual terminal tty 1-3
 # On other ttys you must run manually with the tty option
@@ -89,3 +89,9 @@ fn cmdline-history-filter {|command|
 }
 
 set edit:add-cmd-filters = (conj $edit:add-cmd-filters $cmdline-history-filter~)
+
+# To use the included Secure Shell Agent you need to start the gpg agent
+fn gpg-integration {
+     gpg-connect-agent updatestartuptty /bye stderr>$os:dev-null stdout>&stderr
+}
+gpg-integration
