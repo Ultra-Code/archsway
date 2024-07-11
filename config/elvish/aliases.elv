@@ -289,8 +289,13 @@ set edit:command-abbr['gsml'] = "git log --submodule -p"
 set edit:command-abbr['gsmi'] = "git submodule update --init --recursive"
 set edit:command-abbr['gsmr'] = "git submodule update --remote --rebase"
 
-fn gl {
-  git log --graph --oneline --decorate
+fn gl {|@commit_hash|
+  if (eq $commit_hash []) {
+    git log --graph --oneline --decorate
+  } else {
+   git show $@commit_hash
+   # git diff $commit_hash[0]'~' $commit_hash[0]
+  }
 }
 edit:add-var gl~ $gl~
 
