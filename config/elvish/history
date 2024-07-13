@@ -139,9 +139,9 @@ gsettings list-recursively org.gnome.desktop.interface
 helix --health toml
 ip a
 ip route
-iwctl station wlan0 connect "Ultra Malpha"
-iwctl station wlan0 get-hidden-networks
-iwctl station wlan0 scan ; iwctl station wlan0 get-networks
+iwctl station wlp2s0 connect "Ultra Malpha"
+iwctl station wlp2s0 get-hidden-networks
+iwctl station wlp2s0 scan ; iwctl station wlp2s0 get-networks
 journalctl
 journalctl --disk-usage
 journalctl --field _TRANSPORTnalctl -p err..alert
@@ -154,9 +154,9 @@ journalctl -a _TRANSPORT=syslog -g sshd
 journalctl -af _TRANSPORT=audit
 journalctl -b 0 -n 30 -r -u "docker*"
 journalctl -b 0 -o short | grep 'swap|zram'
+journalctl -b 0 -p warning..emerg
 journalctl -b 0 -u systemd-journald -o cat
 journalctl -k -p4
-journalctl -p emerg..warning -b 0
 journalctl -r --identifier=sway
 journalctl -t kernel
 journalctl -t sway
@@ -302,7 +302,7 @@ sudo userdel ultracode
 sudo usermod -aG docker firefox
 swaymsg -rt get_inputs
 swaymsg -rt get_tree | jq '.nodes[1].nodes[2] | {id : .id,type : .type ,orientation : .orientation , focused : .focused , layout : .layout , border : .border , name : .name ,window : .window , nodes : .nodes[0].nodes[0]}'
-swaymsg -t command -- exec "iwctl station wlan0 disconnect 'Ultra Malpha'"
+swaymsg -t command -- exec "iwctl station wlp2s0 disconnect 'Ultra Malpha'"
 swaymsg -t command -- exec "rfkill unblock wlan"
 swaymsg focus output "Seiko Epson Corporation EPSON PJ 0x00000101"
 systemctl --user enable --now clean-nvim-backups.timer
@@ -317,7 +317,7 @@ time zig build -fsummary -Doptimize=ReleaseSafe
 top
 udevadm info --attribute-walk --name=/dev/libmtp-1-2
 udevadm info --attribute-walk --path=/sys/class/power_supply/ADP1
-udevadm info --query=all --path=/sys/class/net/wlan0
+udevadm info --query=all --path=/sys/class/net/wlp2s0
 udevadm info --query=path --name=/dev/sda4
 udevadm monitor --udev --environment --property
 udevadm test --action=add /sys/devices/virtual/block/zram0
