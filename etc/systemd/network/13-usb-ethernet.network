@@ -18,4 +18,4 @@ RouteMetric=7
 UseDNS=false
 
 [IPv6AcceptRA]
-RouteMetric=2
+RouteMetric=7
