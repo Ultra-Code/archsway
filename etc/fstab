@@ -3,29 +3,24 @@
 
 # <file system> <dir> <type> <options> <dump> <pass>
 # /dev/sda1 UUID=40B6-91E8
-LABEL=BOOT /boot vfat defaults,noatime,fmask=0077,dmask=0077 0 1
+LABEL=BOOT /boot vfat noatime,fmask=0077,dmask=0077 0 2
 
 # /dev/sda2 UUID=bdb04416-e6f2-4388-8757-8c6455b89d4a
-LABEL=ROOT / bcachefs defaults,noatime,fsck,fix_errors,ratelimit_errors,compression=zstd:6,journal_flush_delay=180000	0 1
+LABEL=ROOT / bcachefs noatime,errors=fix_safe,compression=zstd:3,background_compression=zstd:12,journal_flush_delay=180000,fsck,fix_errors,version_upgrade=incompatible 0 1
 
 # /dev/sda3 UUID=26caab6b-923e-4276-a36d-248e5619bda1
-LABEL=HOME /home btrfs defaults,noatime,compress=zstd:12,space_cache=v2,autodefrag,commit=300,subvolid=5,subvol=/ 0 0
-
-# /dev/zram0
-/dev/zram0 none swap defaults,pri=100 0 0
+LABEL=HOME /home btrfs noatime,compress=zstd:12,space_cache=v2,autodefrag,commit=300,subvolid=5,subvol=/ 0 0
 
 # Swap Partition
 #/dev/sda4 swap partition c974f896-87c7-4f55-8503-c72c313c119c
-LABEL=SWAP none swap defaults,pri=1 0 0
+LABEL=SWAP none swap pri=1 0 0
 
 # ZRAM BACKING DEVICE doesn't need to be enabled in fstab
 # /dev/sda5 UUID=0b1be0ee-fee7-4c84-b405-3316109092a2
-# LABEL=ZRAMDEV none swap defaults,pri=10 0 0
+# /dev/zram0
+/dev/zram0 none swap pri=100 0 0
 
 #https://wiki.archlinux.org/title/Ext4#Improving_performance
 #commit=sec isn't enabled because journally is turned off
-# /dev/sda5 UUID=be0eb394-aaa3-4324-a024-2b07568a9659
-LABEL=FILES /home/ultracode/files ext4 defaults,noatime,nobarrier,errors=remount-ro	0 0
-
-#NOTE:simple-mtpfs bin must be linked to /bin/mount.simple-mtpfs
-#/dev/libmtp-1-2 /home/ultracode/phone fuse.simple-mtpfs defaults,noauto,nofail,x-systemd.automount,x-systemd.idle-timeout=1s,noatime 0 0
+# /dev/sda6 UUID=be0eb394-aaa3-4324-a024-2b07568a9659
+LABEL=FILES /home/ultracode/files ext4 noatime,nobarrier,errors=remount-ro 0 0
