@@ -1,8 +1,10 @@
 # https://www.kernel.org/doc/html/latest/admin-guide/blockdev/zram.html#writeback
 # https://www.reddit.com/r/linuxquestions/comments/qto7u3/comment/hkpcbx1/
 # NOTE: recompress and writeback attributes need to come after disksize
+# ATTR{recompress}="type=huge_idle|type=huge algo=zstd|threshold=3072"
 
-#ACTION=="add", KERNEL=="zram0", ATTR{comp_algorithm}="zstd", ATTR{backing_dev}="/dev/sda4", ATTR{recomp_algorithm}="algo=lz4hc priority=1", ATTR{recomp_algorithm}="algo=842 priority=2", ATTR{disksize}="36GiB", ATTR{recompress}="type=huge", ATTR{writeback}="incompressible", RUN="/usr/bin/mkswap -U clear /dev/%k", TAG+="systemd"
+#ACTION=="add", KERNEL=="zram0", ATTR{comp_algorithm}="842", ATTR{backing_dev}="/dev/sda5", ATTR{recomp_algorithm}="algo=zstd priority=1", ATTR{recomp_algorithm}="algo=deflate priority=2", ATTR{disksize}="36GiB", ATTR{recompress}="type=huge", ATTR{writeback}="incompressible", RUN="/usr/bin/mkswap -U clear /dev/%k", TAG+="systemd"
 
-# Aditionally enables huge_idle writeback with an idle marker of 45min(2700)
-ACTION=="add", KERNEL=="zram0", ATTR{comp_algorithm}="zstd", ATTR{backing_dev}="/dev/sda5", ATTR{recomp_algorithm}="algo=lz4hc priority=1", ATTR{recomp_algorithm}="algo=842 priority=2", ATTR{disksize}="36GiB", ATTR{idle}="all", ATTR{idle}="2700", ATTR{recompress}="type=huge_idle", ATTR{writeback}="incompressible", ATTR{writeback}="huge_idle", RUN="/usr/bin/mkswap -U clear /dev/%k", TAG+="systemd"
+# This rule also enables huge_idle writeback with an idle marker of 45min(2700)/7min(420) but on my test with building clang it performs the same as above
+ACTION=="add", KERNEL=="zram0", ATTR{comp_algorithm}="zstd", ATTR{recomp_algorithm}="algo=lz4hc priority=1", ATTR{recomp_algorithm}="algo=842 priority=2", ATTR{backing_dev}="/dev/sda5", ATTR{disksize}="36GiB", ATTR{idle}="all", ATTR{idle}="2700", ATTR{recompress}="type=huge_idle", ATTR{writeback}="incompressible", ATTR{writeback}="huge_idle", RUN="/usr/bin/mkswap -U clear /dev/%k", TAG+="systemd"
+
