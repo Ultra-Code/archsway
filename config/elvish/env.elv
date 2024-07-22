@@ -21,7 +21,9 @@ set-env MANROFFOPT '-c'
 set-env MANPAGER $runtime:elvish-path" -c 'col --no-backspaces --spaces | bat -l man --plain'"
 
 # Setup debuginfo daemon for packages in the official repositories
-cat /etc/debuginfod/archlinux.urls | set-env DEBUGINFOD_URLS (all)
+if (os:is-regular /etc/debuginfod/archlinux.urls) {
+     cat /etc/debuginfod/archlinux.urls | set-env DEBUGINFOD_URLS (all)
+}
 
 fn append-to-path {|env|
      if (not (str:contains $E:PATH $env)) {
