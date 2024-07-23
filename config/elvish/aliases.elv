@@ -197,27 +197,43 @@ edit:add-var rc~ $rc~
 fn er { $E:EDITOR $E:DOTFILES/config/river/init }
 edit:add-var er~ $er~
 
-#Pacman aliases
-set edit:command-abbr['pmi'] = 'yay -S'
-set edit:command-abbr['pmp'] = 'sudo pacman -Rcunsv'
-set edit:command-abbr['pmii'] = 'pacman -Qii'
-set edit:command-abbr['pmsi'] = 'yay -Sii'
+fn pkg {|@args| 
+  if (has-external yay) { 
+      try { 
+        ?(yay $@args) 
+      } catch err {
+        fail $err
+      }
+    } else { 
+      var ok = ?(pacman $@args) 
+      if (not (put $ok)) {
+        fail $ok
+      }
+    }
+}
+edit:add-var pkg~ $pkg~
 
-fn pml { pacman -Qe }
+#pkg aliases
+set edit:command-abbr['pmi'] = 'pkg -S'
+set edit:command-abbr['pmp'] = 'sudo pkg -Rcunsv'
+set edit:command-abbr['pmii'] = 'pkg -Qii'
+set edit:command-abbr['pmsi'] = 'pkg -Sii'
+
+fn pml { pkg -Qe }
 edit:add-var pml~ $pml~
 
-fn pmu { yay -Syu }
+fn pmu { pkg -Syu }
 edit:add-var pmu~ $pmu~
 
-fn pmlr { pacman -Qmq }
+fn pmlr { pkg -Qmq }
 edit:add-var pmlr~ $pmlr~
 
 fn pmlf {|package|
   try {
-    pacman -Ql $package stderr>$os:dev-null
+    pkg -Ql $package stderr>$os:dev-null
   } catch err {
     try {
-      pacman -Fl $package
+      pkg -Fl $package
     } catch err {
       var err = $err[reason]
       echo $err[cmd-name]" exited with "$err[exit-status]": could not list files for the package "$package
@@ -232,7 +248,7 @@ fn pmb {|file|
   }
   if (and (path:is-abs $file) (os:exists &follow-symlink=$true $file)) {
     try {
-      pacman -Qo $file
+      pkg -Qo $file
     } catch err {
       var err = $err[reason]
       echo $err[cmd-name]" exited with "$err[exit-status]": could not find the package which owns "$file
@@ -244,24 +260,47 @@ fn pmb {|file|
 edit:add-var pmb~ $pmb~
 
 # https://github.com/elves/elvish/issues/1775
-fn pmc { sudo pacman -Rsn (pacman -Qdtq) }
+fn pmc { sudo pkg -Rsn (pkg -Qdtq) }
 edit:add-var pmc~ $pmc~
 
-fn pmcc { yay -Sc }
+fn pmcc { pkg -Sc }
 edit:add-var pmcc~ $pmcc~
+
+fn testing { |@args| if (put $false) { fail $@args } else { echo $@args } }
+edit:add-var testing~ $testing~
+
+fn see {
+  try {
+    testing -Ss aisi
+  } catch err {
+    put $err
+  }
+}
+edit:add-var see~ $see~
 
 fn pms {|package|
     try {
-     yay -Qs '^'$package
+      pkg -Qs '^'$package
     } catch err {
+    put 1 $err
       try {
-        yay -Ss '^'$package
+        # FIXME: fix arity mismatch error
+        # yay -Ss risiasa exist without erros but
+        # pkg -Ss riasias
+        # Exception: arity mismatch: command must be 1 value, but is 0 values
+        # ▶ 2
+        # ▶ [^exception &reason=<unknown arity mismatch: command must be 1 value, but is 0 values> &stack-trace=<...>]
+        #  -> exit status 1
+        # get exception output at each level with put number $err
+        pkg -Ss '^'$package
       } catch err {
+    put 2 $err
         try {
-          yay -Fx '^'$package
+          pkg -Fx '^'$package
         } catch err {
+    put 3 $err
           var err = $err[reason]
-          echo $err[cmd-name]" exited with "$err[exit-status]": package "$package" not found in default repo"
+          fail $err[cmd-name]" exited with "$err[exit-status]": package "$package" not found in default repo"
         }
       }     
     }
