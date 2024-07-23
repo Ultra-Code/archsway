@@ -10,6 +10,9 @@ set-env XDG_DATA_HOME (put $E:XDG_LOCAL_HOME | path:join (all) share)
 set-env XDG_STATE_HOME (put $E:XDG_LOCAL_HOME | path:join (all) state)
 
 set-env GNUPGHOME $E:XDG_CONFIG_HOME/gnupg
+if (not (os:is-dir $E:GNUPGHOME)) {
+     os:mkdir-all $E:GNUPGHOME
+}
 
 set-env DOTFILES (put $E:XDG_CONFIG_HOME | path:join (all) dotfiles)
 set E:ELVRC = $E:DOTFILES/config/elvish

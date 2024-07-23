@@ -148,3 +148,9 @@ Options=mode=1777,strictatime,nosuid,nodev,size=90%%,nr_inodes=1m
 - link kitty to xterm
 - Enable DNS over HTTPS in firefox
 - modify relector configuration in /etc/xdg/reflector/reflector.conf to sort based on download rate with --sort rate
+
+## TERMUX
+- openssl-tool
+- openssh
+- golang
+- bsdtar
