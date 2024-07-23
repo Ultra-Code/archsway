@@ -97,17 +97,28 @@ if (has-external carapace) {
   eval (carapace _carapace | slurp)
 }
 
-if (and (has-env PREFIX) (eq (uname -m) aarch64)) {
-     fn which {|bin|
+fn is-termux {
+     if (and (eq (uname -m) aarch64) (has-env PREFIX)) {
+          put  $true
+     } else {
+          put $false
+     }
+}
+edit:add-var is-termux~ $is-termux~
+
+fn which {|bin|
+     if (is-termux) {
           var bin_path = [(whereis -b $bin | str:fields (all))][-1]
           if (not (os:exists $bin_path)) {
                fail "fn which: "(styled $bin_path green)(styled " doesn't exist or isn't in $PATH" bold red)
           } else {
                echo $bin_path
           }
+     } else {
+          e:which $bin
      }
-     edit:add-var which~ $which~
 }
+edit:add-var which~ $which~
 
 set-env EDITOR (
      if (has-external hx) { which hx } ^
