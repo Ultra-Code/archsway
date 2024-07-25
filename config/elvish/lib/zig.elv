@@ -6,7 +6,7 @@ use flag
 
 var ZIG_ROOT = $E:HOME/.local/zig
 var BIN_DIR = $E:XDG_LOCAL_HOME/bin
-var TMPDIR = /tmp/zig-update
+var TMPDIR = $E:PREFIX/tmp/zig-update
 var ZIG_JSON_URL = https://ziglang.org/download/index.json
 var ARCH = x86_64-linux
 

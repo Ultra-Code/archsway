@@ -1,3 +1,4 @@
+# Not supported on turmux
 fn display_power_options {
     var power_files = [
         # /sys/devices/system/cpu/cpufreq/policy?/energy_performance_preference alway performance

@@ -22,8 +22,8 @@ set edit:insert:binding[Alt-l] = { edit:clear }
 set edit:command-abbr['bat'] = 'bat --style=numbers,changes'
 
 fn sort-inplace {|file|
-  order < $file | compact | to-lines stdout> /tmp/sort
-  e:mv /tmp/sort (path:abs $file)
+  order < $file | compact | to-lines stdout> $E:PREFIX/tmp/sort
+  e:mv $E:PREFIX/tmp/sort (path:abs $file)
 }
 edit:add-var sort-inplace~ $sort-inplace~
 
@@ -33,7 +33,7 @@ fn history-export {
 edit:add-var he~ $history-export~
 
 fn store-hist {
-  history-export stdout> /tmp/history
+  history-export stdout> $E:PREFIX/tmp/history
   # https://stackoverflow.com/questions/29244351/how-to-sort-a-file-in-place#29244408
   sort-inplace $E:ELVRC/history
 }
@@ -44,15 +44,15 @@ fn history-diff {
   # comm -23 /tmp/history  $E:ELVRC/history
   # NOTE: comm works only with the external sort command
   # Show lines in /tmp/history(current history) which aren't in elvish/history(old history)
-  e:grep -Fxvf $E:ELVRC/history /tmp/history
+  e:grep -Fxvf $E:ELVRC/history $E:PREFIX/tmp/history
 }  
 edit:add-var hd~ $history-diff~
 
 fn history-import {  
   store-hist
   # update current history with updated elvish/history
-  if ?(e:grep -Fxvf /tmp/history $E:ELVRC/history stdout> /tmp/diffhistory) {
-     cat /tmp/diffhistory | peach {|hist| store:add-cmd $hist}
+  if ?(e:grep -Fxvf $E:PREFIX/tmp/history $E:ELVRC/history stdout> $E:PREFIX/tmp/diffhistory) {
+     cat $E:PREFIX/tmp/diffhistory | peach {|hist| store:add-cmd $hist}
   } else {
     echo "Current history is up to date"
   }

@@ -1,3 +1,4 @@
+# TODO: transition to PREFIXED paths and segregate into termux and linux/wsl
 sudo ln --interactive --symbolic --relative --verbose /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf /etc/fonts/conf.d/
 sudo ln --interactive --symbolic --relative --verbose etc/pacman.d/pacman.conf /etc/pacman.d/
 ln fzf/rgf.sh /home/ultracode/.local/bin/rgf
@@ -36,3 +37,8 @@ ln config/ncmpcpp/* ../ncmpcpp/
 ln efm-langserver/ ../
 Ln /bin/helix /bin/hx
 Cp etc/makepkg.conf.d/makepkg.conf /etc/makepkg.conf.d/makepkg.conf
+
+# TODO: Integrate Turmux setup config (ADD PEFIXES)
+ln config/gnupg/* ../gnupg/
+ln git/ ~/.config/
+ln -s /home/ultracode/.config/dotfiles/elvish/ /home/ultracode/.config/elvish

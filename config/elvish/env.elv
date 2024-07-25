@@ -2,7 +2,9 @@ use os
 use path 
 use runtime
 use str
+use arch
 
+set-env PREFIX ( if (has-env PREFIX) { put $E:PREFIX } else { put '' } )
 set-env XDG_CACHE_HOME (put $E:HOME | path:join (all) .cache)
 set-env XDG_CONFIG_HOME (put $E:HOME | path:join (all) .config)
 set-env XDG_LOCAL_HOME (put $E:HOME | path:join (all) .local)
@@ -24,8 +26,8 @@ set-env MANROFFOPT '-c'
 set-env MANPAGER $runtime:elvish-path" -c 'col --no-backspaces --spaces | bat -l man --plain'"
 
 # Setup debuginfo daemon for packages in the official repositories
-if (os:is-regular /etc/debuginfod/archlinux.urls) {
-     cat /etc/debuginfod/archlinux.urls | set-env DEBUGINFOD_URLS (all)
+if (os:is-regular $E:PREFIX/etc/debuginfod/archlinux.urls) {
+     cat $E:PREFIX/etc/debuginfod/archlinux.urls | set-env DEBUGINFOD_URLS (all)
 }
 
 fn append-to-path {|env|
@@ -35,7 +37,7 @@ fn append-to-path {|env|
 }
 
 # Add local/bin to path env
-if (has-env WSLENV) {
+if (arch:is-wsl) {
      set paths = [/usr/local/sbin /usr/local/bin /usr/bin ~/.local/bin]
 } else {
      append-to-path ~/.local/bin
@@ -57,7 +59,7 @@ if (or (has-external rustup) (has-external rustc)) {
      set-env RUSTUP_HOME (put $E:XDG_LOCAL_HOME | path:join (all) rustup)
      set E:CARGO_HOME = (put $E:XDG_LOCAL_HOME | path:join (all) cargo)
      append-to-path $E:CARGO_HOME/bin
-     var rustup_rust_analyzer = /usr/lib/rustup/bin
+     var rustup_rust_analyzer = $E:PREFIX/usr/lib/rustup/bin
      if (os:is-dir $rustup_rust_analyzer) { append-to-path $rustup_rust_analyzer }
 }
 
@@ -100,17 +102,8 @@ if (has-external carapace) {
   eval (carapace _carapace | slurp)
 }
 
-fn is-termux {
-     if (and (eq (uname -m) aarch64) (has-env PREFIX)) {
-          put  $true
-     } else {
-          put $false
-     }
-}
-edit:add-var is-termux~ $is-termux~
-
 fn which {|bin|
-     if (is-termux) {
+     if (arch:is-termux) {
           var bin_path = [(whereis -b $bin | str:fields (all))][-1]
           if (not (os:exists $bin_path)) {
                fail "fn which: "(styled $bin_path green)(styled " doesn't exist or isn't in $PATH" bold red)
@@ -125,7 +118,7 @@ edit:add-var which~ $which~
 
 set-env EDITOR (
      if (has-external hx) { which hx } ^
-     elif (os:is-regular /usr/lib/helix/hx) { print /usr/lib/helix/hx } ^
+     elif (os:is-regular $E:PREFIX/usr/lib/helix/hx) { print $E:PREFIX/usr/lib/helix/hx } ^
      else { which helix }
 )
 

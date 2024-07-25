@@ -35,7 +35,7 @@ fn start-river {|&tty=$false|
                          echo $package" is optionally required "$optional_deps[$package]
                     }
                }
-               if (not (os:is-regular /usr/share/sounds/freedesktop/stereo/camera-shutter.oga)) {
+               if (not (os:is-regular $E:PREFIX/usr/share/sounds/freedesktop/stereo/camera-shutter.oga)) {
                     echo "sound-theme-freedesktop package is optionally required"
                }
 
