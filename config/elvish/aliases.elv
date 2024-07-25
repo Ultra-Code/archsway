@@ -197,18 +197,18 @@ edit:add-var rc~ $rc~
 fn er { $E:EDITOR $E:DOTFILES/config/river/init }
 edit:add-var er~ $er~
 
-fn pkg {|@args| 
-  if (has-external yay) { 
-      try { 
-        ?(yay $@args) 
-      } catch err {
-        fail $err
-      }
-    } else { 
-      var ok = ?(pacman $@args) 
-      if (not (put $ok)) {
-        fail $ok
-      }
+fn pkg {|@args|
+    try {
+      pacman $@args
+    } catch err {
+      if (has-external yay) {
+          var ok = ?(yay $@args)
+          if (not (put $ok)) {
+            fail $ok
+          }
+        } else {
+          fail $err
+        }
     }
 }
 edit:add-var pkg~ $pkg~
@@ -235,8 +235,8 @@ fn pmlf {|package|
     try {
       pkg -Fl $package
     } catch err {
-      var err = $err[reason]
-      echo $err[cmd-name]" exited with "$err[exit-status]": could not list files for the package "$package
+      var reason = $err[reason]
+      echo (styled $reason[cmd-name] red)" exited with "(styled $reason[exit-status] red)": could not list files for the package "(styled $package blue)
     }
   }
 }
@@ -250,8 +250,8 @@ fn pmb {|file|
     try {
       pkg -Qo $file
     } catch err {
-      var err = $err[reason]
-      echo $err[cmd-name]" exited with "$err[exit-status]": could not find the package which owns "$file
+      var reason = $err[reason]
+      echo (styled $reason[cmd-name] red)" exited with "(styled $reason[exit-status] red)": could not find the package which owns "(styled $file blue)
     }
   } else {
     fail "requires the full path to the file you want to find the package it belongs to"
@@ -266,45 +266,22 @@ edit:add-var pmc~ $pmc~
 fn pmcc { pkg -Sc }
 edit:add-var pmcc~ $pmcc~
 
-fn testing { |@args| if (put $false) { fail $@args } else { echo $@args } }
-edit:add-var testing~ $testing~
-
-fn see {
-  try {
-    testing -Ss aisi
-  } catch err {
-    put $err
-  }
-}
-edit:add-var see~ $see~
-
 fn pms {|package|
-    try {
-      pkg -Qs '^'$package
+  try {
+     pkg -Qs $package
     } catch err {
-    put 1 $err
       try {
-        # FIXME: fix arity mismatch error
-        # yay -Ss risiasa exist without erros but
-        # pkg -Ss riasias
-        # Exception: arity mismatch: command must be 1 value, but is 0 values
-        # ▶ 2
-        # ▶ [^exception &reason=<unknown arity mismatch: command must be 1 value, but is 0 values> &stack-trace=<...>]
-        #  -> exit status 1
-        # get exception output at each level with put number $err
-        pkg -Ss '^'$package
+        pkg -Fx $package
       } catch err {
-    put 2 $err
         try {
-          pkg -Fx '^'$package
+          pkg -Ss $package
         } catch err {
-    put 3 $err
-          var err = $err[reason]
-          fail $err[cmd-name]" exited with "$err[exit-status]": package "$package" not found in default repo"
+          var reason = $err[reason]
+          echo (styled $reason[cmd-name] red)" exited with "(styled $reason[exit-status] red)": package `"(styled $package blue)"` not found in default repo"
         }
       }     
     }
-  }
+}
 edit:add-var pms~ $pms~
 
 #Git aliases
