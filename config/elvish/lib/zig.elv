@@ -34,7 +34,11 @@ var ARCH = (arch)
 fn start {
     if (not (os:is-dir $ZIG_ROOT)) {
         os:mkdir $ZIG_ROOT
-        echo "Root directory "$ZIG_ROOT" has been created!"
+        echo "Zig download directory "$ZIG_ROOT" has been created!"
+    }
+    if (not (os:is-dir $BIN_DIR)) {
+        os:mkdir $BIN_DIR
+        echo "Zig bin directory "$BIN_DIR" has been created!"
     }
     if (not (os:is-dir $TMPDIR)) {
         os:mkdir $TMPDIR
@@ -47,7 +51,7 @@ fn extract-info {|branch|
     var check-index~ = { find $TMPDIR -maxdepth 1 -cmin +70 -path $index -type f }
     if (or (not (os:is-regular $index)) (str:contains (check-index | slurp) $index)) {
         try {
-            curl -s $ZIG_JSON_URL stdout> $index
+            curl -s $ZIG_JSON_URL stdout>$index
         } catch err {
             put $err
             echo (styled "Error: failed to download the zig index.json" red)
@@ -115,9 +119,11 @@ fn is-latest {|install_dir_link zig_version|
 fn set-default {|new_zig_exe zig_version|
     # set/update which binary is the default zig installation
     if (and ?(os:stat $new_zig_exe) (==s (os:stat $new_zig_exe)[type] symlink)) {
-        var _ = ?(os:remove $BIN_DIR/zig)
+        if (os:exists $BIN_DIR/zig) {
+            os:remove $BIN_DIR/zig
+        }
         os:symlink $new_zig_exe $BIN_DIR/zig
-        echo "default zig set to "$zig_version
+        echo "set default zig to "(styled $zig_version green)
     } else {
         fail "install zig before trying to set the default"
     }
@@ -125,13 +131,13 @@ fn set-default {|new_zig_exe zig_version|
 
 fn finish {|new_zig_exe zig_version basename|
     echo "finished updating to "$zig_version
-    echo (styled "Current version is now: " green)($new_zig_exe version)
+    echo "Current version is now: "(styled ($new_zig_exe version) bold green)
     os:remove-all $TMPDIR/$basename
 }
 
 fn update-zig-version {|branch tarball basename new_zig_exe install_dir_link zig_version|
     if (is-latest $install_dir_link $zig_version) {
-        echo (styled "The current " bold green)(styled $zig_version white)(styled " is the latest version!" bold green)
+        echo "The current "(styled $zig_version bold green)" is the latest version!"
     } else {
         if (==s $branch "master") {
             echo "Updating to "$zig_version
