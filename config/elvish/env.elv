@@ -121,6 +121,21 @@ if (has-external carapace) {
   eval (carapace _carapace | slurp)
 }
 
+# needed here for setting EDITOR env
+fn which {|bin|
+     if (is-termux) {
+          var bin_path = [(whereis -b $bin | str:fields (all))][-1]
+          if (not (os:exists $bin_path)) {
+               fail "fn which: "(styled $bin_path green)(styled " doesn't exist or isn't in $PATH" bold red)
+          } else {
+               echo $bin_path
+          }
+     } else {
+          e:which $bin
+     }
+}
+edit:add-var which~ $which~
+
 set-env EDITOR (
      if (has-external hx) { which hx } ^
      elif (os:is-regular $E:PREFIX/usr/lib/helix/hx) { print $E:PREFIX/usr/lib/helix/hx } ^
