@@ -3,12 +3,33 @@ use os
 use path
 use str
 use flag
+use platform
+
+fn arch {
+    var arch = ""
+    var os = ""
+    if (eq $platform:arch "amd64") {
+        set arch = "x86_64"
+    } elif (eq $platform:arch "arm64") {
+        set arch = "aarch64"
+    } else {
+        set arch = $platform:arch
+    }
+
+    if (or (eq $platform:os "linux") (eq $platform:os "android")) {
+        set os = "linux"
+    } else {
+        set os = $platform:os
+    }
+
+    put $arch"-"$os
+}
 
 var ZIG_ROOT = $E:HOME/.local/zig
 var BIN_DIR = $E:XDG_LOCAL_HOME/bin
 var TMPDIR = $E:PREFIX/tmp/zig-update
 var ZIG_JSON_URL = https://ziglang.org/download/index.json
-var ARCH = x86_64-linux
+var ARCH = (arch)
 
 fn start {
     if (not (os:is-dir $ZIG_ROOT)) {

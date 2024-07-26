@@ -2,7 +2,7 @@ use os
 use path 
 use runtime
 use str
-use arch
+use platform
 
 set-env PREFIX ( if (has-env PREFIX) { put $E:PREFIX } else { put '' } )
 set-env XDG_CACHE_HOME (put $E:HOME | path:join (all) .cache)
@@ -36,8 +36,27 @@ fn append-to-path {|env|
      }
 }
 
+fn is-termux {
+     # (eq (uname -m) aarch64)
+     if (and (eq $platform:os "android") (eq $platform:arch "arm64") (has-env PREFIX)) {
+          put  $true
+     } else {
+          put $false
+     }
+}
+edit:add-var is-termux~ $is-termux~
+
+fn is-wsl {
+     if (and (eq $platform:os "linux") (eq $platform:arch "amd64") (has-env WSLENV)) {
+          put $true
+     } else {
+          put $false
+     }
+}
+edit:add-var is-wsl~ $is-wsl~
+
 # Add local/bin to path env
-if (arch:is-wsl) {
+if (is-wsl) {
      set paths = [/usr/local/sbin /usr/local/bin /usr/bin ~/.local/bin]
 } else {
      append-to-path ~/.local/bin
@@ -101,20 +120,6 @@ if (has-external carapace) {
   set-env CARAPACE_LENIENT 1 # allow unknown flags
   eval (carapace _carapace | slurp)
 }
-
-fn which {|bin|
-     if (arch:is-termux) {
-          var bin_path = [(whereis -b $bin | str:fields (all))][-1]
-          if (not (os:exists $bin_path)) {
-               fail "fn which: "(styled $bin_path green)(styled " doesn't exist or isn't in $PATH" bold red)
-          } else {
-               echo $bin_path
-          }
-     } else {
-          e:which $bin
-     }
-}
-edit:add-var which~ $which~
 
 set-env EDITOR (
      if (has-external hx) { which hx } ^
