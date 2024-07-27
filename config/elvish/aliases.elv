@@ -199,7 +199,7 @@ edit:add-var er~ $er~
 
 fn pkg {|@args|
     try {
-      pacman $@args
+      pacman $@args stderr>$os:dev-null
     } catch err {
       if (has-external yay) {
           var ok = ?(yay $@args)
@@ -215,7 +215,7 @@ edit:add-var pkg~ $pkg~
 
 #pkg aliases
 set edit:command-abbr['pmi'] = 'pkg -S'
-set edit:command-abbr['pmp'] = 'sudo pkg -Rcunsv'
+set edit:command-abbr['pmp'] = 'pkg -Rcunsv'
 set edit:command-abbr['pmii'] = 'pkg -Qii'
 set edit:command-abbr['pmsi'] = 'pkg -Sii'
 
@@ -260,7 +260,7 @@ fn pmb {|file|
 edit:add-var pmb~ $pmb~
 
 # https://github.com/elves/elvish/issues/1775
-fn pmc { sudo pkg -Rsn (pkg -Qdtq) }
+fn pmc { pkg -Rsn (pkg -Qdtq) }
 edit:add-var pmc~ $pmc~
 
 fn pmcc { pkg -Sc }
