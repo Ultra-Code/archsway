@@ -397,3 +397,13 @@ fn update-mirrors {
   stdout>$os:dev-null stderr>$os:dev-null
  }
 edit:add-var update-mirrors~ $update-mirrors~
+
+fn fzt {
+  $E:DOTFILES/fzf/fzt.sh
+}
+edit:add-var fzt~ $fzt~
+
+fn rgf {
+  $E:DOTFILES/fzf/rgf.sh
+}
+edit:add-var rgf~ $rgf~
