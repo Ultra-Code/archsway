@@ -398,12 +398,12 @@ fn update-mirrors {
  }
 edit:add-var update-mirrors~ $update-mirrors~
 
-fn fzt {
-  $E:DOTFILES/fzf/fzt.sh
+fn fzt {|@path|
+  $E:DOTFILES/fzf/fzt.sh $@path
 }
 edit:add-var fzt~ $fzt~
 
-fn rgf {
-  $E:DOTFILES/fzf/rgf.sh
+fn rgf {|@path|
+  $E:DOTFILES/fzf/rgf.sh $@path
 }
 edit:add-var rgf~ $rgf~

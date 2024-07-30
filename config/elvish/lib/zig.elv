@@ -151,8 +151,8 @@ fn update-zig-version {|branch tarball basename new_zig_exe install_dir_link zig
 }
 
 var usage = ^
-'zig-update [-branch master|0.11.0]
-zig-update -default -branch master|0.11.0 
+'zig-update [-branch master|0.13.0]
+zig-update -default -branch master|0.13.0
 '
 
 fn main {|&branch=master &default=$false|
