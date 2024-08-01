@@ -357,15 +357,6 @@ fn zr {|@exe_options|
  }
 edit:add-var zr~ $zr~
 
-fn zi {
-    if (has-external zig) {
-        zig build -Doptimize=ReleaseFast --prefix ~/.local install --summary all
-     } else {
-        echo 'install zig on your system'
-     }
- }
-edit:add-var zi~ $zi~
-
 fn z++ {|@args|
   if (has-external zig) {
      zig c++ -std=c++2b -fexperimental-library $@args
