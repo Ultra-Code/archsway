@@ -63,11 +63,16 @@ fn kitty-shell-integration {
           var ST = (print (str:from-utf8-bytes 0x1b)(str:from-utf8-bytes 0x5c))
 
           fn osc {|code| print $OSC$code$ST }
-          edit:add-var osc~ $osc~ 
           fn send-title {|title| osc '0;'$title }
-          fn send-pwd { send-title (tilde-abbr $pwd | path:base (one)); osc '7;'(put $pwd)}
+          fn send-pwd {
+               send-title (tilde-abbr $pwd | path:base (one))
+               osc '7;'(put $pwd)
+          }
           set edit:before-readline = [ { send-pwd } { osc '133;A' } ]
-          set edit:after-readline = [ {|c| send-title (str:split ' ' $c | take 1) } {|c| osc '133;C' } ]
+          set edit:after-readline = [
+               {|c| send-title (str:split ' ' $c | take 1) }
+               {|c| osc '133;C' }
+          ]
           set after-chdir = [ {|_| send-pwd } ]
      }
 }
@@ -88,7 +93,6 @@ fn cmdline-history-filter {|command|
      }
      put $true
 }
-
 set edit:add-cmd-filters = (conj $edit:add-cmd-filters $cmdline-history-filter~)
 
 # To use the included Secure Shell Agent you need to start the gpg agent
