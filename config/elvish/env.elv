@@ -142,9 +142,9 @@ set-env EDITOR (
      else { which helix }
 )
 
+# Configure gpg pinentry to use the correct TTY
+set-env GPG_TTY (tty)
+
 if (not (has-env SSH_AUTH_SOCK)) {
      set-env SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
 }
-
-# Configure gpg pinentry to use the correct TTY
-set-env GPG_TTY (tty)
