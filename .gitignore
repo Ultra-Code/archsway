@@ -13,3 +13,7 @@ zsh/.zinit/
 
 # systemd units
 config/systemd/user/*.target.wants/*
+
+# river
+config/river/init*
+!config/river/init.[zig lua]
