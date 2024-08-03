@@ -30,6 +30,7 @@ var BIN_DIR = $E:XDG_LOCAL_HOME/bin
 var TMPDIR = $E:PREFIX/tmp/zig-update
 var ZIG_JSON_URL = https://ziglang.org/download/index.json
 var ARCH = (arch)
+var INDEX = $TMPDIR/index.json
 
 fn start {
     if (not (os:is-dir $ZIG_ROOT)) {
@@ -46,32 +47,27 @@ fn start {
 }
 
 fn extract-info {|branch|
-    var index = $TMPDIR/index.json
     # check if index hasn't change in about 70 min
-    var check-index~ = { find $TMPDIR -maxdepth 1 -cmin +70 -path $index -type f }
-    if (or (not (os:is-regular $index)) (str:contains (check-index | slurp) $index)) {
+    var check-index~ = { find $TMPDIR -maxdepth 1 -cmin +70 -path $INDEX -type f }
+    if (or (not (os:is-regular $INDEX)) (str:contains (check-index | slurp) $INDEX)) {
         try {
-            curl -s $ZIG_JSON_URL stdout>$index
+            curl -s $ZIG_JSON_URL stdout>$INDEX
         } catch err {
             put $err
             echo (styled "Error: failed to download the zig index.json" red)
         }
     }
-    set index = (cat $index | from-json | put (all)[$branch][$ARCH])
 
-    try {
-        var tarball = $index[tarball]
-        var basename = (path:base $tarball)
-        var zig_version = (str:replace '.tar.xz' '' $basename)
-        var new_zig_exe_name = (if (==s $branch "master") { put zig-dev } else { put zig-$branch })
-        var new_zig_exe =  $BIN_DIR/$new_zig_exe_name
-        var install_dir_link = $ZIG_ROOT/$new_zig_exe_name
-        put [&tarball=$tarball &basename=$basename &zig_version=$zig_version ^
-             &new_zig_exe=$new_zig_exe &install_dir_link=$install_dir_link]
-    } catch err {
-        put $err
-        echo (styled "Error: failed to query repo" red)
-    }
+    var index =  (cat $INDEX | from-json | put (all)[$branch][$ARCH])
+
+    var tarball = $index[tarball]
+    var basename = (path:base $tarball)
+    var zig_version = (str:replace '.tar.xz' '' $basename)
+    var new_zig_exe_name = (if (==s $branch "master") { put zig-dev } else { put zig-$branch })
+    var new_zig_exe =  $BIN_DIR/$new_zig_exe_name
+    var install_dir_link = $ZIG_ROOT/$new_zig_exe_name
+    put [&tarball=$tarball &basename=$basename &zig_version=$zig_version ^
+         &new_zig_exe=$new_zig_exe &install_dir_link=$install_dir_link]
 }
 
 fn update-symlink {|new_zig_exe install_dir_link zig_version|
@@ -91,9 +87,25 @@ fn update-symlink {|new_zig_exe install_dir_link zig_version|
     }
 }
 
-fn update-zig {|tarball basename new_zig_exe install_dir_link zig_version|
-    find $ZIG_ROOT -maxdepth 1 -ctime +3 -type d -name "*-dev.*" ^
-         -exec rm -rf '{}' + stdout>$os:dev-null
+fn remove-old-zig {
+    var latest_zig = (extract-info master)[zig_version]
+    var @dev-versions = (find $ZIG_ROOT -maxdepth 1 -ctime +3 -type d -name "*-dev.*")
+
+    var old_zig = []
+    all [$@dev-versions] | peach {|dev|
+        if (str:contains $dev $latest_zig) {
+            break
+        } else {
+             set old_zig = (conj $old_zig $dev)
+        }
+     }
+
+     rm -rf $@old_zig stdout>$os:dev-null
+}
+
+fn download-zig {|tarball basename new_zig_exe install_dir_link zig_version|
+    remove-old-zig
+
     try {
         echo "Downloading repository..."
         curl --output-dir $TMPDIR --remote-name  --continue-at - $tarball 
@@ -125,7 +137,7 @@ fn set-default {|new_zig_exe zig_version|
         os:symlink $new_zig_exe $BIN_DIR/zig
         echo "set default zig to "(styled $zig_version green)
     } else {
-        fail "install zig before trying to set the default"
+        fail "install "$zig_version" before trying to set it as the default"
     }
 }
 
@@ -135,7 +147,7 @@ fn finish {|new_zig_exe zig_version basename|
     os:remove-all $TMPDIR/$basename
 }
 
-fn update-zig-version {|branch tarball basename new_zig_exe install_dir_link zig_version|
+fn update-zig {|branch tarball basename new_zig_exe install_dir_link zig_version|
     if (is-latest $install_dir_link $zig_version) {
         echo "The current "(styled $zig_version bold green)" is the latest version!"
     } else {
@@ -144,25 +156,26 @@ fn update-zig-version {|branch tarball basename new_zig_exe install_dir_link zig
         } else {
             echo "Installing "$zig_version
         }
-        update-zig $tarball $basename $new_zig_exe $install_dir_link $zig_version
+        download-zig $tarball $basename $new_zig_exe $install_dir_link $zig_version
         set-default $new_zig_exe $zig_version
         finish $new_zig_exe $zig_version $basename
     }
 }
 
 var usage = ^
-'zig-update [-branch master|0.13.0]
-zig-update -default -branch master|0.13.0
+'Usage:
+zig-update [-install master | 0.13.0] [-default]
 '
 
-fn main {|&branch=master &default=$false|
+fn main {|&install=master &default=$false|
     if $default {
-        var info = (extract-info $branch)
+        start
+        var info = (extract-info $install)
         set-default $info[new_zig_exe] $info[zig_version]
     } else {
         start
-        var info = (extract-info $branch)
-        update-zig-version $branch $info[tarball] $info[basename] ^
+        var info = (extract-info $install)
+        update-zig $install $info[tarball] $info[basename] ^
             $info[new_zig_exe] $info[install_dir_link] $info[zig_version]
     }
 }

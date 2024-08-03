@@ -96,6 +96,7 @@ fc-cache -v
 fc-list | grep "Jet" | grep "Regular" | grep "Mono [^(NL)]"
 fc-match mono
 ffmpeg -i 'input'  -filter:a volumedetect -f null /dev/null
+find ~/.local/zig -maxdepth 1 -ctime +3 -type d -name "*-dev.*" -exec rm -rf '{}' + stdout>$os:dev-null
 functions precmd
 getconf GNU_LIBC_VERSION
 getfacl /dev/dri/card0
