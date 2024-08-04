@@ -49,21 +49,16 @@ fn start {
 fn extract-info {|branch|
     # check if index hasn't change in about 70 min
     var check-index~ = { find $TMPDIR -maxdepth 1 -cmin +70 -path $INDEX -type f }
-    if (or (not (os:is-regular $INDEX)) (str:contains (check-index | slurp) $INDEX)) {
+
+    if (or (not (os:is-regular $INDEX)) (eq ?(cat $INDEX | slurp) '') (str:contains (check-index | slurp) $INDEX)) {
         try {
             curl -s $ZIG_JSON_URL stdout>$INDEX
         } catch err {
-            put $err
-            echo (styled "Error: failed to download the zig index.json" red)
+            fail "curl failed to download the zig index.json\nrm "$INDEX" and try zig-update again\nEnsure you have a working internet connection"
         }
     }
 
-    var index = ""
-    try {
-        set index = (cat $INDEX | from-json | put (all)[$branch][$ARCH])
-    } catch {
-        fail "rm "$INDEX" and try zig-update again\nEnsure you have a working internet connection"
-    }
+    var index = (cat $INDEX | from-json | put (all)[$branch][$ARCH])
 
     var tarball = $index[tarball]
     var basename = (path:base $tarball)
