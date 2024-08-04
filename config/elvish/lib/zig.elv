@@ -58,7 +58,12 @@ fn extract-info {|branch|
         }
     }
 
-    var index =  (cat $INDEX | from-json | put (all)[$branch][$ARCH])
+    var index = ""
+    try {
+        set index = (cat $INDEX | from-json | put (all)[$branch][$ARCH])
+    } catch {
+        fail "rm "$INDEX" and try zig-update again\nEnsure you have a working internet connection"
+    }
 
     var tarball = $index[tarball]
     var basename = (path:base $tarball)

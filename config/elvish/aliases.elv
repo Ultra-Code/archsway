@@ -202,9 +202,9 @@ fn pkg {|@args|
       pacman $@args stderr>$os:dev-null
     } catch err {
       if (has-external yay) {
-          var ok = ?(yay $@args)
-          if (not (put $ok)) {
-            fail $ok
+          var is_ok = ?(yay $@args)
+          if (not (put $is_ok)) {
+            fail $is_ok
           }
         } else {
           fail $err
