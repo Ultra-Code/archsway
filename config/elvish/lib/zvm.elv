@@ -27,7 +27,7 @@ fn arch {
 
 var ZIG_ROOT = $E:HOME/.local/zig
 var BIN_DIR = $E:XDG_LOCAL_HOME/bin
-var TMPDIR = $E:PREFIX/tmp/zig-update
+var TMPDIR = $E:PREFIX/tmp/zvm
 var ZIG_JSON_URL = https://ziglang.org/download/index.json
 var ARCH = (arch)
 var INDEX = $TMPDIR/index.json
@@ -54,7 +54,7 @@ fn extract-info {|branch|
         try {
             curl -s $ZIG_JSON_URL stdout>$INDEX
         } catch err {
-            fail "curl failed to download the zig index.json\nrm "$INDEX" and try zig-update again\nEnsure you have a working internet connection"
+            fail "curl failed to download the zig index.json\nrm "$INDEX" and try `zvm` again\nEnsure you have a working internet connection"
         }
     }
 
@@ -164,7 +164,7 @@ fn update-zig {|branch tarball basename new_zig_exe install_dir_link zig_version
 
 var usage = ^
 'Usage:
-zig-update [-install master | 0.13.0] [-default]
+z`v mm[-install master | 0.13.0] [-default]
 '
 
 fn main {|&install=master &default=$false|
@@ -180,6 +180,6 @@ fn main {|&install=master &default=$false|
     }
 }
 
-fn zig-update {|@args|
-    flag:call $main~ [$@args] &on-parse-error={|_| print $usage; fail "zig-update called with incorrect arguments"}
+fn zvm {|@args|
+    flag:call $main~ [$@args] &on-parse-error={|_| print $usage; fail "z`v mmcalled with incorrect arguments"}
 }
