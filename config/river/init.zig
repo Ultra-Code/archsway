@@ -3,10 +3,6 @@ const Allocator = std.mem.Allocator;
 const assert = std.debug.assert;
 const eql = std.mem.eql;
 
-fn getenv(allocator: Allocator, env_key: []const u8) []const u8 {
-    return std.process.getEnvVarOwned(allocator, env_key) catch unreachable;
-}
-
 fn fmt(arena: Allocator, comptime fmt_spec: []const u8, args: anytype) []const u8 {
     return std.fmt.allocPrint(arena, fmt_spec, args) catch unreachable;
 }
@@ -33,6 +29,7 @@ const Options = struct {
             .wallpaper = wallpaper(arena, HOME),
             .screen_lock = "waylock",
             .screenshot_path = screenshot_path(arena, HOME),
+            // wpctl's -l flag clip volume to 160% == 1.6
             .max_volume = 1.6,
             .screen_shot_sound = "/usr/share/sounds/freedesktop/stereo/screen-capture.oga",
             .file_manager = "lf",
@@ -67,6 +64,10 @@ const Options = struct {
         );
     }
 
+    fn getenv(allocator: Allocator, env_key: []const u8) []const u8 {
+        return std.process.getEnvVarOwned(allocator, env_key) catch unreachable;
+    }
+
     fn terminal(arena: Allocator) []const u8 {
         // virtual terminal number
         const vtnr = getenv(arena, "XDG_VTNR");
@@ -82,15 +83,7 @@ const Options = struct {
         return getenv(arena, "HOME");
     }
 
-    fn popen(arena: Allocator, cmd: []const u8) []const u8 {
-        const process_result = std.process.Child.run(.{ .allocator = arena, .argv = &.{ "sh", "-c", cmd } }) catch unreachable;
-        assert(eql(u8, process_result.stderr, ""));
-        return std.mem.trim(u8, process_result.stdout, "\n");
-    }
-
     fn wallpaper(arena: Allocator, HOME: []const u8) []const u8 {
-        assert(!eql(u8, HOME, ""));
-
         const wallpapers_path = fmt(
             arena,
             "{[HOME]s}/files/Pictures/Code/",
@@ -104,7 +97,7 @@ const Options = struct {
         const choosen_wallpaper = fmt(
             arena,
             "{[wallpapers_path]s}{[wallpaper]s}",
-            .{ .wallpapers_path = wallpapers_path, .wallpaper = popen(
+            .{ .wallpapers_path = wallpapers_path, .wallpaper = Run.popen(
                 arena,
                 random_wallpaper,
             ) },
@@ -153,18 +146,7 @@ const Run = struct {
             "batsignal -b -e -p -w 35 -c 18 -d 12 -f 85 -m 180 -D systemctl suspend",
         };
 
-        self.run_list(autostarts_commands[0..]);
-    }
-
-    fn run(arena: Allocator, cmd: []const u8) void {
-        var process = std.process.Child.init(&.{ "sh", "-c", cmd }, arena);
-        const exec_status = process.spawnAndWait() catch unreachable;
-
-        assert(exec_status.Exited == 0);
-    }
-
-    fn run_list(self: Run, commands: []const []const u8) void {
-        for (commands) |command| {
+        for (autostarts_commands) |command| {
             run(
                 self.arena,
                 fmt(
@@ -176,13 +158,48 @@ const Run = struct {
         }
     }
 
-    //TODO: implement run_once
+    fn run(arena: Allocator, cmd: []const u8) void {
+        var process = std.process.Child.init(&.{ "sh", "-c", cmd }, arena);
+        const exec_status = process.spawnAndWait() catch unreachable;
+
+        assert(exec_status.Exited == 0);
+    }
+
+    fn popen(arena: Allocator, cmd: []const u8) []const u8 {
+        const process_result = std.process.Child.run(.{ .allocator = arena, .argv = &.{ "sh", "-c", cmd } }) catch unreachable;
+        assert(eql(u8, process_result.stderr, ""));
+        return std.mem.trim(u8, process_result.stdout, "\n");
+    }
+
     fn oneshot(self: Run) void {
         const oneshot_commands = [_][]const u8{
             "kanshi",
         };
+        const ProcessState = enum { active, inactive };
 
-        self.run_list(oneshot_commands[0..]);
+        for (oneshot_commands) |command| {
+            var cmd = std.mem.splitScalar(u8, command, ' ');
+            const name = cmd.next().?;
+
+            //run program once
+            const process_state = popen(self.arena, fmt(
+                self.arena,
+                "if pgrep {[name]s} >/dev/null 2>&1 ; then echo 'active' ; else echo 'inactive' ; fi",
+                .{ .name = name },
+            ));
+            const state = std.meta.stringToEnum(ProcessState, process_state).?;
+
+            switch (state) {
+                .active => {},
+                .inactive => {
+                    run(self.arena, fmt(
+                        self.arena,
+                        "riverctl spawn '{[command]s}'",
+                        .{ .command = command },
+                    ));
+                },
+            }
+        }
     }
 
     fn configure_input(self: Run) void {
@@ -233,7 +250,7 @@ const Run = struct {
         }
     }
 
-    fn set_river_options(self: Run) void {
+    fn river_options(self: Run) void {
         const RiverOptions = enum {
             @"default-attach-mode",
             @"border-width",
@@ -245,7 +262,7 @@ const Run = struct {
             @"default-layout",
         };
 
-        var river_options = std.enums.EnumMap(
+        var options = std.enums.EnumMap(
             RiverOptions,
             []const u8,
         ).init(.{
@@ -259,7 +276,7 @@ const Run = struct {
             .@"default-layout" = "rivertile",
         });
 
-        var iter = river_options.iterator();
+        var iter = options.iterator();
         while (iter.next()) |option| {
             run(self.arena, fmt(
                 self.arena,
@@ -272,7 +289,7 @@ const Run = struct {
         }
     }
 
-    fn set_gnome_settings(self: Run) void {
+    fn gnome_settings(self: Run) void {
         const setting_group = "org.gnome.desktop.interface";
 
         var theme_values = std.mem.splitScalar(u8, self.options.xcursor_theme, ' ');
@@ -324,7 +341,7 @@ const Run = struct {
         BTN_LEFT, BTN_RIGHT, F11
     };
     // zig fmt: on
-    const Normal = struct {
+    const Command = struct {
         mod: []const Mod,
         key: Key,
         cmd: []const u8,
@@ -340,10 +357,12 @@ const Run = struct {
         };
     }
 
-    fn setup_mapping(self: Run) void {
+    // TODO: consider simplifying mapping with custom modes https://wiki.archlinux.org/title/River#Modes
+    fn mappings(self: Run) void {
         const Map = union(enum) {
             const Type = enum { map, @"map-pointer" };
             const Opt = enum { repeat, release };
+            const Normal = Command;
             const Locked = struct {
                 mod: []const Mod,
                 key: Key,
@@ -440,6 +459,7 @@ const Run = struct {
                         \\spawn '{[terminal]s} --class "coding"'
                     , .{ .terminal = self.options.terminal }),
                 },
+                // clear notifications
                 .{
                     .mod = &.{.Super},
                     .key = .U,
@@ -477,6 +497,7 @@ const Run = struct {
                         \\spawn '{[desktop_launcher]s}'
                     , .{ .desktop_launcher = self.options.desktop_launcher }),
                 },
+                // Clipboard management with cliphist
                 .{
                     .mod = &.{ .Super, .Alt },
                     .key = .C,
@@ -491,6 +512,7 @@ const Run = struct {
                         \\spawn 'cliphist list | {[fuzzel_menu]s} | cliphist delete'
                     , .{ .fuzzel_menu = self.options.menu_launcher }),
                 },
+                // Take screenshot of a window
                 .{
                     .mod = &.{.None},
                     .key = .Print,
@@ -526,7 +548,6 @@ const Run = struct {
                     .key = .Q,
                     .cmd = "close",
                 },
-
                 // Super+Shift+Q to exit river (requires 'swaynag' program from sway)
                 .{
                     .mod = &.{ .Super, .Shift },
@@ -764,7 +785,7 @@ const Run = struct {
 
         const locked_mappings = Map{
             .locked = &.{
-                // 	Eject optical drives
+                // Eject optical drives
                 .{
                     .mod = &.{.None},
                     .key = .XF86Eject,
@@ -772,7 +793,7 @@ const Run = struct {
                     \\spawn 'eject -T'
                     ,
                 },
-                // 	Control pipewire volume
+                // Control pipewire volume
                 .{
                     .mod = &.{.None},
                     .key = .XF86AudioRaiseVolume,
@@ -787,7 +808,7 @@ const Run = struct {
                     ),
                     .opt = .repeat,
                 },
-                // 	To lower the volume
+                // To lower the volume
                 .{
                     .mod = &.{.None},
                     .key = .XF86AudioLowerVolume,
@@ -802,7 +823,7 @@ const Run = struct {
                     ),
                     .opt = .repeat,
                 },
-                // 	To mute/unmute the volume
+                // To mute/unmute the volume
                 .{
                     .mod = &.{.None},
                     .key = .XF86AudioMute,
@@ -810,7 +831,7 @@ const Run = struct {
                     \\spawn 'wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle'
                     ,
                 },
-                // 	To mute/unmute the microphone
+                // To mute/unmute the microphone
                 .{
                     .mod = &.{.None},
                     .key = .XF86AudioMicMute,
@@ -818,7 +839,7 @@ const Run = struct {
                     \\spawn 'wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle'
                     ,
                 },
-                // 	Control MPRIS aware media players with 'mpc'
+                // Control MPRIS aware media players with 'mpc'
                 .{
                     .mod = &.{.None},
                     .key = .XF86AudioStop,
@@ -854,7 +875,7 @@ const Run = struct {
                     \\spawn'mpc next'
                     ,
                 },
-                // 	-- Control screen backlight brightness
+                // Control screen backlight brightness
                 .{
                     .mod = &.{.None},
                     .key = .XF86MonBrightnessUp,
@@ -877,13 +898,13 @@ const Run = struct {
         // Mappings for pointer (mouse)
         const pointer_mapping = Map{
             .normal = &.{
-                // 		Super + Left Mouse Button to move views
+                // Super + Left Mouse Button to move views
                 .{
                     .mod = &.{.Super},
                     .key = .BTN_LEFT,
                     .cmd = "move-view",
                 },
-                // 		Super + Right Mouse Button to resize views
+                // Super + Right Mouse Button to resize views
                 .{
                     .mod = &.{.Super},
                     .key = .BTN_RIGHT,
@@ -897,7 +918,7 @@ const Run = struct {
         pointer_mapping.run(self.arena, .@"map-pointer");
     }
 
-    fn setup_user_mode(self: Run) void {
+    fn user_mode(self: Run) void {
         // set $power_mangement "(s)uspend,hy(b)rid-sleep,(h)ibernate,(r)eboot,suspend-(t)hen-hibernate,(l)ock,(R)UEFI,(S)hutdown"
         const UserMode = struct {
             const Enter =
@@ -909,7 +930,7 @@ const Run = struct {
 
             name: []const u8,
             enter: Enter,
-            cmds: []const Normal,
+            cmds: []const Command,
             exit: Exit,
 
             fn declare_mode(arena: Allocator, mode_name: []const u8) void {
@@ -951,16 +972,16 @@ const Run = struct {
                 );
             }
 
-            fn run(user_mode: @This(), arena: Allocator) void {
-                declare_mode(arena, user_mode.name);
-                enter_mode(arena, user_mode.name, user_mode.enter);
-                exit_mode(arena, user_mode.name, user_mode.exit);
+            fn run(mode: @This(), arena: Allocator) void {
+                declare_mode(arena, mode.name);
+                enter_mode(arena, mode.name, mode.enter);
+                exit_mode(arena, mode.name, mode.exit);
 
-                for (user_mode.cmds) |cmd| {
+                for (mode.cmds) |cmd| {
                     Run.run(arena, fmt(arena,
                         \\riverctl map {[declared_mode]s} {[mod]s} {[key]s} spawn "riverctl enter-mode normal  && {[cmd]s}"
                     , .{
-                        .declared_mode = user_mode.name,
+                        .declared_mode = mode.name,
                         .mod = mod(arena, cmd.mod),
                         .key = @tagName(cmd.key),
                         .cmd = cmd.cmd,
@@ -1094,25 +1115,25 @@ const Run = struct {
     // Mappings for scratchpad tag management
     fn scratchpad_tags(self: Run) void {
 
-        // 	The scratchpad will live on an unused tag. Which tags are used depends on your
-        // 	config, but rivers default uses the first 9 tags.
+        // The scratchpad will live on an unused tag. Which tags are used depends on your
+        // config, but rivers default uses the first 9 tags.
         const scratch_tags = @shlExact(1, 21);
 
-        // 	Toggle viewing the scratchpad on the current tag output with Super+S
+        // Toggle viewing the scratchpad on the current tag output with Super+S
         run(self.arena, fmt(
             self.arena,
             "riverctl map normal Super S toggle-focused-tags {[scratch_tags]d}",
             .{ .scratch_tags = scratch_tags },
         ));
 
-        // 	Send view/window to the scratchpad with Super+Shift+S
+        // Send view/window to the scratchpad with Super+Shift+S
         run(self.arena, fmt(
             self.arena,
             "riverctl map normal Super+Shift S set-view-tags {[scratch_tags]d}",
             .{ .scratch_tags = scratch_tags },
         ));
 
-        // 	Set spawn tagmask to ensure new windows don't have the scratchpad tag unless explicitly set.
+        // Set spawn tagmask to ensure new windows don't have the scratchpad tag unless explicitly set.
         const all_but_scratch_tags = ((1 << 32) - 1) ^ scratch_tags;
 
         run(self.arena, fmt(
@@ -1245,10 +1266,8 @@ const Run = struct {
     }
 
     fn rivertile(self: Run) noreturn {
-        //FIXME: execv blocks, the issues seems to be rivertile
-        //since it blocks in shell also but the lua version
-        //executes successfully, Investigate WHY
-        std.process.execv(self.arena, &.{
+        const env = std.process.getEnvMap(self.arena) catch unreachable;
+        std.process.execve(self.arena, &.{
             "rivertile",
             "-view-padding",
             "0",
@@ -1260,24 +1279,7 @@ const Run = struct {
             "1",
             "-main-ratio",
             "0.6",
-        }) catch unreachable;
-
-        // rivertile -view-padding 0 -outer-padding 0 -main-location left -main-count 1 -main-ratio 0.6
-        // var process = std.process.Child.init(&.{
-        //     "rivertile",
-        //     "-view-padding",
-        //     "0",
-        //     "-outer-padding",
-        //     "0",
-        //     "-main-location",
-        //     "left",
-        //     "-main-count",
-        //     "1",
-        //     "-main-ratio",
-        //     "0.6",
-        // }, self.arena);
-        // const exec_status = process.spawnAndWait() catch unreachable;
-        // assert(exec_status.Exited == 0);
+        }, &env) catch unreachable;
     }
 };
 
@@ -1293,12 +1295,12 @@ pub fn main() !void {
     run.autostart();
     run.oneshot();
     run.configure_input();
-    run.set_river_options();
-    run.setup_mapping();
-    run.setup_user_mode();
+    run.river_options();
+    run.mappings();
+    run.user_mode();
     run.window_tags();
     run.scratchpad_tags();
     run.workspace_rules();
-    run.set_gnome_settings();
+    run.gnome_settings();
     run.rivertile();
 }

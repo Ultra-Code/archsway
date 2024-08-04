@@ -4,7 +4,7 @@
 
 Build the zig river configurator with the command below
 
-`zig build-exe -Doptimize=ReleaseFast -fstrip init.zig`
+`zig build-exe -O ReleaseFast -fstrip init.zig`
 
 Remove the residue object file generated
 
