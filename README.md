@@ -152,5 +152,15 @@ Options=mode=1777,strictatime,nosuid,nodev,size=90%%,nr_inodes=1m
 ## TERMUX
 - openssl-tool
 - openssh
+- zig
+- rust
 - golang
+- python
 - bsdtar
+- fzf
+- bat
+- starship
+- fastfetch
+- git
+- helix
+- man
