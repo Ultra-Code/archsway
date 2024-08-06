@@ -1,5 +1,5 @@
 $runtime:elvish-path
-(which sshd) -Dddd -p 2222
+(which sshd) -Dddd -p 62226
 /bin/mount -fav ; sudo findmnt --verify --verbose
 BROWSER=firefox man -H
 CC=clang CXX=clang++ cmake -DCMAKE_BUILD_TYPE=Release -GNinja -DZIG_NO_LIB=ON ..
@@ -198,8 +198,7 @@ p10k configure
 pacman --noconfirm --root /host -Syu pacman
 php -S localhost:8000 -t src/
 php artisan serve &
-ping 127.232.157.42 -c 4
-ping 129.232.157.42 -c 4
+ping 102.211.186.199 -c 4
 pkg-config --cflags --libs glfw3
 pkill --signal KILL pueued
 poetry add jupyterlab
@@ -252,16 +251,16 @@ rustup toolchain install nightly
 rustup toolchain list
 rustup which --toolchain=nightly rust-analyzer
 scp -Cr Videos/BOLLYWOOD/ isaac@192.168.8.102:~/Windows/
-scp -r -P 2222 kekele@129.232.157.42:/home/kekele/.ssh remotessh
+scp -r -P 62226 kekele@102.211.186.199:/home/kekele/.ssh remotessh
 scp kekele:"firewalld.rules.conf*" serverdotfiles
 scp ~/serverdotfiles/nftables.new.conf kekele:nftables.conf
 ss --tcp --udp --listening --processes --numeric
 ssh -G localhost
-ssh -vvv kekele@129.232.157.42 -p 2233
-ssh kekele -L 127.0.0.1:8080:129.232.157.42:63333 -N
-ssh kekele@129.232.157.42 -p 62226 -L 127.0.0.1:3333:129.232.157.42:3333 -N
+ssh kekele -L 127.0.0.1:8080:102.211.186.199:63333 -N
+ssh kekele@102.211.186.199 -p 62226
+ssh kekele@102.211.186.199 -p 62226 -L 127.0.0.1:3333:102.211.186.199:63333 -N
 ssh-add -l -E sha256
-ssh-copy-id -i ~/.ssh/id_ed25519 -p 2222 kekele@129.232.157.42
+ssh-copy-id -i ~/.ssh/id_ed25519 -p 62226 kekele@102.211.186.199
 ssh-keygen -t ed25519 -C "mega.alpha100@gmail.com"
 str:join ',' ['hello' world]
 strip mode
@@ -281,10 +280,10 @@ sudo mkfs.f2fs -l GNUPG -e "mp3,gif,mov,png,jpg,jpeg,mpeg,svg,mkv,webm,mp4,m4v,a
 sudo mkinitcpio -p linux-zen
 sudo modinfo -p i915
 sudo mount --mkdir -t f2fs -o compress_algorithm=zstd:9,compress_chksum,atgc,gc_merge,lazytime,discard,inline_xattr,f lush_merge,alloc_mode=reuse,checkpoint_merge,compress_chksum,compress_cache,inlinecrypt,atgc,age_extent_cache,errors=re mount-ro /dev/sdb2 /mnt/GNUPG
-sudo nft add rule inet filter input tcp dport 2222 accept
+sudo nft add rule inet filter input tcp dport 62226 accept
 sudo nft list ruleset
-sudo nmap -sV -Pn --reason 129.232.157.42
-sudo nmap -sV -Pn -p 62226,63333 --reason 129.232.157.42
+sudo nmap -sV -Pn --reason 102.211.186.199
+sudo nmap -sV -Pn -p 62226,63333 --reason 102.211.186.199
 sudo pacman -D --asdeps duktape
 sudo pacman -S --debug pacman
 sudo pacman -S --overwrite "*" libx11
