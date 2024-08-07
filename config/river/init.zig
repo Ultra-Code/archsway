@@ -3,6 +3,10 @@ const Allocator = std.mem.Allocator;
 const assert = std.debug.assert;
 const eql = std.mem.eql;
 
+pub const std_options: std.Options = .{
+    .log_level = .warn,
+};
+
 fn fmt(arena: Allocator, comptime fmt_spec: []const u8, args: anytype) []const u8 {
     return std.fmt.allocPrint(arena, fmt_spec, args) catch unreachable;
 }
@@ -49,19 +53,15 @@ const Options = struct {
     }
 
     fn desktop_launcher(arena: Allocator, term: []const u8) []const u8 {
-        return fmt(
-            arena,
-            "fuzzel --terminal {[term]s} --lines 25 --width 54 --show-actions",
-            .{ .term = term },
-        );
+        return fmt(arena,
+            \\fuzzel --terminal "{[term]s}" --lines 25 --width 54 --show-actions
+        , .{ .term = term });
     }
 
     fn menu_launcher(arena: Allocator, term: []const u8) []const u8 {
-        return fmt(
-            arena,
-            "fuzzel --terminal {[term]s} --lines 25 --width 90 --dmenu",
-            .{ .term = term },
-        );
+        return fmt(arena,
+            \\fuzzel --terminal "{[term]s}" --lines 25 --width 90 --dmenu
+        , .{ .term = term });
     }
 
     fn getenv(allocator: Allocator, env_key: []const u8) []const u8 {
@@ -83,6 +83,7 @@ const Options = struct {
         return getenv(arena, "HOME");
     }
 
+    //TODO: implement shuffle in zig
     fn wallpaper(arena: Allocator, HOME: []const u8) []const u8 {
         const wallpapers_path = fmt(
             arena,
@@ -149,11 +150,9 @@ const Run = struct {
         for (autostarts_commands) |command| {
             run(
                 self.arena,
-                fmt(
-                    self.arena,
-                    "riverctl spawn \'{[cmd]s}\'",
-                    .{ .cmd = command },
-                ),
+                fmt(self.arena,
+                    \\riverctl spawn '{[cmd]s}'
+                , .{ .cmd = command }),
             );
         }
     }
@@ -182,6 +181,7 @@ const Run = struct {
             const name = cmd.next().?;
 
             //run program once
+            //TODO: impl process state check in zig
             const process_state = popen(self.arena, fmt(
                 self.arena,
                 "if pgrep {[name]s} >/dev/null 2>&1 ; then echo 'active' ; else echo 'inactive' ; fi",
@@ -1292,6 +1292,7 @@ pub fn main() !void {
     const options = Options.init(arena);
     const run = Run.init(arena, options);
 
+    //TODO: execute these task in a threadpool
     run.autostart();
     run.oneshot();
     run.configure_input();
