@@ -117,13 +117,13 @@ git switch revive-translateC
 git tag -a v0.3.0
 glxinfo |grep opengl
 go install src.elv.sh/cmd/elvish@master
-gpg --expert --edit-key Ultra
-gpg --expert --full-generate-key Ultra
-gpg --export --armor --output public-key.asc Ultra Code
-gpg --export-secret-keys --armor --output private-key.asc Ultra Code
-gpg --export-secret-keys Ultra Code | gpg --list packets
-gpg --export-ssh-key Ultra
-gpg --gen-revoke --armor --output revoke-cert.asc Ultra Code
+gpg --expert --edit-key "Ultra Code"
+gpg --expert --full-generate-key "Ultra Code"
+gpg --export --armor --output public-key.asc "Ultra Code"
+gpg --export-secret-keys "Ultra Code" | gpg --list packets
+gpg --export-secret-keys --armor --output private-key.asc "Ultra Code"
+gpg --export-ssh-key "Ultra Code"
+gpg --gen-revoke --armor --output revoke-cert.asc "Ultra Code"
 gpg --import privake-key.asc
 gpg --keyserver keys.openpgp.org --recv-keys CA7C2C7A30C8E8E1274A847651C67305FFC2E5C0
 gpg --keyserver-options auto-key-retrieve --verify archlinux-2024.03.01-x86_64.iso.sig archlinux-2024.03.01-x86_64.iso
@@ -190,6 +190,7 @@ nft describe icmp type
 nft describe icmpv6 code
 nft describe icmpv6 type
 ninja install
+nohup ssh kekele -L 127.0.0.1:3333:102.211.186.199:63333 -N stdout>/dev/null &
 notify-send -u critical -t 2000 -e 'Screenshot taken'
 num 0xfffff
 objcopy -v --add-gnu-debuglink=mode.debug mode
@@ -260,7 +261,7 @@ ssh kekele -L 127.0.0.1:8080:102.211.186.199:63333 -N
 ssh kekele@102.211.186.199 -p 62226
 ssh kekele@102.211.186.199 -p 62226 -L 127.0.0.1:3333:102.211.186.199:63333 -N
 ssh-add -l -E sha256
-ssh-copy-id -i ~/.ssh/id_ed25519 -p 62226 kekele@102.211.186.199
+ssh-copy-id -i ~/.ssh/id_ed25519.pub -p 62226 kekele@102.211.186.199
 ssh-keygen -t ed25519 -C "mega.alpha100@gmail.com"
 str:join ',' ['hello' world]
 strip mode

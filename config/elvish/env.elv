@@ -74,7 +74,7 @@ if (has-external modular) {
      }
 }
 
-if (or (has-external rustup) (has-external rustc)) {
+if (or (has-external rustup) (has-external rustc) (os:is-dir $E:XDG_LOCAL_HOME/cargo)) {
      set-env RUSTUP_HOME (put $E:XDG_LOCAL_HOME | path:join (all) rustup)
      set E:CARGO_HOME = (put $E:XDG_LOCAL_HOME | path:join (all) cargo)
      append-to-path $E:CARGO_HOME/bin
@@ -139,12 +139,16 @@ edit:add-var which~ $which~
 set-env EDITOR (
      if (has-external hx) { which hx } ^
      elif (os:is-regular $E:PREFIX/usr/lib/helix/hx) { print $E:PREFIX/usr/lib/helix/hx } ^
-     else { which helix }
+     elif (has-external helix) { which helix } ^
+     elif (has-external nvim) { which nvim } ^
+     else { which vi }
 )
 
 # Configure gpg pinentry to use the correct TTY
 set-env GPG_TTY (tty)
 
 if (not (has-env SSH_AUTH_SOCK)) {
-     set-env SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+     if (has-external gpgconf) {
+          set-env SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+     }
 }

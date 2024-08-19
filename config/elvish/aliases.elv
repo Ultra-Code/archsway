@@ -70,7 +70,7 @@ fn diff {|file reference|
 edit:add-var diff~ $diff~
 
 fn ls {|@options_and_path|
-  e:ls --color=always --classify $@options_and_path
+  e:ls --color=always --hyperlink=always --classify $@options_and_path
 }
 edit:add-var ls~ $ls~
 
@@ -130,11 +130,19 @@ fn lb {
 }
 edit:add-var lb~ $lb~
 
-fn grep {|@options regex|
-  e:grep --extended-regexp --color=always --ignore-case --regexp $regex ^
-  $@options
+fn grep {|@regex|
+  e:grep --extended-regexp --color=always --ignore-case $@regex
 }
 edit:add-var grep~ $grep~
+
+# implement underline for grep
+# fn mg {|@args|
+#   kitten hyperlinked_grep --smart-case $@args
+# }
+# edit:add-var mg~ $mg~
+
+fn icat {|file| kitten icat $file }
+edit:add-var icat~ $icat~
 
 # respects gitignore and skip hidden files and cache directories
 fn rg {|regex @options|
@@ -197,9 +205,9 @@ edit:add-var rc~ $rc~
 fn er { $E:EDITOR $E:DOTFILES/config/river/init }
 edit:add-var er~ $er~
 
-fn pkg {|@args|
+fn pacman {|@args|
     try {
-      pacman $@args stderr>$os:dev-null
+      e:pacman $@args stderr>$os:dev-null
     } catch err {
       if (has-external yay) {
           var is_ok = ?(yay $@args)
@@ -211,29 +219,29 @@ fn pkg {|@args|
         }
     }
 }
-edit:add-var pkg~ $pkg~
+edit:add-var pacman~ $pacman~
 
-#pkg aliases
-set edit:command-abbr['pmi'] = 'pkg -S'
-set edit:command-abbr['pmp'] = 'pkg -Rcunsv'
-set edit:command-abbr['pmii'] = 'pkg -Qii'
-set edit:command-abbr['pmsi'] = 'pkg -Sii'
+#pacman aliases
+set edit:command-abbr['pmi'] = 'pacman -S'
+set edit:command-abbr['pmp'] = 'pacman -Rcunsv'
+set edit:command-abbr['pmii'] = 'pacman -Qii'
+set edit:command-abbr['pmsi'] = 'pacman -Sii'
 
-fn pml { pkg -Qe }
+fn pml { pacman -Qe }
 edit:add-var pml~ $pml~
 
-fn pmu { pkg -Syu }
+fn pmu { pacman -Syu }
 edit:add-var pmu~ $pmu~
 
-fn pmlr { pkg -Qmq }
+fn pmlr { pacman -Qmq }
 edit:add-var pmlr~ $pmlr~
 
 fn pmlf {|package|
   try {
-    pkg -Ql $package stderr>$os:dev-null
+    pacman -Ql $package stderr>$os:dev-null
   } catch err {
     try {
-      pkg -Fl $package
+      pacman -Fl $package
     } catch err {
       var reason = $err[reason]
       echo (styled $reason[cmd-name] red)" exited with "(styled $reason[exit-status] red)": could not list files for the package "(styled $package blue)
@@ -248,7 +256,7 @@ fn pmb {|file|
   }
   if (and (path:is-abs $file) (os:exists &follow-symlink=$true $file)) {
     try {
-      pkg -Qo $file
+      pacman -Qo $file
     } catch err {
       var reason = $err[reason]
       echo (styled $reason[cmd-name] red)" exited with "(styled $reason[exit-status] red)": could not find the package which owns "(styled $file blue)
@@ -260,21 +268,21 @@ fn pmb {|file|
 edit:add-var pmb~ $pmb~
 
 # https://github.com/elves/elvish/issues/1775
-fn pmc { pkg -Rsn (pkg -Qdtq) }
+fn pmc { pacman -Rsn (pacman -Qdtq) }
 edit:add-var pmc~ $pmc~
 
-fn pmcc { pkg -Sc }
+fn pmcc { pacman -Sc }
 edit:add-var pmcc~ $pmcc~
 
 fn pms {|package|
   try {
-     pkg -Qs $package
+     pacman -Qs $package
     } catch err {
       try {
-        pkg -Fx $package
+        pacman -Fx $package
       } catch err {
         try {
-          pkg -Ss $package
+          pacman -Ss $package
         } catch err {
           var reason = $err[reason]
           echo (styled $reason[cmd-name] red)" exited with "(styled $reason[exit-status] red)": package `"(styled $package blue)"` not found in default repo"

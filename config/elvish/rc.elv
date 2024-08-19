@@ -79,7 +79,7 @@ fn kitty-shell-integration {
 kitty-shell-integration
 
 fn cmdline-history-filter {|command|
-     var ignorelist = [git cp mv ln fzt rgf printenv]
+     var ignorelist = [cp mv ln fzt rgf printenv]
      for ignore $ignorelist {
           if (str:has-prefix $command $ignore) {
                put $false
@@ -97,6 +97,8 @@ set edit:add-cmd-filters = (conj $edit:add-cmd-filters $cmdline-history-filter~)
 
 # To use the included Secure Shell Agent you need to start the gpg agent
 fn gpg-integration {
-     gpg-connect-agent updatestartuptty /bye stderr>$os:dev-null stdout>&stderr
+     if (has-external gpg-connect-agent) {
+          gpg-connect-agent updatestartuptty /bye stderr>$os:dev-null stdout>&stderr
+     }
 }
 gpg-integration
