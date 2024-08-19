@@ -83,28 +83,48 @@ const Options = struct {
         return getenv(arena, "HOME");
     }
 
-    //TODO: implement shuffle in zig
     fn wallpaper(arena: Allocator, HOME: []const u8) []const u8 {
-        const wallpapers_path = fmt(
+        const path = fmt(
             arena,
             "{[HOME]s}/files/Pictures/Code/",
             .{ .HOME = HOME },
         );
-        const random_wallpaper = fmt(
-            arena,
-            "ls {[wallpapers_path]s} | shuf -n 1",
-            .{ .wallpapers_path = wallpapers_path },
-        );
-        const choosen_wallpaper = fmt(
+
+        var dir = std.fs.openDirAbsolute(
+            path,
+            .{ .iterate = true },
+        ) catch unreachable;
+        defer dir.close();
+
+        const count = 16;
+        var wallpapers = std.ArrayList(
+            []const u8,
+        ).initCapacity(arena, count) catch unreachable;
+
+        var iter = dir.iterate();
+        while (iter.next() catch unreachable) |entry| {
+            wallpapers.appendAssumeCapacity(
+                arena.dupe(u8, entry.name) catch unreachable,
+            );
+        }
+
+        const choosen = fmt(
             arena,
             "{[wallpapers_path]s}{[wallpaper]s}",
-            .{ .wallpapers_path = wallpapers_path, .wallpaper = Run.popen(
-                arena,
-                random_wallpaper,
-            ) },
+            .{
+                .wallpapers_path = path,
+                .wallpaper = shuffle([]const u8, wallpapers.items),
+            },
         );
+        return choosen;
+    }
 
-        return choosen_wallpaper;
+    fn shuffle(T: type, items: []T) T {
+        var prng = std.Random.DefaultPrng.init(@intCast(std.time.timestamp()));
+        const rand = prng.random();
+        rand.shuffle(T, items);
+        const choosen = items[0];
+        return choosen;
     }
 };
 
@@ -1292,7 +1312,6 @@ pub fn main() !void {
     const options = Options.init(arena);
     const run = Run.init(arena, options);
 
-    //TODO: execute these task in a threadpool
     run.autostart();
     run.oneshot();
     run.configure_input();

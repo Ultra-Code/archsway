@@ -202,7 +202,7 @@ edit:add-var ea~ $ea~
 fn rc { $E:EDITOR $E:ELVRC/rc.elv }
 edit:add-var rc~ $rc~
 
-fn er { $E:EDITOR $E:DOTFILES/config/river/init }
+fn er { $E:EDITOR $E:DOTFILES/config/river/init.zig }
 edit:add-var er~ $er~
 
 fn pacman {|@args|
