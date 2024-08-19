@@ -1,3 +1,4 @@
+# https://wiki.archlinux.org/title/XDG_MIME_Applications
 [Default Applications]
 text/plain=helix.desktop
 application/json=helix.desktop
