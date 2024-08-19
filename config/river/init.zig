@@ -4,7 +4,7 @@ const assert = std.debug.assert;
 const eql = std.mem.eql;
 
 pub const std_options: std.Options = .{
-    .log_level = .warn,
+    .log_level = .info,
 };
 
 fn fmt(arena: Allocator, comptime fmt_spec: []const u8, args: anytype) []const u8 {
@@ -1284,24 +1284,33 @@ const Run = struct {
 };
 
 pub fn main() !void {
-    var buf: [1024 * 1024 * 1]u8 = undefined;
-    var fba = std.heap.FixedBufferAllocator.init(&buf);
-    var arena_allocator = std.heap.ArenaAllocator.init(fba.allocator());
+    // var buf: [1024 * 1024 * 9]u8 = undefined;
+    // var fba = std.heap.FixedBufferAllocator.init(&buf);
+    var arena_allocator = std.heap.ArenaAllocator.init(std.heap.page_allocator);
     const arena = arena_allocator.allocator();
 
     const options = Options.init(arena);
     const run = Run.init(arena, options);
 
-    //TODO: execute these task in a threadpool
+    var pool: std.Thread.Pool = undefined;
+    try pool.init(.{ .allocator = arena, .n_jobs = 4 });
+    defer pool.deinit();
+
     run.autostart();
-    run.oneshot();
-    run.configure_input();
-    run.river_options();
-    run.mappings();
-    run.user_mode();
-    run.window_tags();
-    run.scratchpad_tags();
-    run.workspace_rules();
-    run.gnome_settings();
+    {
+        var wg: std.Thread.WaitGroup = .{};
+        defer wg.wait();
+        // Spawn tasks in the thread pool
+        pool.spawnWg(&wg, Run.oneshot, .{run});
+        pool.spawnWg(&wg, Run.configure_input, .{run});
+        pool.spawnWg(&wg, Run.river_options, .{run});
+        pool.spawnWg(&wg, Run.mappings, .{run});
+        pool.spawnWg(&wg, Run.user_mode, .{run});
+        pool.spawnWg(&wg, Run.window_tags, .{run});
+        pool.spawnWg(&wg, Run.scratchpad_tags, .{run});
+        pool.spawnWg(&wg, Run.workspace_rules, .{run});
+        pool.spawnWg(&wg, Run.gnome_settings, .{run});
+    }
+
     run.rivertile();
 }
