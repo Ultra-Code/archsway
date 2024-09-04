@@ -109,6 +109,7 @@ Options=mode=1777,strictatime,nosuid,nodev,size=90%%,nr_inodes=1m
 - grim and slurp for screenshot
 - mako as a lightweight notification daemon for wayland
 - docker for containerization of apps
+- scrcpy for mirroring android device (with adb for copying to android)
 - libreoffice-fresh for working with openoffice documents and hunspell-en_us for spellcheck, [for help setting up spellcheck](https://ask.libreoffice.org/t/how-do-you-get-the-spell-checker-to-work/28998)
 - mpd for music daemon and ncmpcpp for ui interface and mpc for controlling playing
 - mpv as multimedia player
