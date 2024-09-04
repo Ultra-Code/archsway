@@ -118,7 +118,7 @@ fn Cp {|@source destination| sudo cp $@source $destination }
 edit:add-var Cp~ $Cp~
 
 fn mv {|@source destination|
-  e:mv --interactive --update --debug $@source $destination
+  e:mv --interactive --update --verbose $@source $destination
 }
 edit:add-var mv~ $mv~
 
