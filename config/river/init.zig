@@ -154,11 +154,8 @@ const Run = struct {
         );
 
         const autostarts_commands = [_][]const u8{
-            "systemctl --user set-environment XDG_CURRENT_DESKTOP=river",
-            "systemctl --user import-environment DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP",
-            "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=river",
-            swayidle,
             background,
+            swayidle,
             // -- { status_bar }, # don't run status bar on startup
             "wlsunset -t 700 -l 5.5502 -L -0.2174",
             "wl-paste --watch cliphist store",
@@ -166,6 +163,23 @@ const Run = struct {
         };
 
         for (autostarts_commands) |command| {
+            run(
+                self.arena,
+                fmt(self.arena,
+                    \\riverctl spawn '{[cmd]s}'
+                , .{ .cmd = command }),
+            );
+        }
+    }
+
+    fn xdg_portal(self: Run) void {
+        const commands = [_][]const u8{
+            "systemctl --user set-environment XDG_CURRENT_DESKTOP=river",
+            "systemctl --user import-environment DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP",
+            "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=river",
+        };
+
+        for (commands) |command| {
             run(
                 self.arena,
                 fmt(self.arena,
@@ -1357,5 +1371,6 @@ pub fn main() !void {
     run.scratchpad_tags();
     run.workspace_rules();
     run.gnome_settings();
+    run.xdg_portal();
     run.rivertile();
 }
