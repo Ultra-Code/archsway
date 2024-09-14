@@ -1,13 +1,15 @@
 const std = @import("std");
-const Allocator = std.mem.Allocator;
-const assert = std.debug.assert;
-const eql = std.mem.eql;
+const builtin = @import("builtin");
+const debug = std.debug;
+const mem = std.mem;
+const posix = std.posix;
+const process = std.process;
 
 pub const std_options: std.Options = .{
     .log_level = .warn,
 };
 
-fn fmt(arena: Allocator, comptime fmt_spec: []const u8, args: anytype) []const u8 {
+fn fmt(arena: mem.Allocator, comptime fmt_spec: []const u8, args: anytype) []const u8 {
     return std.fmt.allocPrint(arena, fmt_spec, args) catch unreachable;
 }
 
@@ -24,27 +26,27 @@ const Options = struct {
     status_bar: []const u8,
     xcursor_theme: []const u8,
 
-    pub fn init(arena: Allocator) @This() {
-        const HOME = home(arena);
-        const term = terminal(arena);
+    pub fn init(arena: mem.Allocator) @This() {
+        const HOME = getenv("HOME");
+        const term = _terminal(arena);
 
         return .{
             .terminal = term,
-            .wallpaper = wallpaper(arena, HOME),
+            .wallpaper = _wallpaper(arena, HOME),
             .screen_lock = "waylock",
-            .screenshot_path = screenshot_path(arena, HOME),
+            .screenshot_path = _screenshot_path(arena, HOME),
             // wpctl's -l flag clip volume to 160% == 1.6
             .max_volume = 1.6,
             .screen_shot_sound = "/usr/share/sounds/freedesktop/stereo/screen-capture.oga",
             .file_manager = "lf",
-            .desktop_launcher = desktop_launcher(arena, term),
-            .menu_launcher = menu_launcher(arena, term),
+            .desktop_launcher = _desktop_launcher(arena, term),
+            .menu_launcher = _menu_launcher(arena, term),
             .status_bar = "levee pulse backlight battery",
             .xcursor_theme = "Adwaita 24",
         };
     }
 
-    fn screenshot_path(arena: Allocator, HOME: []const u8) []const u8 {
+    fn _screenshot_path(arena: mem.Allocator, HOME: []const u8) []const u8 {
         return fmt(
             arena,
             "{[HOME]s}/files/Pictures/Screenshot/Captura-de-pantalla-de_{[date]s}.png",
@@ -52,38 +54,34 @@ const Options = struct {
         );
     }
 
-    fn desktop_launcher(arena: Allocator, term: []const u8) []const u8 {
+    fn _desktop_launcher(arena: mem.Allocator, term: []const u8) []const u8 {
         return fmt(arena,
             \\fuzzel --terminal "{[term]s}" --lines 25 --width 54 --show-actions
         , .{ .term = term });
     }
 
-    fn menu_launcher(arena: Allocator, term: []const u8) []const u8 {
+    fn _menu_launcher(arena: mem.Allocator, term: []const u8) []const u8 {
         return fmt(arena,
             \\fuzzel --terminal "{[term]s}" --lines 25 --width 90 --dmenu
         , .{ .term = term });
     }
 
-    fn getenv(allocator: Allocator, env_key: []const u8) []const u8 {
-        return std.process.getEnvVarOwned(allocator, env_key) catch unreachable;
+    fn getenv(env_key: []const u8) []const u8 {
+        return posix.getenv(env_key).?;
     }
 
-    fn terminal(arena: Allocator) []const u8 {
+    fn _terminal(arena: mem.Allocator) []const u8 {
         // virtual terminal number
-        const vtnr = getenv(arena, "XDG_VTNR");
-        const term = fmt(
+        const vtnr = getenv("XDG_VTNR");
+        const cmd = fmt(
             arena,
             "kitty --single-instance --instance-group {[vtnr]s}",
             .{ .vtnr = vtnr },
         );
-        return term;
+        return cmd;
     }
 
-    fn home(arena: Allocator) []const u8 {
-        return getenv(arena, "HOME");
-    }
-
-    fn wallpaper(arena: Allocator, HOME: []const u8) []const u8 {
+    fn _wallpaper(arena: mem.Allocator, HOME: []const u8) []const u8 {
         const path = fmt(
             arena,
             "{[HOME]s}/files/Pictures/Code/",
@@ -129,10 +127,10 @@ const Options = struct {
 };
 
 const Run = struct {
-    arena: Allocator,
+    arena: mem.Allocator,
     options: Options,
 
-    pub fn init(arena: Allocator, options: Options) Run {
+    pub fn init(arena: mem.Allocator, options: Options) Run {
         return .{
             .arena = arena,
             .options = options,
@@ -177,16 +175,64 @@ const Run = struct {
         }
     }
 
-    fn run(arena: Allocator, cmd: []const u8) void {
-        var process = std.process.Child.init(&.{ "sh", "-c", cmd }, arena);
-        const exec_status = process.spawnAndWait() catch unreachable;
+    fn run(arena: mem.Allocator, cmd: []const u8) void {
+        var child = process.Child.init(&.{ "sh", "-c", cmd }, arena);
+        const exec_status = child.spawnAndWait() catch unreachable;
 
-        assert(exec_status.Exited == 0);
+        debug.assert(exec_status.Exited == 0);
     }
 
-    fn popen(arena: Allocator, cmd: []const u8) []const u8 {
+    // https://stackoverflow.com/questions/5589632/how-to-determine-if-the-application-is-already-running-c-portable-linux-win
+    /// run `program` in `cmd` once
+    fn run_once(arena: mem.Allocator, program: []const u8, cmd: []const u8) void {
+        const lockfile = fmt(arena, "/dev/shm/{[program]s}.lock", .{ .program = program });
+
+        // Open a lock file
+        const fd = posix.open(
+            lockfile,
+            .{ .ACCMODE = .RDONLY, .CREAT = true },
+            0o600,
+        ) catch |err| switch (err) {
+            error.AccessDenied => process.fatal(
+                \\The requested access to the file is not allowed
+                \\Check and ensure you have permissions to {[lockfile]s}"
+            , .{ .lockfile = lockfile }),
+            else => process.fatal(
+                "{[err]s}: Failed to open lock file {[lockfile]s}",
+                .{ .err = @errorName(err), .lockfile = lockfile },
+            ),
+        };
+        // File lock will automatically release when the file descriptor is closed
+        defer posix.close(fd);
+
+        // Try to acquire an exclusive lock
+        posix.flock(
+            fd,
+            posix.LOCK.EX | posix.LOCK.NB,
+        ) catch |err| switch (err) {
+            error.WouldBlock => {
+                std.log.info(
+                    "Another instance of {[program]s} is running",
+                    .{ .program = program },
+                );
+                return;
+            },
+            error.FileLocksNotSupported => process.fatal(
+                "The underlying filesystem does not support file locks",
+                .{},
+            ),
+            else => process.fatal("{[err]s}: Failed to flock {[lockfile]s}", .{
+                .err = @errorName(err),
+                .lockfile = lockfile,
+            }),
+        };
+
+        run(arena, cmd);
+    }
+
+    fn popen(arena: mem.Allocator, cmd: []const u8) []const u8 {
         const process_result = std.process.Child.run(.{ .allocator = arena, .argv = &.{ "sh", "-c", cmd } }) catch unreachable;
-        assert(eql(u8, process_result.stderr, ""));
+        debug.assert(mem.eql(u8, process_result.stderr, ""));
         return std.mem.trim(u8, process_result.stdout, "\n");
     }
 
@@ -194,31 +240,16 @@ const Run = struct {
         const oneshot_commands = [_][]const u8{
             "kanshi",
         };
-        const ProcessState = enum { active, inactive };
 
         for (oneshot_commands) |command| {
             var cmd = std.mem.splitScalar(u8, command, ' ');
             const name = cmd.next().?;
 
-            //run program once
-            //TODO: impl process state check in zig
-            const process_state = popen(self.arena, fmt(
+            run_once(self.arena, name, fmt(
                 self.arena,
-                "if pgrep {[name]s} >/dev/null 2>&1 ; then echo 'active' ; else echo 'inactive' ; fi",
-                .{ .name = name },
+                "riverctl spawn '{[command]s}'",
+                .{ .command = command },
             ));
-            const state = std.meta.stringToEnum(ProcessState, process_state).?;
-
-            switch (state) {
-                .active => {},
-                .inactive => {
-                    run(self.arena, fmt(
-                        self.arena,
-                        "riverctl spawn '{[command]s}'",
-                        .{ .command = command },
-                    ));
-                },
-            }
         }
     }
 
@@ -367,7 +398,7 @@ const Run = struct {
         cmd: []const u8,
     };
 
-    fn mod(arena: Allocator, mods: []const Mod) []const u8 {
+    fn mod(arena: mem.Allocator, mods: []const Mod) []const u8 {
         return switch (mods.len) {
             1 => @tagName(mods[0]),
             2 => fmt(arena, "{s}+{s}", .{ @tagName(mods[0]), @tagName(mods[1]) }),
@@ -394,7 +425,7 @@ const Run = struct {
 
             fn run(
                 map: @This(),
-                arena: Allocator,
+                arena: mem.Allocator,
                 comptime mtype: Type,
             ) void {
                 switch (map) {
@@ -953,7 +984,7 @@ const Run = struct {
             cmds: []const Command,
             exit: Exit,
 
-            fn declare_mode(arena: Allocator, mode_name: []const u8) void {
+            fn declare_mode(arena: mem.Allocator, mode_name: []const u8) void {
                 Run.run(arena, fmt(
                     arena,
                     "riverctl declare-mode {[declared_mode]s}",
@@ -962,7 +993,7 @@ const Run = struct {
             }
 
             fn enter_mode(
-                arena: Allocator,
+                arena: mem.Allocator,
                 mode_name: []const u8,
                 enter: Enter,
             ) void {
@@ -978,7 +1009,7 @@ const Run = struct {
             }
 
             fn exit_mode(
-                arena: Allocator,
+                arena: mem.Allocator,
                 mode_name: []const u8,
                 exit: Exit,
             ) void {
@@ -992,7 +1023,7 @@ const Run = struct {
                 );
             }
 
-            fn run(mode: @This(), arena: Allocator) void {
+            fn run(mode: @This(), arena: mem.Allocator) void {
                 declare_mode(arena, mode.name);
                 enter_mode(arena, mode.name, mode.enter);
                 exit_mode(arena, mode.name, mode.exit);
@@ -1195,7 +1226,7 @@ const Run = struct {
                 return 1 << (tag - 1);
             }
 
-            fn run(rules: @This(), arena: Allocator) void {
+            fn run(rules: @This(), arena: mem.Allocator) void {
                 switch (rules) {
                     inline .float, .csd => |frules, action| {
                         for (frules) |rule| {
@@ -1285,10 +1316,8 @@ const Run = struct {
         position.run(self.arena);
     }
 
-    fn rivertile(self: Run) noreturn {
-        const env = std.process.getEnvMap(self.arena) catch unreachable;
-        std.process.execve(self.arena, &.{
-            "rivertile",
+    fn rivertile(_: Run) noreturn {
+        posix.execveZ("rivertile", &.{
             "-view-padding",
             "0",
             "-outer-padding",
@@ -1299,11 +1328,17 @@ const Run = struct {
             "1",
             "-main-ratio",
             "0.6",
-        }, &env) catch unreachable;
+        }, &.{null}) catch unreachable;
     }
 };
 
 pub fn main() !void {
+    comptime {
+        switch (builtin.os.tag) {
+            .linux => {},
+            else => @panic("Not tested on this Os, PR is welcome"),
+        }
+    }
     var buf: [1024 * 1024 * 1]u8 = undefined;
     var fba = std.heap.FixedBufferAllocator.init(&buf);
     var arena_allocator = std.heap.ArenaAllocator.init(fba.allocator());
