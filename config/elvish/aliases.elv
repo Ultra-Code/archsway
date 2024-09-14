@@ -136,6 +136,9 @@ fn grep {|@regex|
 edit:add-var grep~ $grep~
 
 # implement underline for grep
+# https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda
+# https://github.com/kovidgoyal/kitty/blob/master/kittens/hyperlinked_grep/main.go
+# https://sw.kovidgoyal.net/kitty/kittens/hints/
 # fn mg {|@args|
 #   kitten hyperlinked_grep --smart-case $@args
 # }
@@ -154,7 +157,8 @@ fn rg {|regex @options|
 }
 edit:add-var rg~ $rg~
 
-fn sed {|file| sed --regexp-extended --silent --in-place=.bak $file }
+fn sed {|regex file| e:sed --regexp-extended --in-place=.bak ^
+        --expression=$regex $file }
 edit:add-var sed~ $sed~
 
 fn tarx {|archive @files| bsdtar -xvf $archive $@files }
@@ -306,7 +310,7 @@ set edit:command-abbr['gst'] = "git status"
 set edit:command-abbr['glt'] = "git log --stat -1"
 set edit:command-abbr['gsml'] = "git log --submodule -p"
 set edit:command-abbr['gsmi'] = "git submodule update --init --recursive"
-set edit:command-abbr['gsmr'] = "git submodule update --remote --rebase"
+set edit:command-abbr['gsmu'] = "git submodule update --remote --rebase"
 
 fn gl {|@commit_hash|
   if (eq $commit_hash []) {
