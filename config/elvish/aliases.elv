@@ -371,7 +371,7 @@ edit:add-var zr~ $zr~
 
 fn z++ {|@args|
   if (has-external zig) {
-     zig c++ -std=c++2b -fexperimental-library $@args
+     zig c++ -std=c++2c -fexperimental-library $@args
   } else {
      fail "install zig language compiler on your system" 
   }
@@ -380,7 +380,7 @@ edit:add-var z++~ $"z++~"
 
 fn zcc {|@args|
   if (has-external zig) {
-     zig cc -std=c2x $@args
+     zig cc -std=c2y $@args
   } else {
      fail "install zig language compiler on your system" 
   }

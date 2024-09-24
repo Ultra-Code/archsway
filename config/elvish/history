@@ -264,6 +264,7 @@ ssh-add -l -E sha256
 ssh-copy-id -i ~/.ssh/id_ed25519.pub -p 62226 kekele@102.211.186.199
 ssh-keygen -t ed25519 -C "mega.alpha100@gmail.com"
 str:join ',' ['hello' world]
+strace -f -s 1024 -e open ls
 strip mode
 su -l $USER #relogin as $USER , loading all groups and changes
 sudo bootctl list
