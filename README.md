@@ -1,5 +1,5 @@
 # ArchSway
-Archlinux on sway from scratch with the most minimal dependencies. DIY is awesome
+Archlinux on river/sway from scratch with the most minimal dependencies. DIY is awesome
 
 # Standard Installation Steps
 [Arch Linux Installation Guide](https://wiki.archlinux.org/title/Installation_guide)
