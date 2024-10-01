@@ -108,7 +108,11 @@ if (has-external vivid) {
 }
 
 if (has-external starship) {
-  set E:STARSHIP_CONFIG = $E:DOTFILES/config/starship/starship.toml
+     if (is-termux) {
+       set E:STARSHIP_CONFIG = $E:DOTFILES/config/starship/termux.toml
+     } else {
+       set E:STARSHIP_CONFIG = $E:DOTFILES/config/starship/starship.toml
+     }
   eval (starship init elvish)
 }
 
