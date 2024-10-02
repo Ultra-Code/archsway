@@ -145,7 +145,7 @@ set-env EDITOR (
      elif (os:is-regular $E:PREFIX/usr/lib/helix/hx) { print $E:PREFIX/usr/lib/helix/hx } ^
      elif (has-external helix) { which helix } ^
      elif (has-external nvim) { which nvim } ^
-     else { which vi }
+     else { which vim }
 )
 
 # Configure gpg pinentry to use the correct TTY

@@ -1,0 +1,32 @@
+# https://learn.microsoft.com/en-us/windows/wsl/wsl-config#wslconfig
+# https://learn.microsoft.com/en-us/community/content/wsl-user-msft-kernel-v6
+
+[wsl2]
+
+# absolute Windows path to a custom Linux kernel.
+kernel=C:\\Users\\b.assan\\wsl\\bzImage
+
+# How much memory to assign to the WSL 2 VM, this can be set as whole numbers using GB or MB
+memory=6GB
+
+# Sets the amount of swap storage space. Swap storage is disk-based RAM used
+# when memory demand exceeds the limit on the hardware device.
+swap=32GB
+
+# An absolute Windows path to the swap virtual hard disk
+swapFile=C:\\Users\\b.assan\\wsl\\swap.vhdx
+
+# turn on the output console Window that shows the contents of dmesg upon the start of a WSL
+debugConsole=false
+
+# turn off nested virtualization, disabling other nested VMs to run inside WSL 2
+nestedVirtualization=false
+
+[experimental]
+
+# Automatically releases cached memory after detecting idle CPU usage.
+# Set to gradual for slow release, and dropcache for instant release of cached memory.
+autoMemoryReclaim=gradual
+
+# When set to true, any newly created VHD will be set to sparse automatically
+sparseVhd=true
