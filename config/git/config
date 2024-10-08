@@ -12,11 +12,14 @@
 [fetch]
 	recurseSubmodules = on-demand
 	parallel = 0
+	prune = true
+	pruneTags = true
 [pull]
 	rebase = true
 [push]
 	recurseSubmodules = on-demand
 	autoSetupRemote = true
+	followTags = true
 [clone]
 	filterSubmodules = true
 [commit]

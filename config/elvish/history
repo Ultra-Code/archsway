@@ -107,9 +107,9 @@ git pull upstream master:test_boundarray
 git push --follow-tags
 git push mywork learn_rust
 git push origin fixes:master
-git remote show
+git remote prune origin
+git remote set-branches --add origin branch
 git remote show origin
-git restore
 git restore --source=12e8f86 fm/lf/clean_preview.zsh
 git show v0.3.0
 git submodule add git@github.com:LMDB/lmdb.git deps/lmdb
@@ -333,15 +333,15 @@ xdg-mime query filetype ~/.local/neorg/index.norg
 xkbcli interactive-wayland
 yt-dlp -S 'res:720' 'https://www.youtube.com/watch?v=lLv1s7rKeCM'
 zgrep CONFIG_ZRAM_MULTI_COMP /proc/config.gz
-zig build -Doptimize=ReleaseFast --prefix ~/.local install
 zig build -Dtarget=x86_64-linux-gnu.2.34
 zig build -Dtarget=x86_64-linux-musl -Doptimize=ReleaseSafe
-zig build run
+zig build install -Doptimize=ReleaseFast --prefix ~/.local
 zig build test --summary all
 zig build-exe --show-builtin
 zig build-exe -lc unique.zig
 zig targets | jq .libc
 zig test -femit-bin=zigtest src/main.zig
+zig test -fno-llvm -fno-lld file.zig --test-filter funcname
 zig test lib/std/std.zig --zig-lib-dir lib --main-mod-path lib/std --test-filter "BoundedArray"
 zig test src/main.zig
 zig test src/packed_and_extern_struct.zig

@@ -343,7 +343,8 @@ fn gpu {
 edit:add-var gpu~ $gpu~
 
 fn gcl {|@repo|
-  git clone --filter=tree:0 $@repo
+  # https://stackoverflow.com/questions/17714159/how-do-i-undo-a-single-branch-clone
+  git clone --filter=tree:0 --single-branch $@repo
 }
 edit:add-var gcl~ $gcl~
 
