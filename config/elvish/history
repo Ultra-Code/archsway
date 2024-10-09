@@ -1,4 +1,5 @@
 $runtime:elvish-path
+(gcc -print-prog-name=cc1plus) -v # asks gcc which C++ preprocessor it is using, and then asks that preprocessor where it looks for includes use `cc1` for the c preprocessor
 (which sshd) -Dddd -p 62226
 /bin/mount -fav ; sudo findmnt --verify --verbose
 BROWSER=firefox man -H
@@ -16,13 +17,17 @@ cal 11 2022
 cal 9 2022
 cargo --list
 cargo add ferris-says@0.2
+cargo build --package asm-lsp --lib
 cargo build --release
 cargo clean
+cargo clippy --workspace
 cargo install --path helix-term --locked
 cargo new --help
 cargo new ferrous --vcs none
+cargo package --list --allow-dirty
 cargo run
 cargo test
+cargo tree --duplicates
 cargo xtask docgen
 chafa --format=sixels ~/files/Pictures/47.jpg
 chafa --symbols ~/files/Pictures/47.jpg
@@ -30,6 +35,10 @@ chown -R www-data:www-data storage
 clang -g -nostartfiles -o main.clang main.bc
 clang++ -g -std=c++2b -fsanitize=address,bounds recursion.cxx -o exe
 cmake -DCMAKE_BUILD_TYPE=Release -DZIG_NO_LIB=ON -GNinja -S ..
+cmake .. -DCMAKE_INSTALL_PREFIX=$E:XDG_LOCAL_HOME/llvm19-debug -DCMAKE_PREFIX_PATH=$E:XDG_LOCAL_HOME/llvm19-debug -DCMAKE_BUILD_TYPE=Debug -DLLVM_ENABLE_LIBXML2=OFF -DLLVM_ENABLE_LIBEDIT=OFF -DLLVM_PARALLEL_LINK_JOBS=(nproc) -DLLVM_PARALLEL_COMPILE_JOBS=(nproc) -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DLLVM_ENABLE_LIBCXX=OFF -DLLVM_ENABLE_MODULES=OFF -DLLVM_USE_LINKER=mold -DLLVM_ENABLE_LTO=OFF -DLLVM_ENABLE_BACKTRACES=OFF -DLLVM_ENABLE_BINDINGS=OFF -DLLVM_ENABLE_CRASH_OVERRIDES=OFF -DLLVM_ENABLE_LIBPFM=OFF -DLLVM_ENABLE_OCAMLDOC=OFF -DLLVM_ENABLE_PLUGINS=OFF -DLLVM_ENABLE_Z3_SOLVER=OFF -DLLVM_BUILD_UTILS=OFF -DLLVM_BUILD_TOOLS=OFF -DLLVM_BUILD_STATIC=OFF -DLLVM_INCLUDE_UTILS=OFF -DLLVM_INCLUDE_TESTS=OFF -DLLVM_INCLUDE_EXAMPLES=OFF -DLLVM_INCLUDE_BENCHMARKS=OFF -DLLVM_INCLUDE_DOCS=OFF -DLLVM_TOOL_LLVM_LTO2_BUILD=OFF -DLLVM_TOOL_LLVM_LTO_BUILD=OFF -DLLVM_TOOL_LTO_BUILD=OFF -DLLVM_TOOL_REMARKS_SHLIB_BUILD=OFF -DLLVM_STATIC_LINK_CXX_STDLIB=ON -DLLVM_TARGETS_TO_BUILD="X86;AArch64;RISCV" -DCMAKE_CXX_STANDARD=26 -G Ninja #Build LLVM only in debug mode
+cmake .. -DCMAKE_INSTALL_PREFIX=$E:XDG_LOCAL_HOME/llvm19-debug -DCMAKE_PREFIX_PATH=$E:XDG_LOCAL_HOME/llvm19-debug -DCMAKE_BUILD_TYPE=Debug -DLLVM_ENABLE_LIBXML2=OFF -DLLVM_ENABLE_TERMINFO=OFF -DLLVM_ENABLE_LIBEDIT=OFF -DLLVM_PARALLEL_LINK_JOBS=(nproc) -DLLVM_PARALLEL_COMPILE_JOBS=(nproc) -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++  -DLLVM_ENABLE_LIBCXX=ON -DLLVM_ENABLE_MODULES=ON -DLLVM_USE_LINKER=mold -DLLVM_ENABLE_LTO=OFF -DLLVM_ENABLE_BACKTRACES=OFF -DLLVM_ENABLE_BINDINGS=OFF -DLLVM_ENABLE_CRASH_OVERRIDES=OFF -DLLVM_ENABLE_LIBPFM=OFF -DLLVM_ENABLE_OCAMLDOC=OFF -DLLVM_ENABLE_PLUGINS=OFF -DLLVM_ENABLE_Z3_SOLVER=OFF -DLLVM_BUILD_UTILS=OFF -DLLVM_BUILD_TOOLS=OFF -DLLVM_BUILD_STATIC=ON -DLLVM_INCLUDE_UTILS=OFF -DLLVM_INCLUDE_TESTS=OFF -DLLVM_INCLUDE_EXAMPLES=OFF -DLLVM_INCLUDE_BENCHMARKS=OFF -DLLVM_INCLUDE_DOCS=OFF -DLLVM_TOOL_LLVM_LTO2_BUILD=OFF -DLLVM_TOOL_LLVM_LTO_BUILD=OFF -DLLVM_TOOL_LTO_BUILD=OFF -DLLVM_TOOL_REMARKS_SHLIB_BUILD=OFF -DCLANG_BUILD_TOOLS=OFF -DCLANG_INCLUDE_DOCS=OFF -DCLANG_INCLUDE_TESTS=OFF -DCLANG_ENABLE_ARCMT=ON -DCLANG_TOOL_CLANG_IMPORT_TEST_BUILD=OFF -DCLANG_TOOL_CLANG_LINKER_WRAPPER_BUILD=OFF -DCLANG_TOOL_C_INDEX_TEST_BUILD=OFF -DCLANG_TOOL_ARCMT_TEST_BUILD=OFF -DCLANG_TOOL_C_ARCMT_TEST_BUILD=OFF -DCLANG_TOOL_LIBCLANG_BUILD=OFF -DLIBCLANG_BUILD_STATIC=ON -DLLD_BUILD_TOOLS=OFF -G Ninja #Build all llvm to be review for when building llvm in full with lld and clang projects enabled
+cmake .. -DCMAKE_INSTALL_PREFIX=$E:XDG_LOCAL_HOME/llvm19-debug -DCMAKE_PREFIX_PATH=$E:XDG_LOCAL_HOME/llvm19-debug -DCMAKE_BUILD_TYPE=Release -DLLVM_PARALLEL_LINK_JOBS=1 -DCMAKE_CXX_STANDARD=23 -DLLD_BUILD_TOOLS=OFF # build lld in release and link to debug llvm
+cmake .. -DCMAKE_INSTALL_PREFIX=$E:XDG_LOCAL_HOME/llvm19-debug-modules -DCMAKE_PREFIX_PATH=$E:XDG_LOCAL_HOME/llvm19-debug-modules -DCMAKE_BUILD_TYPE=Debug -DLLVM_ENABLE_LIBXML2=OFF -DLLVM_ENABLE_LIBEDIT=OFF -DLLVM_PARALLEL_LINK_JOBS=(nproc) -DLLVM_PARALLEL_COMPILE_JOBS=(nproc) -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DLLVM_ENABLE_LIBCXX=ON -DLLVM_ENABLE_MODULES=ON -DLLVM_USE_LINKER=mold -DLLVM_ENABLE_LTO=OFF -DLLVM_ENABLE_BACKTRACES=OFF -DLLVM_ENABLE_BINDINGS=OFF -DLLVM_ENABLE_CRASH_OVERRIDES=OFF -DLLVM_ENABLE_LIBPFM=OFF -DLLVM_ENABLE_OCAMLDOC=OFF -DLLVM_ENABLE_PLUGINS=OFF -DLLVM_ENABLE_Z3_SOLVER=OFF -DLLVM_BUILD_UTILS=OFF -DLLVM_BUILD_TOOLS=OFF -DLLVM_BUILD_STATIC=OFF -DLLVM_INCLUDE_UTILS=OFF -DLLVM_INCLUDE_TESTS=OFF -DLLVM_INCLUDE_EXAMPLES=OFF -DLLVM_INCLUDE_BENCHMARKS=OFF -DLLVM_INCLUDE_DOCS=OFF -DLLVM_TOOL_LLVM_LTO2_BUILD=OFF -DLLVM_TOOL_LLVM_LTO_BUILD=OFF -DLLVM_TOOL_LTO_BUILD=OFF -DLLVM_TOOL_REMARKS_SHLIB_BUILD=OFF -DLLVM_STATIC_LINK_CXX_STDLIB=ON -DLLVM_TARGETS_TO_BUILD="X86;AArch64;RISCV" -DCMAKE_CXX_STANDARD=26 -G Ninja #Build LLVM only in debug mode
 composer create-project laravel/laravel laralearn
 composer global info
 composer global list
@@ -99,12 +108,15 @@ fc-match mono
 ffmpeg -i 'input'  -filter:a volumedetect -f null /dev/null
 find ~/.local/zig -maxdepth 1 -ctime +3 -type d -name "*-dev.*" -exec rm -rf '{}' + stdout>$os:dev-null
 functions precmd
-gcc --print-file-name libc.so
+g++ -E -Wp,-v -xc++ /dev/null
+gcc --print-file-name=libgcc.a
+gcc --print-file-name=libgcc_s.so # startup files https://stackoverflow.com/a/16436294/12007740
 getconf GNU_LIBC_VERSION
 getfacl /dev/dri/card0
 git branch --set-upstream-to=origin/master master
 git fetch origin pull/1136/head:revive-translateC
 git log --patch --reverse 3d8627719be00e39070eaca0ee5b599f2a877c5c..
+git pull --force --strategy recursive --strategy-option theirs
 git pull --rebase=merges upstream master
 git pull upstream master:test_boundarray
 git push --follow-tags
@@ -112,6 +124,8 @@ git push mywork learn_rust
 git push origin fixes:master
 git remote prune origin
 git remote set-branches --add origin branch
+git remote set-branches --no-add origin fix-spacing-templates ; git branch -d fix-spacing-templates ; git remote prune origin
+git remote set-branches --no-add origin fix-spacing-templates ; git config --unset-all remote.origin.fetch ; git branch -d fix-spacing-templates
 git remote show origin
 git restore --source=12e8f86 fm/lf/clean_preview.zsh
 git show v0.3.0

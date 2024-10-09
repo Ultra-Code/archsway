@@ -19,7 +19,8 @@ edit:add-var bun~ $bun~
 
 set edit:insert:binding[Alt-l] = { edit:clear }
 
-set edit:command-abbr['bat'] = 'bat --style=numbers,changes'
+fn cat {|@options| e:bat --style=numbers,changes $@options }
+edit:add-var cat~ $cat~
 
 fn sort-inplace {|file|
   order < $file | compact | to-lines stdout> $E:PREFIX/tmp/sort
@@ -343,7 +344,8 @@ fn gpu {
 edit:add-var gpu~ $gpu~
 
 fn gcl {|@repo|
-  # https://stackoverflow.com/questions/17714159/how-do-i-undo-a-single-branch-clone
+  # https://stackoverflow.com/a/60846265
+  # https://stackoverflow.com/a/67200162
   git clone --filter=tree:0 --single-branch $@repo
 }
 edit:add-var gcl~ $gcl~
