@@ -151,6 +151,8 @@ Options=mode=1777,strictatime,nosuid,nodev,size=90%%,nr_inodes=1m
 - modify relector configuration in /etc/xdg/reflector/reflector.conf to sort based on download rate with --sort rate
 
 ## TERMUX
+To use [pacman](https://wiki.archlinux.org/title/Pacman) as the package manager for [Termux](https://termux.dev/en/) follow these [instructions](https://wiki.termux.com/wiki/Switching_package_manager)
+If you want to compile [AUR](https://wiki.archlinux.org/title/Arch_User_Repository) packages follow these [instructions](https://wiki.termux.com/wiki/AUR)
 - openssl-tool
 - openssh
 - zig
@@ -165,3 +167,10 @@ Options=mode=1777,strictatime,nosuid,nodev,size=90%%,nr_inodes=1m
 - git
 - helix
 - man
+
+## WSL
+Install [ArchWSL](https://github.com/yuk7/ArchWSL) using [scoop](https://scoop.sh/) on windows 11. After installing using scoop follow these [instructions](https://wsldl-pg.github.io/ArchW-docs/How-to-Setup/#setup-after-install) to setup ArchWSL.
+- To compile WSL kernel you need `base-devel`, `bc`, `cpio`, `pahole`, `python`, `rsync`
+- Then set `swap=32GB` and `swapFile=C:\\Users\\username\\wsl\\swap.vhdx` in .wslconfig to ensure you can compile the kernel without running out of memory
+- follow instructions at [updating wsl kernel](https://learn.microsoft.com/en-us/community/content/wsl-user-msft-kernel-v6)
+- At the end you should have a [.wslconfig](https://github.com/Ultra-Code/archsway/blob/master/wsl/wslconfig) like mine
