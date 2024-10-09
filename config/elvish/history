@@ -103,6 +103,7 @@ getfacl /dev/dri/card0
 git branch --set-upstream-to=origin/master master
 git fetch origin pull/1136/head:revive-translateC
 git log --patch --reverse 3d8627719be00e39070eaca0ee5b599f2a877c5c..
+git pull --rebase=merges upstream master
 git pull upstream master:test_boundarray
 git push --follow-tags
 git push mywork learn_rust
