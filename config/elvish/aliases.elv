@@ -234,7 +234,7 @@ set edit:command-abbr['pmsi'] = 'pacman -Sii'
 fn pml { pacman -Qe }
 edit:add-var pml~ $pml~
 
-fn pmu { pacman -Syu }
+fn pmu { pacman -Fy ; pacman -Syu }
 edit:add-var pmu~ $pmu~
 
 fn pmlr { pacman -Qmq }
@@ -393,7 +393,7 @@ fn a2l {|@argv|
  }
 edit:add-var a2l~ $a2l~
 
-fn objdump {|exe| e:objdump -drwC -Mintel $exe }
+fn objdump {|exe| e:objdump -dSrwC -Mintel $exe }
 edit:add-var objdump~ $objdump~
 
 fn update-mirrors {

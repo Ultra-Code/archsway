@@ -27,6 +27,7 @@ cargo xtask docgen
 chafa --format=sixels ~/files/Pictures/47.jpg
 chafa --symbols ~/files/Pictures/47.jpg
 chown -R www-data:www-data storage
+clang -g -nostartfiles -o main.clang main.bc
 clang++ -g -std=c++2b -fsanitize=address,bounds recursion.cxx -o exe
 cmake -DCMAKE_BUILD_TYPE=Release -DZIG_NO_LIB=ON -GNinja -S ..
 composer create-project laravel/laravel laralearn
@@ -98,6 +99,7 @@ fc-match mono
 ffmpeg -i 'input'  -filter:a volumedetect -f null /dev/null
 find ~/.local/zig -maxdepth 1 -ctime +3 -type d -name "*-dev.*" -exec rm -rf '{}' + stdout>$os:dev-null
 functions precmd
+gcc --print-file-name libc.so
 getconf GNU_LIBC_VERSION
 getfacl /dev/dri/card0
 git branch --set-upstream-to=origin/master master
@@ -168,7 +170,9 @@ journalctl _PID=421
 kitten icat ~/files/Pictures/108.jpg
 kitty +kitten themes
 kitty +list-fonts --psnames | grep "Iosevka Term"
+ld -o mainllc.ld -dynamic-linker /lib64/ld-linux-x86-64.so.2 mainllc.o -lc
 ldd --version
+llc -O0 -filetype=obj -relocation-model=pic main.bc -o mainllc.o
 loginctl session-status
 make
 make install
@@ -338,7 +342,7 @@ zig build -Dtarget=x86_64-linux-gnu.2.34
 zig build -Dtarget=x86_64-linux-musl -Doptimize=ReleaseSafe
 zig build install -Doptimize=ReleaseFast --prefix ~/.local
 zig build test --summary all
-zig build-exe --show-builtin
+zig build-exe -fno-llvm -fno-lld -target aarch64-linux --show-builtin
 zig build-exe -lc unique.zig
 zig targets | jq .libc
 zig test -femit-bin=zigtest src/main.zig
@@ -348,4 +352,5 @@ zig test src/main.zig
 zig test src/packed_and_extern_struct.zig
 zig translate-c -lc unique.c > unique.zig
 zig-update
+zig2 build-exe -fPIC -fno-lld -fno-stack-check --verbose-llvm-bc=main.bc -fno-emit-bin main.zig
 zig3 build -p stage4 -Denable-llvm -Dno-lib
