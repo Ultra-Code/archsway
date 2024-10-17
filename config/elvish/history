@@ -110,6 +110,7 @@ git push mywork learn_rust
 git push origin fixes:master
 git remote prune origin
 git remote set-branches --add origin branch
+git remote set-branches --no-add origin fix-spacing-templates ; git branch -d fix-spacing-templates ; git remote prune origin
 git remote show origin
 git restore --source=12e8f86 fm/lf/clean_preview.zsh
 git show v0.3.0
