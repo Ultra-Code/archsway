@@ -359,3 +359,5 @@ cargo package --list --allow-dirty
 git remote set-branches --no-add origin fix-spacing-templates ; git config --unset-all remote.origin.fetch ; git branch -d fix-spacing-templates
 cargo clippy --workspace
 cargo build --package asm-lsp --lib
+cargo tree --duplicates
+ git pull --strategy-option theirs origin aarch64-register-info
