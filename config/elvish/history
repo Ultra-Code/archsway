@@ -6,6 +6,11 @@ BROWSER=firefox man -H
 CC=clang CXX=clang++ cmake -DCMAKE_BUILD_TYPE=Release -GNinja -DZIG_NO_LIB=ON ..
 LIBGL_ALWAYS_SOFTWARE=true kitty
 MESA_LOADER_DRIVER_OVERRIDE=d3d12 __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json kitty
+adb connect 192.168.70.113:38877
+adb devices -l
+adb pair 192.168.70.113:43579
+adb push -p --sync -z zstd '/mnt/c/Users/b.assan/Downloads/TrendiMerchantV10 2.apk' /sdcard/Download
+adb shell
 aria2c -x2 -c -i movies.txt
 asciinema play elvish_completion_take_20sec.cast
 asciinema upload elvish_completion_take_20sec.cast
