@@ -307,7 +307,6 @@ set edit:command-abbr['gg'] = 'git grep --recurse-submodules -I'
 set edit:command-abbr['gmv'] = 'git mv'
 set edit:command-abbr['grm'] = 'git rm -r'
 set edit:command-abbr['gsh'] = 'git show'
-set edit:command-abbr['gst'] = "git status"
 set edit:command-abbr['glt'] = "git log --stat -1"
 set edit:command-abbr['gsml'] = "git log --submodule -p"
 set edit:command-abbr['gsmi'] = "git submodule update --init --recursive"
@@ -332,6 +331,11 @@ fn gs {
   git status -s
 }
 edit:add-var gs~ $gs~
+
+fn gst {
+  git status
+}
+edit:add-var gst~ $gst~
 
 fn gp {
   git push

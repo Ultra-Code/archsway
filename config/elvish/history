@@ -8,7 +8,7 @@ LIBGL_ALWAYS_SOFTWARE=true kitty
 MESA_LOADER_DRIVER_OVERRIDE=d3d12 __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json kitty
 adb connect 192.168.70.113:38877
 adb devices -l
-adb pair 192.168.70.113:43579
+adb pair 192.168.70.113:43579 # https://developer.android.com/tools/adb
 adb push -p --sync -z zstd '/mnt/c/Users/b.assan/Downloads/TrendiMerchantV10 2.apk' /sdcard/Download
 adb shell
 aria2c -x2 -c -i movies.txt
@@ -339,7 +339,6 @@ systemd-analyze critical-chain
 systemd-cat -t btmp -p info tail -f /path/to/log
 systemd-cgls
 systemd-cgtop
-time zig build -fsummary -Doptimize=ReleaseSafe
 top
 udevadm info --attribute-walk --name=/dev/libmtp-1-2
 udevadm info --attribute-walk --path=/sys/class/power_supply/ADP1
@@ -359,10 +358,11 @@ yt-dlp -S 'res:720' 'https://www.youtube.com/watch?v=lLv1s7rKeCM'
 zgrep CONFIG_ZRAM_MULTI_COMP /proc/config.gz
 zig build -Dtarget=x86_64-linux-gnu.2.34
 zig build -Dtarget=x86_64-linux-musl -Doptimize=ReleaseSafe
-zig build install -Doptimize=ReleaseFast --prefix ~/.local
+zig build install --prefix ~/.local -Doptimize=ReleaseFast
 zig build test --summary all
 zig build-exe -fno-llvm -fno-lld -target aarch64-linux --show-builtin
 zig build-exe -lc unique.zig
+zig targets | from-json | put (all)[libc] | order | each { |target| put $target } (all)
 zig targets | jq .libc
 zig test -femit-bin=zigtest src/main.zig
 zig test -fno-llvm -fno-lld file.zig --test-filter funcname
