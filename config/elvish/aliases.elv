@@ -298,10 +298,15 @@ fn pms {|package|
 edit:add-var pms~ $pms~
 
 #Git aliases
-set edit:command-abbr['gd'] = 'git diff'
-set edit:command-abbr['gc'] = 'git commit'
-set edit:command-abbr['gt'] = 'git tag -s'
 set edit:command-abbr['ga'] = 'git add'
+# https://stackoverflow.com/questions/1085162/commit-only-part-of-a-files-changes-in-git
+set edit:command-abbr['gap'] = 'git add --patch'
+set edit:command-abbr['gd'] = 'git diff'
+set edit:command-abbr['gds'] = 'git diff --staged'
+set edit:command-abbr['gc'] = 'git commit'
+# see changes you are about to commit
+set edit:command-abbr['gcv'] = 'git commit --verbose'
+set edit:command-abbr['gt'] = 'git tag -s'
 set edit:command-abbr['glf'] = 'git log --follow -p'
 set edit:command-abbr['gg'] = 'git grep --recurse-submodules -I'
 set edit:command-abbr['gmv'] = 'git mv'
