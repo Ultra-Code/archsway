@@ -28,7 +28,7 @@ edit:add-var sort-inplace~ $sort-inplace~
 fn history-export {
   edit:command-history | peach {|hist| put $hist[cmd]} | order | compact | to-lines
 }
-edit:add-var he~ $history-export~
+edit:add-var history-export~ $history-export~
 
 fn store-hist {
   history-export stdout> $E:PREFIX/tmp/history
@@ -55,7 +55,7 @@ fn history-import {
     echo "Current history is up to date"
   }
 }
-edit:add-var hi~ $history-import~
+edit:add-var history-import~ $history-import~
 
 fn hu { edit:history:fast-forward }
 edit:add-var hu~ $hu~
@@ -232,8 +232,11 @@ set edit:command-abbr['pmsi'] = 'pacman -Sii'
 fn pml { pacman -Qe }
 edit:add-var pml~ $pml~
 
-fn pmu { pacman -Fy ; pacman -Syu }
+fn pmu { pacman -Syu }
 edit:add-var pmu~ $pmu~
+
+fn pmuf { pacman -Fy }
+edit:add-var pmuf~ $pmuf~
 
 fn pmlr { pacman -Qmq }
 edit:add-var pmlr~ $pmlr~
