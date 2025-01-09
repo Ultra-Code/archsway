@@ -74,6 +74,16 @@ if (has-external modular) {
      }
 }
 
+# Alternative rustup dist servers
+# Global
+# https://static.rust-lang.org & https://static.rust-lang.org/rustup - Default
+#
+# Regional
+# https://mirrors.tuna.tsinghua.edu.cn/rustup - Tsinghua University
+# https://mirrors.ustc.edu.cn/rust-static & https://mirrors.ustc.edu.cn/rust-static/rustup - USTC China
+#
+# Example:
+# $ env RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup RUSTUP_UPDATE_ROOT=https://mirrors.tuna.tsinghua.edu.cn/rustup rustup update
 if (or (has-external rustup) (has-external rustc) (os:is-dir $E:XDG_LOCAL_HOME/cargo)) {
      set-env RUSTUP_HOME (put $E:XDG_LOCAL_HOME | path:join (all) rustup)
      set E:CARGO_HOME = (put $E:XDG_LOCAL_HOME | path:join (all) cargo)
@@ -142,7 +152,7 @@ edit:add-var which~ $which~
 
 set-env EDITOR (
      if (has-external hx) { which hx } ^
-     elif (os:is-regular $E:PREFIX/usr/lib/helix/hx) { print $E:PREFIX/usr/lib/helix/hx } ^
+     elif (os:is-regular $E:PREFIX/usr/lib/helix/hx) { append-to-path $E:PREFIX/usr/lib/helix ; print $E:PREFIX/usr/lib/helix/hx } ^
      elif (has-external helix) { which helix } ^
      elif (has-external nvim) { which nvim } ^
      else { which vim }

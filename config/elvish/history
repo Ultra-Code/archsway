@@ -26,6 +26,7 @@ cargo build --package asm-lsp --lib
 cargo build --release
 cargo clean
 cargo clippy --workspace
+cargo install --list
 cargo install --path helix-term --locked
 cargo new --help
 cargo new ferrous --vcs none
@@ -102,6 +103,7 @@ e_inline_xattr,sb_checksum,compression /dev/sdb2
 ea
 echo (styled warning: red) bumpy road
 ee
+env RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup RUSTUP_UPDATE_ROOT=https://mirrors.tuna.tsinghua.edu.cn/rustup rustup update
 eq (uname) Linux
 eval (ssh-agent -t1d)
 exec

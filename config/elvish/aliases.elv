@@ -5,9 +5,6 @@ use os
 fn el { exec elvish }
 edit:add-var el~ $el~
 
-fn hx {|@files| $E:EDITOR $@files }
-edit:add-var hx~ $hx~
-
 fn Hx {|@files| sudo --preserve-env $E:EDITOR $@files }
 edit:add-var Hx~ $Hx~
 
