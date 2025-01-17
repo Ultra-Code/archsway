@@ -93,12 +93,8 @@ if (or (has-external rustup) (has-external rustc) (os:is-dir $E:XDG_LOCAL_HOME/c
 }
 
 if (has-external bun) {
-     # prevent error on fresh install due to No package.json in bun/install/global
-     var bun_path = (var success = ?(bun pm bin -g stderr>$os:dev-null))
-     if ?($success) { append-to-path $bun_path }
-} else {
-     set E:BUN_INSTALL = $E:XDG_LOCAL_HOME/bun
-     append-to-path $E:BUN_INSTALL/bin
+     var bun_path  = (put $E:XDG_CACHE_HOME/.bun/bin)
+     append-to-path $bun_path
 }
 
 if (has-external go) {
