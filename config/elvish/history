@@ -140,6 +140,7 @@ git submodule add git@github.com:LMDB/lmdb.git deps/lmdb
 git switch revive-translateC
 git tag -a v0.3.0
 glxinfo |grep opengl
+go clean -modcache
 go install src.elv.sh/cmd/elvish@master
 gpg --expert --edit-key "Ultra Code"
 gpg --expert --full-generate-key "Ultra Code"
@@ -352,6 +353,7 @@ udevadm test --action=change /sys/class/power_supply/ADP1
 udevadm test-builtin net_id /sys/class/net/enp3s0
 udevadm trigger --action=add --verbose --type=subsystems --subsystem-match=usb --attr-match=attribute="removable==1"
 unshare --user --pid --map-root-user --mount-proc --fork bash
+watchexec --shell=none --restart --watch src cargo run
 xdg-mime default firefox.desktop application/pdf
 xdg-mime query default application/epub
 xdg-mime query filetype ~/.local/neorg/index.norg
