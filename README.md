@@ -172,5 +172,6 @@ If you want to compile [AUR](https://wiki.archlinux.org/title/Arch_User_Reposito
 Install [ArchWSL](https://github.com/yuk7/ArchWSL) using [scoop](https://scoop.sh/) on windows 11. After installing using scoop follow these [instructions](https://wsldl-pg.github.io/ArchW-docs/How-to-Setup/#setup-after-install) to setup ArchWSL.
 - To compile WSL kernel you need `base-devel`, `bc`, `cpio`, `pahole`, `python`, `rsync`
 - Then set `swap=32GB` and `swapFile=C:\\Users\\username\\wsl\\swap.vhdx` in .wslconfig to ensure you can compile the kernel without running out of memory
+- ensure CONFIG_TUN=y and CONFIG_TAP=y are set in Microsoft/config-wsl to enable [userspace networking](https://www.kernel.org/doc/html/latest/networking/tuntap.html) used by podman and vpns
 - follow instructions at [updating wsl kernel](https://learn.microsoft.com/en-us/community/content/wsl-user-msft-kernel-v6)
 - At the end you should have a [.wslconfig](https://github.com/Ultra-Code/archsway/blob/master/wsl/wslconfig) like mine
