@@ -355,7 +355,7 @@ edit:add-var gpu~ $gpu~
 fn gcl {|@repo|
   # https://stackoverflow.com/a/60846265
   # https://stackoverflow.com/a/67200162
-  git clone --filter=tree:0 --single-branch $@repo
+  git clone --filter=tree:0 $@repo
 }
 edit:add-var gcl~ $gcl~
 
