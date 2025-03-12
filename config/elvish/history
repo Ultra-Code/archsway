@@ -34,6 +34,8 @@ cargo package --list --allow-dirty
 cargo run
 cargo test
 cargo tree --duplicates
+cargo tree --edges features --invert chrono
+cargo tree --edges features --package chrono
 cargo xtask docgen
 chafa --format=sixels ~/files/Pictures/47.jpg
 chafa --symbols ~/files/Pictures/47.jpg
@@ -282,6 +284,8 @@ scp -Cr Videos/BOLLYWOOD/ isaac@192.168.8.102:~/Windows/
 scp -r -P 62226 kekele@102.211.186.199:/home/kekele/.ssh remotessh
 scp kekele:"firewalld.rules.conf*" serverdotfiles
 scp ~/serverdotfiles/nftables.new.conf kekele:nftables.conf
+sea-orm-cli generate entity -o entity_dir --with-serde deserial
+sea-orm-cli migrate generate table_name --universal-time
 ss --tcp --udp --listening --processes --numeric
 ssh -G localhost
 ssh kekele -L 127.0.0.1:8080:102.211.186.199:63333 -N

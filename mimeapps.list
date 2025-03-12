@@ -7,3 +7,4 @@ application/octet-stream=libreoffice-impress.desktop
 application/zip=com.github.johnfactotum.Foliate.desktop
 application/epub+zip=com.github.johnfactotum.Foliate.desktop
 application/vnd.oasis.opendocument.text=libreoffice-writer.desktop
+x-scheme-handler/postman=Postman.desktop

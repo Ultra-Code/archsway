@@ -353,8 +353,8 @@ fn gpu {
 edit:add-var gpu~ $gpu~
 
 fn gcl {|@repo|
-  # https://stackoverflow.com/a/60846265
-  # https://stackoverflow.com/a/67200162
+  # https://stackoverflow.com/questions/17714159/how-do-i-undo-a-single-branch-clone/60846265#60846265
+  # https://stackoverflow.com/questions/11552437/git-pull-remote-branch-cannot-find-remote-ref/67200162#67200162
   git clone --filter=tree:0 $@repo
 }
 edit:add-var gcl~ $gcl~
