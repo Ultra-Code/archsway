@@ -1,0 +1,6 @@
+[Unit]
+Description=Sync Firefox profile in memory to disk
+
+[Service]
+Type=oneshot
+ExecStart=%E/systemd/user/firefox-profile-on-ram.sh
