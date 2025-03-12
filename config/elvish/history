@@ -284,7 +284,7 @@ scp -Cr Videos/BOLLYWOOD/ isaac@192.168.8.102:~/Windows/
 scp -r -P 62226 kekele@102.211.186.199:/home/kekele/.ssh remotessh
 scp kekele:"firewalld.rules.conf*" serverdotfiles
 scp ~/serverdotfiles/nftables.new.conf kekele:nftables.conf
-sea-orm-cli generate entity -o entity_dir --with-serde deserial
+sea-orm-cli generate entity -o entity_dir --with-serde deserialize --with-prelude=all-allow-unused-imports
 sea-orm-cli migrate generate table_name --universal-time
 ss --tcp --udp --listening --processes --numeric
 ssh -G localhost
