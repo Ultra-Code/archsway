@@ -381,3 +381,4 @@ zig translate-c -lc unique.c > unique.zig
 zig-update
 zig2 build-exe -fPIC -fno-lld -fno-stack-check --verbose-llvm-bc=main.bc -fno-emit-bin main.zig
 zig3 build -p stage4 -Denable-llvm -Dno-lib
+makepkg -g >> PKGBUILD # generate new checksum for package
