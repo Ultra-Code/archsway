@@ -146,12 +146,12 @@ const Run = struct {
 
         const background =
             fmt(
-            self.arena,
-            "wbg {[wallpaper]s}",
-            .{
-                .wallpaper = self.options.wallpaper,
-            },
-        );
+                self.arena,
+                "wbg {[wallpaper]s}",
+                .{
+                    .wallpaper = self.options.wallpaper,
+                },
+            );
 
         const autostarts_commands = [_][]const u8{
             background,
@@ -396,8 +396,8 @@ const Run = struct {
 
     const Mod = enum { Super, None, Shift, Alt, Control };
     // zig fmt: off
-    const Key = enum { 
-        A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, 
+    const Key = enum {
+        A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S,
         T, U, V, W, X, Y, Z, Return, Print, Space, Tab, Escape,
         XF86Eject, XF86AudioRaiseVolume, XF86AudioLowerVolume,
         XF86AudioMute, XF86AudioMicMute, XF86AudioStop,
@@ -988,9 +988,9 @@ const Run = struct {
         const UserMode = struct {
             const Enter =
                 struct {
-                mod: Mod,
-                key: Key,
-            };
+                    mod: Mod,
+                    key: Key,
+                };
             const Exit = Enter;
 
             name: []const u8,
@@ -1151,7 +1151,7 @@ const Run = struct {
                 .{ .tag = tag, .tag_mask = tag_mask },
             ));
 
-            // Super+Alt+[1-9] to toggle (sending a copy of) current focused view/window onto specified tag output [0-8]
+            // Super+Control+Shift+[1-9] to toggle (sending a copy of) current focused view/window onto specified tag output [1-9]
             run(self.arena, fmt(
                 self.arena,
                 "riverctl map normal Super+Control+Shift {[tag]d} toggle-view-tags {[tag_mask]d}",
@@ -1159,17 +1159,17 @@ const Run = struct {
             ));
         }
 
-        // Super+0 to focus all tags
-        // Super+Shift+0 to tag focused view/window with all tags
         // river has a total of 32 tags
         const all_tags_mask = @shlExact(1, 32) - 1;
 
+        // Super+0 to focus all tags(workspaces) on current view
         run(self.arena, fmt(
             self.arena,
             "riverctl map normal Super 0 set-focused-tags {[all_tags_mask]d}",
             .{ .all_tags_mask = all_tags_mask },
         ));
 
+        // Super+Shift+0 to tag(copy) focused view/window on all tags(workspaces)
         run(self.arena, fmt(
             self.arena,
             "riverctl map normal Super+Shift 0 set-view-tags {[all_tags_mask]d}",
@@ -1212,7 +1212,7 @@ const Run = struct {
         // zig fmt: off
         const Action = enum {
             float, csd, tags, position,
-            // @"no-float", ssd, output, 
+            // @"no-float", ssd, output,
             //dimensions, fullscreen, @"no-fullscreen",
         };
         // zig fmt: on
@@ -1330,19 +1330,29 @@ const Run = struct {
         position.run(self.arena);
     }
 
-    fn rivertile(_: Run) noreturn {
-        posix.execveZ("rivertile", &.{
-            "-view-padding",
-            "0",
-            "-outer-padding",
-            "0",
-            "-main-location",
-            "left",
-            "-main-count",
-            "1",
-            "-main-ratio",
-            "0.6",
-        }, &.{null}) catch unreachable;
+    fn rivertile(r: Run) void {
+        const pid = posix.fork() catch unreachable;
+        if (pid < 0) {
+            // fork failed
+            posix.exit(5);
+        } else if (pid == 0) {
+            // child process
+            process.execv(r.arena, &.{
+                "rivertile",
+                "-view-padding",
+                "0",
+                "-outer-padding",
+                "0",
+                "-main-location",
+                "left",
+                "-main-count",
+                "1",
+                "-main-ratio",
+                "0.6",
+            }) catch unreachable;
+        } else {
+            //running rivertile in background so parent must not call waitpid
+        }
     }
 };
 
