@@ -1,4 +1,5 @@
 # https://wiki.archlinux.org/title/XDG_MIME_Applications
+# Link to $E:XDG_CONFIG_HOME/mimeapps.list
 [Default Applications]
 text/plain=helix.desktop
 application/json=helix.desktop
