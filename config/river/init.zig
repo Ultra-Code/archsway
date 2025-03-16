@@ -28,7 +28,7 @@ const Options = struct {
 
     pub fn init(arena: mem.Allocator) @This() {
         const HOME = getenv("HOME");
-        const term = _terminal(arena);
+        const term = _terminal(arena, .ghostty);
 
         return .{
             .terminal = term,
@@ -56,13 +56,13 @@ const Options = struct {
 
     fn _desktop_launcher(arena: mem.Allocator, term: []const u8) []const u8 {
         return fmt(arena,
-            \\fuzzel --terminal "{[term]s}" --lines 25 --width 54 --show-actions
+            \\fuzzel --terminal "{[term]s}" --lines 15 --width 45 --show-actions
         , .{ .term = term });
     }
 
     fn _menu_launcher(arena: mem.Allocator, term: []const u8) []const u8 {
         return fmt(arena,
-            \\fuzzel --terminal "{[term]s}" --lines 25 --width 90 --dmenu
+            \\fuzzel --terminal "{[term]s}" --lines 15 --width 60 --dmenu
         , .{ .term = term });
     }
 
@@ -70,15 +70,20 @@ const Options = struct {
         return posix.getenv(env_key).?;
     }
 
-    fn _terminal(arena: mem.Allocator) []const u8 {
-        // virtual terminal number
-        const vtnr = getenv("XDG_VTNR");
-        const cmd = fmt(
-            arena,
-            "kitty --single-instance --instance-group {[vtnr]s}",
-            .{ .vtnr = vtnr },
-        );
-        return cmd;
+    fn _terminal(arena: mem.Allocator, emulator: enum { ghostty, kitty }) []const u8 {
+        return switch (emulator) {
+            .ghostty => "ghostty --gtk-single-instance=true",
+            .kitty => blk: {
+                // virtual terminal number
+                const vtnr = getenv("XDG_VTNR");
+                const cmd = fmt(
+                    arena,
+                    "kitty --single-instance --instance-group {[vtnr]s}",
+                    .{ .vtnr = vtnr },
+                );
+                break :blk cmd;
+            },
+        };
     }
 
     fn _wallpaper(arena: mem.Allocator, HOME: []const u8) []const u8 {
@@ -242,12 +247,6 @@ const Run = struct {
         };
 
         run(arena, cmd);
-    }
-
-    fn popen(arena: mem.Allocator, cmd: []const u8) []const u8 {
-        const process_result = std.process.Child.run(.{ .allocator = arena, .argv = &.{ "sh", "-c", cmd } }) catch unreachable;
-        debug.assert(mem.eql(u8, process_result.stderr, ""));
-        return std.mem.trim(u8, process_result.stdout, "\n");
     }
 
     fn oneshot(self: Run) void {
@@ -1356,6 +1355,7 @@ const Run = struct {
     }
 };
 
+// Build with `zig build-exe -O ReleaseFast -femit-bin=init -fstrip riverinit.zig`
 pub fn main() !void {
     comptime {
         switch (builtin.os.tag) {
