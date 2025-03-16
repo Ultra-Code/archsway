@@ -71,11 +71,19 @@ const Options = struct {
     }
 
     fn _terminal(arena: mem.Allocator, emulator: enum { ghostty, kitty }) []const u8 {
+        // virtual terminal number to separate instances per WM instance
+        const vtnr = getenv("XDG_VTNR");
         return switch (emulator) {
-            .ghostty => "ghostty --gtk-single-instance=true",
+            .ghostty => ghostty: {
+                const cmd = fmt(
+                    arena,
+                    "ghostty --gtk-single-instance=true --class=com.wm.ghostty.vt{[vtnr]s}",
+
+                    .{ .vtnr = vtnr },
+                );
+                break :ghostty cmd;
+            },
             .kitty => blk: {
-                // virtual terminal number
-                const vtnr = getenv("XDG_VTNR");
                 const cmd = fmt(
                     arena,
                     "kitty --single-instance --instance-group {[vtnr]s}",
@@ -180,8 +188,8 @@ const Run = struct {
     fn xdg_portal(self: Run) void {
         const commands = [_][]const u8{
             "systemctl --user set-environment XDG_CURRENT_DESKTOP=river",
-            "systemctl --user import-environment DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP",
-            "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=river",
+            "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP",
+            "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=river",
         };
 
         for (commands) |command| {
@@ -516,6 +524,7 @@ const Run = struct {
                         \\spawn '{[terminal]s}'
                     , .{ .terminal = self.options.terminal }),
                 },
+                //TODO: to be replaced as I don't need this anymore
                 .{
                     .mod = &.{ .Super, .Shift },
                     .key = .Return,
@@ -982,6 +991,8 @@ const Run = struct {
         pointer_mapping.run(self.arena, .@"map-pointer");
     }
 
+    // https://wiki.archlinux.org/title/River#Modes
+    // Move more keybindings into modes
     fn user_mode(self: Run) void {
         // set $power_mangement "(s)uspend,hy(b)rid-sleep,(h)ibernate,(r)eboot,suspend-(t)hen-hibernate,(l)ock,(R)UEFI,(S)hutdown"
         const UserMode = struct {
@@ -1369,6 +1380,8 @@ pub fn main() !void {
     const arena = arena_allocator.allocator();
 
     const options = Options.init(arena);
+    //TODO: idea for improvement
+    // https://codeberg.org/river/wiki/pulls/10
     const run = Run.init(arena, options);
 
     run.autostart();
