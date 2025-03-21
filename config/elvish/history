@@ -205,6 +205,7 @@ makepkg --clean -f
 makepkg --install
 makepkg --printsrcinfo > .SRCINFO
 makepkg --syncdeps --rmdeps
+makepkg -g >> PKGBUILD # generate new checksum for package
 makoctl dismiss all
 mariadb -u ultracode -p < Downloads/access_to_basic_services.sql
 math:pow 10 3
@@ -224,6 +225,7 @@ notify-send -u critical -t 2000 -e 'Screenshot taken'
 num 0xfffff
 objcopy -v --add-gnu-debuglink=mode.debug mode
 objcopy -v --only-keep-debug mode mode.debug
+openssl rand -base64 48
 p10k configure
 pacman --noconfirm --root /host -Syu pacman
 php -S localhost:8000 -t src/
@@ -231,6 +233,9 @@ php artisan serve &
 ping 102.211.186.199 -c 4
 pkg-config --cflags --libs glfw3
 pkill --signal KILL pueued
+podman --log-level=debug run -it -v (pwd):/backend -w /backend --rm --security-opt seccomp=unconfined cgr.dev/chainguard/wolfi-base:latest sh
+podman-compose down --remove-orphans
+podman-compose down --volumes
 poetry add jupyterlab
 poetry add pytest --group dev
 poetry config --list
@@ -254,7 +259,7 @@ pylint --enable-all-extensions --enable=all --generate-toml-config > pylint.toml
 pylint --help-msg=docstring-first-line-empty
 pylint --list-group
 pylint --list-msgs-enabled
-readlink /bin/rustc 
+readlink /bin/rustc
 rename --verbose --interactive build build2 hashing/**
 resolvectl
 resolvectl query 1.1.1.1
@@ -272,8 +277,8 @@ rustup help
 rustup man cargo
 rustup run nightly rustc --version
 rustup run rustc
-rustup self update 
-rustup set profile default 
+rustup self update
+rustup set profile default
 rustup show
 rustup target list
 rustup toolchain help
@@ -381,4 +386,3 @@ zig translate-c -lc unique.c > unique.zig
 zig-update
 zig2 build-exe -fPIC -fno-lld -fno-stack-check --verbose-llvm-bc=main.bc -fno-emit-bin main.zig
 zig3 build -p stage4 -Denable-llvm -Dno-lib
-makepkg -g >> PKGBUILD # generate new checksum for package
