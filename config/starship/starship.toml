@@ -17,7 +17,7 @@ follow_symlinks = true
 [battery]
 format = "[$symbol $percentage]($style)"
 full_symbol = "󰁹"
-charging_symbol = "󰂄" #🔋
+charging_symbol = "󰂄"                    #🔋
 discharging_symbol = "󰂃"
 unknown_symbol = "󰁽"
 empty_symbol = "󰂎"
@@ -34,10 +34,7 @@ symbol = "🍞"
 style = "bold red"
 disabled = false
 detect_extensions = []
-detect_files = [
-    "bun.lockb",
-    "bunfig.toml",
-]
+detect_files = ["bun.lockb", "bunfig.toml"]
 detect_folders = []
 
 [c]
@@ -46,31 +43,15 @@ version_format = "v${raw}"
 style = "149 bold"
 symbol = " "
 disabled = false
-detect_extensions = [
-    "c",
-    "h",
-]
-detect_files = ["compile_flags.txt","CMakeLists.txt"]
+detect_extensions = ["c", "h"]
+detect_files = ["compile_flags.txt", "CMakeLists.txt"]
 detect_folders = []
-commands = [
-    [
-    "cc",
-    "--version",
-],
-    [
-    "gcc",
-    "--version",
-],
-    [
-    "clang",
-    "--version",
-],
-]
+commands = [["cc", "--version"], ["gcc", "--version"], ["clang", "--version"]]
 
 [character]
 format = "$symbol "
 success_symbol = "[❯](bold green)"
-error_symbol = '[✗ ](bold red)' 
+error_symbol = '[✗ ](bold red)'
 vimcmd_symbol = '[](bold green)'
 vimcmd_visual_symbol = '[V](bold yellow)'
 vimcmd_replace_symbol = "[R](bold purple)"
@@ -84,17 +65,14 @@ symbol = "△"
 style = "bold blue"
 disabled = false
 detect_extensions = []
-detect_files = [
-    "CMakeLists.txt",
-    "CMakeCache.txt",
-]
+detect_files = ["CMakeLists.txt", "CMakeCache.txt"]
 detect_folders = []
 
 [cmd_duration]
-min_time = 2000
+min_time = 1000
 format = " [$duration]($style)"
 style = "yellow bold"
-show_milliseconds = false
+show_milliseconds = true
 disabled = false
 show_notifications = false
 min_time_to_notify = 45000
@@ -135,11 +113,7 @@ style = "blue bold"
 only_with_files = true
 disabled = false
 detect_extensions = []
-detect_files = [
-    "docker-compose.yml",
-    "docker-compose.yaml",
-    "Dockerfile",
-]
+detect_files = ["docker-compose.yml", "docker-compose.yaml", "Dockerfile"]
 detect_folders = []
 
 [fill]
@@ -215,13 +189,13 @@ disabled = false
 not_capable_style = "bold red"
 detect_extensions = ["go"]
 detect_files = [
-    "go.mod",
-    "go.sum",
-    "go.work",
-    "glide.yaml",
-    "Gopkg.yml",
-    "Gopkg.lock",
-    ".go-version",
+  "go.mod",
+  "go.sum",
+  "go.work",
+  "glide.yaml",
+  "Gopkg.yml",
+  "Gopkg.lock",
+  ".go-version",
 ]
 detect_folders = ["Godeps"]
 
@@ -282,19 +256,8 @@ symbol = " "
 style = "bold green"
 disabled = false
 not_capable_style = "bold red"
-detect_extensions = [
-    "js",
-    "mjs",
-    "cjs",
-    "ts",
-    "mts",
-    "cts",
-]
-detect_files = [
-    "package.json",
-    ".node-version",
-    ".nvmrc",
-]
+detect_extensions = ["js", "mjs", "cjs", "ts", "mts", "cts"]
+detect_files = ["package.json", ".node-version", ".nvmrc"]
 detect_folders = ["node_modules"]
 
 [os]
@@ -339,20 +302,13 @@ symbol = "🐘"
 style = "147 bold"
 disabled = false
 detect_extensions = ["php"]
-detect_files = [
-    "composer.json",
-    ".php-version",
-]
+detect_files = ["composer.json", ".php-version"]
 detect_folders = []
 
 [python]
 pyenv_version_name = false
 pyenv_prefix = "pyenv "
-python_binary = [
-    "python",
-    "python3",
-    "python2",
-]
+python_binary = ["python", "python3", "python2"]
 format = '[${symbol} ${pyenv_prefix}(${version}) (\($virtualenv\))]($style)'
 version_format = "v${raw}"
 style = "yellow bold"
@@ -361,13 +317,13 @@ symbol = " "
 disabled = false
 detect_extensions = ["py"]
 detect_files = [
-    "requirements.txt",
-    ".python-version",
-    "pyproject.toml",
-    "Pipfile",
-    "tox.ini",
-    "setup.py",
-    "__init__.py",
+  "requirements.txt",
+  ".python-version",
+  "pyproject.toml",
+  "Pipfile",
+  "tox.ini",
+  "setup.py",
+  "__init__.py",
 ]
 detect_folders = []
 
@@ -431,13 +387,13 @@ allow_windows = false
 disabled = true
 
 [time]
-format = '[[  $time]()]($style)'
+format = '[[ $time]()]($style)'
 style = "bold yellow"
 use_12hr = false
 disabled = false
 utc_time_offset = "local"
 time_range = "-"
-time_format = "%R" # Hour:Minute Format
+time_format = "%R"               # Hour:Minute Format
 
 [username]
 format = "[$user]($style)"
@@ -447,7 +403,7 @@ show_always = false
 disabled = false
 
 [zig]
-format = " [$symbol($version)]($style)"
+format = " [$symbol ($version)]($style) "
 version_format = "v${raw}"
 symbol = "⚡️"
 style = "bold yellow"
