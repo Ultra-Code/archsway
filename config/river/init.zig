@@ -524,14 +524,6 @@ const Run = struct {
                         \\spawn '{[terminal]s}'
                     , .{ .terminal = self.options.terminal }),
                 },
-                //TODO: to be replaced as I don't need this anymore
-                .{
-                    .mod = &.{ .Super, .Shift },
-                    .key = .Return,
-                    .cmd = fmt(self.arena,
-                        \\spawn '{[terminal]s} --class "coding"'
-                    , .{ .terminal = self.options.terminal }),
-                },
                 // clear notifications
                 .{
                     .mod = &.{.Super},
@@ -703,8 +695,8 @@ const Run = struct {
                 },
                 // Super+Shift+E to bump the focused view to the top of the layout stack
                 .{
-                    .mod = &.{ .Super, .Shift },
-                    .key = .E,
+                    .mod = &.{.Super},
+                    .key = .Return,
                     .cmd = "zoom",
                 },
                 // Super+{H,L} to decrease/increase the main_factor value of rivertile by 0.02
