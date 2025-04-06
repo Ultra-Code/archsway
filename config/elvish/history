@@ -226,6 +226,9 @@ num 0xfffff
 objcopy -v --add-gnu-debuglink=mode.debug mode
 objcopy -v --only-keep-debug mode mode.debug
 openssl rand -base64 48
+openssl s_client -connect 127.0.0.1:8081 -tls1_3
+openssl s_client -connect localhost:8082 -showcerts
+openssl speed rsa2048 ecdsap256 ed25519
 p10k configure
 pacman --noconfirm --root /host -Syu pacman
 php -S localhost:8000 -t src/
@@ -234,6 +237,7 @@ ping 102.211.186.199 -c 4
 pkg-config --cflags --libs glfw3
 pkill --signal KILL pueued
 podman --log-level=debug run -it -v (pwd):/backend -w /backend --rm --security-opt seccomp=unconfined cgr.dev/chainguard/wolfi-base:latest sh
+podman run -itd --privileged --env-file .env --security-opt seccomp=unconfined -v .:/server -w /server --name outer-containers docker.io/library/alpine:edge sh
 podman-compose down --remove-orphans
 podman-compose down --volumes
 poetry add jupyterlab
