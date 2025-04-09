@@ -4,7 +4,7 @@
 [wsl2]
 
 # absolute Windows path to a custom Linux kernel.
-kernel=C:\\Users\\b.assan\\wsl\\bzImage-6.6.75.1-1
+# kernel=C:\\Users\\b.assan\\wsl\\bzImage-6.6.75.1-1
 
 # How much memory to assign to the WSL 2 VM, this can be set as whole numbers using GB or MB
 memory=6GB
@@ -18,9 +18,6 @@ debugConsole=false
 
 # turn off nested virtualization, disabling other nested VMs to run inside WSL 2
 nestedVirtualization=false
-
-# disable cgroup v1 hierarchies
-kernelCommandLine = cgroup_no_v1=all
 
 [experimental]
 
