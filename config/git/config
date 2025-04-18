@@ -23,7 +23,11 @@
 [clone]
 	filterSubmodules = true
 [commit]
-	gpgsign = true
+	gpgSign = true
+[tag]
+	gpgSign = true
+[format]
+	signOff = true
 [merge]
 	conflictStyle = diff3
 [rerere]
@@ -37,11 +41,14 @@
 [diff]
 	submodule = log
 	colorMoved = zebra
+[apply]
+	whitespace = fix
 [grep]
 	column = true
 	lineNumber = true
 	extendedRegexp = true
 [color]
 	ui = always
+	diff = auto
 [pack]
 	deltaCacheSize = 0
