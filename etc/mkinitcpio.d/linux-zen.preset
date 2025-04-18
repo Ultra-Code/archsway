@@ -1,12 +1,13 @@
+# https://wiki.archlinux.org/title/Unified_kernel_image
 # mkinitcpio preset file for the 'linux-zen' package
-# create an unified kernel image from linux-zen
+# create a unified kernel image from linux-zen
 # linux-zen.preset must be placed in /etc/mkinitcpio.d/linux-zen.preset
 ALL_kver="/boot/vmlinuz-linux-zen"
 
 PRESETS=('default' 'fallback')
 
-default_uki="/boot/EFI/Linux/arch-linux.efi"
+default_uki="/boot/EFI/Linux/arch-linux-zen.efi"
 default_options="--splash=/usr/share/systemd/bootctl/splash-arch.bmp --cmdline /etc/kernel/cmdline"
 
-fallback_uki="/boot/EFI/Linux/arch-linux-fallback.efi"
+fallback_uki="/boot/EFI/Linux/arch-linux-zen-fallback.efi"
 fallback_options="-S autodetect --cmdline /etc/kernel/cmdline-fallback"

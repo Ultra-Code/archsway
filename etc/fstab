@@ -6,7 +6,7 @@
 LABEL=BOOT /boot vfat noatime,fmask=0077,dmask=0077 0 2
 
 # /dev/sda2 UUID=bdb04416-e6f2-4388-8757-8c6455b89d4a
-LABEL=ROOT / bcachefs noatime,errors=fix_safe,compression=zstd:3,background_compression=zstd:12,journal_flush_delay=180000,fsck,fix_errors,version_upgrade=incompatible 0 1
+LABEL=ROOT / bcachefs noatime,errors=fix_safe,compression=zstd:3,background_compression=zstd:19,journal_flush_delay=180000,fsck,fix_errors,version_upgrade=incompatible 0 1
 
 # /dev/sda3 UUID=26caab6b-923e-4276-a36d-248e5619bda1
 LABEL=HOME /home btrfs noatime,compress=zstd:12,space_cache=v2,autodefrag,commit=300,subvolid=5,subvol=/ 0 0
