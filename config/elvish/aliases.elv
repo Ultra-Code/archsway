@@ -46,7 +46,7 @@ fn md {|@path| mkdir --parents --verbose $@path }
 edit:add-var md~ $md~
 
 fn Md {|@path| sudo mkdir --parents --verbose $@path }
-edit:add-var md~ $md~
+edit:add-var Md~ $Md~
 
 fn mc {|path| md $path ; cd $path }
 edit:add-var mc~ $mc~
