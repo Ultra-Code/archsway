@@ -158,8 +158,8 @@ fn tarxz {|archive @source|
 edit:add-var tarxz~ $tarxz~
 
 fn cat {|@options|
-   if (has-external bat) { e:bat --style=numbers,changes $@options
-   } else { e:cat -n $@options }
+  if (has-external bat) { e:bat --style=numbers,changes $@options
+  } else { e:cat -n $options }
 }
 edit:add-var cat~ $cat~
 

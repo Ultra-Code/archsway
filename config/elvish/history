@@ -63,6 +63,7 @@ coredumpctl debug
 coredumpctl dump
 coredumpctl info
 coredumpctl list
+curl -L -o changes.patch https://codeberg.org/techatrix/zig/compare/ff24d73096cde9792b6156825ad368981e948e2b...a1ce8e2fe50116a5d1c029e56afd55d812d3f8e3.patch
 curl -L -o pretty-php.phar https://github.com/lkrms/pretty-php/releases/latest/download/pretty-php.phar
 curl -LO https://codeberg.org/Techatrix/zig/commit/d48f64ac2225b9de4f1965963216c97649ff5900.patch
 curl -LO https://github.com/mattn/efm-langserver/releases/download/v0.0.56/efm-langserver_v0.0.56_linux_amd64.tar.gz
