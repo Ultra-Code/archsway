@@ -220,6 +220,7 @@ makepkg --printsrcinfo > .SRCINFO
 makepkg --syncdeps --rmdeps
 makepkg -g >> PKGBUILD # generate new checksum for package
 makoctl dismiss all
+man -S 2,0p,2const -waK O_DIRECT
 mariadb -u ultracode -p < Downloads/access_to_basic_services.sql
 math:pow 10 3
 mkinitcpio -H resume

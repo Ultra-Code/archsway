@@ -51,6 +51,31 @@ set E:ELVRC = $E:DOTFILES/config/elvish
 set-env GTK_THEME 'Adwaita:dark'
 set-env QT_STYLE_OVERRIDE 'adwaita-dark'
 
+# p      - POSIX specifications
+# x      - X Window System
+# 0      - C library header files
+# 0p     - Header files (POSIX)
+# 1      - Executable programs or shell commands
+# 1p     - Executable programs or shell commands (POSIX)
+# 2      - System calls (functions provided by the kernel)
+# 2const - System calls Constants
+# 2type  - System calls types
+# 3      - Library calls (functions within program libraries)
+# 3attr  - C/C++ attributes
+# 3const - Library constants
+# 3head  - Library headers
+# 3p     - Posix Library functions
+# 3type  - Library function types
+# 4      - Special files (usually found in /dev)
+# 5      - File formats and conventions eg /etc/passwd
+# 6      - Games
+# 7      - Miscellaneous (including  macro  packages and conventions), e.g. man(7)
+# 8      - System administration commands (usually only for root)
+# 9      - Kernel routines
+# man -f intro   # list of intros
+# man -S 0p -k . # list of pages in section 0p
+# apropos -r '.*' or whatis -r '.*' # list of all man pages
+set-env MANSECT '2,3,3p,2const,2type,3const,3head,3type,0,0p,8,5,1,1p,4,9,7,6'
 set-env MANROFFOPT '-c'
 set-env MANPAGER $runtime:elvish-path" -c 'col --no-backspaces --spaces | bat -l man --plain'"
 
