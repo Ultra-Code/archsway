@@ -165,7 +165,7 @@ Options=mode=1777,strictatime,nosuid,nodev,size=90%%,nr_inodes=1m
 - Configure _pacman_ with [pacman.d/pacman.conf](https://github.com/bernardassan/archsway/blob/main/etc/pacman.d/pacman.conf) and disable/comment out **NoProgressBar** if it is enabled in your _/etc/pacman.conf_
 - Configure [makepkg](https://github.com/bernardassan/archsway/tree/main/etc/makepkg.conf.d) so that fetching git repos is efficient and compilations are optimized, and well-compressed, while debug builds aren't generated
 - Install yay for AUR management with `mkdir ~/.aur ; cd ~/.aur ; sudo pacman -S --needed git base-devel ; git clone https://aur.archlinux.org/yay-bin.git ; cd yay-bin ; makepkg -si`
-- Setup [locale](https://wiki.archlinux.org/title/Installation_guide#Localization) as appropriate 
+- Setup [locale](https://wiki.archlinux.org/title/Installation_guide#Localization) as appropriate
 - Install essential utilities like `xdg-utils`, `man-db`, `man-pages`, `carapace-bin`, `openssh`, `bat`, and `fzf`.
 
 ## Using a custom build WSL kernel
@@ -197,4 +197,4 @@ Options=mode=1777,strictatime,nosuid,nodev,size=90%%,nr_inodes=1m
 - fastfetch
 - git
 - helix
-- man
+- mandoc & manpages
